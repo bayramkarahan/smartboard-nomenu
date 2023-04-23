@@ -11,10 +11,9 @@
 #include<QWidgetAction>
 #include<QFileDialog>
 #include<QToolButton>
-///#include<popupmenu.h>
 #include<QToolBar>
 #include<QFrame>
-
+#include<tooltahta.h>
 class QMouseEvent;
 class toolKalem : public QFrame
 {
@@ -26,21 +25,24 @@ public:
     DiagramItem::DiagramType oldType;
     DiagramItem::DiagramType currentType;
     QString panelSide="Right";
+    GridLines * gridLines; ///< this is my custom QGraphicsItem
 
     QPoint offset;
     bool mouseClick;
-    explicit toolKalem(QString _title, int _en, int _boy, QWidget *parent = nullptr);
+    explicit toolKalem(QString _title, int _en, int _boy,toolTahta *_toolTahta, QWidget *parent = nullptr);
     int en;
     int boy;
+
     int penSize=4;
     int gridSize=15;
     int penAlpha=50;
     QColor penColor=QColor(0,0,0,255);
     Qt::PenStyle penStyle=Qt::SolidLine;
     QLabel *moveLabel;
-    QColor sekilZeminColor=QColor(0,0,0,0);
+    QColor sekilZeminColor=QColor(255,255,255,0);
     QColor zeminColor=QColor(0,0,0,0);
     QColor zeminGridColor=QColor(0,0,0,255);
+    DiagramItem::DiagramType sekilType=DiagramItem::DiagramType::NoType;
     DiagramItem::DiagramType pagePattern=DiagramItem::DiagramType::TransparanPage;
     QToolButton *penColorButton;
     QLineEdit *pageOfNumber;
@@ -54,7 +56,10 @@ public:
     QToolButton *undoButton;
     QToolButton *redoButton;
     QMenu *penMenu();
-
+    toolTahta *current_toolTahta;
+    QHBoxLayout *sceneListButtonLayout;
+    void penToScene();
+    void sceneToPen();
 signals:
     void kalemColorSignal(QString colorType,QColor color);
     void kalemModeSignal(Scene::Mode mode,DiagramItem::DiagramType type);
@@ -64,6 +69,7 @@ signals:
     void kalemSekilModeSignal(DiagramItem::DiagramType type);
 
 public slots:
+
     void handButtonSlot();
     void penButtonSlot();
     void clearButtonSlot();
@@ -88,10 +94,16 @@ public slots:
     QPushButton *butonSlot(QPushButton *btn, QString text, QString icon, QColor color, int w, int h, int iw, int ih);
 
     QToolButton *butonToolSlot(QToolButton *btn, QString text, QString icon, QColor color, int w, int h);
-
+    QWidget *penTopMenu();
+    QWidget* sekilTopMenu();
+    QWidget *zeminTopMenu();
+    QWidget *eraseTopMenu();
+     QWidget *pageBottomMenu();
+    void setEraseSize(int size);
+    void ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfPageIndex);
+    void silSayfaButtonClick();
 private:
     QString title;
-
     QMenu *zeminMenu();
     QMenu *pageMenu();
     QPalette *palette;
@@ -99,15 +111,24 @@ private:
     QLabel *sekilKalemSizePopLabel;
     QLabel *kalemSizePopLabel;
     QLabel *gridSizePopLabel;
-
-protected:
+    QWidget *pageListwg;
+    QPushButton *delPageButton;
+    QPushButton *addPageButton;
+    QPushButton *nextPageButton;
+    QPushButton *zoomnegatifPageButton;
+    QPushButton *backPageButton;
+    QPushButton *rightsidePageButton;
+    QPushButton *leftsidePageButton;
+    QPushButton *zoomfitPageButton;
+    QPushButton *zoompozitifPageButton;
+    protected:
     virtual void paintEvent (QPaintEvent *event) override
         {
 
             /*
              * Draw the title centred in the top margin.
              */
-            QPainter painter(this);
+           /* QPainter painter(this);
             QRect title_rect(QPoint(0, 0), QSize(width(), contentsMargins().top()));
             painter.fillRect(title_rect, Qt::blue);
             painter.setPen(Qt::black);
@@ -116,8 +137,8 @@ protected:
             /*
              * Defer to the base class implementation to update everything else.
              */
-            super::paintEvent(event);
-        }
+           /* super::paintEvent(event);
+       */ }
 
 };
 

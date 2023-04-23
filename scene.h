@@ -67,11 +67,11 @@
 #include<QPixmap>
 ///////#include<pageitem.h>
 #include<dotsignal.h>
-
 class QPalette;
 class QPoint;
 class QMouseEvent;
 class QGraphicsSceneHoverEventPrivate;
+
 //class QTest;
 //
 
@@ -143,7 +143,7 @@ public:
     ModeTrue sceneModeTrue;
     Scene::Mode tempSceneMode;
     bool dragMove;
-    bool myMousePress;  
+    bool myMousePress;
     DiagramItem::DiagramType tempSekilType;
     VERectangle* tempCopyModeItemToRectDraw;
 

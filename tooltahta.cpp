@@ -18,8 +18,9 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     gv->hide();
     gv->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     gv->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    gv->setAttribute(Qt::WA_TranslucentBackground);
+    //gv->setAttribute(Qt::WA_TranslucentBackground);
     gv->viewport()->setAutoFillBackground(false);
+   // gv->setStyleSheet("background-color:rgb(0,0,240,255);");
     gv->setRenderHint(QPainter::Antialiasing);
     gv->setFixedSize(this->width(),this->height());
     scene = new Scene(gv);
@@ -30,9 +31,9 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     scene->sceneGuzelYazi=false;
     gridLines = new GridLines (this->width(), this->height(),10,scene->sceneGridYatay,scene->sceneGridDikey,scene->sceneGuzelYazi,QColor(0,0,0,0), QColor(0,0,0,0));
     QPixmap bkgnd=gridLines->PixItem(gridLines,width(),height());
-QPalette palet;
-palet.setBrush(QPalette::Window,bkgnd);
-setPalette(palet);
+    QPalette palet;
+    palet.setBrush(QPalette::Window,bkgnd);
+    setPalette(palet);
 }
 void toolTahta::mousePressEvent(QMouseEvent *event)
 {
@@ -42,6 +43,7 @@ void toolTahta::mousePressEvent(QMouseEvent *event)
 */
   if(penDrawingMain)
         {
+     // qDebug()<<"tooltahta mouse press";
             if ((event->buttons() & Qt::LeftButton)) {
             drawStatus=true;
             lastPoint = event->pos();
@@ -165,11 +167,12 @@ QImage toolTahta::copyImage(const QImage & input, const QRect & path){
 }
 void toolTahta::drawLineTo(const QPoint &endPoint)
 {
-QColor myPenColor("0,0,0,255");
-int myPenSize=4;
+    //qDebug()<<"çizim";
+//QColor myPenColor("0,0,0,255");
+int myPenSize=scene->myPenSize;
 //Qt::SolidLine myPenStyle;
     QPainter painter(&penTuval);
-    QPen pen=QPen(myPenColor, myPenSize, Qt::SolidLine, Qt::RoundCap ,Qt::RoundJoin);
+    QPen pen=QPen( scene->myPenColor, scene->myPenSize, Qt::SolidLine, Qt::RoundCap ,Qt::RoundJoin);
     pen.setCosmetic(true);
     painter.setPen(pen);
     painter.setRenderHint(QPainter::Antialiasing);

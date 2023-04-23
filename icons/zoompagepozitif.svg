@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="256px"
+   height="256px"
+   viewBox="0 0 24.00 24.00"
+   id="zoom-in-alt-1"
+   data-name="Flat Line"
+   class="icon flat-line"
+   version="1.1"
+   sodipodi:docname="zoompagepozitif.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs11" />
+  <sodipodi:namedview
+     id="namedview9"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.921875"
+     inkscape:cx="68.881356"
+     inkscape:cy="128"
+     inkscape:window-width="1366"
+     inkscape:window-height="672"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="zoom-in-alt-1" />
+  <g
+     id="SVGRepo_bgCarrier"
+     stroke-width="0" />
+  <g
+     id="SVGRepo_tracerCarrier"
+     stroke-linecap="round"
+     stroke-linejoin="round" />
+  <g
+     id="SVGRepo_iconCarrier"
+     transform="matrix(1.172199,0,0,1.2152133,-1.8409134,-2.4370105)">
+    <circle
+       id="secondary"
+       cx="10"
+       cy="10"
+       r="7"
+       style="fill:#ffffff;stroke-width:2" />
+    <line
+       id="primary-upstroke"
+       x1="20.5"
+       y1="20.5"
+       x2="17"
+       y2="17"
+       style="fill:none;stroke:#3584e4;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round" />
+    <path
+       id="primary"
+       d="m 17,10 a 7,7 0 1 1 -7,-7 7,7 0 0 1 7,7 z m 3,10 -5,-5 M 10,12 V 8 m -2,2 h 4"
+       style="fill:none;stroke:#3584e4;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+  </g>
+</svg>

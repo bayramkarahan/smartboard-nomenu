@@ -12,7 +12,7 @@ LIBS += -L/usr/lib -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_imgc
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = etahta
+TARGET = smartboard
 TEMPLATE = app
 
 
@@ -24,6 +24,8 @@ SOURCES += main.cpp\
     popupmenu.cpp \
     scene.cpp \
     toolKalem.cpp \
+    toolkalemmenu.cpp \
+    toolpagemenu.cpp \
     tooltahta.cpp \
     verectangle.cpp
 
@@ -37,6 +39,8 @@ HEADERS  += \
     popupmenu.h \
     scene.h \
     toolKalem.h \
+    toolkalemmenu.h \
+    toolpagemenu.h \
     tooltahta.h \
     verectangle.h
 

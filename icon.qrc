@@ -109,5 +109,23 @@
         <file>icons/backpage.png</file>
         <file>icons/arrow-up-down.png</file>
         <file>icons/addimage.png</file>
+        <file>icons/addpage.svg</file>
+        <file>icons/delpage.svg</file>
+        <file>icons/nextpage.svg</file>
+        <file>icons/backpage.svg</file>
+        <file>icons/zoompagenegatif.svg</file>
+        <file>icons/zoompagefit.svg</file>
+        <file>icons/zoompagepozitif.svg</file>
+        <file>icons/leftside.svg</file>
+        <file>icons/rightside.svg</file>
+        <file>icons/pen.svg</file>
+        <file>icons/e-tahta.png</file>
+        <file>icons/dotpage.svg</file>
+        <file>icons/linepage.svg</file>
+        <file>icons/karepage.svg</file>
+        <file>icons/izometrikpage.svg</file>
+        <file>icons/halfnonumbercoordinate.svg</file>
+        <file>icons/numbercoordinate.svg</file>
+        <file>icons/nonumbercoordinate.svg</file>
     </qresource>
 </RCC>

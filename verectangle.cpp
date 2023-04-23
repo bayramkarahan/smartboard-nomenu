@@ -112,6 +112,8 @@ if(drm){
     setPositionGrabbers();
     setVisibilityGrabbers();
    if(sekilTr==DiagramItem::DiagramType::Pdf) hideGrabbers();
+   if(sekilTr==DiagramItem::DiagramType::PatternPage) hideGrabbers();
+
     //qDebug() <<"rectangle nesnesi seçildi--";
 }
 else{
@@ -127,6 +129,8 @@ update();
 
 void VERectangle::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    if(sekilTr==DiagramItem::DiagramType::PatternPage) return;
+
  //   qDebug() <<"move yapıldı";
   //  qDebug() <<"üzerine geldi"<<drm;
    if(drm)
@@ -805,6 +809,10 @@ void VERectangle::paint (QPainter *painter, const QStyleOptionGraphicsItem *, QW
            }
 
     }
+    else if(sekilTr==DiagramItem::DiagramType::PatternPage){
+           painter->drawPixmap(0,0,myImage.scaled(this->rect().width(),this->rect().height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
+    }
+
     else if(sekilTr==DiagramItem::DiagramType::Cetvel){
              painter->drawPixmap(0,0,myImage.scaled(this->rect().width(),this->rect().height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
      }

@@ -1,17 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
 #include <QWidget>
 #include <QTimer>
 #include <QResizeEvent>
-
 #include<QGridLayout>
 #include<toolKalem.h>
 #include<QApplication>
 #include<QScreen>
-
 #include<QDebug>
 #include<tooltahta.h>
+#include<toolkalemmenu.h>
+#include<toolpagemenu.h>
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -20,6 +19,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
      toolTahta *current_toolTahta;
+     toolKalemMenu *current_toolKalemMenu;
+    toolPageMenu *curent_pageMenu;
 public slots:
      void kalemZeminModeSignalSlot(DiagramItem::DiagramType type);
     void kalemPenModeSignalSlot(DiagramItem::DiagramType type);
@@ -42,6 +43,7 @@ public slots:
     void sceneItemAddedSignalSlot();
 
 private:
+
  toolKalem *kw;
  QSize screenSize;
  int en;

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#3584e4"
+   height="256px"
+   width="256px"
+   version="1.1"
+   id="Layer_1"
+   viewBox="-76.8 -76.8 665.60 665.60"
+   xml:space="preserve"
+   sodipodi:docname="leftside.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs28" /><sodipodi:namedview
+   id="namedview26"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="0.921875"
+   inkscape:cx="68.881356"
+   inkscape:cy="128"
+   inkscape:window-width="1366"
+   inkscape:window-height="672"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="Layer_1" />
+
+<g
+   id="SVGRepo_bgCarrier"
+   stroke-width="0">
+
+<rect
+   x="-76.8"
+   y="-76.8"
+   width="665.60"
+   height="665.60"
+   rx="332.8"
+   fill="#ffffff"
+   strokewidth="0"
+   id="rect2" />
+
+</g>
+
+<g
+   id="SVGRepo_tracerCarrier"
+   stroke-linecap="round"
+   stroke-linejoin="round" />
+
+<g
+   id="SVGRepo_iconCarrier"
+   transform="matrix(0,1,1,0,3.8e-4,-3.8e-4)"> <g
+   id="g10"> <g
+   id="g8"> <path
+   d="M 246.073,107.939 143.421,5.287 c -7.048,-7.048 -18.477,-7.048 -25.526,0 L 15.244,107.939 c -7.049,7.048 -7.049,18.477 0,25.526 7.048,7.048 18.477,7.048 25.526,0 L 80.528,93.707 V 375.879 H 180.79 V 93.707 l 39.758,39.758 c 3.525,3.524 8.144,5.287 12.762,5.287 4.618,0 9.239,-1.763 12.762,-5.287 7.05,-7.048 7.05,-18.477 0.001,-25.526 z"
+   id="path6" /> </g> </g> <g
+   id="g16"> <g
+   id="g14"> <path
+   d="M 496.758,107.939 394.109,5.287 C 390.724,1.901 386.133,0 381.345,0 376.557,0 371.966,1.901 368.583,5.287 L 265.93,107.94 c -7.049,7.048 -7.049,18.477 0,25.526 7.048,7.048 18.477,7.048 25.526,0 L 331.212,93.71 V 375.881 H 431.476 V 93.708 l 39.756,39.756 c 3.525,3.526 8.144,5.287 12.762,5.287 4.618,0 9.239,-1.763 12.762,-5.287 7.051,-7.047 7.051,-18.476 0.002,-25.525 z"
+   id="path12" /> </g> </g> <g
+   id="g22"> <g
+   id="g20"> <path
+   d="M 434.173,399.946 H 77.831 c -20.88,0 -37.867,16.986 -37.867,37.866 v 36.323 c 0,20.88 16.987,37.866 37.867,37.866 h 356.342 c 20.88,0 37.867,-16.986 37.867,-37.866 v -36.323 c 0,-20.88 -16.987,-37.866 -37.867,-37.866 z"
+   id="path18" /> </g> </g> </g>
+
+</svg>

@@ -5,6 +5,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QWidget(parent)
 {
   this->setFixedSize(300,600);
+   // QGuiApplication::instance()->setW->setWindowIcon(QIcon(":icons/pencolor.png"));
 
     setWindowFlags(Qt::WindowStaysOnTopHint);
    // setWindowFlags(Qt::X11BypassWindowManagerHint);
@@ -15,21 +16,24 @@ MainWindow::MainWindow(QWidget *parent) :
     boy=(screenSize.height()/100)*5.70;
     en=boy;
     //qDebug()<<"ekran boyutu:"<<screenSize;
-    current_toolTahta=new toolTahta(screenSize.width()*0.6,screenSize.height()*0.6);
-    current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,0);
+    current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.6);
+    current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()/2);
     current_toolTahta->show();
 
-    QGridLayout *mainlayout = new QGridLayout();
-   mainlayout->setAlignment(Qt::AlignCenter);
-   mainlayout->setRowStretch(2,1);
-   mainlayout->setColumnStretch(2,1);
 
  /******************************************************************************/
-   kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8);
-   kw->setFixedSize(en*2-1,boy*0.8*19.7);
-   kw->move(screenSize.width()-en*1-10-en,screenSize.height()/2- kw->height()/2);
+   kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta);
+   kw->setFixedSize(en*1.15,boy*0.8*11);
+   kw->move(screenSize.width()-kw->width()-10,screenSize.height()/2- kw->height()/2);
    kw->setStyleSheet("background-color:rgb(220, 220, 220);");
    kw->setWindowFlags(Qt::X11BypassWindowManagerHint);
+   kw->setObjectName("kalem");
+   kw->setStyleSheet("QWidget#kalem{"
+                         "border: 2px solid rgb(62, 140, 183);"
+                         "border-radius: 3px;"
+                         "background-color:rgba(240,240,240,250);"
+                         "}");
+
    kw->show();
    connect(kw, SIGNAL(kalemModeSignal(Scene::Mode,DiagramItem::DiagramType)),
            this, SLOT(kalemModeSignalSlot(Scene::Mode,DiagramItem::DiagramType)));
@@ -46,9 +50,19 @@ MainWindow::MainWindow(QWidget *parent) :
    connect(kw, SIGNAL(kalemSekilModeSignal(DiagramItem::DiagramType)),
            this, SLOT(kalemSekilModeSignalSlot(DiagramItem::DiagramType)));
    /********************************************/
-   slotPenInit();
+  // slotPenInit();
+   /***************************Top Menu**********************************************/
+   current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(),screenSize.width()*0.8,screenSize.height()*0.07);
+   current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,0);
+   current_toolKalemMenu->show();
    /***********************************************/
+   /***************************Bottom Menu**********************************************/
+   curent_pageMenu=new toolPageMenu(kw->pageBottomMenu(),screenSize.width()*0.85,screenSize.height()*0.06);
+   curent_pageMenu->move(screenSize.width()/2-curent_pageMenu->width()/2,screenSize.height()-curent_pageMenu->height()*2);
 
+   curent_pageMenu->show();
+   /***********************************************/
+kw->ekleSayfaButtonClick(-1,false,-1);
 }
 void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type)
 {
@@ -83,6 +97,32 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
    /*  page->copyMode=false;
      on_copyToClipboardMode_triggered(false);
 */
+        qDebug()<<"kw->currentMode:"<<kw->currentMode<<kw->oldMode;
+
+   if(kw->currentMode!=kw->oldMode)
+    {
+
+    if(current_toolKalemMenu->isVisible()) current_toolKalemMenu->close();
+   if(mode==Scene::Mode::DrawPen)
+       current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(),screenSize.width()*0.8,screenSize.height()*0.07);
+   if(mode==Scene::Mode::EraseMode)
+       current_toolKalemMenu=new toolKalemMenu(kw->eraseTopMenu(),screenSize.width()*0.6,screenSize.height()*0.07);
+   if(mode==Scene::Mode::SekilMode)
+       current_toolKalemMenu=new toolKalemMenu(kw->sekilTopMenu(),screenSize.width()*0.7,screenSize.height()*0.07);
+   if(mode==Scene::Mode::ZeminMode)
+   {
+       current_toolKalemMenu=new toolKalemMenu(kw->zeminTopMenu(),screenSize.width()*0.9,screenSize.height()*0.07);
+   //qDebug()<<"zeminnn";
+   }
+       if(mode==Scene::Mode::SelectObject||
+//           mode==Scene::Mode::ClearMode||
+           mode==Scene::Mode::CopyMode)
+       current_toolKalemMenu=new toolKalemMenu(new QWidget(),screenSize.width()*0.6,screenSize.height()*0.07);
+
+   current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,0);
+    current_toolKalemMenu->show();
+    }
+
     if(Scene::Mode::DrawPen==mode)
     {
         current_toolTahta->penDrawingMain=true;
@@ -93,6 +133,8 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
         QPalette palet;
         palet.setBrush(QPalette::Background,pixMap);
         current_toolTahta->setPalette(palet);
+
+
     }else
     {
         current_toolTahta->penDrawingMain=false;
@@ -289,13 +331,13 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
      //   QMainWindow::close();
         exit(0);
        }
-    slotScaleSceneItem(1,1);
+   // slotScaleSceneItem(1,1);
   //  kw->pageOfNumber->setText(QString::number(currentTab()->currentPage())+"/"+
     //                         QString::number(currentTab()->numberOfPages()));
 
- if(Scene::Mode::ZoomSelectionMode!=mode||
+ /*if(Scene::Mode::ZoomSelectionMode!=mode||
          Scene::Mode::SekilMode!=mode)
-     kw->modeKontrolSlot();
+     kw->modeKontrolSlot();*/
 }
 void MainWindow::slotErase()
 {
@@ -406,23 +448,22 @@ void MainWindow::slotHand()
 
 }
 void MainWindow::slotPenInit()
-{     current_toolTahta->scene->setPenSize(kw->penSize);
-      current_toolTahta->scene->setPenAlpha(kw->penAlpha);
-     current_toolTahta->scene->setPenColor(kw->penColor);
-      current_toolTahta->scene->setPenStyle(kw->penStyle);
+{   current_toolTahta->scene->setPenSize(kw->penSize);
+    current_toolTahta->scene->setPenAlpha(kw->penAlpha);
+    current_toolTahta->scene->setPenColor(kw->penColor);
+    current_toolTahta->scene->setPenStyle(kw->penStyle);
 
-      current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
-      current_toolTahta->scene->setSekilKalemColor(kw->penColor);
-      current_toolTahta->scene->mySekilPenStyle=kw->penStyle;
-       kw->sekilZeminColor=QColor(255,255,255,0);
-     current_toolTahta->scene->setSekilZeminColor(kw->sekilZeminColor);
-       current_toolTahta->scene->setSekilPenSize(kw->penSize);
+    current_toolTahta->scene->mySekilType=kw->sekilType;
+    current_toolTahta->scene->setSekilKalemColor(kw->penColor);
+    current_toolTahta->scene->mySekilPenStyle=kw->penStyle;
+    current_toolTahta->scene->setSekilZeminColor(kw->sekilZeminColor);
+    current_toolTahta->scene->setSekilPenSize(kw->penSize);
 
-       current_toolTahta->scene->sceneGridYatay=false;
-      current_toolTahta->scene->sceneGridDikey=false;
-      current_toolTahta->scene->sceneGuzelYazi=false;
-       current_toolTahta->scene->setSekilTanimlamaStatus(false);
-     current_toolTahta->scene->pageOfNumberScene=0;
+    current_toolTahta->scene->sceneGridYatay=false;
+    current_toolTahta->scene->sceneGridDikey=false;
+    current_toolTahta->scene->sceneGuzelYazi=false;
+    current_toolTahta->scene->setSekilTanimlamaStatus(false);
+    current_toolTahta->scene->pageOfNumberScene=0;
        /*******************önemli ayarlar**************************************/
   ///    setContinuousMode(false);     //sayfalar birleşik gözükmeyecek
    ///   setLayoutMode(SinglePageMode);//Tek sayfa gösterme ayarlandı
@@ -436,8 +477,8 @@ void MainWindow::slotPenInit()
        const QRectF pageItemRect = page->boundingRect().translated(page->pos());
        currentTab()->scene->pageItemRect=pageItemRect;
      **/
-       kalemZeminModeSignalSlot(DiagramItem::DiagramType::TransparanPage);
-     current_toolTahta->scene->makeItemsControllable(false);
+        kalemZeminModeSignalSlot(DiagramItem::DiagramType::TransparanPage);
+        current_toolTahta->scene->makeItemsControllable(false);
 
        connect(current_toolTahta->scene, SIGNAL(sceneItemAddedSignal()),
        this,SLOT(sceneItemAddedSignalSlot()));
@@ -448,62 +489,15 @@ void MainWindow::slotPenInit()
 
 
 }
-void  MainWindow::kalemPenModeSignalSlot(DiagramItem::DiagramType type)
+void MainWindow::kalemPenModeSignalSlot(DiagramItem::DiagramType type)
 {
-
-    //current_toolTahta->penTuval.
-   // qDebug()<<"pen mode:"<<type;
-   /* currentTab()->scene->pageOfNumberScene=currentTab()->currentPage()-1;
-    */
-   /// PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-   /// const QRectF pageItemRect = page->boundingRect().translated(page->pos());
-   // currentTab()->scene->pageItemRect=pageItemRect;
-    //if(DiagramItem::DiagramType::SolidLine==type)  currentTab()->scene->setSekilPenStyle(Qt::SolidLine);
-    //else if(DiagramItem::DiagramType::DashLine==type)  currentTab()->scene->setSekilPenStyle(Qt::DashLine);
-   // else if(DiagramItem::DiagramType::DotLine==type)  currentTab()->scene->setSekilPenStyle(Qt::DotLine);
-
-    if(DiagramItem::DiagramType::SolidLine==type){
-        current_toolTahta->scene->setSekilPenStyle(Qt::SolidLine);
-        current_toolTahta->scene->setPenStyle(Qt::SolidLine);
-    }
-    if(DiagramItem::DiagramType::DashLine==type){
-       current_toolTahta->scene->setPenStyle(Qt::DashLine);
-        current_toolTahta->scene->setSekilPenStyle(Qt::DashLine);
-    }
-    if(DiagramItem::DiagramType::DotLine==type){
-        current_toolTahta->scene->setPenStyle(Qt::DotLine);
-       current_toolTahta-> scene->setSekilPenStyle(Qt::DotLine);
-    }
-
-    if(DiagramItem::DiagramType::PenSize2==type){kw->penSize=2; current_toolTahta->scene->setPenSize(kw->penSize);}
-    if(DiagramItem::DiagramType::PenSize4==type){kw->penSize=4; current_toolTahta->scene->setPenSize(kw->penSize);}
-    if(DiagramItem::DiagramType::PenSize6==type){kw->penSize=6; current_toolTahta->scene->setPenSize(kw->penSize);}
-    if(DiagramItem::DiagramType::PenSize8==type){kw->penSize=8; current_toolTahta->scene->setPenSize(kw->penSize);}
-    if(DiagramItem::DiagramType::PenSize10==type){kw->penSize=10; current_toolTahta->scene->setPenSize(kw->penSize);}
-    if(DiagramItem::DiagramType::PenSize12==type){kw->penSize=12; current_toolTahta->scene->setPenSize(kw->penSize);}
-    if(DiagramItem::DiagramType::PenSize14==type){kw->penSize=14; current_toolTahta->scene->setPenSize(kw->penSize);}
-
-
-    if(DiagramItem::DiagramType::NormalPen==type){
-       current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
-        current_toolTahta->scene->setSekilTanimlamaStatus(false);
-    }
-    if(DiagramItem::DiagramType::SmartPen==type){
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
-       current_toolTahta->scene->setSekilTanimlamaStatus(true);
-    }
-    if(DiagramItem::DiagramType::FosforluPen==type){
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPenFosfor;
-      current_toolTahta->scene->setSekilTanimlamaStatus(false);
-         current_toolTahta->scene->setPenAlpha(50);
-
-    }
-
+  //current_toolTahta->penTuval.
+  //  qDebug()<<"pen mode:"<<type;
 }
 void MainWindow::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
 {
 
-//qDebug()<<"zemin mode:"<<type<<kw->penSize;
+qDebug()<<"zemin mode:"<<type<<kw->penSize;
   /* current_toolTahta->scene->pageOfNumberScene=currentTab()->currentPage()-1;
     PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
     const QRectF pageItemRect = page->boundingRect().translated(page->pos());
@@ -526,6 +520,7 @@ if(DiagramItem::DiagramType::CizgiliKagit==type) {current_toolTahta->scene->donS
 
 
 if(DiagramItem::DiagramType::TransparanPage==type){
+   //   qDebug()<<"seffaf zemin";
     kw->pagePattern=type;
     kw->sekilZeminColor=QColor(0,0,0,0);
     current_toolTahta->scene->sceneGridYatay=false;
@@ -540,119 +535,122 @@ if(DiagramItem::DiagramType::TransparanPage==type){
 
   }
 if(DiagramItem::DiagramType::BlackPage==type){
+   // qDebug()<<"siyah zemin";
     kw->pagePattern=type;
     kw->sekilZeminColor=QColor(0,0,0,255);
 
-  current_toolTahta->scene->sceneGridYatay=false;
+    current_toolTahta->scene->sceneGridYatay=false;
+    current_toolTahta->scene->sceneGridDikey=false;
+    current_toolTahta->scene->sceneGuzelYazi=false;
+    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
+    QSize screenSize = qApp->screens()[0]->size();
+    GridLines *gridLines = new GridLines (current_toolTahta->width(),current_toolTahta->height(),kw->gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi, kw->sekilZeminColor, kw->penColor);
+    QPixmap bkgnd=gridLines->PixItem(gridLines,current_toolTahta->width(),current_toolTahta->height());
+
+    current_toolTahta->scene->myImage=bkgnd;
+    //current_toolTahta->scene->donSlot(DiagramItem::DiagramType::PatternPage);
+  //  kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
+   // kw->buttonStateClear();
+   // kw->penButton->setChecked(true);
+  }
+
+if(DiagramItem::DiagramType::WhitePage==type){
+    kw->pagePattern=type;
+    kw->sekilZeminColor=QColor(255,255,255,255);
+    current_toolTahta->scene->sceneGridYatay=false;
+    current_toolTahta->scene->sceneGridDikey=false;
+    current_toolTahta->scene->sceneGuzelYazi=false;
+    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
+    QSize screenSize = qApp->screens()[0]->size();
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
+    QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
+    current_toolTahta->scene->myImage=bkgnd;
+   // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
+    /*kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
+    kw->buttonStateClear();
+    kw->penButton->setChecked(true);
+*/
+ }
+if(DiagramItem::DiagramType::CustomColorPage==type){
+    kw->pagePattern=type;
+    current_toolTahta->scene->sceneGridYatay=false;
+    current_toolTahta->scene->sceneGridDikey=false;
+    current_toolTahta->scene->sceneGuzelYazi=false;
+    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
+    QSize screenSize = qApp->screens()[0]->size();
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
+    QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
+    current_toolTahta->scene->myImage=bkgnd;
+   // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
+   /* kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
+    kw->buttonStateClear();
+    kw->penButton->setChecked(true);
+*/
+}
+
+if(DiagramItem::DiagramType::CizgiliPage==type){
+    kw->pagePattern=type;
+    current_toolTahta->scene->sceneGridYatay=true;
+    current_toolTahta->scene->sceneGridDikey=false;
+    current_toolTahta->scene->sceneGuzelYazi=false;
+    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
+    QSize screenSize = qApp->screens()[0]->size();
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->zeminGridColor);
+    QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
+    current_toolTahta->scene->myImage=bkgnd;
+   // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
+   /* kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
+    kw->buttonStateClear();
+    kw->penButton->setChecked(true);
+*/
+  }
+if(DiagramItem::DiagramType::KareliPage==type){
+    kw->pagePattern=type;
+    current_toolTahta->scene->sceneGridYatay=true;
+    current_toolTahta->scene->sceneGridDikey=true;
+    current_toolTahta->scene->sceneGuzelYazi=false;
+    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
+    QSize screenSize = qApp->screens()[0]->size();
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->zeminGridColor);
+    QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
+    current_toolTahta->scene->myImage=bkgnd;
+   // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
+   /* kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
+    kw->buttonStateClear();
+    kw->penButton->setChecked(true);
+*/
+  }
+if(DiagramItem::DiagramType::MuzikPage==type){
+    kw->pagePattern=type;
+    current_toolTahta->scene->sceneGridYatay=true;
     current_toolTahta->scene->sceneGridDikey=false;
    current_toolTahta->scene->sceneGuzelYazi=false;
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi, kw->sekilZeminColor, kw->penColor);
-    QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
-   current_toolTahta->scene->myImage=bkgnd;
-  //  currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-    kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
-    kw->buttonStateClear();
-    kw->penButton->setChecked(true);
-  }
-/*
-if(DiagramItem::DiagramType::WhitePage==type){
-    kw->pagePattern=type;
-    kw->sekilZeminColor=QColor(255,255,255,255);
-    currentTab()->scene->sceneGridYatay=false;
-    currentTab()->scene->sceneGridDikey=false;
-    currentTab()->scene->sceneGuzelYazi=false;
-    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
-    QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,currentTab()->scene->sceneGridYatay,currentTab()->scene->sceneGridDikey,currentTab()->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
-    QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
-    currentTab()->scene->myImage=bkgnd;
-   // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-    kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
-    kw->buttonStateClear();
-    kw->penButton->setChecked(true);
-
- }
-if(DiagramItem::DiagramType::CustomColorPage==type){
-    kw->pagePattern=type;
-    currentTab()->scene->sceneGridYatay=false;
-    currentTab()->scene->sceneGridDikey=false;
-    currentTab()->scene->sceneGuzelYazi=false;
-    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
-    QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*10,currentTab()->scene->sceneGridYatay,currentTab()->scene->sceneGridDikey,currentTab()->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
-    QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
-    currentTab()->scene->myImage=bkgnd;
-   // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-    kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
-    kw->buttonStateClear();
-    kw->penButton->setChecked(true);
-
-}
-if(DiagramItem::DiagramType::CizgiliPage==type){
-    kw->pagePattern=type;
-    currentTab()->scene->sceneGridYatay=true;
-    currentTab()->scene->sceneGridDikey=false;
-    currentTab()->scene->sceneGuzelYazi=false;
-    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
-    QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,currentTab()->scene->sceneGridYatay,currentTab()->scene->sceneGridDikey,currentTab()->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->zeminGridColor);
-    QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
-    currentTab()->scene->myImage=bkgnd;
-   // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-    kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
-    kw->buttonStateClear();
-    kw->penButton->setChecked(true);
-
-  }
-if(DiagramItem::DiagramType::KareliPage==type){
-    kw->pagePattern=type;
-    currentTab()->scene->sceneGridYatay=true;
-    currentTab()->scene->sceneGridDikey=true;
-    currentTab()->scene->sceneGuzelYazi=false;
-    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
-    QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,currentTab()->scene->sceneGridYatay,currentTab()->scene->sceneGridDikey,currentTab()->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->zeminGridColor);
-    QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
-    currentTab()->scene->myImage=bkgnd;
-   // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-    kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
-    kw->buttonStateClear();
-    kw->penButton->setChecked(true);
-
-  }
-if(DiagramItem::DiagramType::MuzikPage==type){
-    kw->pagePattern=type;
-    currentTab()->scene->sceneGridYatay=true;
-    currentTab()->scene->sceneGridDikey=false;
-    currentTab()->scene->sceneGuzelYazi=false;
-    ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
-    QSize screenSize = qApp->screens()[0]->size();
     DiagramItem *ditem=new DiagramItem();
-    QPixmap pim(kw->zeminImage(ditem->sekilStore(DiagramItem::DiagramType::Muzik,QRectF(QPointF(0,0),QPointF(screenSize.width(),screenSize.height()))),screenSize.width(),screenSize.height(),kw->zeminGridColor,2));
-    currentTab()->scene->myImage=pim;
+    QPixmap pim(kw->zeminImage(ditem->sekilStore(DiagramItem::DiagramType::Muzik,QRectF(QPointF(0,0),QPointF(current_toolTahta->width(),current_toolTahta->height()))),current_toolTahta->width(),current_toolTahta->height(),kw->zeminGridColor,2));
+    current_toolTahta->scene->myImage=pim;
     //currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-    kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
+   /* kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
     kw->buttonStateClear();
     kw->penButton->setChecked(true);
-
+*/
   }
 if(DiagramItem::DiagramType::GuzelYaziPage==type){
     kw->pagePattern=type;
-    currentTab()->scene->sceneGridYatay=false;
-    currentTab()->scene->sceneGridDikey=false;
-    currentTab()->scene->sceneGuzelYazi=true;
+    current_toolTahta->scene->sceneGridYatay=false;
+    current_toolTahta->scene->sceneGridDikey=false;
+    current_toolTahta->scene->sceneGuzelYazi=true;
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,currentTab()->scene->sceneGridYatay,currentTab()->scene->sceneGridDikey,currentTab()->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
     QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
-    currentTab()->scene->myImage=bkgnd;
+    current_toolTahta->scene->myImage=bkgnd;
     //currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-    kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
+  /*  kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
     kw->buttonStateClear();
     kw->penButton->setChecked(true);
-
+*/
   }
 
 if(DiagramItem::DiagramType::CustomImagePage==type)
@@ -672,7 +670,7 @@ if(DiagramItem::DiagramType::CustomImagePage==type)
     flags |= Qt::X11BypassWindowManagerHint;
     flags |= Qt::WindowStaysOnTopHint;
     // */
-/*QFileDialog abc;
+QFileDialog abc;
    // abc.setWindowFlags(flags);
     QString os="";
 #ifdef WIN32
@@ -700,7 +698,7 @@ if(DiagramItem::DiagramType::CustomImagePage==type)
                 //QSize screenSize = qApp->screens()[0]->size();
                 //GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,currentTab()->scene->sceneGridYatay,currentTab()->scene->sceneGridDikey,currentTab()->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
                */// QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
-              /*  currentTab()->scene->myImage=image;
+               current_toolTahta->scene->myImage=image;
                 //currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
 
                // currentTab()->scene->setImage(image);
@@ -729,16 +727,16 @@ if(DiagramItem::DiagramType::CustomImagePage==type)
                 QSize screenSize = qApp->screens()[0]->size();
                 //GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,currentTab()->scene->sceneGridYatay,currentTab()->scene->sceneGridDikey,currentTab()->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
                */// QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
-           ///     currentTab()->scene->myImage=image;
+                current_toolTahta->scene->myImage=image;
                 //currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
 
                // currentTab()->scene->setImage(image);
                 // currentTab()->scene->donSlot(type);
 
-         /*   }
+            }
         }
 
-    }*/
+    }
 
    /* flags |= Qt::Window;
     flags |= Qt::X11BypassWindowManagerHint;
@@ -747,53 +745,59 @@ if(DiagramItem::DiagramType::CustomImagePage==type)
     show();*/
    // currentTab()->scene->mySekilType=type;
 
-  /*  kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
+   /* kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
     kw->buttonStateClear();
     kw->penButton->setChecked(true);
+    */
 
 }
 
 bool pageadd=false;
-foreach(QGraphicsItem* item, currentTab()->scene->items()){
+foreach(QGraphicsItem* item,current_toolTahta->scene->items()){
          VERectangle * selection = dynamic_cast<VERectangle *>(item);
           if(selection)
          {
             if(selection->sekilTr!=0&&
-             selection->pageOfNumber==currentTab()->scene->pageOfNumberScene&&
+            // selection->pageOfNumber==current_toolTahta->scene->pageOfNumberScene&&
              selection->sekilTr==DiagramItem::DiagramType::PatternPage){
 
-             pageadd=true;
-             selection->setImage(currentTab()->scene->myImage);
-           //  qDebug()<<"zemin..x";
-             selection->setRect(0,0,pageItemRect.width(),pageItemRect.height());
-             selection->setPos(pageItemRect.left(),pageItemRect.top());
-
-             selection->update();
+           //  pageadd=true;
+             ///selection->setImage(current_toolTahta->scene->myImage);
+            // qDebug()<<"zemin..x";
+            // selection->setRect(0,0,current_toolTahta->width(),current_toolTahta->height());
+           //  selection->setPos(current_toolTahta->left(),current_toolTahta->top());
+             selection->setPos(current_toolTahta->pos());
+            current_toolTahta->scene->removeItem(selection);
+            // selection->update();
              }
          }
      }
+ qDebug()<<"zemin..0"<<pageadd;
+//if(pageadd)
 
-if(!pageadd)
-
-{
+//{*/
     // qDebug()<<"zemin..0";
-   VERectangle *zeminItem = new VERectangle(currentTab()->scene);
-   zeminItem->setPen(QPen(currentTab()->scene->mySekilKalemColor, kw->penSize, currentTab()->scene->mySekilPenStyle));
+   VERectangle *zeminItem = new VERectangle(current_toolTahta->scene);
+   zeminItem->setPen(QPen(current_toolTahta->scene->mySekilKalemColor, kw->penSize, current_toolTahta->scene->mySekilPenStyle));
 
    zeminItem->sekilTur(DiagramItem::DiagramType::PatternPage);
-   zeminItem->setImage(currentTab()->scene->myImage);
-   currentTab()->scene->addItem(zeminItem);
-   zeminItem->pageOfNumber=currentTab()->scene->pageOfNumberScene;
-   currentTab()->scene->graphicsList.append(zeminItem);
-   currentTab()->scene->graphicsListTemp.append(zeminItem);
-   currentTab()->scene->historyBack.append(zeminItem);
-   currentTab()->scene->historyBackAction.append("added");
-   zeminItem->setRect(0,0,pageItemRect.width(),pageItemRect.height());
-   zeminItem->setPos(pageItemRect.left(),pageItemRect.top());
-  // zeminItem->setSelected(false);
-}
+   zeminItem->setImage(current_toolTahta->scene->myImage);
+   current_toolTahta->scene->addItem(zeminItem);
+   // zeminItem->pageOfNumber=current_toolTahta->scene->pageOfNumberScene;
+   current_toolTahta->scene->graphicsList.append(zeminItem);
+   current_toolTahta->scene->graphicsListTemp.append(zeminItem);
+   current_toolTahta->scene->historyBack.append(zeminItem);
+   current_toolTahta->scene->historyBackAction.append("added");
+   zeminItem->setRect(0,0,current_toolTahta->width(),current_toolTahta->height());
+   // zeminItem->setPos(current_toolTahta->left(),current_toolTahta->top());
+   zeminItem->setPos(0,0);
+   zeminItem->setZValue(-200);
 
-*/
+  // zeminItem->setSelected(false);
+   zeminItem->update();
+//}
+
+
 
 }
 void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
@@ -937,11 +941,15 @@ void MainWindow::kalemColorSignalSlot(QString colorType, QColor color)
      kw->sekilZeminColor=color;
     current_toolTahta->scene->setSekilZeminColor(kw->sekilZeminColor);
    }
-
-
   if (colorType=="zeminGridColor"){
      //qDebug()<<"sekilZeminColor"<<color;
      kw->zeminGridColor=color;
+     //currentTab()->scene->setSekilZeminColor(kw->sekilZeminColor);
+   }
+  if (colorType=="zeminColor"){
+     qDebug()<<"zeminColor"<<color;
+     kw->sekilZeminColor=color;
+     kalemZeminModeSignalSlot(DiagramItem::DiagramType::CustomColorPage);
      //currentTab()->scene->setSekilZeminColor(kw->sekilZeminColor);
    }
 

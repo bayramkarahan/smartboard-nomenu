@@ -79,9 +79,11 @@ void toolKalem::handButtonSlot()
 }
 void toolKalem::penButtonSlot()
 {
-    buttonStateClear();penButton->setChecked(true);
+    buttonStateClear();
+    penButton->setChecked(true);
+    current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
+    current_toolTahta->scene->setSekilTanimlamaStatus(false);
     emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NormalPen);
-
 }
 void toolKalem::clearButtonSlot()
 {
@@ -159,55 +161,80 @@ void toolKalem::modeKontrolSlot()
 
 }
 }
+void toolKalem::penToScene()
+{   current_toolTahta->scene->setPenSize(penSize);
+    current_toolTahta->scene->setPenAlpha(penAlpha);
+    current_toolTahta->scene->setPenColor(penColor);
+    current_toolTahta->scene->setPenStyle(penStyle);
 
-toolKalem::toolKalem(QString _title, int _en, int _boy, QWidget *parent):super(parent)
+    current_toolTahta->scene->mySekilType=sekilType;
+    current_toolTahta->scene->setSekilKalemColor(penColor);
+    current_toolTahta->scene->mySekilPenStyle=penStyle;
+    current_toolTahta->scene->setSekilZeminColor(sekilZeminColor);
+    current_toolTahta->scene->setSekilPenSize(penSize);
+
+    current_toolTahta->scene->sceneGridYatay=false;
+    current_toolTahta->scene->sceneGridDikey=false;
+    current_toolTahta->scene->sceneGuzelYazi=false;
+    current_toolTahta->scene->setSekilTanimlamaStatus(false);
+   // current_toolTahta->scene->pageOfNumberScene=0;
+       /*******************önemli ayarlar**************************************/
+  ///    setContinuousMode(false);     //sayfalar birleşik gözükmeyecek
+   ///   setLayoutMode(SinglePageMode);//Tek sayfa gösterme ayarlandı
+
+       //currentTab()->setScaleMode(FitToPageWidthMode);//sayfayı orijinal boyutta göster
+  ///   setScaleMode(FitToPageSizeMode);//sayfayı sığdır fit to window
+     ///  kw->pageOfNumber->setText(QString::number(currentTab()->currentPage())+" / "+
+     ///                           QString::number(currentTab()->numberOfPages()));
+      /* currentTab()->scene->pageOfNumberScene=currentTab()->currentPage()-1;
+       PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
+       const QRectF pageItemRect = page->boundingRect().translated(page->pos());
+       currentTab()->scene->pageItemRect=pageItemRect;
+     **/
+       /// kalemZeminModeSignalSlot(DiagramItem::DiagramType::TransparanPage);
+      emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+
+        current_toolTahta->scene->makeItemsControllable(false);
+
+      // connect(current_toolTahta->scene, SIGNAL(sceneItemAddedSignal()),
+       //this,SLOT(sceneItemAddedSignalSlot()));
+     //  sceneItemAddedSignalSlot();
+      handButtonSlot();
+       //kalemPenModeSignalSlot(DiagramItem::DiagramType::NormalPen);
+
+emit kalemModeSignal(currentMode,currentType);
+
+}
+void toolKalem::sceneToPen()
+{
+    penSize=current_toolTahta->scene->myPenSize;
+    penAlpha=current_toolTahta->scene->myPenAlpha;
+    penColor=current_toolTahta->scene->myPenColor;
+    penStyle=current_toolTahta->scene->myPenStyle;
+    sekilType=current_toolTahta->scene->mySekilType;
+    sekilZeminColor=current_toolTahta->scene->mySekilKalemColor;
+    //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+    //   current_toolTahta->scene->makeItemsControllable(false);
+    // connect(current_toolTahta->scene, SIGNAL(sceneItemAddedSignal()),
+    //this,SLOT(sceneItemAddedSignalSlot()));
+    //  sceneItemAddedSignalSlot();
+    // handButtonSlot();
+    //kalemPenModeSignalSlot(DiagramItem::DiagramType::NormalPen);
+
+
+
+}
+toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, QWidget *parent):super(parent)
         {
-    setContentsMargins(0, 2 * fontInfo().pixelSize(), 0, 0);
     title=_title;
     en=_en;
     boy=_boy;
-
     mouseClick=false;
     currentMode=Scene::Mode::SelectObject;
-//int boy=40;
-//int en=this->width()/2-24;
-
-this->setObjectName("kalem");
-/*this->setStyleSheet("QWidget#kalem{"
-                      "border: 1px solid rgb(62, 140, 183);"
-                      "border-radius: 5px;"
-                      "background-color:rgb(240,240,240,250);"
-                      "}");
-                      */
-
-/*moveLabel=new QLabel(this);
-moveLabel->setStyleSheet("background-color:#3e8db8;");
-moveLabel->setFixedSize(en*1.5,boy*0.6);
-//QPixmap movepixmap(":icons/icons/move.png");
-//moveLabel->setPixmap(movepixmap);
-moveLabel->setScaledContents(true);
-moveLabel->setText("Kalem");
-moveLabel->setStyleSheet("border: 0px solid #3e8db8;"
-"border-radius: 3px;"
-"background-color: #3e8db8;"
-"qproperty-alignment: AlignCenter;"
-"qproperty-text: 'Kalem';"
-"qproperty-wordWrap: true;");
-
-QFont ff( "Arial", 7, QFont::Normal);
-moveLabel->setFont(ff);
-*/
+    current_toolTahta=_toolTahta;
 /*******************************************************************/
 
 handButton = new QToolButton(this);
-/*handButton->setFixedSize(en*1.5,boy);
-handButton->setToolButtonStyle(Qt::ToolButtonIconOnly);
-handButton->setIcon(QIcon(":icons/icons/hand.png"));
-handButton->setIconSize(QSize(en,boy-10));
-handButton->setAutoRaise(true);
-handButton->setAutoFillBackground(true);
-//handButton->setStyleSheet("background-color: #acacac");*/
-
 handButton=butonToolSlot(handButton,"",":icons/hand.png",QColor(255,0,0,0),en*1.5,boy);
 handButton->setCheckable(true);
 handButton->setChecked(true);
@@ -224,7 +251,7 @@ connect(copyButton, &QToolButton::clicked, [=]() {
    });
 
 penButton = new QToolButton(this);
-penButton=butonToolSlot(penButton,"Kalem",":icons/pen.png",QColor(255,0,0,0),en*1.5,boy);
+penButton=butonToolSlot(penButton,"Kalem",":icons/pen.svg",QColor(255,0,0,0),en*1.5,boy);
 penButton->setIconSize(QSize(en*0.8,boy*1.3));
 penButton->setMenu(penMenu());
 penButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -232,7 +259,6 @@ penButton->setCheckable(true);
 connect(penButton, &QToolButton::clicked, [=]() {
 penButtonSlot();
 });
-
 
 eraseButton = new QToolButton(this);
 eraseButton=butonToolSlot(eraseButton,"Silgi",":icons/erase.png",QColor(255,0,0,0),en*1.5,boy);
@@ -249,7 +275,7 @@ clearButton->setIconSize(QSize(en*1,boy*1));
 connect(clearButton, &QToolButton::clicked, [=]() {
   clearButtonSlot();
 });
-
+/*
 QToolButton *blackButton = new QToolButton(this);
 blackButton=butonToolSlot(blackButton,"","",QColor(0,0,0,255),en*1.5,boy/2);
 connect(blackButton, &QToolButton::clicked, [=]() {
@@ -269,7 +295,7 @@ connect(blueButton, &QToolButton::clicked, [=]() {
 emit kalemColorSignal("penColor",QColor(0,0,255,255));
 
 });
-
+*/
 penColorButton = new QToolButton(this);
 penColorButton=butonToolSlot(penColorButton,"",":icons/pencolor.png",QColor(0,0,0,255),en*1.5,boy*0.8);
 connect(penColorButton, &QToolButton::clicked, [=]() {
@@ -278,6 +304,7 @@ connect(penColorButton, &QToolButton::clicked, [=]() {
  colorMenu("penColor","yatay",en,boy,true)->exec(mapToGlobal(penColorButton->pos())-QPoint(menu->width(),0));
 
 });
+
 QWidget *urw=new QWidget(this);
 urw->setFixedSize(en*1.5,boy);
 undoButton = new QToolButton(urw);
@@ -325,153 +352,12 @@ zeminButton->setPopupMode(QToolButton::MenuButtonPopup);
 connect(zeminButton, &QToolButton::clicked, [=]() {
     emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
    });
-//QIcon(QLatin1String(":icons/fit-to-page-width")), SLOT(on_fitToPageWidthMode_triggered(bool)), true);
-//QIcon(QLatin1String(":icons/fit-to-page-size")),  SLOT(on_fitToPageSizeMode_triggered(bool)), true);
-QWidget *wpw=new QWidget(this);
-wpw->setFixedSize(en*1.5,boy);
 
-QToolButton *fitWindowButton = new QToolButton(wpw);
-fitWindowButton=butonToolSlot(fitWindowButton,"",":icons/fitwindowsize.png",QColor(255,0,0,0),en*0.75,boy*0.8);
-fitWindowButton->setIconSize(QSize(en*0.8,boy*0.8));
-connect(fitWindowButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::FitWindowMode,DiagramItem::DiagramType::NoType);
-
-});
-
-QToolButton *fitPageButton = new QToolButton(wpw);
-fitPageButton=butonToolSlot(fitPageButton,"",":icons/fitpagesize.png",QColor(255,0,0,0),en*0.75,boy*0.8);
-fitPageButton->setIconSize(QSize(en*0.8,boy*0.8));
-connect(fitPageButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::FitPageMode,DiagramItem::DiagramType::NoType);
-});
-
-
-QHBoxLayout *line01 = new QHBoxLayout;
-line01->addWidget(fitWindowButton,Qt::AlignHCenter);
-line01->addWidget(fitPageButton,Qt::AlignHCenter);
-
-line01->setContentsMargins(0,0, 0,0);
-line01->setSpacing(1);
-wpw->setLayout(line01);
-
-QWidget *znpw=new QWidget(this);
-znpw->setFixedSize(en*1.5,boy);
-
-QToolButton *zoomPozitifButton = new QToolButton(znpw);
-zoomPozitifButton=butonToolSlot(zoomPozitifButton,"",":icons/zoompozitif.png",QColor(255,0,0,0),en*0.75,boy);
-zoomPozitifButton->setIconSize(QSize(en*0.75,boy*0.75));
-connect(zoomPozitifButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::ZoomPozitifMode,DiagramItem::DiagramType::NoType);
-   });
-
-QToolButton *zoomNegatifButton = new QToolButton(znpw);
-zoomNegatifButton=butonToolSlot(zoomNegatifButton, "",":icons/zoomnegatif.png",QColor(255,0,0,0),en*0.75,boy);
-zoomNegatifButton->setIconSize(QSize(en*0.75,boy*0.75));
-connect(zoomNegatifButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::ZoomNegatifMode,DiagramItem::DiagramType::NoType);
-   });
-QHBoxLayout *line03 = new QHBoxLayout;
-line03->addWidget(zoomPozitifButton,Qt::AlignHCenter);
-line03->addWidget(zoomNegatifButton,Qt::AlignHCenter);
-
-line03->setContentsMargins(0,0, 0,0);
-line03->setSpacing(1);
-znpw->setLayout(line03);
-
-QToolButton *zoomSelectionButton = new QToolButton(this);
-zoomSelectionButton=butonToolSlot(zoomSelectionButton, "",":icons/zoomselect.png",QColor(255,0,0,0),en*1.5,boy*0.8);
-zoomSelectionButton->setIconSize(QSize(en*0.8,boy*0.8));
-connect(zoomSelectionButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::ZoomSelectionMode,DiagramItem::DiagramType::NoType);
-   });
-
-
-pageOfNumber=new QLineEdit(this);
-pageOfNumber->setFixedSize(en*1.5,boy*0.7);
-//pageOfNumber->setStyleSheet("background-color: #acacac");
-pageOfNumber->setText(" / ");
-pageOfNumber->setAlignment(Qt::AlignCenter);
-pageOfNumber->setEnabled(false);
-QFont ff( "Arial", 8, 0);
-pageOfNumber->setFont(ff);
-
-QWidget *nbw=new QWidget(this);
-nbw->setFixedSize(en*1.5,boy);
-//nbw->setStyleSheet("background-color: #ac0000");
-QToolButton *nextButton = new QToolButton(nbw);
-nextButton=butonToolSlot(nextButton,"",":icons/nextpage.png",QColor(255,0,0,0),en*0.75,boy);
-nextButton->setIconSize(QSize(en*0.8,boy*0.8));
-connect(nextButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::NextPageMode,DiagramItem::DiagramType::NoType);
-   });
-
-QToolButton *backButton = new QToolButton(nbw);
-backButton=butonToolSlot(backButton,"",":icons/backpage.png",QColor(255,0,0,0),en*0.75,boy);
-backButton->setIconSize(QSize(en*0.8,boy*0.8));
-connect(backButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::BackPageMode,DiagramItem::DiagramType::NoType);
-   });
-
-QHBoxLayout *line02 = new QHBoxLayout;
-line02->addWidget(backButton,Qt::AlignHCenter);
-line02->addWidget(nextButton,Qt::AlignHCenter);
-
-line02->setContentsMargins(0,0, 0,0);
-line02->setSpacing(1);
-nbw->setLayout(line02);
-
-QToolButton *jumpPageButton = new QToolButton(this);
-jumpPageButton=butonToolSlot(jumpPageButton,"Sayfaya Git",":icons/jumppage.png",QColor(255,0,0,0),en*1.5,boy);
-jumpPageButton->setIconSize(QSize(en*1.3,boy*1.3));
-connect(jumpPageButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::JumpPageMode,DiagramItem::DiagramType::NoType);
-   });
-QToolButton *listButton = new QToolButton(this);
-listButton=butonToolSlot(listButton,"",":icons/list.png",QColor(255,0,0,0),en*1.5,boy*0.7);
-connect(listButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::ListMode,DiagramItem::DiagramType::NoType);
-   });
-QToolButton *searchButton = new QToolButton(this);
-searchButton=butonToolSlot(searchButton,"",":icons/search.png",QColor(255,0,0,0),en*1.5,boy*0.7);
-connect(searchButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::SearchMode,DiagramItem::DiagramType::NoType);
-   });
-/*
-QToolButton *saveButton = new QToolButton(this);
-saveButton=butonToolSlot(saveButton,"",":icons/save.png",QColor(255,0,0,0),en*1.5,boy);
-connect(saveButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::SaveMode,DiagramItem::DiagramType::NoType);
-   });
-*/
 QToolButton *printButton = new QToolButton(this);
 printButton=butonToolSlot(printButton,"",":icons/print.png",QColor(255,0,0,0),en*1.5,boy);
 connect(printButton, &QToolButton::clicked, [=]() {
 emit kalemModeSignal(Scene::Mode::PrintMode,DiagramItem::DiagramType::NoType);
    });
-
-QWidget *prldw=new QWidget(this);
-prldw->setFixedSize(en*1.5,boy);
-
-QToolButton *panelLeftRightButton = new QToolButton(prldw);
-panelLeftRightButton=butonToolSlot(panelLeftRightButton,"Sağa/Sola Hizala",":icons/panelside.png",QColor(255,0,0,0),en*0.75,boy);
-panelLeftRightButton->setIconSize(QSize(en*0.75,boy*0.75));
-connect(panelLeftRightButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::PanelSideLeftRight,DiagramItem::DiagramType::NoType);
-   });
-
-QToolButton *panelBottomButton = new QToolButton(prldw);
-panelBottomButton=butonToolSlot(panelBottomButton,"Alta Hizala",":icons/panelsidedown.png",QColor(255,0,0,0),en*0.75,boy);
-panelBottomButton->setIconSize(QSize(en*0.75,boy*0.75));
-connect(panelBottomButton, &QToolButton::clicked, [=]() {
-emit kalemModeSignal(Scene::Mode::PanelSideBottom,DiagramItem::DiagramType::NoType);
-   });
-QHBoxLayout *line06 = new QHBoxLayout;
-line06->addWidget(panelLeftRightButton,Qt::AlignHCenter);
-line06->addWidget(panelBottomButton,Qt::AlignHCenter);
-
-line06->setContentsMargins(0,0, 0,0);
-line06->setSpacing(1);
-prldw->setLayout(line06);
 
 
 
@@ -480,68 +366,9 @@ exitButton=butonToolSlot(exitButton,"Kapat",":icons/close.png",QColor(255,0,0,0)
 connect(exitButton, &QToolButton::clicked, [=]() {
 emit kalemModeSignal(Scene::Mode::ExitMode,DiagramItem::DiagramType::NoType);
    });
-///QAction *quit = toolbar->addAction(QIcon(quitpix),"Quit Application");
-
-///connect(quit, &QAction::triggered, qApp, &QApplication::quit);
-
-/*QAction *pQAction = this->addAction("Click Me", [](bool) {
-    qDebug() << "Clicked.";
-});*/
- //QToolButton *pQToolBtn= dynamic_cast<QToolButton*>(this->widgetForAction(pQAction));
-/*
-this->addWidget(handButton);
-this->addWidget(copyButton);
-this->addWidget(penButton);
-this->addWidget(eraseButton);
-this->addWidget(clearButton);
-this->addWidget(blackButton);
-this->addWidget(redButton);
-this->addWidget(blueButton);
-this->addWidget(penColorButton);
-//this->addWidget(undoButton);
-//this->addWidget(redoButton);
-this->addWidget(urw);
-this->addWidget(sekilButton);
-this->addWidget(zeminButton);
-//this->addWidget(zoomPozitifButton);
-//this->addWidget(zoomNegatifButton);
-
-this->addWidget(znpw);
-this->addWidget(zoomSelectionButton);
-//this->addWidget(fitWindowButton);
-//this->addWidget(fitPageButton);
-/*this->addWidget(wpw);
-this->addWidget(pageOfNumber);
-this->addWidget(nbw);*/
-//this->addWidget(backButton);
-//this->addWidget(nextButton);
-/*this->addWidget(jumpPageButton);
-QWidget *spacer0 = new QWidget();
-spacer0->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-this->addWidget(spacer0);
-*/
-/*QWidget *spacer = new QWidget(this);
-spacer->setMinimumHeight(50);
-spacer->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::MinimumExpanding);
-this->addWidget(spacer);*/
-//this->addWidget(saveButton);
-/*this->addWidget(printButton);
-// Spacer
-    QWidget *spacer1 = new QWidget();
-    spacer1->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    this->addWidget(spacer1);
-//this->addWidget(panelLeftRightButton);
-//this->addWidget(panelDownButton);
-    this->addWidget(listButton);
-
-        this->addWidget(searchButton);
-
-this->addWidget(prldw);
-this->addWidget(exitButton);
-    */
 
 auto layout = new QGridLayout();
-layout->setContentsMargins(1,0, 0,0);
+layout->setContentsMargins(2,5, 2,5);
 layout->setSpacing(1);
 
 //layout->addWidget(moveLabel, 0, 0,1,2);
@@ -554,9 +381,10 @@ layout->addWidget(penButton, 10, 0,1,2);
 layout->addWidget(eraseButton, 20, 0,1,2);
 layout->addWidget(clearButton, 30, 0,1,2);
 
-layout->addWidget(blackButton, 40, 0,1,2);
+/*layout->addWidget(blackButton, 40, 0,1,2);
 layout->addWidget(redButton, 41, 0,1,2);
 layout->addWidget(blueButton, 42, 0,1,2);
+*/
 layout->addWidget(penColorButton, 43, 0,1,2);
 
 layout->addWidget(undoButton, 45, 0,1,1);
@@ -566,34 +394,14 @@ layout->addWidget(sekilButton, 50, 0,1,2);
 layout->addWidget(zeminButton, 60, 0,1,2);
 
 
-layout->addWidget(zoomPozitifButton, 70, 0,1,1);
-layout->addWidget(zoomNegatifButton, 70, 1,1,1);
-layout->addWidget(zoomSelectionButton, 71, 0,1,2);
-layout->addWidget(urw, 72, 0,1,2);
-layout->addWidget(pageOfNumber, 73, 0,1,2);
-//layout->addWidget(nbw, 74, 0,1,2);
-layout->addWidget(fitWindowButton, 75, 0,1,1);
-layout->addWidget(fitPageButton, 75, 1,1,1);
-
-
-//layout->addWidget(pageOfNumber, 79, 0,1,2);
-layout->addWidget(backButton, 80, 0,1,1);
-layout->addWidget(nextButton, 80, 1,1,1);
-layout->addWidget(jumpPageButton, 89, 0,1,2);
-//layout->addWidget(saveButton, 90, 0,1,2);
-layout->addWidget(prldw, 85, 0,1,2);
 
 layout->addWidget(printButton, 91, 0,1,2);
-layout->addWidget(listButton, 92, 0,1,2);
 
-    layout->addWidget(searchButton, 93, 0,1,2);
-
-layout->addWidget(prldw, 94, 0,1,2);
 layout->addWidget(exitButton, 95, 0,1,2);
 
 this->setLayout(layout);
 
-
+penToScene();
 }
 
 QPushButton *toolKalem::butonSlot(QPushButton *btn, QString text, QString icon, QColor color, int w, int h, int iw, int ih)
@@ -936,6 +744,7 @@ QWidget* toolKalem::colorWidget(QString colorType,QString yon,int w,int h,bool c
     layout->setVerticalSpacing(2);
   //  layout->setColumnMinimumWidth(0, 37);
     if(yon=="dikey"){
+    layout->addWidget(color8Button, 0,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color1Button, 1,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color2Button, 2,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color3Button, 3,1,1,1,Qt::AlignHCenter);
@@ -943,20 +752,20 @@ QWidget* toolKalem::colorWidget(QString colorType,QString yon,int w,int h,bool c
     layout->addWidget(color5Button, 5,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color6Button, 6,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color7Button, 7,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(color8Button, 8,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color9Button, 9,1,1,1,Qt::AlignHCenter);
   // layout->addWidget(color10Button, 10,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color11Button, 11,1,1,1,Qt::AlignHCenter);
     }
     if(yon=="yatay"){
-    layout->addWidget(color1Button, 1,0,1,1,Qt::AlignHCenter);
-    layout->addWidget(color2Button, 1,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(color3Button, 1,2,1,1,Qt::AlignHCenter);
-    layout->addWidget(color4Button, 1,3,1,1,Qt::AlignHCenter);
-    layout->addWidget(color5Button, 1,4,1,1,Qt::AlignHCenter);
-    layout->addWidget(color6Button, 1,5,1,1,Qt::AlignHCenter);
-    layout->addWidget(color7Button, 1,6,1,1,Qt::AlignHCenter);
-    layout->addWidget(color8Button, 1,7,1,1,Qt::AlignHCenter);
+     layout->addWidget(color8Button, 1,0,1,1,Qt::AlignHCenter);
+    layout->addWidget(color1Button, 1,1,1,1,Qt::AlignHCenter);
+    layout->addWidget(color2Button, 1,2,1,1,Qt::AlignHCenter);
+    layout->addWidget(color3Button, 1,3,1,1,Qt::AlignHCenter);
+    layout->addWidget(color4Button, 1,4,1,1,Qt::AlignHCenter);
+    layout->addWidget(color5Button, 1,5,1,1,Qt::AlignHCenter);
+    layout->addWidget(color6Button, 1,6,1,1,Qt::AlignHCenter);
+    layout->addWidget(color7Button, 1,7,1,1,Qt::AlignHCenter);
+
     layout->addWidget(color9Button, 1,8,1,1,Qt::AlignHCenter);
   // layout->addWidget(color10Button, 9,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color11Button, 1,10,1,1,Qt::AlignHCenter);
@@ -975,9 +784,9 @@ void toolKalem::setGridSize(int s)
     gridSize=s;
     gridSizePopLabel->setText("Satır ve Sütun Genişliği: "+QString::number(gridSize));
     emit kalemModeSignal(Scene::Mode::ZeminMode,pagePattern);
-    emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
-    buttonStateClear();
-    penButton->setChecked(true);
+    //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
+    //buttonStateClear();
+    //penButton->setChecked(true);
 }
 QWidget *toolKalem::cizgiBoyutMenu()
 {     int e=(en*0.8)/4*5.5;
@@ -985,7 +794,7 @@ QWidget *toolKalem::cizgiBoyutMenu()
       QWidget *menu = new QWidget(this);
       gridSizePopLabel= new QLabel();
       gridSizePopLabel->setText("Satır ve Sütun Genişliği: "+QString::number(gridSize));
-      QFont ff( "Arial", 8, QFont::Normal);
+      QFont ff( "Arial", 7, QFont::Normal);
       gridSizePopLabel->setFont(ff);
 
       QSlider *gSize= new QSlider(Qt::Horizontal,menu);
@@ -997,15 +806,15 @@ QWidget *toolKalem::cizgiBoyutMenu()
 
      // auto widget = new QWidget;
       auto layout = new QGridLayout(menu);
-     // layout->setContentsMargins(0, 0, 0, 3);
-     // layout->setColumnMinimumWidth(0, 37);
+        layout->setContentsMargins(0, 0, 0,0);
+          // layout->setColumnMinimumWidth(0, 37);
 
+          layout->addWidget(gSize,0,1,1,2);
 
-      layout->addWidget(gridSizePopLabel, 1, 1,1,2);
-      layout->addWidget(gSize,4,1,1,2);
-    //  layout->setColumnStretch(6, 255);
-    // add a widget action to the context menu
-      auto wa = new QWidgetAction(this);
+            layout->addWidget(gridSizePopLabel, 1, 1,1,2);
+              //  layout->setColumnStretch(6, 255);
+              // add a widget action to the context menu
+              auto wa = new QWidgetAction(this);
     //  wa->setIcon(QIcon(":/icon1"));
       wa->setDefaultWidget(menu);
       menu->addAction(wa);
@@ -1028,6 +837,227 @@ QWidget *toolKalem::cizgiBoyutMenu()
      // menu->setStyleSheet("QMenu { width: 290 px; height: 180 px; }");
      return menu;
 }
+QWidget *toolKalem::pageBottomMenu()
+{   int e=(en*0.8)/4*10;
+    int b=(boy*0.6)/4*8;
+    QWidget *menu = new QWidget(this);
+
+
+    QFont ff( "Arial", 8, QFont::Normal);
+
+    delPageButton=new QPushButton();
+    delPageButton=butonSlot(delPageButton,"",":icons/delpage.svg",QColor(255,0,0,0),e,b,e,b);
+
+    connect(delPageButton, &QPushButton::clicked, [=]() {
+        if (current_toolTahta->sceneIndex>0)
+        {
+
+           // current_toolTahta->sceneIndex--;
+            silSayfaButtonClick();
+            qDebug()<<"current_toolTahta->sceneIndex:"<<current_toolTahta->sceneIndex;
+        }
+        //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+
+    });
+
+    addPageButton=new QPushButton();
+    addPageButton=butonSlot(addPageButton,"",":icons/addpage.svg",QColor(255,0,0,0),e,b,e,b);
+
+    connect(addPageButton, &QPushButton::clicked, [=]() {
+        current_toolTahta->sceneIndex++;
+        current_toolTahta->current_sceneIndex=current_toolTahta->sceneIndex;
+        qDebug()<<"current_toolTahta->sceneIndex:"<<current_toolTahta->sceneIndex;
+
+       ekleSayfaButtonClick(-1,false,-1);///İlk Sayfa ekleniyor Açıldığında göünen sayfa
+      //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+       });
+    nextPageButton=new QPushButton();
+    nextPageButton=butonSlot(nextPageButton,"",":icons/nextpage.svg",QColor(255,0,0,0),e,b,e,b);
+
+    connect(nextPageButton, &QPushButton::clicked, [=]() {
+        if(current_toolTahta->sceneIndex>current_toolTahta->current_sceneIndex)
+        {
+            current_toolTahta->current_sceneIndex++;
+            qDebug()<<"current_toolTahta->current_sceneIndex:"<<current_toolTahta->current_sceneIndex;
+        }
+        //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+
+    });
+
+   backPageButton=new QPushButton();
+    backPageButton=butonSlot(backPageButton,"",":icons/backpage.svg",QColor(255,0,0,0),e,b,e,b);
+
+    connect(backPageButton, &QPushButton::clicked, [=]() {
+        if (current_toolTahta->sceneIndex>0&&current_toolTahta->current_sceneIndex>0)
+        {
+            current_toolTahta->current_sceneIndex--;
+            qDebug()<<"current_toolTahta->current_sceneIndex:"<<current_toolTahta->current_sceneIndex;
+         }
+
+      //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+       });
+
+    zoomnegatifPageButton=new QPushButton();
+    zoomnegatifPageButton=butonSlot(zoomnegatifPageButton,"",":icons/zoompagenegatif.svg",QColor(255,0,0,0),e,b,e,b);
+
+    connect(zoomnegatifPageButton, &QPushButton::clicked, [=]() {
+      //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+       });
+
+
+    zoompozitifPageButton=new QPushButton();
+    zoompozitifPageButton=butonSlot(zoompozitifPageButton,"",":icons/zoompagepozitif.svg",QColor(255,0,0,0),e,b,e,b);
+
+    connect(zoompozitifPageButton, &QPushButton::clicked, [=]() {
+      //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+       });
+
+
+    zoomfitPageButton=new QPushButton();
+    zoomfitPageButton=butonSlot(zoomfitPageButton,"",":icons/zoompagefit.svg",QColor(255,0,0,0),e,b,e,b);
+
+    connect(zoomfitPageButton, &QPushButton::clicked, [=]() {
+      //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+       });
+
+    leftsidePageButton=new QPushButton();
+    leftsidePageButton=butonSlot(leftsidePageButton,"",":icons/leftside.svg",QColor(255,0,0,0),e,b,e,b);
+
+    connect(leftsidePageButton, &QPushButton::clicked, [=]() {
+      //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+       });
+
+    rightsidePageButton=new QPushButton();
+    rightsidePageButton=butonSlot(rightsidePageButton,"",":icons/rightside.svg",QColor(255,0,0,0),e,b,e,b);
+
+    connect(rightsidePageButton, &QPushButton::clicked, [=]() {
+      //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+       });
+
+    pageListwg=new QWidget(menu);
+    pageListwg->setFixedSize(e*12,b);
+   /// pageListwg->setPalette(*palette);
+   // pageListwg->move(this->width()/4,this->height()-boy-boy);
+    //pageListwg->setAutoFillBackground(true);
+    pageListwg->setObjectName("pageListwg");
+
+    pageListwg->setStyleSheet("QWidget#pageListwg{"
+                          "border: 0.5px solid rgba(62, 140, 220,20);"
+                          "border-radius: 5px;"
+                          "background-color:rgba(255,255,255,0);"
+                          "}");
+
+    sceneListButtonLayout = new QHBoxLayout(pageListwg);
+    sceneListButtonLayout->setContentsMargins(0, 0, 0, 0);
+
+    auto layout = new QGridLayout(menu);
+    layout->setContentsMargins(0, 0, 0, 1);
+    //layout->setMargin(0);
+   // layout->setColumnMinimumWidth(0, 37);
+
+
+    layout->addWidget(leftsidePageButton, 0, 1,1,1,Qt::AlignHCenter);
+    layout->addWidget(backPageButton, 0, 2,1,1,Qt::AlignHCenter);
+    layout->addWidget(addPageButton, 0, 3,1,1,Qt::AlignHCenter);
+    layout->addWidget(pageListwg, 0, 4,1,1,Qt::AlignHCenter);
+
+    layout->addWidget(delPageButton, 0, 6,1,1,Qt::AlignHCenter);
+    layout->addWidget(nextPageButton, 0, 7,1,1,Qt::AlignHCenter);
+    layout->addWidget(zoomnegatifPageButton, 0, 8,1,1,Qt::AlignHCenter);
+    layout->addWidget(zoompozitifPageButton, 0, 9,1,1,Qt::AlignHCenter);
+    layout->addWidget(zoomfitPageButton, 0, 10,1,1,Qt::AlignHCenter);
+    layout->addWidget(rightsidePageButton, 0, 11,1,1,Qt::AlignHCenter);
+
+       //menu->setFixedSize(QSize(e*20,b));
+   // menu->setStyleSheet("QMenu { width: 290 px; height: 180 px; }");
+
+   return menu;
+}
+
+QWidget *toolKalem::eraseTopMenu()
+{   int e=(en*0.8)/4*9;
+    int b=(boy*0.6)/4*5;
+    QWidget *menu = new QWidget(this);
+    eraseSizePopLabel= new QLabel();
+
+    eraseSizePopLabel->setText("Silgi Boyutu: "+QString::number(penSize));
+  //  eraseSizePopLabel->resize(e,b);
+    QFont ff( "Arial", 8, QFont::Normal);
+    eraseSizePopLabel->setFont(ff);
+
+    QSlider *eraseSize= new QSlider(Qt::Horizontal,menu);
+    //eraseSize->setMinimum(2);
+    //eraseSize->setMaximum(1);
+    eraseSize->setRange(1,15);
+    eraseSize->setSliderPosition(4);
+    connect(eraseSize,SIGNAL(valueChanged(int)),this,SLOT(setEraseSize(int)));
+
+    QPushButton *silMenuButton=new QPushButton();
+  //  silMenuButton->setFixedSize(e, b);
+    //silMenuButton->setIconSize(QSize(e,b));
+   // silMenuButton=butonToolSlot(silMenuButton,"Silgi",":icons/erase.png",QColor(255,0,0,0),en*1.5,boy);
+    silMenuButton=butonSlot(silMenuButton,"",":icons/erase.png",QColor(255,0,0,0),e,b,e,b);
+
+    connect(silMenuButton, &QPushButton::clicked, [=]() {
+        //qDebug()<<b;
+        //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+       });
+
+    QPushButton *temizleMenuButton=new QPushButton();
+   // temizleMenuButton->setFixedSize(e, b);
+    //temizleMenuButton->setIconSize(QSize(e,b));
+     temizleMenuButton=butonSlot(temizleMenuButton,"",":icons/clear.png",QColor(255,0,0,0),e,b,e,b);
+
+    connect(temizleMenuButton, &QPushButton::clicked, [=]() {
+      //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+       });
+
+    auto layout = new QGridLayout(menu);
+    layout->setContentsMargins(0, 0, 0, 1);
+    //layout->setMargin(0);
+   // layout->setColumnMinimumWidth(0, 37);
+
+
+    layout->addWidget(eraseSizePopLabel, 0,0,2,1);
+    layout->addWidget(silMenuButton, 0, 1,1,1,Qt::AlignHCenter);
+    layout->addWidget(temizleMenuButton, 0, 2,1,1,Qt::AlignHCenter);
+    layout->addWidget(new QLabel("<font size=1>Sil</font>"),1,1,1,1,Qt::AlignHCenter);
+    layout->addWidget(new QLabel("<font size=1>Tahta Temizle</font>"),1,2,1,1,Qt::AlignHCenter);
+
+    layout->addWidget(eraseSize,0,3,2,1);
+  //  layout->setColumnStretch(6, 255);
+    connect(silMenuButton, &QPushButton::clicked, [=]() {
+        //scene->setPopMenuStatus(false);
+      //  menu->close();
+        //kalemButtonClick();
+    });
+    connect(temizleMenuButton, &QPushButton::clicked, [=]() {
+       // scene->setPopMenuStatus(false);
+        //menu->close();
+        //kalemButtonClick();
+    });
+    // add a widget action to the context menu
+
+    eraseSize->setStyleSheet(".QSlider::groove:Horizontal {"
+                                   "background: rgba(0, 0, 50, 200);"
+                                   "width:"+QString::number(e*3)+"px;"
+                                    "height:"+QString::number(b/2)+"px;"
+                                   "}"
+
+                                   ".QSlider::handle:Horizontal {"
+                                   "background: rgba(242, 242, 242, 95);"
+                                   "border: 2px solid rgb(0,0,0);"
+                                   "background: rgba(0, 0, 50, 255);"
+                                   "width: "+QString::number(e/2)+"px;"
+                                   "height: "+QString::number(b)+"px;"
+                                    "margin:-"+QString::number(e/8*3)+"px   0   -"+QString::number(b/8*3)+"px   0;"
+                                   "}");
+
+    eraseSize->setFixedSize(QSize(e*3,b));
+   menu->setFixedSize(QSize(e*10,b*2));
+   // menu->setStyleSheet("QMenu { width: 290 px; height: 180 px; }");
+   return menu;
+}
 
 QMenu *toolKalem::eraseMenu()
 {   int e=(en*0.8)/4*9;
@@ -1046,10 +1076,11 @@ QMenu *toolKalem::eraseMenu()
     eraseSize->setRange(1,15);
     eraseSize->setSliderPosition(4);
     ///connect(eraseSize,SIGNAL(valueChanged(int)),this,SLOT(setEraseSize(int)));
-    QPushButton *silMenuButton=new QPushButton();
+    QToolButton *silMenuButton=new QToolButton();
     silMenuButton->setFixedSize(e, b);
     silMenuButton->setIconSize(QSize(e,b));
-    QPushButton *temizleMenuButton=new QPushButton();
+
+    QToolButton *temizleMenuButton=new QToolButton();
     temizleMenuButton->setFixedSize(e, b);
     temizleMenuButton->setIconSize(QSize(e,b));
 
@@ -1097,7 +1128,7 @@ QMenu *toolKalem::eraseMenu()
                                     "margin:-"+QString::number(e/8*3)+"px   0   -"+QString::number(b/8*3)+"px   0;"
                                    "}");
 
-    eraseSize->setFixedSize(QSize(e*3,b));
+    eraseSize->setFixedSize(QSize(e*2.5,b));
    // menu->setStyleSheet("QMenu { width: 290 px; height: 180 px; }");
    return menu;
 }
@@ -1209,7 +1240,7 @@ QMenu* toolKalem::sekilMenu()
     kup->setFixedSize(e, b);
     kup->setIconSize(QSize(e,b));
     //penStyleSolidLine->setFlat(true);
-    kup->setIcon(QIcon(":icons/icons/kup.png"));
+    kup->setIcon(QIcon(":/icons/kup.png"));
     connect(kup, &QPushButton::clicked, [=]() {
         emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Kup);
          menu->close();
@@ -1238,7 +1269,7 @@ QMenu* toolKalem::sekilMenu()
     });
 
     QPushButton *kure = new QPushButton;
-    kure->setIcon(QIcon(":icons/icons/kure.png"));
+    kure->setIcon(QIcon(":/icons/kure.png"));
     kure->setFixedSize(e, b);
     kure->setIconSize(QSize(e,b));
     // penStyleDotLine->setFlat(true);
@@ -1559,17 +1590,449 @@ QMenu* toolKalem::sekilMenu()
       return menu;
 }
 
-QMenu *toolKalem::penMenu()
+QWidget* toolKalem::sekilTopMenu()
 {
     int ken=300;
+    //ken=300;
+    int e=(en*0.8)/4*9;
+    int b=(boy*0.6)/4*5;
+    e=e/2;
+    QWidget *menu= new QWidget();
+      menu->installEventFilter(this);
+      /*************************************************************************/
+    DiagramItem *ditem=new DiagramItem();
+
+    QPushButton *penStyleSolidLine = new QPushButton;
+    penStyleSolidLine->setFixedSize(e, b);
+    penStyleSolidLine->setIconSize(QSize(e,b));
+   // penStyleSolidLine->setFlat(true);
+    penStyleSolidLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::SolidLine,ken,ken));
+    connect(penStyleSolidLine, &QPushButton::clicked, [=]() {
+     emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::SolidLine);
+
+    });
+
+    QPushButton *penStyleDashLine = new QPushButton;
+    penStyleDashLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::DashLine,ken,ken));
+    penStyleDashLine->setFixedSize(e, b);
+    penStyleDashLine->setIconSize(QSize(e,b));
+   // penStyleDashLine->setFlat(true);
+    connect(penStyleDashLine, &QPushButton::clicked, [=]() {
+  emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::DashLine);
+
+    });
+
+    QPushButton *penStyleDotLine = new QPushButton;
+    penStyleDotLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::DotLine,ken,ken));
+    penStyleDotLine->setFixedSize(e, b);
+    penStyleDotLine->setIconSize(QSize(e,b));
+   // penStyleDotLine->setFlat(true);
+    connect(penStyleDotLine, &QPushButton::clicked, [=]() {
+         emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::DotLine);
+
+    });
+/********************************************************************/
+
+
+    /***********************pergel cetvel gönye iletki***************/
+
+
+    QPushButton *pergel = new QPushButton;
+    pergel->setFixedSize(e, b);
+    pergel->setIconSize(QSize(e,b));
+    //penStyleSolidLine->setFlat(true);
+    pergel->setIcon(QIcon(":icons/pergel.png"));
+    connect(pergel, &QPushButton::clicked, [=]() {
+          emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Pergel);
+
+      //  menu->close();
+    });
+
+    QPushButton *cetvel = new QPushButton;
+    cetvel->setIcon(QIcon(":icons/cetvel.png"));
+    cetvel->setFixedSize(e, b);
+    cetvel->setIconSize(QSize(e,b));
+    //penStyleDashLine->setFlat(true);
+    connect(cetvel, &QPushButton::clicked, [=]() {
+         emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Cetvel);
+
+     //   menu->close();
+
+    });
+
+    QPushButton *gonye = new QPushButton;
+    gonye->setIcon(QIcon(":icons/gonye.png"));
+    gonye->setFixedSize(e, b);
+    gonye->setIconSize(QSize(e,b));
+    // penStyleDotLine->setFlat(true);
+    connect(gonye, &QPushButton::clicked, [=]() {
+         emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Gonye);
+
+    //    menu->close();
+
+    });
+
+    QPushButton *iletki = new QPushButton;
+    iletki->setIcon(QIcon(":icons/iletki.png"));
+    iletki->setFixedSize(e, b);
+    iletki->setIconSize(QSize(e,b));
+    // penStyleDotLine->setFlat(true);
+    connect(iletki, &QPushButton::clicked, [=]() {
+          emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Iletki);
+
+      //  menu->close();
+
+    });
+
+
+     /***********************küp silindir küre pramid***************/
+
+
+    QPushButton *kup = new QPushButton;
+    kup->setFixedSize(e, b);
+    kup->setIconSize(QSize(e,b));
+    //penStyleSolidLine->setFlat(true);
+    kup->setIcon(QIcon(":/icons/kup.png"));
+    connect(kup, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Kup);
+    //     menu->close();
+    });
+
+    QPushButton *silindir = new QPushButton;
+    silindir->setIcon(QIcon(":icons/silindir.png"));
+    silindir->setFixedSize(e, b);
+    silindir->setIconSize(QSize(e,b));
+    //penStyleDashLine->setFlat(true);
+    connect(silindir, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Silindir);
+    //    menu->close();
+
+    });
+
+    QPushButton *pramit = new QPushButton;
+    pramit->setIcon(QIcon(":icons/pramit.png"));
+    pramit->setFixedSize(e, b);
+    pramit->setIconSize(QSize(e,b));
+    // penStyleDotLine->setFlat(true);
+    connect(pramit, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Pramit);
+     //   menu->close();
+
+    });
+
+    QPushButton *kure = new QPushButton;
+    kure->setIcon(QIcon(":/icons/kure.png"));
+    kure->setFixedSize(e, b);
+    kure->setIconSize(QSize(e,b));
+    // penStyleDotLine->setFlat(true);
+    connect(kure, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Kure);
+    // menu->close();
+
+    });
+
+    /***********************************************************/
+
+    QPushButton *cizgi= new QPushButton;
+    cizgi->setFixedSize(e, b);
+    cizgi->setIconSize(QSize(e,b));
+   // cizgi->setFlat(true);
+    cizgi->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Cizgi,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(cizgi, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Cizgi);
+     //   menu->close();
+    });
+
+    QPushButton *ok= new QPushButton;
+    ok->setFixedSize(e, b);
+    ok->setIconSize(QSize(e,b));
+    //ok->setFlat(true);
+    ok->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Ok,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(ok, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Ok);
+
+   // menu->close();
+    });
+
+    QPushButton *ciftok= new QPushButton;
+    ciftok->setFixedSize(e, b);
+    ciftok->setIconSize(QSize(e,b));
+    //ciftok->setFlat(true);
+    ciftok->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::CiftOk,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(ciftok, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::CiftOk);
+     //   menu->close();
+    });
+
+    QPushButton *ucgen= new QPushButton;
+    ucgen->setFixedSize(e, b);
+    ucgen->setIconSize(QSize(e,b));
+   // ucgen->setFlat(true);
+    ucgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Ucgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(ucgen, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Ucgen);
+     //    menu->close();
+    });
+
+    QPushButton *dortgen= new QPushButton;
+    dortgen->setFixedSize(e, b);
+    dortgen->setIconSize(QSize(e,b));
+    //dortgen->setFlat(true);
+    dortgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Dortgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(dortgen, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Dortgen);
+    //    menu->close();
+    });
+
+    QPushButton *cember= new QPushButton;
+    cember->setFixedSize(e, b);
+    cember->setIconSize(QSize(e,b));
+   // cember->setFlat(true);
+    cember->setIcon(imageEllipse(ditem->sekilStore(DiagramItem::DiagramType::Cember,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(cember, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Cember);
+     //  menu->close();
+    });
+
+    QPushButton *baklava= new QPushButton;
+    baklava->setFixedSize(e, b);
+    baklava->setIconSize(QSize(e,b));
+    //baklava->setFlat(true);
+    baklava->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Baklava,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(baklava, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Baklava);
+    //     menu->close();
+    });
+
+    QPushButton *yamuk= new QPushButton;
+    yamuk->setFixedSize(e, b);
+    yamuk->setIconSize(QSize(e,b));
+    //yamuk->setFlat(true);
+    yamuk->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Yamuk,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(yamuk, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Yamuk);
+     //     menu->close();
+    });
+
+    QPushButton *besgen= new QPushButton;
+    besgen->setFixedSize(e, b);
+    besgen->setIconSize(QSize(e,b));
+    //esgen->setFlat(true);
+    besgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Besgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(besgen, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Besgen);
+    //    menu->close();
+     });
+
+    QPushButton *altigen= new QPushButton;
+    altigen->setFixedSize(e, b);
+    altigen->setIconSize(QSize(e,b));
+    //altigen->setFlat(true);
+    altigen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Altigen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(altigen, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Altigen);
+
+    //  menu->close();
+    });
+
+    QPushButton *sekizgen= new QPushButton;
+    sekizgen->setFixedSize(e, b);
+    sekizgen->setIconSize(QSize(e,b));
+    //sekizgen->setFlat(true);
+    sekizgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Sekizgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(sekizgen, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Sekizgen);
+   //       menu->close();
+    });
+
+    QPushButton *dikucgen= new QPushButton;
+    dikucgen->setFixedSize(e, b);
+    dikucgen->setIconSize(QSize(e,b));
+    //dikucgen->setFlat(true);
+    dikucgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::DikUcgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(dikucgen, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::DikUcgen);
+   //  menu->close();
+    });
+
+    QPushButton *guzelyazi= new QPushButton;
+    guzelyazi->setFixedSize(e, b);
+    guzelyazi->setIconSize(QSize(e,b));
+    //guzelyazi->setFlat(true);
+    guzelyazi->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::GuzelYazi,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(guzelyazi, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::GuzelYazi);
+    // menu->close();
+    });
+
+    QPushButton *muzik= new QPushButton;
+    muzik->setFixedSize(e, b);
+    muzik->setIconSize(QSize(e,b));
+    //muzik->setFlat(true);
+    muzik->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Muzik,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(muzik, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Muzik);
+   // menu->close();
+    });
+
+    QPushButton *cizgilisayfa= new QPushButton;
+    cizgilisayfa->setFixedSize(e, b);
+    cizgilisayfa->setIconSize(QSize(e,b));
+   // cizgilisayfa->setFlat(true);
+    cizgilisayfa->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::CizgiliSayfa,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
+    connect(cizgilisayfa, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::CizgiliSayfa);
+        // menu->close();
+    });
+    QPushButton *resimEkle= new QPushButton;
+    resimEkle->setFixedSize(e*2, b*1.5);
+    resimEkle->setIconSize(QSize(e*2,b*1.5));
+    resimEkle->setFlat(true);
+    resimEkle->setIcon(QIcon(":icons/addimage.png"));
+    connect(resimEkle, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim);
+
+       //  menu->close();
+    });
+
+    QPushButton *sekilKalemRenkButton=new QPushButton();
+    sekilKalemRenkButton->setFixedSize(e,b);
+    sekilKalemRenkButton->setIconSize(QSize(e,b));
+    QPushButton *sekilZeminRenkButton=new QPushButton();
+
+    sekilZeminRenkButton->setFixedSize(e,b);
+    sekilZeminRenkButton->setIconSize(QSize(e,b));
+    connect(sekilZeminRenkButton, &QPushButton::clicked, [=]() {
+        colorMenu("sekilZeminColor","dikey",en,boy,true)->exec(mapToGlobal(mapToParent(menu->pos())));
+
+         //menu->close();
+    });
+
+    auto layout = new QGridLayout(menu);
+   layout->setContentsMargins(5,5,5,5);
+    //layout->setColumnMinimumWidth(0, 37);
+
+     QFont ff( "Arial", 7, QFont::Normal);
+    QGridLayout *arac = new QGridLayout;
+    QLabel *pergell= new QLabel("Pergel");      pergell->setFont(ff);
+    QLabel *gonyel=  new QLabel("Gönye");        gonyel->setFont(ff);
+    QLabel *cetvell= new QLabel("Cetvel");    cetvell->setFont(ff);;
+    QLabel *iletkil= new QLabel("İletki");      iletkil->setFont(ff);
+    arac->addWidget(pergel,0,0,1,1,Qt::AlignHCenter);
+    arac->addWidget(cetvel,0,1,1,1,Qt::AlignHCenter);
+    arac->addWidget(gonye,0,2,1,1,Qt::AlignHCenter);
+    arac->addWidget(iletki,0,3,1,1,Qt::AlignHCenter);
+    arac->addWidget(pergell,1,0,1,1,Qt::AlignHCenter);
+    arac->addWidget(gonyel,1,1,1,1,Qt::AlignHCenter);
+    arac->addWidget(cetvell,1,2,1,1,Qt::AlignHCenter);
+    arac->addWidget(iletkil,1,3,1,1,Qt::AlignHCenter);
+    layout->addLayout(arac,0, 0,1,1,Qt::AlignHCenter);
+
+    QGridLayout *layout2 = new QGridLayout;
+    QHBoxLayout *b3 = new QHBoxLayout;
+    QLabel *kupl= new QLabel("Küp");      kupl->setFont(ff);
+    QLabel *silindirl=  new QLabel("Silindir");        silindirl->setFont(ff);
+    QLabel *pramitl= new QLabel("Pramit");    pramitl->setFont(ff);;
+    QLabel *kurel= new QLabel("Küre");      kurel->setFont(ff);
+
+    layout2->addWidget(kup,0,0,1,1,Qt::AlignHCenter);
+    layout2->addWidget(silindir,0,1,1,1,Qt::AlignHCenter);
+    layout2->addWidget(pramit,0,2,1,1,Qt::AlignHCenter);
+    layout2->addWidget(kure,0,3,1,1,Qt::AlignHCenter);
+
+    layout2->addWidget(kupl,1,0,1,1,Qt::AlignHCenter);
+    layout2->addWidget(silindirl,1,1,1,1,Qt::AlignHCenter);
+    layout2->addWidget(pramitl,1,2,1,1,Qt::AlignHCenter);
+    layout2->addWidget(kurel,1,3,1,1,Qt::AlignHCenter);
+    layout->addLayout(layout2,0, 1,1,1,Qt::AlignHCenter);
+
+
+   QGridLayout *line0 = new QGridLayout;
+   QLabel *lb00= new QLabel("Çizgi");
+   QLabel *lb01=  new QLabel("Ok");
+   QLabel *lb02= new QLabel("Çift Ok");
+   QLabel *lb03= new QLabel("Üçgen");
+   lb00->setFont(ff);lb01->setFont(ff);lb02->setFont(ff);lb03->setFont(ff);
+   line0->addWidget(cizgi,0,0,1,1,Qt::AlignHCenter);
+   line0->addWidget(ok,0,1,1,1,Qt::AlignHCenter);
+   line0->addWidget(ciftok,0,2,1,1,Qt::AlignHCenter);
+   line0->addWidget(ucgen,0,3,1,1,Qt::AlignHCenter);
+
+   line0->addWidget(lb00,1,0,1,1,Qt::AlignHCenter);
+   line0->addWidget(lb01,1,1,1,1,Qt::AlignHCenter);
+   line0->addWidget(lb02,1,2,1,1,Qt::AlignHCenter);
+   line0->addWidget(lb03,1,3,1,1,Qt::AlignHCenter);
+   //line0->setSpacing(en/3*2);
+   layout->addLayout(line0, 0, 2,1,1,Qt::AlignHCenter);
+
+
+   /***************************************************************/
+   QGridLayout *line01 = new QGridLayout;
+   QLabel *lb10= new QLabel("Dörtgen");
+   QLabel *lb11=  new QLabel("Çember");
+   QLabel *lb12= new QLabel("Baklava");
+   QLabel *lb13= new QLabel("Yamuk");
+  // QFont ff( "Arial", 5, QFont::Normal);
+   lb10->setFont(ff);lb11->setFont(ff);lb12->setFont(ff);lb13->setFont(ff);
+   line01->addWidget(dortgen,0,0,1,1,Qt::AlignHCenter);
+   line01->addWidget(cember,0,1,1,1,Qt::AlignHCenter);
+   line01->addWidget(baklava,0,2,1,1,Qt::AlignHCenter);
+   line01->addWidget(yamuk,0,3,1,1,Qt::AlignHCenter);
+   line01->addWidget(lb10,1,0,1,1,Qt::AlignHCenter);
+   line01->addWidget(lb11,1,1,1,1,Qt::AlignHCenter);
+   line01->addWidget(lb12,1,2,1,1,Qt::AlignHCenter);
+   line01->addWidget(lb13,1,3,1,1,Qt::AlignHCenter);
+   layout->addLayout(line01, 0, 3,1,1,Qt::AlignHCenter);
+
+   /**************************************************************/
+   QGridLayout *line02 = new QGridLayout;
+   QLabel *lb20= new QLabel("Beşgen");
+   QLabel *lb21=  new QLabel("Altıgen");
+   QLabel *lb22= new QLabel("Sekizgen");
+   QLabel *lb23= new QLabel("D.Üçgen");
+   // QFont ff( "Arial", 5, QFont::Normal);
+   lb20->setFont(ff);lb21->setFont(ff);lb22->setFont(ff);lb23->setFont(ff);
+   line02->addWidget(besgen,0,0,1,1,Qt::AlignHCenter);
+   line02->addWidget(altigen,0,1,1,1,Qt::AlignHCenter);
+   line02->addWidget(sekizgen,0,2,1,1,Qt::AlignHCenter);
+   line02->addWidget(dikucgen,0,3,1,1,Qt::AlignHCenter);
+
+   line02->addWidget(lb20,1,0,1,1,Qt::AlignHCenter);
+   line02->addWidget(lb21,1,1,1,1,Qt::AlignHCenter);
+   line02->addWidget(lb22,1,2,1,1,Qt::AlignHCenter);
+   line02->addWidget(lb23,1,3,1,1,Qt::AlignHCenter);
+
+  layout->addLayout(line02, 0, 4,1,1,Qt::AlignHCenter);
+
+  layout->addWidget(resimEkle, 0, 5,1,1,Qt::AlignHCenter);
+  //colorWidget
+  QGridLayout *renkloyout = new QGridLayout;
+
+  QWidget *cw=colorWidget("sekilZeminColor","yatay",en*0.8,boy/2,false);
+  cw->setFixedSize(en*9,boy*0.6);
+  cw->setVisible(true);
+  renkloyout->addWidget(cw, 0,0,1,1,Qt::AlignHCenter);
+  QLabel *renk= new QLabel("Şekil Dolgu Rengi");      renk->setFont(ff);
+  renkloyout->addWidget(renk, 1,0,1,1,Qt::AlignHCenter);
+  layout->addLayout(renkloyout, 0,6,1,1,Qt::AlignHCenter);
+
+  return menu;
+}
+
+QWidget *toolKalem::penTopMenu()
+{
+ //  QSize *screenSize = qApp->screens()[0]->size();
+    int ken=300;
+    //en=screenSize->width();
+    //boy=screenSize->height();
     int e=(en*0.8)/4*9;
     int b=(boy*0.6)/4*5;
 
-    QMenu *menu = new QMenu(this);
-      menu->installEventFilter(this);
+    QWidget *menu = new QWidget(this);
     kalemSizePopLabel= new QLabel();
+        kalemSizePopLabel->setFixedSize(e*3, b);
     kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
-    QFont ff( "Arial", 8, QFont::Normal);
+    QFont ff( "Arial", 7, QFont::Normal);
     kalemSizePopLabel->setFont(ff);
 
    /* QSlider *penSize= new QSlider(Qt::Horizontal,menu);
@@ -1580,15 +2043,18 @@ QMenu *toolKalem::penMenu()
 */
     DiagramItem *ditem=new DiagramItem();
 
-    QPushButton *penStyleSolidLine = new QPushButton;
+    QPushButton *penStyleSolidLine = new QPushButton();
     penStyleSolidLine->setFixedSize(e, b);
     penStyleSolidLine->setIconSize(QSize(e,b));
     //penStyleSolidLine->setFlat(true);*/
     penStyleSolidLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::SolidLine,ken,ken));
     connect(penStyleSolidLine, &QPushButton::clicked, [=]() {
        // setPenStyle(Qt::SolidLine);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SolidLine);
-        menu->close();
+       // emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SolidLine);
+        current_toolTahta->scene->setSekilPenStyle(Qt::SolidLine);
+        current_toolTahta->scene->setPenStyle(Qt::SolidLine);
+
+        //  menu->close();
     });
 
     QPushButton *penStyleDashLine = new QPushButton;
@@ -1598,8 +2064,11 @@ QMenu *toolKalem::penMenu()
     penStyleDashLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::DashLine,ken,ken));
     connect(penStyleDashLine, &QPushButton::clicked, [=]() {
        // setPenStyle(Qt::DashLine);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DashLine);
-        menu->close();
+       // emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DashLine);
+        //menu->close();
+        current_toolTahta->scene->setPenStyle(Qt::DashLine);
+         current_toolTahta->scene->setSekilPenStyle(Qt::DashLine);
+
     });
 
     QPushButton *penStyleDotLine = new QPushButton;
@@ -1609,58 +2078,45 @@ QMenu *toolKalem::penMenu()
     penStyleDotLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::DotLine,ken,ken));
     connect(penStyleDotLine, &QPushButton::clicked, [=]() {
         //setPenStyle(Qt::DotLine);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DotLine);
-        menu->close();
+        //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DotLine);
+        //menu->close();
+        current_toolTahta->scene->setPenStyle(Qt::DotLine);
+       current_toolTahta-> scene->setSekilPenStyle(Qt::DotLine);
     });
 
     QPushButton *kalemSekilTanimlama= new QPushButton;
      kalemSekilTanimlama=butonSlot(kalemSekilTanimlama,"",":icons/smartpen.png",QColor(255,0,0,0),e,b,e,b);
     connect(kalemSekilTanimlama, &QPushButton::clicked, [=]()
     {
-          emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SmartPen);
-            menu->close();
-       /* scene->setPopMenuStatus(false);
-        menu->close();
-        kalemButtonClick();
-        scene->setSekilTanimlamaStatus(true);
-        buttonColorClear();
-        palette->setColor(QPalette::Button, QColor(212,0,0,255));
-       // kalemSekilTanimlama->setPalette(*palette);
-        //kalemSekilTanimlama->setAutoFillBackground(true);
-        kalemButton->setPalette(*palette);
-        kalemButton->setAutoFillBackground(true);
-        kalemButton->setIcon(QIcon(":icons/smartpen.png"));
-//kalemButton->setIconSize(QSize(20,20));
-         currentScreenModeSlot();
-         */
+          //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SmartPen);
+           // menu->close();
+        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
+        current_toolTahta->scene->setSekilTanimlamaStatus(true);
+
     });
 
 
     QPushButton *kalemMenuButton=new QPushButton();
     /*kalemMenuButton->setFixedSize(e, b);
     kalemMenuButton->setIconSize(QSize(e,b));*/
-    kalemMenuButton=butonSlot(kalemMenuButton,"",":icons/pen.png",QColor(255,0,0,0),e,b,e,b);
+    kalemMenuButton=butonSlot(kalemMenuButton,"",":icons/pen.svg",QColor(255,0,0,0),e,b,e,b);
     connect(kalemMenuButton, &QPushButton::clicked, [=]() {
+        // menu->close();  qDebug()<<b;
+        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
+        current_toolTahta->scene->setSekilTanimlamaStatus(false);
         emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NormalPen);
-        menu->close();
-
-        /*scene->setPopMenuStatus(false);
-        menu->close();
-        scene->setSekilTanimlamaStatus(false);
-*/
-    });
+        qDebug()<<"pen normal";
+       // current_toolTahta->gv->hide();
+       });
 
     QPushButton *fosforluKalemButton=new QPushButton();
     fosforluKalemButton=butonSlot(fosforluKalemButton,"",":icons/fosforlupen.png",QColor(255,0,0,0),e,b,e,b);
     connect(fosforluKalemButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::FosforluPen);
-        menu->close();
-
-        /*   scene->setPopMenuStatus(false);
-           menu->close();
-           //kalemButtonClick();
-           scene->setSekilTanimlamaStatus(false);
-   */
+        //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::FosforluPen);
+       // menu->close();
+        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPenFosfor;
+        current_toolTahta->scene->setSekilTanimlamaStatus(false);
+        current_toolTahta->scene->setPenAlpha(50);
        });
 
 
@@ -1670,132 +2126,671 @@ QMenu *toolKalem::penMenu()
       nokta2=butonSlot(nokta2,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*0.2,b*0.2);
     connect(nokta2, &QPushButton::clicked, [=]() {
         //setPenSize(1);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize2);
+        //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize2);
+        penSize=2; current_toolTahta->scene->setPenSize(penSize);
         kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
-        menu->close();
+
+        //menu->close();
     });
 
     QPushButton *nokta4 = new QPushButton;
      nokta4=butonSlot(nokta4,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*0.4,b*0.4);
     connect(nokta4, &QPushButton::clicked, [=]() {
        // setPenSize(2);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize4);
+        //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize4);
+        penSize=4; current_toolTahta->scene->setPenSize(penSize);
         kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
-        menu->close();
+       // menu->close();
     });
 
     QPushButton *nokta6 = new QPushButton;
      nokta6=butonSlot(nokta6,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*0.6,b*0.6);
     connect(nokta6, &QPushButton::clicked, [=]() {
         //setPenSize(3);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize6);
+        //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize6);
+        penSize=6; current_toolTahta->scene->setPenSize(penSize);
         kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
-        menu->close();
-    });
+         });
 
     QPushButton *nokta8 = new QPushButton;
       nokta8=butonSlot(nokta8,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*0.8,b*0.8);
     connect(nokta8, &QPushButton::clicked, [=]() {
         //setPenSize(4);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize8);
+        //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize8);
+        penSize=8; current_toolTahta->scene->setPenSize(penSize);
         kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
-        menu->close();
+       // menu->close();
     });
 
     QPushButton *nokta10 = new QPushButton;
      nokta10=butonSlot(nokta10,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*1,b);
     connect(nokta10, &QPushButton::clicked, [=]() {
       //  setPenSize(5);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize10);
+        //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize10);
+        penSize=10; current_toolTahta->scene->setPenSize(penSize);
         kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
-        menu->close();
+
+        //menu->close();
    });
 
     QPushButton *nokta12 = new QPushButton;
       nokta12=butonSlot(nokta12,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*1.2,b*1.2);
     connect(nokta12, &QPushButton::clicked, [=]() {
         //setPenSize(6);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize12);
+       // emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize12);
+        penSize=12; current_toolTahta->scene->setPenSize(penSize);
         kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
-        menu->close();
+
+       // menu->close();
     });
 
     QPushButton *nokta14 = new QPushButton;
      nokta14=butonSlot(nokta14,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*1.4,b*1.4);
     connect(nokta14, &QPushButton::clicked, [=]() {
        // setPenSize(7);
-     emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize14);
-     kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
-    menu->close();
+     //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize14);
+        penSize=14; current_toolTahta->scene->setPenSize(penSize);
+        kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
+
+   // menu->close();
     });
 
-    auto widget = new QWidget;
-    auto layout = new QGridLayout(widget);
-   // layout->setContentsMargins(0, 0, 0, 3);
+
+    auto layout = new QGridLayout(menu);
+  layout->setContentsMargins(5, 5, 5,5);
    // layout->setColumnMinimumWidth(0, 37);
 
 
-    layout->addWidget(kalemSizePopLabel, 0, 1,1,3);
+    layout->addWidget(kalemSizePopLabel, 0,0,2,1);
  //   layout->addWidget(geriAlButton,1,2,1,1);
 //    layout->addWidget(new QLabel("<font size=1>Geri Al</font>"),2,2,1,1,Qt::AlignHCenter);
-
-    layout->addWidget(kalemMenuButton,3,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(fosforluKalemButton,3,2,1,1,Qt::AlignHCenter);
-    layout->addWidget(kalemSekilTanimlama,3,3,1,2,Qt::AlignHCenter);
-    layout->addWidget(new QLabel("<font size=1>Kalem</font>"),4,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(new QLabel("<font size=1>Fosforlu Kalem</font>"),4,2,1,1,Qt::AlignHCenter);
-    layout->addWidget(new QLabel("<font size=1>Akıllı Kalem</font>"),4,3,1,1,Qt::AlignHCenter);
+    QLabel *kl=new QLabel("Kalem");
+    QLabel *fkl=new QLabel("Fosforlu Kalem");
+    QLabel *akl=new QLabel("Akıllı Kalem");
+    kl->setFont(ff);    fkl->setFont(ff);    akl->setFont(ff);
+    layout->addWidget(kalemMenuButton,0,1,1,1,Qt::AlignHCenter);
+    layout->addWidget(fosforluKalemButton,0,2,1,1,Qt::AlignHCenter);
+    layout->addWidget(kalemSekilTanimlama,0,3,1,1,Qt::AlignHCenter);
+    layout->addWidget(kl,1,1,1,1,Qt::AlignHCenter);
+    layout->addWidget(fkl,1,2,1,1,Qt::AlignHCenter);
+    layout->addWidget(akl,1,3,1,1,Qt::AlignHCenter);
 
    // layout->addWidget(penSize,5,1,1,3,Qt::AlignHCenter);
 
     QHBoxLayout *layout1 = new QHBoxLayout;
-         layout1->addWidget(nokta2);
-         layout1->addWidget(nokta4);
-         layout1->addWidget(nokta6);
-         layout1->addWidget(nokta8);
-         layout1->addWidget(nokta10);
-         layout1->addWidget(nokta12);
-         layout1->addWidget(nokta14);
+    layout1->addWidget(nokta2);
+    layout1->addWidget(nokta4);
+    layout1->addWidget(nokta6);
+    layout1->addWidget(nokta8);
+    layout1->addWidget(nokta10);
+    layout1->addWidget(nokta12);
+    layout1->addWidget(nokta14);
+    layout->addLayout(layout1, 0,4,2,1,Qt::AlignHCenter);
+
+    QGridLayout *renkloyout = new QGridLayout;
+    QWidget *cw=colorWidget("penColor","yatay",en*0.8,boy,false);
+    cw->setFixedSize(en*9,boy*0.9);
+    cw->setVisible(true);
+    renkloyout->addWidget(cw, 0,0,1,1,Qt::AlignHCenter);
+    QLabel *renk= new QLabel("Kalem Rengi");      renk->setFont(ff);
+    renkloyout->addWidget(renk, 1,0,1,1,Qt::AlignHCenter);
+    layout->addWidget(cw, 0,5,2,1,Qt::AlignHCenter);
 
 
-    layout->addLayout(layout1, 6, 1,1,3,Qt::AlignHCenter);
-    //layout->addWidget(nokta4, 6, 2,1,1,Qt::AlignHCenter);
-    //layout->addWidget(nokta8, 6, 3,1,1,Qt::AlignHCenter);
-    //layout->addWidget(nokta12, 6, 4,1,1,Qt::AlignHCenter);
-
-    layout->addWidget(penStyleSolidLine, 7, 1,1,1,Qt::AlignHCenter);
-    layout->addWidget(penStyleDashLine, 7, 2,1,1,Qt::AlignHCenter);
-    layout->addWidget(penStyleDotLine, 7, 3,1,1,Qt::AlignHCenter);
-    layout->addWidget(new QLabel("<font size=1>Düz</font>"),8,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(new QLabel("<font size=1>Kesik</font>"),8,2,1,1,Qt::AlignHCenter);
-    layout->addWidget(new QLabel("<font size=1>Noktalı</font>"),8,3,1,1,Qt::AlignHCenter);
-
-
-  //  layout->setColumnStretch(6, 255);
-
-    // add a widget action to the context menu
-    auto wa = new QWidgetAction(this);
-  //  wa->setIcon(QIcon(":/icon1"));
-    wa->setDefaultWidget(widget);
-    menu->addAction(wa);
-   /* penSize->setStyleSheet(".QSlider::groove:Horizontal {"
-                                   "background: rgba(0, 0, 0, 200);"
-                                   "width:"+QString::number(e*4)+"px;"
-                                    "height: "+QString::number(b/2)+"px;"
-                                   "}"
-
-                                   ".QSlider::handle:Horizontal {"
-                                   "background: rgba(242, 242, 242, 95);"
-                                   "border: 2px solid rgb(0,0,0);"
-                                   "background: rgba(0, 0, 0, 255);"
-                                   "width: "+QString::number(e/2)+"px;"
-                                   "height: "+QString::number(b)+"px;"
-                                    "margin:-"+QString::number(e/8*3)+"px   0   -"+QString::number(b/8*3)+"px   0;"
-                                   "}");
-*/
-   // penSize->setFixedSize(QSize(e*4,b));
-    //menu->setStyleSheet("QMenu { width: 290 px; height: 250 px; }");
+    QLabel *fd=new QLabel("Düz");
+    QLabel *fk=new QLabel("Kesik");
+    QLabel *fn=new QLabel("Noktalı");
+    fd->setFont(ff);    fk->setFont(ff);    fn->setFont(ff);
+    layout->addWidget(penStyleSolidLine, 0, 8,1,1,Qt::AlignHCenter);
+    layout->addWidget(penStyleDashLine, 0, 9,1,1,Qt::AlignHCenter);
+    layout->addWidget(penStyleDotLine, 0, 10,1,1,Qt::AlignHCenter);
+    layout->addWidget(fd,1,8,1,1,Qt::AlignHCenter);
+    layout->addWidget(fk,1,9,1,1,Qt::AlignHCenter);
+    layout->addWidget(fn,1,10,1,1,Qt::AlignHCenter);
 return menu;
+}
+
+QMenu *toolKalem::penMenu()
+{
+    int ken=300;
+       int e=(en*0.8)/4*9;
+       int b=(boy*0.6)/4*5;
+
+       QMenu *menu = new QMenu(this);
+         menu->installEventFilter(this);
+       kalemSizePopLabel= new QLabel();
+       kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
+       QFont ff( "Arial", 8, QFont::Normal);
+       kalemSizePopLabel->setFont(ff);
+
+      /* QSlider *penSize= new QSlider(Qt::Horizontal,menu);
+       penSize->setMinimum(2);
+       penSize->setMaximum(8);
+       penSize->setSliderPosition(4);
+       connect(penSize,SIGNAL(valueChanged(int)),this,SLOT(setPenSize(int)));
+   */
+       DiagramItem *ditem=new DiagramItem();
+
+       QPushButton *penStyleSolidLine = new QPushButton;
+       penStyleSolidLine->setFixedSize(e, b);
+       penStyleSolidLine->setIconSize(QSize(e,b));
+       //penStyleSolidLine->setFlat(true);*/
+       penStyleSolidLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::SolidLine,ken,ken));
+       connect(penStyleSolidLine, &QPushButton::clicked, [=]() {
+          // setPenStyle(Qt::SolidLine);
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SolidLine);
+           menu->close();
+       });
+
+       QPushButton *penStyleDashLine = new QPushButton;
+       penStyleDashLine->setFixedSize(e, b);
+       penStyleDashLine->setIconSize(QSize(e,b));
+       //penStyleDashLine->setFlat(true);
+       penStyleDashLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::DashLine,ken,ken));
+       connect(penStyleDashLine, &QPushButton::clicked, [=]() {
+          // setPenStyle(Qt::DashLine);
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DashLine);
+           menu->close();
+       });
+
+       QPushButton *penStyleDotLine = new QPushButton;
+       penStyleDotLine->setFixedSize(e, b);
+       penStyleDotLine->setIconSize(QSize(e,b));
+      // penStyleDotLine->setFlat(true);
+       penStyleDotLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::DotLine,ken,ken));
+       connect(penStyleDotLine, &QPushButton::clicked, [=]() {
+           //setPenStyle(Qt::DotLine);
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DotLine);
+           menu->close();
+       });
+
+       QPushButton *kalemSekilTanimlama= new QPushButton;
+        kalemSekilTanimlama=butonSlot(kalemSekilTanimlama,"",":icons/smartpen.png",QColor(255,0,0,0),e,b,e,b);
+       connect(kalemSekilTanimlama, &QPushButton::clicked, [=]()
+       {
+             emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SmartPen);
+               menu->close();
+          /* scene->setPopMenuStatus(false);
+           menu->close();
+           kalemButtonClick();
+           scene->setSekilTanimlamaStatus(true);
+           buttonColorClear();
+           palette->setColor(QPalette::Button, QColor(212,0,0,255));
+          // kalemSekilTanimlama->setPalette(*palette);
+           //kalemSekilTanimlama->setAutoFillBackground(true);
+           kalemButton->setPalette(*palette);
+           kalemButton->setAutoFillBackground(true);
+           kalemButton->setIcon(QIcon(":icons/smartpen.png"));
+   //kalemButton->setIconSize(QSize(20,20));
+            currentScreenModeSlot();
+            */
+       });
+
+
+       QPushButton *kalemMenuButton=new QPushButton();
+       /*kalemMenuButton->setFixedSize(e, b);
+       kalemMenuButton->setIconSize(QSize(e,b));*/
+       kalemMenuButton=butonSlot(kalemMenuButton,"",":icons/pen.png",QColor(255,0,0,0),e,b,e,b);
+       connect(kalemMenuButton, &QPushButton::clicked, [=]() {
+
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NormalPen);
+           menu->close();
+
+           /*scene->setPopMenuStatus(false);
+           menu->close();
+           scene->setSekilTanimlamaStatus(false);
+   */
+       });
+
+       QPushButton *fosforluKalemButton=new QPushButton();
+       fosforluKalemButton=butonSlot(fosforluKalemButton,"",":icons/fosforlupen.png",QColor(255,0,0,0),e,b,e,b);
+       connect(fosforluKalemButton, &QPushButton::clicked, [=]() {
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::FosforluPen);
+           menu->close();
+
+           /*   scene->setPopMenuStatus(false);
+              menu->close();
+              //kalemButtonClick();
+              scene->setSekilTanimlamaStatus(false);
+      */
+          });
+
+
+
+
+       QPushButton *nokta2 = new QPushButton;
+         nokta2=butonSlot(nokta2,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*0.2,b*0.2);
+       connect(nokta2, &QPushButton::clicked, [=]() {
+           //setPenSize(1);
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize2);
+           kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
+           menu->close();
+       });
+
+       QPushButton *nokta4 = new QPushButton;
+        nokta4=butonSlot(nokta4,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*0.4,b*0.4);
+       connect(nokta4, &QPushButton::clicked, [=]() {
+          // setPenSize(2);
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize4);
+           kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
+           menu->close();
+       });
+
+       QPushButton *nokta6 = new QPushButton;
+        nokta6=butonSlot(nokta6,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*0.6,b*0.6);
+       connect(nokta6, &QPushButton::clicked, [=]() {
+           //setPenSize(3);
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize6);
+           kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
+           menu->close();
+       });
+
+       QPushButton *nokta8 = new QPushButton;
+         nokta8=butonSlot(nokta8,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*0.8,b*0.8);
+       connect(nokta8, &QPushButton::clicked, [=]() {
+           //setPenSize(4);
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize8);
+           kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
+           menu->close();
+       });
+
+       QPushButton *nokta10 = new QPushButton;
+        nokta10=butonSlot(nokta10,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*1,b);
+       connect(nokta10, &QPushButton::clicked, [=]() {
+         //  setPenSize(5);
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize10);
+           kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
+           menu->close();
+      });
+
+       QPushButton *nokta12 = new QPushButton;
+         nokta12=butonSlot(nokta12,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*1.2,b*1.2);
+       connect(nokta12, &QPushButton::clicked, [=]() {
+           //setPenSize(6);
+           emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize12);
+           kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
+           menu->close();
+       });
+
+       QPushButton *nokta14 = new QPushButton;
+        nokta14=butonSlot(nokta14,"",":icons/nokta.png",QColor(0,0,0,0),e/2,b,e*1.4,b*1.4);
+       connect(nokta14, &QPushButton::clicked, [=]() {
+          // setPenSize(7);
+        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PenSize14);
+        kalemSizePopLabel->setText("Kalem Boyutu: "+QString::number(penSize));
+       menu->close();
+       });
+
+       auto widget = new QWidget;
+       auto layout = new QGridLayout(widget);
+      // layout->setContentsMargins(0, 0, 0, 3);
+      // layout->setColumnMinimumWidth(0, 37);
+
+
+       layout->addWidget(kalemSizePopLabel, 0, 1,1,3);
+    //   layout->addWidget(geriAlButton,1,2,1,1);
+   //    layout->addWidget(new QLabel("<font size=1>Geri Al</font>"),2,2,1,1,Qt::AlignHCenter);
+
+       layout->addWidget(kalemMenuButton,3,1,1,1,Qt::AlignHCenter);
+       layout->addWidget(fosforluKalemButton,3,2,1,1,Qt::AlignHCenter);
+       layout->addWidget(kalemSekilTanimlama,3,3,1,2,Qt::AlignHCenter);
+       layout->addWidget(new QLabel("<font size=1>Kalem</font>"),4,1,1,1,Qt::AlignHCenter);
+       layout->addWidget(new QLabel("<font size=1>Fosforlu Kalem</font>"),4,2,1,1,Qt::AlignHCenter);
+       layout->addWidget(new QLabel("<font size=1>Akıllı Kalem</font>"),4,3,1,1,Qt::AlignHCenter);
+
+      // layout->addWidget(penSize,5,1,1,3,Qt::AlignHCenter);
+
+       QHBoxLayout *layout1 = new QHBoxLayout;
+            layout1->addWidget(nokta2);
+            layout1->addWidget(nokta4);
+            layout1->addWidget(nokta6);
+            layout1->addWidget(nokta8);
+            layout1->addWidget(nokta10);
+            layout1->addWidget(nokta12);
+            layout1->addWidget(nokta14);
+
+
+       layout->addLayout(layout1, 6, 1,1,3,Qt::AlignHCenter);
+
+       layout->addWidget(penStyleSolidLine, 7, 1,1,1,Qt::AlignHCenter);
+       layout->addWidget(penStyleDashLine, 7, 2,1,1,Qt::AlignHCenter);
+       layout->addWidget(penStyleDotLine, 7, 3,1,1,Qt::AlignHCenter);
+       layout->addWidget(new QLabel("<font size=1>Düz</font>"),8,1,1,1,Qt::AlignHCenter);
+       layout->addWidget(new QLabel("<font size=1>Kesik</font>"),8,2,1,1,Qt::AlignHCenter);
+       layout->addWidget(new QLabel("<font size=1>Noktalı</font>"),8,3,1,1,Qt::AlignHCenter);
+
+
+     //  layout->setColumnStretch(6, 255);
+
+       // add a widget action to the context menu
+       auto wa = new QWidgetAction(this);
+     //  wa->setIcon(QIcon(":/icon1"));
+       wa->setDefaultWidget(widget);
+       menu->addAction(wa);
+      /* penSize->setStyleSheet(".QSlider::groove:Horizontal {"
+                                      "background: rgba(0, 0, 0, 200);"
+                                      "width:"+QString::number(e*4)+"px;"
+                                       "height: "+QString::number(b/2)+"px;"
+                                      "}"
+                                      ".QSlider::handle:Horizontal {"
+                                      "background: rgba(242, 242, 242, 95);"
+                                      "border: 2px solid rgb(0,0,0);"
+                                      "background: rgba(0, 0, 0, 255);"
+                                      "width: "+QString::number(e/2)+"px;"
+                                      "height: "+QString::number(b)+"px;"
+                                       "margin:-"+QString::number(e/8*3)+"px   0   -"+QString::number(b/8*3)+"px   0;"
+                                      "}");
+   */
+      // penSize->setFixedSize(QSize(e*4,b));
+       //menu->setStyleSheet("QMenu { width: 290 px; height: 250 px; }");
+   return menu;
+}
+
+
+QWidget *toolKalem::zeminTopMenu()
+{  //int e=en;
+   // int b=boy;
+    int e=(en*0.8)/4*6;
+    int b=(boy*0.6)/4*5;
+
+    QWidget *menu = new QWidget(this);
+      menu->installEventFilter(this);
+    QLabel  *zeminLabel= new QLabel();
+    zeminLabel->setText("Arkaplan\nSeçenekleri");
+    QFont ffl( "Arial", 7, QFont::Normal);
+    zeminLabel->setFont(ffl);
+
+    auto layout = new QGridLayout(menu);
+    layout->setContentsMargins(5, 5,5,5);
+    //layout->setColumnMinimumWidth(0, 37);
+
+
+    /***********************noktalı izometrik kareli çizgili***************/
+
+
+    QPushButton *noktaliKagit = new QPushButton;
+    noktaliKagit->setFixedSize(e, b);
+    noktaliKagit->setIconSize(QSize(e,b));
+    //penStyleSolidLine->setFlat(true);
+    noktaliKagit->setIcon(QIcon(":icons/dotpage.svg"));
+    connect(noktaliKagit, &QPushButton::clicked, [=]() {
+   emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NoktaliKagit);
+
+       // menu->close();
+    });
+
+    QPushButton *izometrikKagit = new QPushButton;
+    izometrikKagit->setIcon(QIcon(":icons/izometrikpage.svg"));
+    izometrikKagit->setFixedSize(e, b);
+    izometrikKagit->setIconSize(QSize(e,b));
+    //penStyleDashLine->setFlat(true);
+    connect(izometrikKagit, &QPushButton::clicked, [=]() {
+    emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::IzometrikKagit);
+     // menu->close();
+
+    });
+
+    QPushButton *kareliKagit = new QPushButton;
+    kareliKagit->setIcon(QIcon(":icons/karepage.svg"));
+    kareliKagit->setFixedSize(e, b);
+    kareliKagit->setIconSize(QSize(e,b));
+    // penStyleDotLine->setFlat(true);
+    connect(kareliKagit, &QPushButton::clicked, [=]() {
+    emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::KareliKagit);
+
+       // menu->close();
+
+    });
+
+    QPushButton *cizgiliKagit = new QPushButton;
+    cizgiliKagit->setIcon(QIcon(":icons/linepage.svg"));
+    cizgiliKagit->setFixedSize(e, b);
+    cizgiliKagit->setIconSize(QSize(e,b));
+    //penStyleDotLine->setFlat(true);
+    connect(cizgiliKagit, &QPushButton::clicked, [=]() {
+      emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::CizgiliKagit);
+        //   menu->close();
+
+    });
+    /***********************ndogru nnkoordinat  hnkoordinat nkoordinat***************/
+
+
+    QPushButton *ndogru = new QPushButton;
+    ndogru->setFixedSize(e, b);
+    ndogru->setIconSize(QSize(e,b));
+    //penStyleSolidLine->setFlat(true);
+    ndogru->setIcon(QIcon(":icons/ndogru.png"));
+    connect(ndogru, &QPushButton::clicked, [=]() {
+      emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NDogru);
+     // menu->close();
+    });
+
+    QPushButton *nnkoordinat = new QPushButton;
+    nnkoordinat->setIcon(QIcon(":icons/nnkoordinat.png"));
+    nnkoordinat->setFixedSize(e, b);
+    nnkoordinat->setIconSize(QSize(e,b));
+    //penStyleDashLine->setFlat(true);
+    connect(nnkoordinat, &QPushButton::clicked, [=]() {
+      emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NNKoordinat);
+    //  menu->close();
+
+    });
+
+    QPushButton *hnkoordinat = new QPushButton;
+    hnkoordinat->setIcon(QIcon(":icons/hnkoordinat.png"));
+    hnkoordinat->setFixedSize(e, b);
+    hnkoordinat->setIconSize(QSize(e,b));
+    // penStyleDotLine->setFlat(true);
+    connect(hnkoordinat, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::HNKoordinat);
+    //menu->close();
+
+    });
+
+    QPushButton *nkoordinat = new QPushButton;
+    nkoordinat->setIcon(QIcon(":icons/nkoordinat.png"));
+    nkoordinat->setFixedSize(e, b);
+    nkoordinat->setIconSize(QSize(e,b));
+    // penStyleDotLine->setFlat(true);
+    connect(nkoordinat, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NKoordinat);
+     //menu->close();
+
+    });
+
+    /*****************************************************/
+    QPushButton *zeminSeffafButton=new QPushButton();
+    zeminSeffafButton=butonSlot(zeminSeffafButton,"",":icons/transparanboard.png",QColor(255,0,0,0),e,b,e,b);
+    zeminSeffafButton->setFlat(true);
+    connect(zeminSeffafButton, &QPushButton::clicked, [=]()
+    {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+    });
+
+    QPushButton *zeminSiyahButton=new QPushButton();
+    zeminSiyahButton=butonSlot(zeminSiyahButton,"",":icons/blackboard.png",QColor(255,0,0,0),e,b,e,b);
+    zeminSiyahButton->setFlat(true);
+    connect(zeminSiyahButton, &QPushButton::clicked, [=]()
+    {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::BlackPage);
+
+    });
+    QPushButton *zeminBeyazButton=new QPushButton();
+    zeminBeyazButton=butonSlot(zeminBeyazButton,"",":icons/whiteboard.png",QColor(255,0,0,0),e,b,e,b);
+    zeminBeyazButton->setFlat(true);
+    connect(zeminBeyazButton, &QPushButton::clicked, [=]()
+    {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
+
+    });
+    QPushButton *zeminCustomColorButton=new QPushButton();
+     zeminCustomColorButton=butonSlot(zeminCustomColorButton,"",":icons/zeminCustomColor.png",QColor(255,0,0,0),e,b,e,b);
+     zeminCustomColorButton->setFlat(true);
+     zeminCustomColorButton=butonSlot(zeminCustomColorButton,"",":icons/zeminrenk.png",QColor(255,0,0,0),e,b,e,b);
+     zeminCustomColorButton->setFlat(true);
+     QMenu *zcc=colorMenu("zeminColor","dikey",en,boy,true);
+      zeminCustomColorButton->setMenu(zcc);
+
+     connect(zeminCustomColorButton, &QPushButton::clicked, [=]()
+    {
+       // emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::CustomColorPage);
+
+    });
+    QPushButton *zeminCizgiliSayfaButton = new QPushButton;
+    zeminCizgiliSayfaButton->setIcon(QIcon(":icons/icons/cizgilisayfa.png"));
+    zeminCizgiliSayfaButton=butonSlot(zeminCizgiliSayfaButton,"",":icons/cizgilisayfa.png",QColor(255,0,0,0),e,b,e,b);
+    zeminCizgiliSayfaButton->setFlat(true);
+    connect(zeminCizgiliSayfaButton, &QPushButton::clicked, [=]()
+    {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::CizgiliPage);
+    });
+
+    QPushButton *zeminKareliSayfaButton = new QPushButton;
+    zeminKareliSayfaButton=butonSlot(zeminKareliSayfaButton,"",":icons/karelisayfa.png",QColor(255,0,0,0),e,b,e,b);
+    zeminKareliSayfaButton->setFlat(true);
+    connect(zeminKareliSayfaButton, &QPushButton::clicked, [=]()
+    {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::KareliPage);
+    });
+
+    QPushButton *zeminMuzikSayfaButton=new QPushButton();
+    zeminMuzikSayfaButton=butonSlot(zeminMuzikSayfaButton,"",":icons/muziksayfa.png",QColor(255,0,0,0),e,b,e,b);
+    zeminMuzikSayfaButton->setFlat(true);
+    connect(zeminMuzikSayfaButton, &QPushButton::clicked, [=]()
+    {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::MuzikPage);
+    });
+
+
+    QPushButton *zeminGuzelYaziSayfaButton=new QPushButton();
+    zeminGuzelYaziSayfaButton=butonSlot(zeminGuzelYaziSayfaButton,"",":icons/guzelyazisayfa.png",QColor(255,0,0,0),e,b,e,b);
+    zeminGuzelYaziSayfaButton->setFlat(true);
+    connect(zeminGuzelYaziSayfaButton, &QPushButton::clicked, [=]()
+    {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::GuzelYaziPage);
+    });
+
+
+    QPushButton *zeminDesenEkleSayfaButton=new QPushButton();
+    zeminDesenEkleSayfaButton=butonSlot(zeminDesenEkleSayfaButton,"",":icons/resimekle.png",QColor(255,0,0,0),e,b,e,b);
+    zeminDesenEkleSayfaButton->setFlat(true);
+    connect(zeminDesenEkleSayfaButton, &QPushButton::clicked, [=]()
+    {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::CustomImagePage);
+
+    });
+
+   QPushButton *zeminTemizleSayfaButton = new QPushButton;
+   zeminTemizleSayfaButton=butonSlot(zeminTemizleSayfaButton,"",":icons/zemintemizle.png",QColor(255,0,0,0),e,b,e,b);
+   zeminTemizleSayfaButton->setFlat(true);
+   connect(zeminTemizleSayfaButton, &QPushButton::clicked, [=]()
+    {
+       emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+
+    });
+
+    QPushButton *gridRenkButton = new QPushButton;
+    gridRenkButton=butonSlot(gridRenkButton,"",":icons/gridrenk.png",QColor(255,0,0,0),e,b,e,b);
+    gridRenkButton->setFlat(true);
+    QMenu *gcm=colorMenu("zeminGridColor","dikey",en,boy,true);
+    gridRenkButton->setMenu(gcm);
+   connect(gridRenkButton, &QPushButton::clicked, [=]()
+    {
+    });
+
+    QPushButton *zeminRenkButton = new QPushButton;
+
+     zeminRenkButton=butonSlot(zeminRenkButton,"",":icons/zeminrenk.png",QColor(255,0,0,0),e,b,e,b);
+     zeminRenkButton->setFlat(true);
+     QMenu *zcm=colorMenu("sekilZeminColor","dikey",en,boy,true);
+      zeminRenkButton->setMenu(zcm);
+     connect(zeminRenkButton, &QPushButton::clicked, [=]()
+     {
+     });
+
+   layout->addWidget(zeminLabel, 0, 0,2,1);
+
+
+   layout->addWidget(noktaliKagit,0,5,1,1,Qt::AlignHCenter);
+   layout->addWidget(izometrikKagit,0,6,1,1,Qt::AlignHCenter);
+   layout->addWidget(kareliKagit,0,7,1,1,Qt::AlignHCenter);
+   layout->addWidget(cizgiliKagit,0,8,1,1,Qt::AlignHCenter);
+
+   QLabel *noktali=new QLabel("Noktalı");   noktali->setFont(ffl);
+   QLabel *izometrik=new QLabel("İzometrik"); izometrik->setFont(ffl);
+   QLabel *kareli=new QLabel("Kareli");    kareli->setFont(ffl);
+   QLabel *cizgili=new QLabel("Çizgili");   cizgili->setFont(ffl);
+   layout->addWidget(noktali,1,5,1,1,Qt::AlignHCenter);
+   layout->addWidget(izometrik,1,6,1,1,Qt::AlignHCenter);
+   layout->addWidget(kareli,1,7,1,1,Qt::AlignHCenter);
+   layout->addWidget(cizgili,1,8,1,1,Qt::AlignHCenter);
+
+   layout->addWidget(nkoordinat,0,9,1,1,Qt::AlignHCenter);
+   layout->addWidget(hnkoordinat,0,10,1,1,Qt::AlignHCenter);
+   layout->addWidget(ndogru,0,11,1,1,Qt::AlignHCenter);
+   layout->addWidget(nnkoordinat,0,12,1,1,Qt::AlignHCenter);
+
+   QLabel *skoordinatl=new QLabel("S.Koordinat");   skoordinatl->setFont(ffl);
+   QLabel *hnkoordinatl=new QLabel("Y. Koordinat"); hnkoordinatl->setFont(ffl);
+   QLabel *ndogrul=new QLabel("Sayı Doğrusu");      ndogrul->setFont(ffl);
+   QLabel *nnkoordinatl=new QLabel("Koordinat");    nnkoordinatl->setFont(ffl);
+
+   layout->addWidget(skoordinatl,1,9,1,1,Qt::AlignHCenter);
+   layout->addWidget(hnkoordinatl,1,10,1,1,Qt::AlignHCenter);
+   layout->addWidget(ndogrul,1,11,1,1,Qt::AlignHCenter);
+   layout->addWidget(nnkoordinatl,1,12,1,1,Qt::AlignHCenter);
+
+    layout->addWidget(zeminSeffafButton,0,15,1,1,Qt::AlignHCenter);
+    layout->addWidget(zeminSiyahButton,0,16,1,1,Qt::AlignHCenter);
+    layout->addWidget(zeminBeyazButton,0,17,1,1,Qt::AlignHCenter);
+    layout->addWidget(zeminCustomColorButton,0,18,1,1,Qt::AlignHCenter);
+
+    QLabel *seffaftahta=new QLabel("Şeffaf Tahta");   seffaftahta->setFont(ffl);
+    QLabel *siyahtahta=new QLabel("Siyah Tahta"); siyahtahta->setFont(ffl);
+    QLabel *beyaztahta=new QLabel("Beyaz Tahta");      beyaztahta->setFont(ffl);
+    QLabel *customtahta=new QLabel("S. Renk Tahta");    customtahta->setFont(ffl);
+
+    layout->addWidget(seffaftahta,1,15,1,1,Qt::AlignHCenter);
+    layout->addWidget(siyahtahta,1,16,1,1,Qt::AlignHCenter);
+    layout->addWidget(beyaztahta,1,17,1,1,Qt::AlignHCenter);
+    layout->addWidget(customtahta,1,18,1,1,Qt::AlignHCenter);
+
+
+    layout->addWidget(zeminCizgiliSayfaButton,0,20,1,1,Qt::AlignHCenter);
+    layout->addWidget(zeminKareliSayfaButton,0,21,1,1,Qt::AlignHCenter);
+    layout->addWidget(zeminMuzikSayfaButton,0,22,1,1,Qt::AlignHCenter);
+    layout->addWidget(zeminGuzelYaziSayfaButton,0,23,1,1,Qt::AlignHCenter);
+
+    QLabel *cizgilitahta=new QLabel("Çizgili Tahta");   cizgilitahta->setFont(ffl);
+    QLabel *karelitahta=new QLabel("Kareli Tahta"); karelitahta->setFont(ffl);
+    QLabel *muziktahta=new QLabel("Müzik Tahta");      muziktahta->setFont(ffl);
+    QLabel *gyazitahta=new QLabel("G.Yazı Tahta");    gyazitahta->setFont(ffl);
+
+    layout->addWidget(cizgilitahta,1,20,1,1,Qt::AlignHCenter);
+    layout->addWidget(karelitahta,1,21,1,1,Qt::AlignHCenter);
+    layout->addWidget(muziktahta,1,22,1,1,Qt::AlignHCenter);
+    layout->addWidget(gyazitahta,1,23,1,1,Qt::AlignHCenter);
+
+
+    layout->addWidget(zeminTemizleSayfaButton,0,25,1,1,Qt::AlignHCenter);
+    layout->addWidget(zeminDesenEkleSayfaButton,0,26,1,1,Qt::AlignHCenter);
+    layout->addWidget(gridRenkButton,0,27,1,1,Qt::AlignHCenter);
+    layout->addWidget(zeminRenkButton,0,28,1,1,Qt::AlignHCenter);
+    QLabel *temizletahta=new QLabel("Tahta Temizle");   temizletahta->setFont(ffl);
+    QLabel *desenekletahta=new QLabel("Desen Ekle");    desenekletahta->setFont(ffl);
+    QLabel *cizgirengitahta=new QLabel("Çizgi Rengi");  cizgirengitahta->setFont(ffl);
+    QLabel *zeminrengitahta=new QLabel("Zemin Rengi");  zeminrengitahta->setFont(ffl);
+
+    layout->addWidget(temizletahta,1,25,1,1,Qt::AlignHCenter);
+    layout->addWidget(desenekletahta,1,26,1,1,Qt::AlignHCenter);
+    layout->addWidget(cizgirengitahta,1,27,1,1,Qt::AlignHCenter);
+    layout->addWidget(zeminrengitahta,1,28,1,1,Qt::AlignHCenter);
+
+    QWidget *cm=cizgiBoyutMenu();
+    cm->setVisible(true);
+    //cm->setFixedSize(220,cm->height());
+    layout->addWidget(cm,0,30,2,1,Qt::AlignHCenter);
+   return menu;
 }
 
 QMenu *toolKalem::zeminMenu()
@@ -1811,28 +2806,11 @@ QMenu *toolKalem::zeminMenu()
     QFont ff( "Arial", 8, QFont::Normal);
     zeminLabel->setFont(ff);
 
-/*
-    gridSizePopLabel= new QLabel();
-    gridSizePopLabel->setText("Grid Boyutu: "+QString::number(myGridSize));
-    gridSizePopLabel->setFont(ff);
-
-    QSlider *penSize= new QSlider(Qt::Horizontal,menu);
-    penSize->setMinimum(2);
-    penSize->setMaximum(8);
-    penSize->setSliderPosition(4);
-    ///connect(penSize,SIGNAL(valueChanged(int)),this,SLOT(setGridSize(int)));
-
-*/
-
     auto widget = new QWidget;
     auto layout = new QGridLayout(widget);
     layout->setContentsMargins(0, 0, 0, 3);
     //layout->setColumnMinimumWidth(0, 37);
-
-
     /***********************noktalı izometrik kareli çizgili***************/
-
-
     QPushButton *noktaliKagit = new QPushButton;
     noktaliKagit->setFixedSize(e, b);
     noktaliKagit->setIconSize(QSize(e,b));
@@ -2231,3 +3209,261 @@ void toolKalem::sekilButtonIconSlot(DiagramItem::DiagramType mySekilType){
     }
 }
 
+void toolKalem::setEraseSize(int size)
+{
+    eraseSizePopLabel->setText("Silgi Boyutu: "+QString::number(size));
+}
+
+void toolKalem::ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfPageIndex){
+     qDebug()<<"ekle sayfa1"<<pdfObjectAdded;
+
+    bool initprg=false;
+     if(current_toolTahta->current_sceneIndex==0&&current_toolTahta->sceneIndex==0)
+    {
+       /* initprg=true;
+        sceneSayfaNumber++;
+        sceneSayfaActiveNumber=0;
+        sceneSayfa.removeAt(0);*/
+        //if(pdfobjectnumber==1&&pdfObjectAdded==false) pdfObjectAdded=true;
+    }else
+    {
+        ///initprg=false;
+       //current_toolTahta->sceneIndex++;
+
+      //if(inserIndex==-1)sceneSayfaActiveNumber=sceneSayfaNumber-1;
+      //else sceneSayfaActiveNumber++;
+    }
+  ///  qDebug()<<"ekle sayfa2"<<sceneSayfaNumber<<sceneSayfaActiveNumber<<pdfObjectAdded;
+     current_toolTahta->_scene = new Scene(current_toolTahta->gv);
+     current_toolTahta->_scene->pdfObjectAdded=pdfObjectAdded;
+     current_toolTahta->_scene->pdfPageNumber=pdfPageIndex;
+     current_toolTahta->scene=current_toolTahta->_scene;
+     current_toolTahta->sceneList.insert(current_toolTahta->current_sceneIndex,current_toolTahta->scene);
+     current_toolTahta->gv->setScene(current_toolTahta->scene);
+     current_toolTahta->scene->setSceneRect(current_toolTahta->gv->pos().x(),current_toolTahta->gv->pos().y(), current_toolTahta->gv->width(),current_toolTahta->gv->height());
+     penToScene();
+    // pageNumberPopLabel->setText("Sayfa( "+QString::number(sceneSayfaNumber+1)+" / "+QString::number(sceneSayfaActiveNumber+1)+" )");
+    ///kalemButtonClick();
+    auto _screenbtn = new QToolButton(pageListwg);
+    _screenbtn->setFixedSize(QSize(boy,boy));
+    _screenbtn->setIconSize(QSize(boy*0.7,boy*0.7));
+    _screenbtn->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    _screenbtn->setText(QString::number(current_toolTahta->current_sceneIndex+1));
+    _screenbtn->setToolTip(QString::number(current_toolTahta->current_sceneIndex));
+
+
+    // screenlayout->addWidget(_screenbtn);
+    sceneListButtonLayout->insertWidget(current_toolTahta->current_sceneIndex,_screenbtn);
+    // pageList.append(_screenbtn);
+    current_toolTahta->sceneListButton.insert(current_toolTahta->current_sceneIndex,_screenbtn);
+
+        //qDebug()<<"ekle sayfa2";
+   for(int i=0;i<current_toolTahta->sceneListButton.count();i++){
+
+        current_toolTahta->sceneListButton[i]->setText(QString::number(i+1));
+        current_toolTahta->sceneListButton[i]->setToolTip(QString::number(i));
+
+    }
+   //if(pdfPageList>1) pdfPageList--;
+  // ileriSayfaButtonClick();
+
+      connect(_screenbtn, &QPushButton::clicked, [=]() {
+          QPalette palet;
+          palet.setBrush(QPalette::Background,QColor(0,0,0,0));
+          current_toolTahta->setPalette(palet);
+
+        current_toolTahta->current_sceneIndex=_screenbtn->toolTip().toInt();
+        current_toolTahta->clearImage();
+        //qDebug()<<"tooltip:"<<_screenbtn->toolTip();
+        /******************************************************/
+        /// sceneSayfaActiveNumber=_screenbtn->toolTip().toInt();
+        current_toolTahta->scene=current_toolTahta->sceneList[current_toolTahta->current_sceneIndex];
+        current_toolTahta->gv->setScene(current_toolTahta->scene);
+        current_toolTahta->scene->setSceneRect(current_toolTahta->gv->pos().x(),current_toolTahta->gv->pos().y(), current_toolTahta->gv->width(),current_toolTahta->gv->height());
+
+
+        sceneToPen();
+        ///ileriGeriSayfa();
+       /// qDebug()<<"sayı:"<<pageList.length();
+
+        /**********************************************/
+        for(int i=0;i<current_toolTahta->sceneListButton.length();i++)
+        {
+            palette->setColor(QPalette::Button, QColor(225,225,225,255));
+            current_toolTahta->sceneListButton[i]->setPalette(*palette);
+            current_toolTahta->sceneListButton[i]->setAutoFillBackground(true);
+
+        }
+        palette->setColor(QPalette::Button, QColor(255,0,0,100));
+        _screenbtn->setPalette(*palette);
+        _screenbtn->setAutoFillBackground(true);
+        /**************pdf loader page**** çok önemli***********/
+        ///   if(scene->pdfObjectAdded&&scene->pdfObjectShow==false&&scene->pdfPageNumber<=pdfPageCount-1) pdfLoaderPage(scene->pdfPageNumber);///pdf page loader
+  //  currentScreenModeSlot();
+        /************************************************/
+       qDebug()<<"sayfa yenileniyor";
+       QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+       // QPalette palet;
+        palet.setBrush(QPalette::Background,pixMap);
+       current_toolTahta->setPalette(palet);
+
+
+    });
+    /*****************Sayfa Eklenince mutlaka Çalışmalı*****************************/
+    for(int i=0;i<current_toolTahta->sceneListButton.count();i++)
+    {
+        palette->setColor(QPalette::Button, QColor(225,225,225,255));
+        current_toolTahta->sceneListButton[i]->setPalette(*palette);
+        current_toolTahta->sceneListButton[i]->setAutoFillBackground(true);
+
+    }
+
+    palette->setColor(QPalette::Button, QColor(255,0,0,100));
+   _screenbtn->setPalette(*palette);
+    _screenbtn->setAutoFillBackground(true);
+    current_toolTahta->scene->sceneGridYatay=false;///?isteğe bağlı
+    current_toolTahta->scene->sceneGridDikey=false;///?isteğe bağlı
+    current_toolTahta->scene->sceneGuzelYazi=false;///?isteğe bağlı
+    /**********************************************/
+
+    //iconButton();
+    //buttonColorClear();
+    //sekilButtonIconSlot();
+    //
+
+    modeKontrolSlot();
+    /************************************************/
+
+      if(initprg==false)
+      {
+           if(current_toolTahta->scene->pdfObjectAdded==1)
+          {
+              // qDebug()<<"sayfa ekle8";
+              nextPageButton->show();
+              backPageButton->show();
+              zoompozitifPageButton->show();
+              zoomnegatifPageButton->show();
+              zoomfitPageButton->show();
+
+          }else
+          {
+               nextPageButton->hide();
+               backPageButton->hide();
+               zoompozitifPageButton->hide();
+               zoomnegatifPageButton->hide();
+               zoomfitPageButton->hide();
+
+          }
+
+          //  qDebug()<<"sayfa ekle11";
+          if(current_toolTahta->sceneIndex>0)
+          {
+
+              ///ileriGeriSayfaLabel->show();
+              delPageButton->setEnabled(true);
+              //addSayfaButton->show();
+          }
+          else
+          {
+
+              delPageButton->setEnabled(false);
+
+          }
+      }
+
+}
+
+void toolKalem::silSayfaButtonClick(){
+   /// if(sceneSayfaNumber>0)sceneSayfaNumber--;
+    if(current_toolTahta->sceneIndex>0){
+      qDebug()<<"sil sayfa-1";
+        delete current_toolTahta->sceneListButton[current_toolTahta->current_sceneIndex];
+        current_toolTahta->sceneListButton.removeAt(current_toolTahta->current_sceneIndex);
+       current_toolTahta->sceneList.removeAt(current_toolTahta->current_sceneIndex);
+         current_toolTahta->sceneIndex--;
+        current_toolTahta->current_sceneIndex--;
+        current_toolTahta->scene=current_toolTahta->sceneList[current_toolTahta->current_sceneIndex];
+        current_toolTahta->gv->setScene(current_toolTahta->scene);
+
+    }
+  /*  else if(sceneSayfaActiveNumber==0){
+        if(sceneSayfaNumber>0)
+        {
+           // qDebug()<<"sil sayfa-2"<<sceneSayfaActiveNumber;
+            delete pageList[sceneSayfaActiveNumber];
+            pageList.removeAt(sceneSayfaActiveNumber);
+
+            sceneSayfa.removeAt(sceneSayfaActiveNumber);
+            // sceneSayfaActiveNumber--;
+            scene=sceneSayfa[sceneSayfaActiveNumber];
+            view->setScene(scene);
+            sceneSayfaNumber--;
+
+        }
+    }*/
+   // qDebug()<<"sil sayfa-1"<<sceneSayfaNumber<<sceneSayfaActiveNumber;
+    /***********************************************/
+    for(int i=0;i<current_toolTahta->sceneListButton.length();i++)
+    {
+        current_toolTahta->sceneListButton[i]->setToolTip(QString::number(i));
+        current_toolTahta->sceneListButton[i]->setText(QString::number(i+1));
+        palette->setColor(QPalette::Button, QColor(225,225,225,255));
+        current_toolTahta->sceneListButton[i]->setPalette(*palette);
+        current_toolTahta->sceneListButton[i]->setAutoFillBackground(true);
+
+
+    }
+    palette->setColor(QPalette::Button, QColor(255,0,0,100));
+    current_toolTahta->sceneListButton[current_toolTahta->current_sceneIndex]->setPalette(*palette);
+    current_toolTahta->sceneListButton[current_toolTahta->current_sceneIndex]->setAutoFillBackground(true);
+    /**********************************************/
+
+      //int pdfobject=pdfobjectnumber;
+      bool pdfobjectadded=false;
+        foreach(QGraphicsItem* item, current_toolTahta->scene->items()){
+            VERectangle * selection = dynamic_cast<VERectangle *>(item);
+            if(selection)
+            {
+                if(selection->sekilTr==DiagramItem::DiagramType::Pdf){ pdfobjectadded=true;}
+            }
+        }
+        if(current_toolTahta->scene->pdfObjectAdded==1)
+       {
+           // qDebug()<<"sayfa ekle8";
+           nextPageButton->show();
+           backPageButton->show();
+           zoompozitifPageButton->show();
+           zoomnegatifPageButton->show();
+           zoomfitPageButton->show();
+
+       }else
+       {
+            nextPageButton->hide();
+            backPageButton->hide();
+            zoompozitifPageButton->hide();
+            zoomnegatifPageButton->hide();
+            zoomfitPageButton->hide();
+
+       }
+
+       //  qDebug()<<"sayfa ekle11";
+       if(current_toolTahta->sceneIndex>0)
+       {
+
+           ///ileriGeriSayfaLabel->show();
+           delPageButton->setEnabled(true);
+           //addSayfaButton->show();
+       }
+       else
+       {
+
+           delPageButton->setEnabled(false);
+
+       }
+      /*****************************************************************/
+  QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+  QPalette palet;
+  palet.setBrush(QPalette::Background,pixMap);
+  current_toolTahta->setPalette(palet);
+  current_toolTahta->repaint();
+}
