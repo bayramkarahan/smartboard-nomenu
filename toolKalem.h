@@ -14,6 +14,10 @@
 #include<QToolBar>
 #include<QFrame>
 #include<tooltahta.h>
+#include<QPrinter>
+#include<QMessageBox>
+#include<QPdfWriter>
+#include<poppler/qt5/poppler-qt5.h>
 class QMouseEvent;
 class toolKalem : public QFrame
 {
@@ -29,7 +33,7 @@ public:
 
     QPoint offset;
     bool mouseClick;
-    explicit toolKalem(QString _title, int _en, int _boy,toolTahta *_toolTahta, QWidget *parent = nullptr);
+    explicit toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, int parentw, int parenth, QWidget *parent = nullptr);
     int en;
     int boy;
 
@@ -99,10 +103,14 @@ public slots:
     QWidget *zeminTopMenu();
     QWidget *eraseTopMenu();
      QWidget *pageBottomMenu();
+     QWidget *pdfTopMenu();
     void setEraseSize(int size);
     void ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfPageIndex);
     void silSayfaButtonClick();
+    void secSayfaButtonClick(int index);
 private:
+    int parentw;
+    int parenth;
     QString title;
     QMenu *zeminMenu();
     QMenu *pageMenu();

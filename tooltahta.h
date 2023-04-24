@@ -12,7 +12,7 @@
 #include<depo.h>
 #include<QLabel>
 #include<QToolButton>
-
+#include<poppler/qt5/poppler-qt5.h>
 class toolTahta : public QWidget
 {
     Q_OBJECT
@@ -34,6 +34,10 @@ public:
     QList<QToolButton*> sceneListButton;
     QList<Scene*> sceneList;
       void clearImage();
+      Poppler::Document *doc;
+      int pdfPageCount=0;
+      int pdfFirstPageNumber=0;
+      int pdfLastPageNumber=0;
 public slots:
 
 

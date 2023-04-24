@@ -90,7 +90,7 @@ public:
               NextPageMode,BackPageMode,ZoomPozitifMode,ZoomNegatifMode,ZoomSelectionMode,
                ZeminMode,SekilMode,PanelSideLeftRight,PanelSideBottom,
                ColorMode,BlueColorMode,RedColorMode,BlackColorMode,GreenColorMode,
-              ListMode,SearchMode,JumpPageMode,SaveMode,PrintMode,ExitMode};
+              ListMode,SearchMode,JumpPageMode,SaveMode,PrintMode,PdfMode,ExitMode};
     enum ModeTrue {DrawPenTrue,DrawPenFosforTrue,DrawLineTrue,CopyModeTrue,DrawRectangleTrue,EraseModeTrue,SelectObjectTrue,NoModeTrue};
     explicit Scene(QWidget* parent = 0);
     void setMode(Mode mode, DiagramItem::DiagramType sekil);

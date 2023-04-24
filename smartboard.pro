@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui printsupport
 INCLUDEPATH += \
                 /usr/include/opencv4
                 /usr/include

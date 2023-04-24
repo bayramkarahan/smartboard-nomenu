@@ -17,12 +17,13 @@ MainWindow::MainWindow(QWidget *parent) :
     en=boy;
     //qDebug()<<"ekran boyutu:"<<screenSize;
     current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.6);
+    //current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
     current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()/2);
     current_toolTahta->show();
 
 
  /******************************************************************************/
-   kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta);
+   kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta,screenSize.width(),screenSize.height());
    kw->setFixedSize(en*1.15,boy*0.8*11);
    kw->move(screenSize.width()-kw->width()-10,screenSize.height()/2- kw->height()/2);
    kw->setStyleSheet("background-color:rgb(220, 220, 220);");
@@ -104,20 +105,23 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
 
     if(current_toolKalemMenu->isVisible()) current_toolKalemMenu->close();
    if(mode==Scene::Mode::DrawPen)
-       current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(),screenSize.width()*0.8,screenSize.height()*0.07);
+       current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(),screenSize.width()*0.8,screenSize.height()*0.05);
    if(mode==Scene::Mode::EraseMode)
-       current_toolKalemMenu=new toolKalemMenu(kw->eraseTopMenu(),screenSize.width()*0.6,screenSize.height()*0.07);
+       current_toolKalemMenu=new toolKalemMenu(kw->eraseTopMenu(),screenSize.width()*0.6,screenSize.height()*0.05);
    if(mode==Scene::Mode::SekilMode)
-       current_toolKalemMenu=new toolKalemMenu(kw->sekilTopMenu(),screenSize.width()*0.7,screenSize.height()*0.07);
+       current_toolKalemMenu=new toolKalemMenu(kw->sekilTopMenu(),screenSize.width()*0.7,screenSize.height()*0.05);
    if(mode==Scene::Mode::ZeminMode)
    {
-       current_toolKalemMenu=new toolKalemMenu(kw->zeminTopMenu(),screenSize.width()*0.9,screenSize.height()*0.07);
-   //qDebug()<<"zeminnn";
+       current_toolKalemMenu=new toolKalemMenu(kw->zeminTopMenu(),screenSize.width()*0.9,screenSize.height()*0.05);
+   }
+   if(mode==Scene::Mode::PdfMode)
+   {
+       current_toolKalemMenu=new toolKalemMenu(kw->pdfTopMenu(),screenSize.width()*0.6,screenSize.height()*0.05);
    }
        if(mode==Scene::Mode::SelectObject||
 //           mode==Scene::Mode::ClearMode||
            mode==Scene::Mode::CopyMode)
-       current_toolKalemMenu=new toolKalemMenu(new QWidget(),screenSize.width()*0.6,screenSize.height()*0.07);
+       current_toolKalemMenu=new toolKalemMenu(new QWidget(),screenSize.width()*0.6,screenSize.height()*0.05);
 
    current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,0);
     current_toolKalemMenu->show();

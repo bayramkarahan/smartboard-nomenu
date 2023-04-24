@@ -133,6 +133,10 @@ void toolTahta::mouseReleaseEvent(QMouseEvent *event)
         itemToRectDraw->fareState(false);
         itemToRectDraw = 0;
         clearImage();
+        QPalette palet1;
+        palet1.setBrush(QPalette::Background,QColor(0,0,0,0));
+        this->setPalette(palet1);
+
 
         QPixmap pixMap = gv->grab(gv->sceneRect().toRect());
         QPalette palet;

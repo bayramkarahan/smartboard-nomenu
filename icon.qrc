@@ -127,5 +127,10 @@
         <file>icons/halfnonumbercoordinate.svg</file>
         <file>icons/numbercoordinate.svg</file>
         <file>icons/nonumbercoordinate.svg</file>
+        <file>icons/pdf.svg</file>
+        <file>icons/pdfopen.svg</file>
+        <file>icons/pdfsave.svg</file>
+        <file>icons/save.svg</file>
+        <file>icons/open.svg</file>
     </qresource>
 </RCC>
