@@ -105,23 +105,23 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
 
     if(current_toolKalemMenu->isVisible()) current_toolKalemMenu->close();
    if(mode==Scene::Mode::DrawPen)
-       current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(),screenSize.width()*0.8,screenSize.height()*0.05);
+       current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(),screenSize.width()*0.8,screenSize.height()*0.06);
    if(mode==Scene::Mode::EraseMode)
-       current_toolKalemMenu=new toolKalemMenu(kw->eraseTopMenu(),screenSize.width()*0.6,screenSize.height()*0.05);
+       current_toolKalemMenu=new toolKalemMenu(kw->eraseTopMenu(),screenSize.width()*0.6,screenSize.height()*0.06);
    if(mode==Scene::Mode::SekilMode)
-       current_toolKalemMenu=new toolKalemMenu(kw->sekilTopMenu(),screenSize.width()*0.7,screenSize.height()*0.05);
+       current_toolKalemMenu=new toolKalemMenu(kw->sekilTopMenu(),screenSize.width()*0.7,screenSize.height()*0.06);
    if(mode==Scene::Mode::ZeminMode)
    {
-       current_toolKalemMenu=new toolKalemMenu(kw->zeminTopMenu(),screenSize.width()*0.9,screenSize.height()*0.05);
+       current_toolKalemMenu=new toolKalemMenu(kw->zeminTopMenu(),screenSize.width()*0.9,screenSize.height()*0.06);
    }
    if(mode==Scene::Mode::PdfMode)
    {
-       current_toolKalemMenu=new toolKalemMenu(kw->pdfTopMenu(),screenSize.width()*0.6,screenSize.height()*0.05);
+       current_toolKalemMenu=new toolKalemMenu(kw->pdfTopMenu(),screenSize.width()*0.6,screenSize.height()*0.06);
    }
        if(mode==Scene::Mode::SelectObject||
 //           mode==Scene::Mode::ClearMode||
            mode==Scene::Mode::CopyMode)
-       current_toolKalemMenu=new toolKalemMenu(new QWidget(),screenSize.width()*0.6,screenSize.height()*0.05);
+       current_toolKalemMenu=new toolKalemMenu(new QWidget(),screenSize.width()*0.6,screenSize.height()*0.06);
 
    current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,0);
     current_toolKalemMenu->show();
@@ -156,7 +156,7 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
     if(Scene::Mode::ZeminMode==mode) kalemZeminModeSignalSlot(type);
     if(Scene::Mode::SelectObject==mode) slotHand();
     if(Scene::Mode::EraseMode==mode) slotErase();
-    if(Scene::Mode::ClearMode==mode) slotClear();
+    //if(Scene::Mode::ClearMode==mode) slotClear();
     if(Scene::Mode::CopyMode==mode) slotCopy();
      /* if(Scene::Mode::NextPageMode==mode) {
         on_nextPage_triggered();
@@ -351,19 +351,7 @@ void MainWindow::slotErase()
    current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
 
 }
-void MainWindow::slotClear()
-{
-   /*scene->pageOfNumberScene=currentTab()->currentPage()-1;
-    PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-    const QRectF pageItemRect = page->boundingRect().translated(page->pos());
-    currentTab()->scene->pageItemRect=pageItemRect;
-*/
-  current_toolTahta->scene->sceneMode=Scene::Mode::ClearMode;
-  current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
-  current_toolTahta->scene->removeAllItem();
-///qDebug()<<"sil*****";
 
-}
 void MainWindow::slotCopy()
 {
     /*

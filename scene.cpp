@@ -1018,7 +1018,8 @@ void Scene::removeOddItem(){
         {
             VERectangle * itemselection = dynamic_cast<VERectangle *>(item);
             if(itemselection->sekilTr!=DiagramItem::DiagramType::PatternPage&&
-                    itemselection->pageOfNumber==pageOfNumberScene)
+               itemselection->sekilTr!=DiagramItem::DiagramType::Pdf&&
+               itemselection->pageOfNumber==pageOfNumberScene)
             {
                 /// qDebug()<<"verectangle silindi";
                 historyBack.append(itemselection);
@@ -1058,6 +1059,7 @@ void Scene::removeAllItem(){
         {
             VERectangle * itemselection = dynamic_cast<VERectangle *>(item);
             if(itemselection->sekilTr!=DiagramItem::DiagramType::PatternPage&&
+                    itemselection->sekilTr!=DiagramItem::DiagramType::Pdf&&
                     itemselection->pageOfNumber==pageOfNumberScene)
             {
                 /// qDebug()<<"verectangle silindi";

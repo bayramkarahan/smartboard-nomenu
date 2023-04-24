@@ -17,7 +17,6 @@
 #include<QPrinter>
 #include<QMessageBox>
 #include<QPdfWriter>
-#include<poppler/qt5/poppler-qt5.h>
 class QMouseEvent;
 class toolKalem : public QFrame
 {
@@ -105,10 +104,18 @@ public slots:
      QWidget *pageBottomMenu();
      QWidget *pdfTopMenu();
     void setEraseSize(int size);
-    void ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfPageIndex);
+    void ekleSayfaButtonClick(int insertIndex, bool pdfObjectAdded, int pdfPageIndex);
     void silSayfaButtonClick();
     void secSayfaButtonClick(int index);
+     void geriSayfaButtonClick();
+     void ileriSayfaButtonClick();
+     void pdfLoaderPage(int pageIndex);
+     void zoomfitSayfaButtonClick();
+     void zoompozitifSayfaButtonClick();
+     void zoomnegatifSayfaButtonClick();
 private:
+     int pdfPageList=0;
+     int ekliSayfa=1;
     int parentw;
     int parenth;
     QString title;

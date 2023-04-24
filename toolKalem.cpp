@@ -91,7 +91,8 @@ void toolKalem::penButtonSlot()
 
 void toolKalem::clearButtonSlot()
 {
-    emit kalemModeSignal(Scene::Mode::ClearMode,DiagramItem::DiagramType::NoType);
+     current_toolTahta->scene->removeAllItem();
+    //emit kalemModeSignal(Scene::Mode::ClearMode,DiagramItem::DiagramType::NoType);
 }
 
 void toolKalem::modeKontrolSlot()
@@ -900,9 +901,9 @@ QWidget *toolKalem::pageBottomMenu()
     addPageButton=butonSlot(addPageButton,"",":icons/addpage.svg",QColor(255,0,0,0),e,b,e,b);
 
     connect(addPageButton, &QPushButton::clicked, [=]() {
-        current_toolTahta->sceneIndex++;
-        current_toolTahta->current_sceneIndex=current_toolTahta->sceneIndex;
-        qDebug()<<"current_toolTahta->sceneIndex:"<<current_toolTahta->sceneIndex;
+        //current_toolTahta->sceneIndex++;
+       // current_toolTahta->current_sceneIndex=current_toolTahta->sceneIndex;
+        //qDebug()<<"current_toolTahta->sceneIndex:"<<current_toolTahta->sceneIndex;
 
        ekleSayfaButtonClick(-1,false,-1);///İlk Sayfa ekleniyor Açıldığında göünen sayfa
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
@@ -937,6 +938,7 @@ QWidget *toolKalem::pageBottomMenu()
     zoomnegatifPageButton=butonSlot(zoomnegatifPageButton,"",":icons/zoompagenegatif.svg",QColor(255,0,0,0),e,b,e,b);
 
     connect(zoomnegatifPageButton, &QPushButton::clicked, [=]() {
+        zoomnegatifSayfaButtonClick();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
 
@@ -945,6 +947,7 @@ QWidget *toolKalem::pageBottomMenu()
     zoompozitifPageButton=butonSlot(zoompozitifPageButton,"",":icons/zoompagepozitif.svg",QColor(255,0,0,0),e,b,e,b);
 
     connect(zoompozitifPageButton, &QPushButton::clicked, [=]() {
+        zoompozitifSayfaButtonClick();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
 
@@ -953,6 +956,7 @@ QWidget *toolKalem::pageBottomMenu()
     zoomfitPageButton=butonSlot(zoomfitPageButton,"",":icons/zoompagefit.svg",QColor(255,0,0,0),e,b,e,b);
 
     connect(zoomfitPageButton, &QPushButton::clicked, [=]() {
+        zoomfitSayfaButtonClick();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
 
@@ -1102,7 +1106,7 @@ QWidget *toolKalem::pdfTopMenu()
         if(fileSelected==false) return;
         fileSelected=false;
        // Poppler::Document *doc
-        /* current_toolTahta->doc = Poppler::Document::load(abc.selectedFiles()[0]);
+         current_toolTahta->doc = Poppler::Document::load(abc.selectedFiles()[0]);
        current_toolTahta->doc->setRenderHint(Poppler::Document::TextAntialiasing,true);
         current_toolTahta->doc->setRenderHint(Poppler::Document::Antialiasing,true);
         current_toolTahta->doc->setRenderHint(Poppler::Document::TextHinting,true);
@@ -1120,14 +1124,14 @@ QWidget *toolKalem::pdfTopMenu()
 
             //pdfobjectnumber=1;
            // pdfPageList=1;
-            //ileriSayfaButtonClick();
+            ileriSayfaButtonClick();
 
             //sceneSayfaActiveNumber=0;
            // scene=sceneSayfa[sceneSayfaActiveNumber];
            // view->setScene(scene);
            // if(scene->pdfObjectAdded&&scene->pdfObjectShow==false) pdfLoaderPage(sceneSayfaActiveNumber);///pdf page loader
             //currentScreenModeSlot();
-        }*/
+        }
     });
 
     QPushButton *pdfSaveButton=new QPushButton();
@@ -3462,24 +3466,24 @@ void toolKalem::setEraseSize(int size)
     eraseSizePopLabel->setText("Silgi Boyutu: "+QString::number(size));
 }
 
-void toolKalem::ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfPageIndex){
-     qDebug()<<"ekle sayfa1"<<pdfObjectAdded;
+void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdfPageIndex){
+     qDebug()<<"ekle sayfa1"<<insertIndex<<pdfObjectAdded<<pdfPageIndex;
 
-    bool initprg=false;
-     if(current_toolTahta->current_sceneIndex==0&&current_toolTahta->sceneIndex==0)
+   // bool initprg=false;
+    if(current_toolTahta->sceneIndex==0&&current_toolTahta->current_sceneIndex==0)
     {
-       /* initprg=true;
-        sceneSayfaNumber++;
-        sceneSayfaActiveNumber=0;
-        sceneSayfa.removeAt(0);*/
+        //initprg=true;
+        current_toolTahta->sceneIndex++;
+        current_toolTahta->current_sceneIndex=0;
+       // current_toolTahta->sceneList.removeAt(0);
         //if(pdfobjectnumber==1&&pdfObjectAdded==false) pdfObjectAdded=true;
     }else
     {
-        ///initprg=false;
-       //current_toolTahta->sceneIndex++;
+        //initprg=false;
+        current_toolTahta->sceneIndex++;
 
-      //if(inserIndex==-1)sceneSayfaActiveNumber=sceneSayfaNumber-1;
-      //else sceneSayfaActiveNumber++;
+      if(insertIndex==-1)current_toolTahta->current_sceneIndex=current_toolTahta->sceneIndex-1;
+      else current_toolTahta->current_sceneIndex++;
     }
   ///  qDebug()<<"ekle sayfa2"<<sceneSayfaNumber<<sceneSayfaActiveNumber<<pdfObjectAdded;
      current_toolTahta->_scene = new Scene(current_toolTahta->gv);
@@ -3503,9 +3507,9 @@ void toolKalem::ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfP
     // screenlayout->addWidget(_screenbtn);
     sceneListButtonLayout->insertWidget(current_toolTahta->current_sceneIndex,_screenbtn);
     // pageList.append(_screenbtn);
-    current_toolTahta->sceneListButton.insert(current_toolTahta->current_sceneIndex,_screenbtn);
+    current_toolTahta->sceneListButton.insert(current_toolTahta->sceneIndex-1,_screenbtn);
+   // current_toolTahta->sceneListButton.append(_screenbtn);
 
-        //qDebug()<<"ekle sayfa2";
    for(int i=0;i<current_toolTahta->sceneListButton.count();i++){
 
         current_toolTahta->sceneListButton[i]->setText(QString::number(i+1));
@@ -3516,16 +3520,18 @@ void toolKalem::ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfP
   // ileriSayfaButtonClick();
 
       connect(_screenbtn, &QPushButton::clicked, [=]() {
-          QPalette palet;
+       /*   QPalette palet;
           palet.setBrush(QPalette::Background,QColor(0,0,0,0));
           current_toolTahta->setPalette(palet);
 
           current_toolTahta->current_sceneIndex=_screenbtn->toolTip().toInt();
           current_toolTahta->clearImage();
           //qDebug()<<"tooltip:"<<_screenbtn->toolTip();
+          */
+          secSayfaButtonClick(_screenbtn->toolTip().toInt());
           /******************************************************/
           /// sceneSayfaActiveNumber=_screenbtn->toolTip().toInt();
-          current_toolTahta->scene=current_toolTahta->sceneList[current_toolTahta->current_sceneIndex];
+       /*   current_toolTahta->scene=current_toolTahta->sceneList[current_toolTahta->current_sceneIndex];
           current_toolTahta->gv->setScene(current_toolTahta->scene);
           current_toolTahta->scene->setSceneRect(current_toolTahta->gv->pos().x(),current_toolTahta->gv->pos().y(), current_toolTahta->gv->width(),current_toolTahta->gv->height());
 
@@ -3535,7 +3541,7 @@ void toolKalem::ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfP
           /// qDebug()<<"sayı:"<<pageList.length();
 
         /**********************************************/
-        for(int i=0;i<current_toolTahta->sceneListButton.length();i++)
+      /*  for(int i=0;i<current_toolTahta->sceneListButton.length();i++)
         {
             palette->setColor(QPalette::Button, QColor(225,225,225,255));
             current_toolTahta->sceneListButton[i]->setPalette(*palette);
@@ -3546,19 +3552,20 @@ void toolKalem::ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfP
         _screenbtn->setPalette(*palette);
         _screenbtn->setAutoFillBackground(true);
         /**************pdf loader page**** çok önemli***********/
-        ///   if(scene->pdfObjectAdded&&scene->pdfObjectShow==false&&scene->pdfPageNumber<=pdfPageCount-1) pdfLoaderPage(scene->pdfPageNumber);///pdf page loader
+      ///     if(current_toolTahta->scene->pdfObjectAdded&&current_toolTahta->scene->pdfObjectShow==false&&current_toolTahta->scene->pdfPageNumber<=current_toolTahta->pdfPageCount-1) pdfLoaderPage(current_toolTahta->scene->pdfPageNumber);///pdf page loader
   //  currentScreenModeSlot();
         /************************************************/
-       qDebug()<<"sayfa yenileniyor";
+  /*     qDebug()<<"sayfa yenileniyor";
        QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
        // QPalette palet;
         palet.setBrush(QPalette::Background,pixMap);
        current_toolTahta->setPalette(palet);
 
-
+*/
     });
+      secSayfaButtonClick(_screenbtn->toolTip().toInt());
     /*****************Sayfa Eklenince mutlaka Çalışmalı*****************************/
-    for(int i=0;i<current_toolTahta->sceneListButton.count();i++)
+   /* for(int i=0;i<current_toolTahta->sceneListButton.count();i++)
     {
         palette->setColor(QPalette::Button, QColor(225,225,225,255));
         current_toolTahta->sceneListButton[i]->setPalette(*palette);
@@ -3578,15 +3585,15 @@ void toolKalem::ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfP
     //buttonColorClear();
     //sekilButtonIconSlot();
     //
-
-    modeKontrolSlot();
+//qDebug()<<"ekle-orta"<<current_toolTahta->scene->pdfObjectAdded;
+ //   modeKontrolSlot();
     /************************************************/
 
-      if(initprg==false)
-      {
-           if(current_toolTahta->scene->pdfObjectAdded==1)
+     // if(initprg==false)
+      //{
+      /*     if(current_toolTahta->scene->pdfObjectAdded)
           {
-              // qDebug()<<"sayfa ekle8";
+            //  qDebug()<<"sayfa ekle8";
               nextPageButton->show();
               backPageButton->show();
               zoompozitifPageButton->show();
@@ -3604,7 +3611,7 @@ void toolKalem::ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfP
           }
 
           //  qDebug()<<"sayfa ekle11";
-          if(current_toolTahta->sceneIndex>0)
+          if(current_toolTahta->sceneIndex>1)
           {
 
               ///ileriGeriSayfaLabel->show();
@@ -3616,15 +3623,15 @@ void toolKalem::ekleSayfaButtonClick(int inserIndex,bool pdfObjectAdded,int pdfP
 
               delPageButton->setEnabled(false);
 
-          }
-      }
-
+          }*/
+     // }
+//qDebug()<<"ekle-son";
 }
 
 void toolKalem::silSayfaButtonClick(){
    /// if(sceneSayfaNumber>0)sceneSayfaNumber--;
     if(current_toolTahta->sceneIndex>0){
-       // qDebug()<<"sil sayfa-1";
+       qDebug()<<"sil sayfa-1";
         QPalette palet;
         palet.setBrush(QPalette::Background,QColor(0,0,0,0));
         current_toolTahta->setPalette(palet);
@@ -3634,13 +3641,14 @@ void toolKalem::silSayfaButtonClick(){
         current_toolTahta->sceneList.removeAt(current_toolTahta->current_sceneIndex);
         current_toolTahta->sceneIndex--;
         current_toolTahta->current_sceneIndex--;
-        current_toolTahta->scene=current_toolTahta->sceneList[current_toolTahta->current_sceneIndex];
+        secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+       /* current_toolTahta->scene=current_toolTahta->sceneList[current_toolTahta->current_sceneIndex];
         current_toolTahta->gv->setScene(current_toolTahta->scene);
 
         QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
         // QPalette palet;
         palet.setBrush(QPalette::Background,pixMap);
-        current_toolTahta->setPalette(palet);
+        current_toolTahta->setPalette(palet);*/
     }
   /*  else if(sceneSayfaActiveNumber==0){
         if(sceneSayfaNumber>0)
@@ -3659,7 +3667,7 @@ void toolKalem::silSayfaButtonClick(){
     }*/
    // qDebug()<<"sil sayfa-1"<<sceneSayfaNumber<<sceneSayfaActiveNumber;
     /***********************************************/
-    for(int i=0;i<current_toolTahta->sceneListButton.length();i++)
+  /*  for(int i=0;i<current_toolTahta->sceneListButton.length();i++)
     {
         current_toolTahta->sceneListButton[i]->setToolTip(QString::number(i));
         current_toolTahta->sceneListButton[i]->setText(QString::number(i+1));
@@ -3675,7 +3683,7 @@ void toolKalem::silSayfaButtonClick(){
     /**********************************************/
 
       //int pdfobject=pdfobjectnumber;
-      bool pdfobjectadded=false;
+ /*     bool pdfobjectadded=false;
         foreach(QGraphicsItem* item, current_toolTahta->scene->items()){
             VERectangle * selection = dynamic_cast<VERectangle *>(item);
             if(selection)
@@ -3717,15 +3725,20 @@ void toolKalem::silSayfaButtonClick(){
 
        }
       /*****************************************************************/
-  QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+ /* QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
   QPalette palet;
   palet.setBrush(QPalette::Background,pixMap);
   current_toolTahta->setPalette(palet);
-  current_toolTahta->repaint();
+  current_toolTahta->repaint();*/
 }
 
 void toolKalem::secSayfaButtonClick(int index)
 {
+  /***************************form ekran fotosu resetleniyor**************/
+    QPalette palet;
+    palet.setBrush(QPalette::Background,QColor(0,0,0,0));
+    current_toolTahta->setPalette(palet);
+/*********************************************************************/
     current_toolTahta->current_sceneIndex=index;;
     current_toolTahta->clearImage();
     current_toolTahta->scene=current_toolTahta->sceneList[current_toolTahta->current_sceneIndex];
@@ -3757,10 +3770,303 @@ void toolKalem::secSayfaButtonClick(int index)
     palette->setColor(QPalette::Button, QColor(255,0,0,100));
     current_toolTahta->sceneListButton[index]->setPalette(*palette);
     current_toolTahta->sceneListButton[index]->setAutoFillBackground(true);
-   /* if(current_toolTahta->scene->pdfObjectAdded&&current_toolTahta->scene->pdfObjectShow==false&&
-            current_toolTahta->scene->pdfPageNumber<=pdfPageCount-1)
-       /// pdfLoaderPage(current_toolTahta->scene->pdfPageNumber);///pdf page loader
-    ///currentScreenModeSlot();
-*/
 
+    if(current_toolTahta->scene->pdfObjectAdded&&current_toolTahta->scene->pdfObjectShow==false&&
+            current_toolTahta->scene->pdfPageNumber<=current_toolTahta->pdfPageCount-1)
+      pdfLoaderPage(current_toolTahta->scene->pdfPageNumber);///pdf page loader
+    ///currentScreenModeSlot();
+/***************************form ekran fotosu ayarlanıyor**************/
+    qDebug()<<"sayfa seç yenileniyor";
+    QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+    QPalette palet1;
+    palet1.setBrush(QPalette::Background,pixMap);
+    current_toolTahta->setPalette(palet1);
+/********************************************************************/
+    if(current_toolTahta->scene->pdfObjectAdded)
+   {
+     //  qDebug()<<"sayfa ekle8";
+       nextPageButton->show();
+       backPageButton->show();
+       zoompozitifPageButton->show();
+       zoomnegatifPageButton->show();
+       zoomfitPageButton->show();
+
+   }else
+   {
+        nextPageButton->hide();
+        backPageButton->hide();
+        zoompozitifPageButton->hide();
+        zoomnegatifPageButton->hide();
+        zoomfitPageButton->hide();
+
+   }
+
+   //  qDebug()<<"sayfa ekle11";
+   if(current_toolTahta->sceneIndex>1)
+   {
+
+       ///ileriGeriSayfaLabel->show();
+       delPageButton->setEnabled(true);
+       //addSayfaButton->show();
+   }
+   else
+   {
+
+       delPageButton->setEnabled(false);
+
+   }
+}
+
+
+void toolKalem::ileriSayfaButtonClick(){
+    pdfPageList++;int start,end;
+    int pdfPageCount=current_toolTahta->pdfPageCount;
+  ///  qDebug()<<"ileri: pdfPageList"<<pdfPageList<<"pdfPageCount"<<pdfPageCount<<"ekliSayfa"<<ekliSayfa;
+    start=pdfPageList*15-15;
+    end=pdfPageList*15;
+    if(pdfPageList>=((pdfPageCount+ekliSayfa)/15)+1)
+    {   start=pdfPageList*15-15;    end=pdfPageCount+ekliSayfa; pdfPageList=(pdfPageCount+ekliSayfa)/15; }
+
+    for(int i=start;i<end;i++)
+    {
+        //// qDebug()<<"ileri:"<<start<<end<<i;
+        if(i>=ekliSayfa){
+            //qDebug()<<"ileri:"<<i;
+            if(current_toolTahta->sceneListButton.count()>i)
+            {
+               current_toolTahta->sceneListButton[i]->show();
+            }
+            else
+            {
+
+                ekleSayfaButtonClick(-1,true,i-ekliSayfa);
+            }
+        }
+    }
+
+    for(int i=0;i<current_toolTahta->sceneListButton.length();i++)
+    {
+        current_toolTahta->sceneListButton[i]->hide();
+    }
+
+    for(int i=start;i<end;i++)
+    {
+        palette->setColor(QPalette::Button, QColor(225,225,225,100));
+        current_toolTahta->sceneListButton[i]->setPalette(*palette);
+        current_toolTahta->sceneListButton[i]->setAutoFillBackground(true);
+        //pageList[i]->update();
+
+        current_toolTahta->sceneListButton[i]->show();
+    }
+
+  secSayfaButtonClick(start); //ilk sayfa gösteriliyor
+
+}
+void toolKalem::geriSayfaButtonClick(){
+    pdfPageList--;
+  //  qDebug()<<"geri: pdfPageList"<<pdfPageList<<"pdfPageCount"<<pdfPageCount<<"ekliSayfa"<<ekliSayfa;
+    int start=pdfPageList*15;
+    int end=pdfPageList*15+15;
+    if(pdfPageList<=1)
+    { pdfPageList=1;  start=pdfPageList*15-15;    end=pdfPageList*15;  }
+
+
+    for(int i=0;i<current_toolTahta->sceneListButton.length();i++)
+    {
+        current_toolTahta->sceneListButton[i]->hide();
+    }
+
+        for(int i=start;i<end;i++)
+        {
+            palette->setColor(QPalette::Button, QColor(225,225,225,100));
+            current_toolTahta->sceneListButton[i]->setPalette(*palette);
+            current_toolTahta->sceneListButton[i]->setAutoFillBackground(true);
+            //pageList[i]->update();
+            current_toolTahta->sceneListButton[i]->show();
+        }
+        secSayfaButtonClick(start); //ilk sayfa gösteriliyor
+   }
+void toolKalem::pdfLoaderPage(int pageIndex)
+{
+   qDebug()<<"pdf loader function"<<pageIndex;
+  /// zeminBeyazButtonClick();///burada zemin beyaz yapılıyor
+    emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
+
+     //  QImage image = doc->page(pageIndex)->renderToImage(125.0,125.0,-1,-1,-1,-1);
+     QImage image = current_toolTahta->doc->page(pageIndex)->renderToImage(150.0,150.0,current_toolTahta->doc->page(pageIndex)->pageSize().width(),current_toolTahta->doc->page(pageIndex)->pageSize().height());
+
+    ///  view->setSceneRect(0,0,image.width(),image.height());
+     VERectangle*  itemToRectDraw = new VERectangle(current_toolTahta->scene);
+    itemToRectDraw->sekilTur(DiagramItem::DiagramType::Pdf);
+    //itemToRectDraw->setPen(QPen(sekilKalemColor, sekilPenSize, sekilPenStyle));
+     itemToRectDraw->setPos(QPoint(current_toolTahta->width()/8,0));
+
+     itemToRectDraw->setBrush(sekilZeminColor);
+     QPixmap tmp(image.width(),image.height());
+     tmp.fill(QColor(sekilZeminColor));
+     QPainter painter(&tmp);
+     painter.drawImage(QPoint{}, image, image.rect());
+     painter.end();
+
+     itemToRectDraw->setImage(tmp);
+
+    current_toolTahta->scene->addItem(itemToRectDraw);
+
+    current_toolTahta->scene->graphicsList.append(itemToRectDraw);
+    current_toolTahta->scene->graphicsListTemp.append(itemToRectDraw);
+    current_toolTahta->scene->historyBack.append(itemToRectDraw);
+    current_toolTahta->scene->historyBackAction.append("added");
+
+    depo::historyBackCount=current_toolTahta->scene->historyBack.count();
+    depo::historyNextCount=current_toolTahta->scene->historyNext.count();
+
+    itemToRectDraw->setRect(0,0,current_toolTahta->width()/4*3,current_toolTahta->height());
+
+    itemToRectDraw->fareState(false);
+    itemToRectDraw->setZValue(-200);
+    current_toolTahta->scene->makeItemsControllable(false);
+    current_toolTahta->scene->pdfObjectShow=true;
+    //itemToRectDraw->fareState(true);
+    itemToRectDraw = 0;
+    //secButtonClick();
+current_toolTahta->scene->update();
+ //currentScreenModeSlot();
+if(current_toolTahta->scene->pdfObjectAdded)
+{
+ //  qDebug()<<"sayfa ekle8";
+   nextPageButton->show();
+   backPageButton->show();
+   zoompozitifPageButton->show();
+   zoomnegatifPageButton->show();
+   zoomfitPageButton->show();
+
+}else
+{
+    nextPageButton->hide();
+    backPageButton->hide();
+    zoompozitifPageButton->hide();
+    zoomnegatifPageButton->hide();
+    zoomfitPageButton->hide();
+
+}
+
+//  qDebug()<<"sayfa ekle11";
+if(current_toolTahta->sceneIndex>1)
+{
+
+   ///ileriGeriSayfaLabel->show();
+   delPageButton->setEnabled(true);
+   //addSayfaButton->show();
+}
+else
+{
+
+   delPageButton->setEnabled(false);
+
+}
+
+}
+
+void toolKalem::zoomfitSayfaButtonClick()
+{
+    foreach(QGraphicsItem* item, current_toolTahta->scene->items()){
+        VERectangle * selection = dynamic_cast<VERectangle *>(item);
+
+        if(selection)
+        {
+            if(selection->sekilTr==DiagramItem::DiagramType::Pdf)
+            {
+                selection->setRect(0,0,current_toolTahta->width()/4*3,current_toolTahta->height());
+                selection->setPos(QPoint(current_toolTahta->width()/8,0));
+
+/*
+                selection->setRect(0,0,selection->rect().width()/6*7,selection->rect().height()/4*6);
+
+                if(selection->rect().width()+boy<this->width())
+                    selection->setPos(QPoint(this->width()/2-selection->rect().width()/2,0));
+
+
+                if(selection->pos().x()-selection->rect().width()/12<boy)
+                    selection->setPos(QPoint(boy*1.1,0));
+                */
+                 selection->fareState(false);
+                current_toolTahta->scene->update();
+
+              QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+              QPalette palet;
+              palet.setBrush(QPalette::Background,pixMap);
+              current_toolTahta->setPalette(palet);
+
+                //    else
+               // selection->setPos(QPoint(selection->pos().x()-selection->rect().width()/12,0));
+
+            }
+        }
+
+
+    }
+}
+void toolKalem::zoompozitifSayfaButtonClick()
+{
+    foreach(QGraphicsItem* item, current_toolTahta->scene->items()){
+        VERectangle * selection = dynamic_cast<VERectangle *>(item);
+
+        if(selection)
+        {
+            if(selection->sekilTr==DiagramItem::DiagramType::Pdf)
+            {
+
+                selection->setRect(0,0,selection->rect().width()/6*7,selection->rect().height()/4*6);
+
+                if(selection->rect().width()+boy<current_toolTahta->width())
+                    selection->setPos(QPoint(current_toolTahta->width()/2-selection->rect().width()/2,0));
+
+
+                if(selection->pos().x()-selection->rect().width()/12<boy)
+                    selection->setPos(QPoint(boy*1.1,0));
+                 selection->fareState(false);
+                current_toolTahta->scene->update();
+
+              QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+              QPalette palet;
+              palet.setBrush(QPalette::Background,pixMap);
+              current_toolTahta->setPalette(palet);
+
+                //    else
+               // selection->setPos(QPoint(selection->pos().x()-selection->rect().width()/12,0));
+
+            }
+        }
+
+
+    }
+}
+void toolKalem::zoomnegatifSayfaButtonClick()
+{
+    foreach(QGraphicsItem* item, current_toolTahta->scene->items()){
+        VERectangle * selection = dynamic_cast<VERectangle *>(item);
+
+        if(selection)
+        {
+            if(selection->sekilTr==DiagramItem::DiagramType::Pdf)
+            {
+
+                selection->setRect(0,0,selection->rect().width()/7*6,selection->rect().height()/6*4);
+                if(selection->rect().width()/7*6<current_toolTahta->width()+boy)
+                    selection->setPos(QPoint(current_toolTahta->width()/2-selection->rect().width()/2,0));
+                    else
+                    selection->setPos(QPoint(selection->pos().x()+selection->rect().width()/12,0));
+                     selection->fareState(false);
+                 current_toolTahta->scene->update();
+
+                 QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+                 QPalette palet;
+                 palet.setBrush(QPalette::Background,pixMap);
+                 current_toolTahta->setPalette(palet);
+
+            }
+        }
+
+
+    }
 }

@@ -29,7 +29,6 @@ public slots:
     void kalemSekilModeSignalSlot(DiagramItem::DiagramType type);
    // void slotBos();
     void slotPenInit();
-    void slotClear();
     void slotErase();
     void slotHand();
     void slotCopy();
