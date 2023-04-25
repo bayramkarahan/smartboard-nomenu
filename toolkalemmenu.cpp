@@ -26,7 +26,7 @@ toolKalemMenu::toolKalemMenu(QWidget *_menu,int w, int h, QWidget *parent)
        menu->setObjectName("buyukKutu");
         menu->setStyleSheet("QWidget#buyukKutu{"
                             "border: 2px solid rgb(53, 132, 228);"
-                              "border-radius: 10px;"
+                              "border-radius: 5px;"
                               "background-color:rgba(240,240,240,255);"
                             "}");
 

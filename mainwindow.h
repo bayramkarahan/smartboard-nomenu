@@ -11,6 +11,8 @@
 #include<tooltahta.h>
 #include<toolkalemmenu.h>
 #include<toolpagemenu.h>
+#include<QDesktopWidget>
+
 class MainWindow : public QWidget
 {
     Q_OBJECT

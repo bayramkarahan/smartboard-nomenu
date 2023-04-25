@@ -20,7 +20,6 @@
 class QMouseEvent;
 class toolKalem : public QFrame
 {
-     using super = QFrame;
     Q_OBJECT
 public:
     Scene::Mode oldMode;
@@ -97,12 +96,12 @@ public slots:
     QPushButton *butonSlot(QPushButton *btn, QString text, QString icon, QColor color, int w, int h, int iw, int ih);
 
     QToolButton *butonToolSlot(QToolButton *btn, QString text, QString icon, QColor color, int w, int h);
-    QWidget *penTopMenu();
-    QWidget* sekilTopMenu();
-    QWidget *zeminTopMenu();
-    QWidget *eraseTopMenu();
-     QWidget *pageBottomMenu();
-     QWidget *pdfTopMenu();
+    QWidget *penTopMenu(int _boy);
+    QWidget* sekilTopMenu(int _boy);
+    QWidget *zeminTopMenu(int _boy);
+    QWidget *eraseTopMenu(int _boy);
+    QWidget *pageBottomMenu(int _boy);
+    QWidget *pdfTopMenu(int _boy);
     void setEraseSize(int size);
     void ekleSayfaButtonClick(int insertIndex, bool pdfObjectAdded, int pdfPageIndex);
     void silSayfaButtonClick();
@@ -139,23 +138,7 @@ private:
     QPushButton *zoomfitPageButton;
     QPushButton *zoompozitifPageButton;
     protected:
-    virtual void paintEvent (QPaintEvent *event) override
-        {
 
-            /*
-             * Draw the title centred in the top margin.
-             */
-           /* QPainter painter(this);
-            QRect title_rect(QPoint(0, 0), QSize(width(), contentsMargins().top()));
-            painter.fillRect(title_rect, Qt::blue);
-            painter.setPen(Qt::black);
-            painter.drawText(title_rect, Qt::AlignCenter, title);
-
-            /*
-             * Defer to the base class implementation to update everything else.
-             */
-           /* super::paintEvent(event);
-       */ }
 
 };
 

@@ -141,7 +141,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event){
          break;
      }
      case CopyMode:{sceneModeTrue=CopyModeTrue;
-          //qDebug()<<"crop başladı";
+          qDebug()<<"crop başladı";
           origPoint = event->scenePos();
            QGraphicsView::DragMode vMode =QGraphicsView::NoDrag;
           vMode = QGraphicsView::RubberBandDrag;
@@ -847,7 +847,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
         break;}
     case CopyModeTrue:{
 
-       /* if(!itemToRectDraw){
+        if(!itemToRectDraw){
 
              itemToRectDraw = new VERectangle(this);
             itemToRectDraw->sekilTur(DiagramItem::DiagramType::Copy);
@@ -891,8 +891,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
             fc->fileWrite("copy=1");
 */
 
-        ///}
-      //  qDebug()<<"copy bitti";
+        }
+        qDebug()<<"copy bitti";
 
         break;}
     case EraseModeTrue:{
