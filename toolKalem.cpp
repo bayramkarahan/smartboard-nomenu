@@ -62,7 +62,19 @@ bool toolKalem::eventFilter(QObject * obj, QEvent *event)
     }*/
     return false;
 }
+void toolKalem::sagSolHizala()
+{
+    if (!sagSolHizaStatus)
+    {
+        move(parentw-this->width()-10,parenth/2- this->height()/2);
+        sagSolHizaStatus=true;
+    }else
+    {
+        move(10,parenth/2- this->height()/2);
+        sagSolHizaStatus=false;
+    }
 
+}
 void toolKalem::buttonStateClear()
 {
     handButton->setChecked(false);
@@ -964,6 +976,7 @@ QWidget *toolKalem::pageBottomMenu()
     leftsidePageButton=butonSlot(leftsidePageButton,"",":icons/leftside.svg",QColor(255,0,0,0),e,b,e,b);
 
     connect(leftsidePageButton, &QPushButton::clicked, [=]() {
+        sagSolHizala();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
 
@@ -971,6 +984,7 @@ QWidget *toolKalem::pageBottomMenu()
     rightsidePageButton=butonSlot(rightsidePageButton,"",":icons/rightside.svg",QColor(255,0,0,0),e,b,e,b);
 
     connect(rightsidePageButton, &QPushButton::clicked, [=]() {
+        sagSolHizala();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
 

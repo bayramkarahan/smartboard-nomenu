@@ -113,16 +113,18 @@ public slots:
      void zoomfitSayfaButtonClick();
      void zoompozitifSayfaButtonClick();
      void zoomnegatifSayfaButtonClick();
+     void sagSolHizala();
 private:
+     bool sagSolHizaStatus;
      int pdfPageList=0;
      int ekliSayfa=1;
-    int parentw;
-    int parenth;
-    QString title;
-    QMenu *zeminMenu();
-    QMenu *pageMenu();
-    QPalette *palette;
-    QLabel *eraseSizePopLabel;
+     int parentw;
+     int parenth;
+     QString title;
+     QMenu *zeminMenu();
+     QMenu *pageMenu();
+     QPalette *palette;
+     QLabel *eraseSizePopLabel;
     QLabel *sekilKalemSizePopLabel;
     QLabel *kalemSizePopLabel;
     QLabel *gridSizePopLabel;

@@ -25,7 +25,8 @@ MainWindow::MainWindow(QWidget *parent) :
  /******************************************************************************/
    kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta,screenSize.width(),screenSize.height());
    kw->setFixedSize(en*1.15,boy*0.8*11);
-   kw->move(screenSize.width()-kw->width()-10,screenSize.height()/2- kw->height()/2);
+   kw->sagSolHizala();
+  // kw->move(screenSize.width()-kw->width()-10,screenSize.height()/2- kw->height()/2);
    kw->setStyleSheet("background-color:rgb(220, 220, 220);");
    kw->setWindowFlags(Qt::X11BypassWindowManagerHint);
    kw->setObjectName("kalem");
