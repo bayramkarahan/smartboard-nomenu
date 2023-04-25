@@ -104,6 +104,7 @@ void toolKalem::penButtonSlot()
 void toolKalem::clearButtonSlot()
 {
      current_toolTahta->scene->removeAllItem();
+     secSayfaButtonClick(current_toolTahta->current_sceneIndex);
     //emit kalemModeSignal(Scene::Mode::ClearMode,DiagramItem::DiagramType::NoType);
 }
 
