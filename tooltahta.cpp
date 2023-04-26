@@ -121,7 +121,8 @@ void toolTahta::mouseReleaseEvent(QMouseEvent *event)
 
         itemToRectDraw->setImage(temp);
         scene->addItem(itemToRectDraw);
-      /*  scene->graphicsList.append(itemToRectDraw);
+
+        scene->graphicsList.append(itemToRectDraw);
         scene->graphicsListTemp.append(itemToRectDraw);
         scene->historyBack.append(itemToRectDraw);
         scene->historyBackAction.append("added");

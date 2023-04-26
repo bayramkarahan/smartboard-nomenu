@@ -77,6 +77,7 @@ void toolKalem::sagSolHizala()
 }
 void toolKalem::buttonStateClear()
 {
+    desktopButton->setChecked(false);
     handButton->setChecked(false);
     copyButton->setChecked(false);
     penButton->setChecked(false);
@@ -243,9 +244,29 @@ void toolKalem::sceneToPen()
 
 
 }
-
-toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta,int parentw, int parenth, QWidget *parent)
+void toolKalem::desktopButtonSlot()
+{
+    buttonStateClear();
+    if(!penDesktopStatus)
+    {
+        desktopButton->setChecked(true);
+        current_toolTahta->hide();
+        penDesktopStatus=!penDesktopStatus;
+        emit kalemModeSignal(Scene::Mode::DesktopMode,DiagramItem::DiagramType::NoType);
+        desktopButton->setIcon(QIcon(":/icons/app.svg"));
+    }else
+    {
+        desktopButton->setChecked(false);
+        current_toolTahta->show();
+        penDesktopStatus=!penDesktopStatus;
+        emit kalemModeSignal(Scene::Mode::PenMode,DiagramItem::DiagramType::NoType);
+        penButtonSlot();
+        desktopButton->setIcon(QIcon(":/icons/desktop.svg"));
+    }
+}
+toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, int parentw, int parenth, QWidget *parent)
         {
+    penDesktopStatus=false;
     this->parentw=parentw;
     this->parenth=parenth;
     title=_title;
@@ -254,7 +275,17 @@ toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta,in
     mouseClick=false;
     currentMode=Scene::Mode::SelectObject;
     current_toolTahta=_toolTahta;
+
 /*******************************************************************/
+
+    desktopButton = new QToolButton(this);
+    desktopButton=butonToolSlot(desktopButton,"",":icons/desktop.svg",QColor(255,0,0,0),en*1.5,boy);
+    desktopButton->setCheckable(true);
+    desktopButton->setChecked(true);
+    connect(desktopButton, &QToolButton::clicked, [=]() {
+        desktopButtonSlot();
+
+         });
 
 handButton = new QToolButton(this);
 handButton=butonToolSlot(handButton,"",":icons/hand.png",QColor(255,0,0,0),en*1.5,boy);
@@ -269,6 +300,9 @@ copyButton=butonToolSlot(copyButton,"",":icons/copy.png",QColor(255,0,0,0),en*1.
 copyButton->setCheckable(true);
 connect(copyButton, &QToolButton::clicked, [=]() {
     buttonStateClear();copyButton->setChecked(true);
+   // current_toolTahta->gv->show();
+   // current_toolTahta->gv->setEnabled(true);
+
     emit kalemModeSignal(Scene::Mode::CopyMode,DiagramItem::DiagramType::NoType);
    });
 
@@ -297,27 +331,7 @@ clearButton->setIconSize(QSize(en*1,boy*1));
 connect(clearButton, &QToolButton::clicked, [=]() {
   clearButtonSlot();
 });
-/*
-QToolButton *blackButton = new QToolButton(this);
-blackButton=butonToolSlot(blackButton,"","",QColor(0,0,0,255),en*1.5,boy/2);
-connect(blackButton, &QToolButton::clicked, [=]() {
-    emit kalemColorSignal("penColor",QColor(0,0,0,255));
-   });
 
-
-QToolButton *redButton = new QToolButton(this);
-redButton=butonToolSlot(redButton,"","",QColor(255,0,0,255),en*1.5,boy/2);
-connect(redButton, &QToolButton::clicked, [=]() {
-    emit kalemColorSignal("penColor",QColor(255,0,0,255));
-   });
-
-QToolButton *blueButton = new QToolButton(this);
-blueButton=butonToolSlot(blueButton,"","",QColor(0,0,255,255),en*1.5,boy/2);
-connect(blueButton, &QToolButton::clicked, [=]() {
-emit kalemColorSignal("penColor",QColor(0,0,255,255));
-
-});
-*/
 penColorButton = new QToolButton(this);
 penColorButton=butonToolSlot(penColorButton,"",":icons/pencolor.png",QColor(0,0,0,255),en*1.5,boy*0.8);
 connect(penColorButton, &QToolButton::clicked, [=]() {
@@ -333,7 +347,9 @@ undoButton = new QToolButton(urw);
 undoButton=butonToolSlot(undoButton,"",":icons/undo.png",QColor(255,0,0,0),en*0.75,boy);
 undoButton->setIconSize(QSize(en*0.8,boy*0.8));
 connect(undoButton, &QToolButton::clicked, [=]() {
-    emit kalemModeSignal(Scene::Mode::GeriAlMode,DiagramItem::DiagramType::NoType);
+    //emit kalemModeSignal(Scene::Mode::GeriAlMode,DiagramItem::DiagramType::NoType);
+    current_toolTahta->scene->setMode(Scene::Mode::GeriAlMode, DiagramItem::DiagramType::NoType);
+    secSayfaButtonClick(current_toolTahta->current_sceneIndex);
 
 });
 
@@ -341,7 +357,9 @@ redoButton = new QToolButton(urw);
 redoButton=butonToolSlot(redoButton,"",":icons/redo.png",QColor(255,0,0,0),en*0.75,boy);
 redoButton->setIconSize(QSize(en*0.8,boy*0.8));
 connect(redoButton, &QToolButton::clicked, [=]() {
-    emit kalemModeSignal(Scene::Mode::IleriAlMode,DiagramItem::DiagramType::NoType);
+   // emit kalemModeSignal(Scene::Mode::IleriAlMode,DiagramItem::DiagramType::NoType);
+    current_toolTahta->scene->setMode(Scene::Mode::IleriAlMode, DiagramItem::DiagramType::NoType);
+    secSayfaButtonClick(current_toolTahta->current_sceneIndex);
 
 });
 
@@ -414,7 +432,7 @@ auto layout = new QGridLayout();
 layout->setContentsMargins(2,5, 2,5);
 layout->setSpacing(1);
 
-//layout->addWidget(moveLabel, 0, 0,1,2);
+layout->addWidget(desktopButton, 0, 0,1,2);
 layout->addWidget(handButton, 1, 0,1,2);
 layout->addWidget(copyButton, 2, 0,1,2);
 
@@ -430,9 +448,9 @@ layout->addWidget(blueButton, 42, 0,1,2);
 */
 layout->addWidget(penColorButton, 43, 0,1,2);
 
-layout->addWidget(undoButton, 45, 0,1,1);
-layout->addWidget(redoButton, 45, 1,1,1);
-
+//layout->addWidget(undoButton, 45, 0,1,1);
+//layout->addWidget(redoButton, 45, 1,1,1);
+layout->addWidget(urw, 45, 1,1,1);
 layout->addWidget(sekilButton, 50, 0,1,2);
 layout->addWidget(zeminButton, 60, 0,1,2);
 
@@ -3485,7 +3503,7 @@ void toolKalem::setEraseSize(int size)
 }
 
 void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdfPageIndex){
-     qDebug()<<"ekle sayfa1"<<insertIndex<<pdfObjectAdded<<pdfPageIndex;
+     qDebug()<<"Sayfa Ekleniyor: "<<insertIndex<<pdfObjectAdded<<pdfPageIndex;
 
    // bool initprg=false;
     if(current_toolTahta->sceneIndex==0&&current_toolTahta->current_sceneIndex==0)
@@ -3594,7 +3612,7 @@ void toolKalem::secSayfaButtonClick(int index)
             current_toolTahta->scene->pdfPageNumber<=current_toolTahta->pdfPageCount-1)
       pdfLoaderPage(current_toolTahta->scene->pdfPageNumber);///pdf page loader
 /***************************form ekran fotosu ayarlanıyor**************/
-    qDebug()<<"sayfa seç yenileniyor";
+    qDebug()<<"Sayfa Seçiliyor ve Yenileniyor";
     QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
     QPalette palet1;
     palet1.setBrush(QPalette::Background,pixMap);

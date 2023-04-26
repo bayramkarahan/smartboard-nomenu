@@ -132,5 +132,7 @@
         <file>icons/pdfsave.svg</file>
         <file>icons/save.svg</file>
         <file>icons/open.svg</file>
+        <file>icons/app.svg</file>
+        <file>icons/desktop.svg</file>
     </qresource>
 </RCC>

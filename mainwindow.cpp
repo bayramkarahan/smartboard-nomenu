@@ -24,10 +24,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
  /******************************************************************************/
    kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta,screenSize.width(),screenSize.height());
-   kw->setFixedSize(en*1.15,boy*0.8*11);
+   kw->setFixedSize(en*1.15,boy*0.8*12);
    kw->sagSolHizala();
   // kw->move(screenSize.width()-kw->width()-10,screenSize.height()/2- kw->height()/2);
-   kw->setStyleSheet("background-color:rgb(220, 220, 220);");
+  // kw->setStyleSheet("background-color:rgb(220, 220, 220);");
    kw->setWindowFlags(Qt::X11BypassWindowManagerHint);
    kw->setObjectName("kalem");
    kw->setStyleSheet("QWidget#kalem{"
@@ -54,10 +54,10 @@ MainWindow::MainWindow(QWidget *parent) :
    /********************************************/
   // slotPenInit();
    /***************************Top Menu**********************************************/
-  /* current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(screenSize.height()*0.05),screenSize.width()*0.8,screenSize.height()*0.05);
+   current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(screenSize.height()*0.05),screenSize.width()*0.8,screenSize.height()*0.05);
    current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,0);
-   current_toolKalemMenu->show();
-   */
+  // current_toolKalemMenu->show();
+
    /***************************Bottom Menu**********************************************/
    curent_pageMenu=new toolPageMenu(kw->pageBottomMenu(screenSize.height()*0.045),screenSize.width()*0.85,screenSize.height()*0.045);
    curent_pageMenu->move(screenSize.width()/2-curent_pageMenu->width()/2,screenSize.height()-curent_pageMenu->height()*2.5);
@@ -66,6 +66,7 @@ MainWindow::MainWindow(QWidget *parent) :
    kw->ekleSayfaButtonClick(-1,false,-1);
    kalemModeSignalSlot(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
    kw->handButtonSlot();
+
 }
 void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type)
 {
@@ -104,7 +105,7 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
 
    if(kw->currentMode!=kw->oldMode)
     {
-
+    //qDebug()<<"toolKalemMenu seçenekleri kontrol ediliyor";
     if(current_toolKalemMenu->isVisible()) current_toolKalemMenu->close();
    if(mode==Scene::Mode::DrawPen)
    {
@@ -160,17 +161,24 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
 
     }else
     {
-        qDebug()<<"farklı";
+        //qDebug()<<"farklı";
         current_toolTahta->penDrawingMain=false;
         current_toolTahta->gv->show();
         current_toolTahta->gv->setEnabled(true);
 
         QPalette palet;
-        palet.setBrush(QPalette::Background,QColor(0,0,0,0));
-        current_toolTahta->setPalette(palet);
 
     }
-
+    if(!kw->penDesktopStatus)
+    {
+        current_toolKalemMenu->hide();
+        curent_pageMenu->hide();
+    }
+    else
+    {
+        current_toolKalemMenu->show();
+        curent_pageMenu->show();
+    }
     if(Scene::Mode::DrawPen==mode&&DiagramItem::DiagramType::NormalPen==type) kalemPenModeSignalSlot(type);
     if(Scene::Mode::SekilMode==mode) kalemSekilModeSignalSlot(type);
     if(Scene::Mode::ZeminMode==mode) kalemZeminModeSignalSlot(type);
@@ -273,22 +281,23 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
        currentTab()->scene->update();
        page->update();
 
-     }
+     }*/
     if(Scene::Mode::IleriAlMode==mode){
       // qDebug()<<"ileri al";
-      Scene::Mode tempmode=currentTab()->scene->sceneMode;
-      currentTab()->scene->setMode(Scene::Mode::IleriAlMode, DiagramItem::DiagramType::NoType);
-      sceneItemAddedSignalSlot();
-     currentTab()->scene->sceneMode=tempmode;
+      Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
+      current_toolTahta->scene->setMode(Scene::Mode::IleriAlMode, DiagramItem::DiagramType::NoType);
+      //sceneItemAddedSignalSlot();
+     current_toolTahta->scene->sceneMode=tempmode;
 
      }
     if(Scene::Mode::GeriAlMode==mode){
          // qDebug()<<"geri al";
-        Scene::Mode tempmode=currentTab()->scene->sceneMode;
-        currentTab()->scene->setMode(Scene::Mode::GeriAlMode, DiagramItem::DiagramType::NoType);
-        sceneItemAddedSignalSlot();
-        currentTab()->scene->sceneMode=tempmode;
+        Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
+       current_toolTahta->scene->setMode(Scene::Mode::GeriAlMode, DiagramItem::DiagramType::NoType);
+        // sceneItemAddedSignalSlot();
+        current_toolTahta->scene->sceneMode=tempmode;
       }
+    /*
     if(Scene::Mode::JumpPageMode==mode) slotJumpPage();
     if(Scene::Mode::SaveMode==mode) on_saveAs_triggered();
     if(Scene::Mode::PrintMode==mode) on_print_triggered();
@@ -520,7 +529,7 @@ void MainWindow::kalemPenModeSignalSlot(DiagramItem::DiagramType type)
 void MainWindow::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
 {
 
-qDebug()<<"zemin mode:"<<type<<kw->penSize;
+qDebug()<<"Zemin Türü Seçiliyor:"<<type;
   /* current_toolTahta->scene->pageOfNumberScene=currentTab()->currentPage()-1;
     PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
     const QRectF pageItemRect = page->boundingRect().translated(page->pos());
@@ -795,7 +804,7 @@ foreach(QGraphicsItem* item,current_toolTahta->scene->items()){
              }
          }
      }
- qDebug()<<"zemin..0"<<pageadd;
+ //qDebug()<<"zemin..0"<<pageadd;
 //if(pageadd)
 
 //{*/

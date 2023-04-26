@@ -86,7 +86,7 @@ public:
     enum Mode {NoMode, SelectObject,DrawPen,DrawPenFosfor,DrawRectangle,DrawEllipse,
                ScreenMode,TransparanMode,WhiteBoardMode,BlackBoardMode,MoveMode,
               EraseMode,ClearMode,
-              IleriAlMode,GeriAlMode,CopyMode,FitWindowMode,FitPageMode,
+              IleriAlMode,GeriAlMode,PenMode,DesktopMode,CopyMode,FitWindowMode,FitPageMode,
               NextPageMode,BackPageMode,ZoomPozitifMode,ZoomNegatifMode,ZoomSelectionMode,
                ZeminMode,SekilMode,PanelSideLeftRight,PanelSideBottom,
                ColorMode,BlueColorMode,RedColorMode,BlackColorMode,GreenColorMode,

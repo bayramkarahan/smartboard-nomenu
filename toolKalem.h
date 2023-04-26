@@ -17,6 +17,7 @@
 #include<QPrinter>
 #include<QMessageBox>
 #include<QPdfWriter>
+
 class QMouseEvent;
 class toolKalem : public QFrame
 {
@@ -28,6 +29,7 @@ public:
     DiagramItem::DiagramType currentType;
     QString panelSide="Right";
     GridLines * gridLines; ///< this is my custom QGraphicsItem
+    bool penDesktopStatus;
 
     QPoint offset;
     bool mouseClick;
@@ -40,16 +42,16 @@ public:
     int penAlpha=50;
     QColor penColor=QColor(0,0,0,255);
     Qt::PenStyle penStyle=Qt::SolidLine;
-    QLabel *moveLabel;
+
     QColor sekilZeminColor=QColor(255,255,255,0);
     QColor zeminColor=QColor(0,0,0,0);
     QColor zeminGridColor=QColor(0,0,0,255);
     DiagramItem::DiagramType sekilType=DiagramItem::DiagramType::NoType;
     DiagramItem::DiagramType pagePattern=DiagramItem::DiagramType::TransparanPage;
     QToolButton *penColorButton;
-    QLineEdit *pageOfNumber;
     QPixmap zeminImage(const QPolygonF &myPolygon, int w, int h, QColor color, int pensize) const;
     QToolButton *handButton;
+    QToolButton *desktopButton;
     QToolButton *copyButton;
     QToolButton *penButton;
     QToolButton *eraseButton;
@@ -76,7 +78,7 @@ public slots:
     void penButtonSlot();
     void clearButtonSlot();
     void modeKontrolSlot();
-
+    void desktopButtonSlot();
    void buttonStateClear();
    void setGridSize(int s);
     QMenu *eraseMenu();
@@ -115,6 +117,7 @@ public slots:
      void sagSolHizala();
 private:
      bool sagSolHizaStatus;
+
      int pdfPageList=0;
      int ekliSayfa=1;
      int parentw;

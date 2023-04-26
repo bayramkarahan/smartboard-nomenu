@@ -89,7 +89,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event){
 
  //QTest::mouseClick(views().at(0)->viewport(),Qt::LeftButton,Qt::NoModifier,
    //                QPoint(event->scenePos().x(),event->scenePos().y()),-1);
-   qDebug()<<"scene mouse press"<<myMousePress<<sceneMode;
+ //  qDebug()<<"scene mouse press"<<myMousePress<<sceneMode;
     if(myMousePress){
     switch(sceneMode)
      {
@@ -150,7 +150,8 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event){
           QGraphicsView* mView = views().at(0);
           if(mView)
            mView->setDragMode(vMode);
-          break;}
+          qDebug()<<"seçme ayaralanıyor....";
+                   break;}
      case EraseMode:{sceneModeTrue=EraseModeTrue;
          //qDebug()<<"silme tıklandı";
         drawing=true;
