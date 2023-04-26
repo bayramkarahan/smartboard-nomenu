@@ -246,23 +246,26 @@ void toolKalem::sceneToPen()
 }
 void toolKalem::desktopButtonSlot()
 {
+   qDebug()<<"Desktop Pen Modu Ayarlanır.."<<penDesktopStatus;
     buttonStateClear();
     if(!penDesktopStatus)
     {
-        desktopButton->setChecked(true);
+        desktopButton->setChecked(false);
+        penDesktopStatus=true;
         current_toolTahta->hide();
-        penDesktopStatus=!penDesktopStatus;
-        emit kalemModeSignal(Scene::Mode::DesktopMode,DiagramItem::DiagramType::NoType);
+        //emit kalemModeSignal(Scene::Mode::PenMode,DiagramItem::DiagramType::NoType);
         desktopButton->setIcon(QIcon(":/icons/app.svg"));
+
     }else
     {
-        desktopButton->setChecked(false);
+        desktopButton->setChecked(true);
         current_toolTahta->show();
-        penDesktopStatus=!penDesktopStatus;
-        emit kalemModeSignal(Scene::Mode::PenMode,DiagramItem::DiagramType::NoType);
+        penDesktopStatus=false;
         penButtonSlot();
+        //emit kalemModeSignal(Scene::Mode::DesktopMode,DiagramItem::DiagramType::NoType);
         desktopButton->setIcon(QIcon(":/icons/desktop.svg"));
     }
+
 }
 toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, int parentw, int parenth, QWidget *parent)
         {
@@ -909,7 +912,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     QWidget *menu = new QWidget(this);
 
 
-    QFont ff( "Arial", 8, QFont::Normal);
+    QFont ff( "Arial", 7, QFont::Normal);
 
     delPageButton=new QPushButton();
     delPageButton=butonSlot(delPageButton,"",":icons/delpage.svg",QColor(255,0,0,0),e,b,e,b);
@@ -3558,8 +3561,11 @@ void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdf
       connect(_screenbtn, &QPushButton::clicked, [=]() {
           secSayfaButtonClick(_screenbtn->toolTip().toInt());
     });
-      secSayfaButtonClick(_screenbtn->toolTip().toInt());
+      if(current_toolTahta->sceneIndex>1)
+          emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
 
+      secSayfaButtonClick(_screenbtn->toolTip().toInt());
+      penButtonSlot();
 }
 
 void toolKalem::silSayfaButtonClick(){

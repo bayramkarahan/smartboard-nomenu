@@ -19,6 +19,10 @@ MainWindow::MainWindow(QWidget *parent) :
     //current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.6);
     current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
     current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()/2);
+    current_toolTahta->lower();
+    current_toolTahta->lower();
+    current_toolTahta->lower();
+
     current_toolTahta->show();
 
 
@@ -65,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
    /*******************ilk Açılış Hazırlığı****************************/
    kw->ekleSayfaButtonClick(-1,false,-1);
    kalemModeSignalSlot(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
-   kw->handButtonSlot();
+   kw->desktopButtonSlot();
 
 }
 void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type)
@@ -76,6 +80,27 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
 
     kw->oldType=kw->currentType;
     kw->currentType=type;
+   // qDebug()<<"penDesktopStatus"<<kw->penDesktopStatus;
+   /* if(!kw->penDesktopStatus)
+    {
+        current_toolKalemMenu->hide();
+        curent_pageMenu->hide();
+        current_toolTahta->hide();
+        qDebug()<<"desktop";
+    }*/
+   if((Scene::Mode::DrawPen==mode||
+            Scene::Mode::SekilMode==mode||
+            Scene::Mode::ZeminMode==mode||
+            Scene::Mode::EraseMode==mode||
+            Scene::Mode::PdfMode==mode||
+            Scene::Mode::PenMode)&&kw->penDesktopStatus)
+    {
+        //current_toolKalemMenu->show();
+        //curent_pageMenu->show();
+        current_toolTahta->show();
+        qDebug()<<"pen";
+    }
+
 /*
     currentTab()->scene->pageOfNumberScene=currentTab()->currentPage()-1;
     PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
@@ -169,16 +194,7 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
         QPalette palet;
 
     }
-    if(!kw->penDesktopStatus)
-    {
-        current_toolKalemMenu->hide();
-        curent_pageMenu->hide();
-    }
-    else
-    {
-        current_toolKalemMenu->show();
-        curent_pageMenu->show();
-    }
+
     if(Scene::Mode::DrawPen==mode&&DiagramItem::DiagramType::NormalPen==type) kalemPenModeSignalSlot(type);
     if(Scene::Mode::SekilMode==mode) kalemSekilModeSignalSlot(type);
     if(Scene::Mode::ZeminMode==mode) kalemZeminModeSignalSlot(type);
@@ -371,6 +387,8 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
  /*if(Scene::Mode::ZoomSelectionMode!=mode||
          Scene::Mode::SekilMode!=mode)
      kw->modeKontrolSlot();*/
+
+
 }
 void MainWindow::slotErase()
 {
@@ -530,6 +548,7 @@ void MainWindow::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
 {
 
 qDebug()<<"Zemin Türü Seçiliyor:"<<type;
+
   /* current_toolTahta->scene->pageOfNumberScene=currentTab()->currentPage()-1;
     PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
     const QRectF pageItemRect = page->boundingRect().translated(page->pos());
@@ -828,8 +847,6 @@ foreach(QGraphicsItem* item,current_toolTahta->scene->items()){
   // zeminItem->setSelected(false);
    zeminItem->update();
 //}
-
-
 
 }
 void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){

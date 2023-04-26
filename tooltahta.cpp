@@ -5,7 +5,7 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     setFixedSize(w,h);
     setWindowFlags(Qt::FramelessWindowHint);
     setWindowFlags(Qt::WindowStaysOnTopHint);
-    //setWindowFlags(Qt::X11BypassWindowManagerHint);
+    setWindowFlags(Qt::X11BypassWindowManagerHint);
     setAttribute(Qt::WA_StaticContents);
     setAttribute(Qt::WA_TranslucentBackground, true);
     this->setAttribute(Qt::WA_NoSystemBackground, false);
@@ -34,6 +34,7 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     QPalette palet;
     palet.setBrush(QPalette::Window,bkgnd);
     setPalette(palet);
+
 }
 void toolTahta::mousePressEvent(QMouseEvent *event)
 {

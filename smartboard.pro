@@ -51,3 +51,28 @@ FORMS    +=
 
 RESOURCES += \
     icon.qrc
+
+    target.path = /usr/bin
+
+    desktop_file.files = smartboard.desktop
+    desktop_file.path = /usr/share/applications/
+    icon.files = icons/smartboard.svg
+    icon.path = /usr/share/smartboard/
+
+    config_file.files = smartboard.ini
+    config_file.path = /usr/share/smartboard/
+
+    auto_start.files = esmartboard-autostart.desktop
+    auto_start.path = /etc/xdg/autostart/
+
+    desktopfile.files = smartboardxdglink.sh
+    desktopfile.path = /usr/bin/
+
+
+    INSTALLS += target desktop_file icon config_file auto_start desktopfile
+    #INSTALLS += libopencvimgcodecs libopencvcore libopencvhighgui libopencvimgproc
+    DISTFILES += \
+        icons/smartboard.svg \
+        smartboard.ini\
+        smartboard-autostart.desktop\
+        smartboardxdglink.sh
