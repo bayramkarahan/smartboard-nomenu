@@ -20,8 +20,8 @@ public:
     explicit toolTahta(int w, int h, QWidget *parent = nullptr);
     bool penDrawingMain=false;
     QImage penTuval;
-    QLabel *tahtaTuval;
-    QLabel *penTuvalZemin;
+    //QLabel *tahtaTuval;
+    //QLabel *penTuvalZemin;
 
     Scene *scene;
     Scene *_scene;

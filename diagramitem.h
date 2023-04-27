@@ -53,7 +53,7 @@ public:
          KareliKagit,CizgiliKagit,NoktaliKagit,IzometrikKagit,
          Kalem,Resim,Copy,DrawPath,DrawPoligon,Pdf,
          SolidLine,DashLine,DotLine,
-         NormalPen,SmartPen,FosforluPen,
+         NormalPen,SmartPen,FosforluPen,PatternPen,
          PenSize2,PenSize4,PenSize6,PenSize8,PenSize10,PenSize12,PenSize14,
          PatternPage,
          TransparanPage,BlackPage,WhitePage,CustomColorPage,

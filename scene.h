@@ -83,7 +83,7 @@ Q_OBJECT
 
 public:
 
-    enum Mode {NoMode, SelectObject,DrawPen,DrawPenFosfor,DrawRectangle,DrawEllipse,
+    enum Mode {NoMode, SelectObject,DrawPen,DrawPenFosfor,DrawRectangle,DrawEllipse,DrawPenPattern,
                ScreenMode,TransparanMode,WhiteBoardMode,BlackBoardMode,MoveMode,
               EraseMode,ClearMode,
               IleriAlMode,GeriAlMode,PenMode,DesktopMode,CopyMode,FitWindowMode,FitPageMode,

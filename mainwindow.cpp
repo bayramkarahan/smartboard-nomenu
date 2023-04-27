@@ -47,9 +47,6 @@ MainWindow::MainWindow(QWidget *parent) :
    connect(kw, SIGNAL(kalemColorSignal(QString,QColor)),
            this, SLOT(kalemColorSignalSlot(QString,QColor)));
 
-   connect(kw, SIGNAL(kalemPenModeSignal(DiagramItem::DiagramType)),
-           this, SLOT(kalemPenModeSignalSlot(DiagramItem::DiagramType)));
-
    connect(kw, SIGNAL(kalemZeminModeSignal(DiagramItem::DiagramType)),
            this, SLOT(kalemZeminModeSignalSlot(DiagramItem::DiagramType)));
 
@@ -68,8 +65,13 @@ MainWindow::MainWindow(QWidget *parent) :
    curent_pageMenu->show();
    /*******************ilk Açılış Hazırlığı****************************/
    kw->ekleSayfaButtonClick(-1,false,-1);
-   kalemModeSignalSlot(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
-   kw->desktopButtonSlot();
+   //kalemModeSignalSlot(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+   //kw->penButtonSlot();
+   //kw->desktopButtonSlot();
+   kw->raise();kw->raise();
+   curent_pageMenu->raise();curent_pageMenu->raise();
+   current_toolKalemMenu->raise();current_toolKalemMenu->raise();
+
 
 }
 void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type)
@@ -172,7 +174,7 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
        }
     }
 
-    if(Scene::Mode::DrawPen==mode&&DiagramItem::DiagramType::NormalPen==type)
+    if(Scene::Mode::DrawPen==mode&&(DiagramItem::DiagramType::NormalPen==type||DiagramItem::DiagramType::PatternPen==type))
     {
         current_toolTahta->penDrawingMain=true;
         current_toolTahta->gv->hide();
@@ -186,364 +188,21 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
 
     }else
     {
-        //qDebug()<<"farklı";
+        qDebug()<<"Kalem Dışında Faklı Bir Araç Seçildi";
         current_toolTahta->penDrawingMain=false;
         current_toolTahta->gv->show();
         current_toolTahta->gv->setEnabled(true);
 
-        QPalette palet;
-
     }
 
-    if(Scene::Mode::DrawPen==mode&&DiagramItem::DiagramType::NormalPen==type) kalemPenModeSignalSlot(type);
     if(Scene::Mode::SekilMode==mode) kalemSekilModeSignalSlot(type);
     if(Scene::Mode::ZeminMode==mode) kalemZeminModeSignalSlot(type);
-    if(Scene::Mode::SelectObject==mode) slotHand();
-    if(Scene::Mode::EraseMode==mode) slotErase();
-    //if(Scene::Mode::ClearMode==mode) slotClear();
-    if(Scene::Mode::CopyMode==mode) slotCopy();
-     /* if(Scene::Mode::NextPageMode==mode) {
-        on_nextPage_triggered();
-        }
-    if(Scene::Mode::BackPageMode==mode){
-        on_previousPage_triggered();
-     }
-    if(Scene::Mode::ZoomPozitifMode==mode){
-        PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-            const QRectF pageRect = page->boundingRect().translated(page->pos());
-        //qDebug()<<"1. ölçek:"<<pageRect.height();
-
-        on_zoomIn_triggered();
-        const QRectF pageRect1 = page->boundingRect().translated(page->pos());
-        //qDebug()<<"2. ölçek:"<<pageRect1.height();
-        // qDebug()<<"ölçek:"<<pageRect1.height()/pageRect.height();
-        slotScaleSceneItem(pageRect1.width()/pageRect.width(),pageRect1.height()/pageRect.height());
-      // kw->handButtonSlot();
-    }
-    if(Scene::Mode::ZoomNegatifMode==mode) {
-
-
-        PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-            const QRectF pageRect = page->boundingRect().translated(page->pos());
-        //qDebug()<<"1. ölçek:"<<pageRect.height();
-
-         on_zoomOut_triggered();
-        const QRectF pageRect1 = page->boundingRect().translated(page->pos());
-        //qDebug()<<"2. ölçek:"<<pageRect1.height();
-         //qDebug()<<"ölçek:"<<pageRect1.height()/pageRect.height();
-        slotScaleSceneItem(pageRect1.width()/pageRect.width(),pageRect1.height()/pageRect.height());
-
-
-    }
-    if(Scene::Mode::ZoomSelectionMode==mode) {
-        currentTab()->scene->sceneMode=Scene::Mode::ZoomSelectionMode;
-        PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-        const QRectF pageRect = page->boundingRect().translated(page->pos());
-
-        //currentTab()->setContinuousMode(false);     //sayfalar birleşik gözükmeyecek
-       // currentTab()->setLayoutMode(SinglePageMode);//Tek sayfa gösterme ayarlandı
-         on_fitToPageSizeMode_triggered(true);
-
-        const QRectF pageRect1 = page->boundingRect().translated(page->pos());
-        slotScaleSceneItem(pageRect1.width()/pageRect.width(),pageRect1.height()/pageRect.height());
-
-      //  PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-        page->zoomSelectMode=true;
-        on_copyToClipboardMode_triggered(true);
-        foreach(QGraphicsItem* item, currentTab()->scene->items()){
-            VERectangle * selection = dynamic_cast<VERectangle *>(item);
-            if(selection)
-            {
-                if(selection->sekilTr==DiagramItem::DiagramType::PatternPage){
-                    // qDebug()<<"arka plan";
-                    if(currentTab()->currentPage()-1==selection->pageOfNumber)
-                        selection->setVisible(false);
-                    update();
-                }
-            }
-        }
-    }
-    if(Scene::Mode::FitWindowMode==mode){
-
-
-         PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-         const QRectF pageRect = page->boundingRect().translated(page->pos());
-
-         //currentTab()->setContinuousMode(false);     //sayfalar birleşik gözükmeyecek
-        // currentTab()->setLayoutMode(SinglePageMode);//Tek sayfa gösterme ayarlandı
-          on_fitToPageSizeMode_triggered(true);
-
-         const QRectF pageRect1 = page->boundingRect().translated(page->pos());
-         slotScaleSceneItem(pageRect1.width()/pageRect.width(),pageRect1.height()/pageRect.height());
-//currentTab()->scene->update();
-
-    }
-    if(Scene::Mode::FitPageMode==mode){
-
-       PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-       const QRectF pageRect = page->boundingRect().translated(page->pos());
-
-      // currentTab()->setContinuousMode(false);     //sayfalar birleşik gözükmeyecek
-      // currentTab()->setLayoutMode(SinglePageMode);//Tek sayfa gösterme ayarlandı
-      on_fitToPageWidthMode_triggered(true);
-
-       const QRectF pageRect1 = page->boundingRect().translated(page->pos());
-       slotScaleSceneItem(pageRect1.width()/pageRect.width(),pageRect1.height()/pageRect.height());
-        ///currentTab()->scene->update();
-       // qDebug()<<"aaaaa";
-      // kalemModeSignalSlot(Scene::Mode::NoMode,DiagramItem::DiagramType::NoType);
-      // kw->buttonStateClear();
-      // kw->handButton->setChecked(true);
-       currentTab()->scene->update();
-       page->update();
-
-     }*/
-    if(Scene::Mode::IleriAlMode==mode){
-      // qDebug()<<"ileri al";
-      Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
-      current_toolTahta->scene->setMode(Scene::Mode::IleriAlMode, DiagramItem::DiagramType::NoType);
-      //sceneItemAddedSignalSlot();
-     current_toolTahta->scene->sceneMode=tempmode;
-
-     }
-    if(Scene::Mode::GeriAlMode==mode){
-         // qDebug()<<"geri al";
-        Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
-       current_toolTahta->scene->setMode(Scene::Mode::GeriAlMode, DiagramItem::DiagramType::NoType);
-        // sceneItemAddedSignalSlot();
-        current_toolTahta->scene->sceneMode=tempmode;
-      }
-    /*
-    if(Scene::Mode::JumpPageMode==mode) slotJumpPage();
-    if(Scene::Mode::SaveMode==mode) on_saveAs_triggered();
-    if(Scene::Mode::PrintMode==mode) on_print_triggered();
-    if(Scene::Mode::ListMode==mode) {
-        if(m_thumbnailsDock->isVisible())
-             m_thumbnailsDock->hide();
-        else
-                m_thumbnailsDock->show();
-
-    }
-    if(Scene::Mode::SearchMode==mode) {
-   /* if(m_searchDock->isVisible())
-         m_searchDock->hide();
-    else
-            m_searchDock->show();
-
-       slotSearch();
-    }
-*/
-    if(Scene::Mode::PanelSideLeftRight==mode) {
-        if (kw->panelSide=="Right"){
-       //    addToolBar(Qt::LeftToolBarArea, kw);
-            kw->panelSide="Left";
-            return;
-        }
-        if (kw->panelSide=="Left"){
-   //        addToolBar(Qt::RightToolBarArea, kw);
-            kw->panelSide="Right";
-            return;
-        }
-
-        if (kw->panelSide=="Bottom"||kw->panelSide=="Top"){
-        //    addToolBar(Qt::RightToolBarArea, kw);
-            kw->panelSide="Right";
-            return;
-        }
-       // qDebug()<<"sağsol hizala";
-       // kw->setOrientation(Qt::Vertical);//Qt::Vertical Horizontal
-       // addToolBar(Qt::RightToolBarArea, kw);
-        //kw->setAllowedAreas(Qt::RightToolBarArea);
-
-    }
-    if(Scene::Mode::PanelSideBottom==mode) {
-        if (kw->panelSide=="Left"||kw->panelSide=="Right"){
-         //  addToolBar(Qt::BottomToolBarArea, kw);
-           kw->panelSide="Bottom";
-           return;
-        }
-        if (kw->panelSide=="Bottom"){
-          //  addToolBar(Qt::TopToolBarArea, kw);
-            kw->panelSide="Top";
-            return;
-        }
-        if (kw->panelSide=="Top"){
-          //  addToolBar(Qt::BottomToolBarArea, kw);
-            kw->panelSide="Bottom";
-            return;
-        }
-          // qDebug()<<"aşağı hizala";
-          // addToolBar(Qt::LeftToolBarArea, kw);
-         //kw->setAllowedAreas(Qt::LeftToolBarArea);
-    }
-    if(Scene::Mode::ExitMode==mode){
-     //   QMainWindow::close();
-        exit(0);
-       }
-   // slotScaleSceneItem(1,1);
-  //  kw->pageOfNumber->setText(QString::number(currentTab()->currentPage())+"/"+
-    //                         QString::number(currentTab()->numberOfPages()));
-
- /*if(Scene::Mode::ZoomSelectionMode!=mode||
-         Scene::Mode::SekilMode!=mode)
-     kw->modeKontrolSlot();*/
+    if(Scene::Mode::ExitMode==mode)exit(0);
 
 
 }
-void MainWindow::slotErase()
-{
-
-   current_toolTahta->scene->setEraseSize(kw->penSize*2);
-   current_toolTahta->scene->sceneMode=Scene::Mode::EraseMode;
-   current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
-
-}
-
-void MainWindow::slotCopy()
-{
-
-    //qDebug()<<"kopy kalem çalıştı"<<screenDesktop;
-    //if (!screenDesktop)kalemButtonClick();
-    current_toolTahta->scene->makeItemsControllable(false);
-        current_toolTahta->scene->setMode(Scene::Mode::CopyMode, DiagramItem::DiagramType::Copy);
-        //currentScreenMode=Scene::Mode::CopyMode;
-       // iconButton();
-        //buttonColorClear();
-        current_toolTahta->scene->setSekilTanimlamaStatus(false);
-         /*palette->setColor(QPalette::Button, QColor(212,0,0,255));
-         secButton->setPalette(*palette);
-         secButton->setAutoFillBackground(true);
-         */
-       //
-                 QSize screenSize = qApp->screens()[0]->size();
-         QPixmap desk = qApp->screens().at(0)->grabWindow(
-         QDesktopWidget().winId(),
-        0,
-        0,
-         screenSize.width(),
-         screenSize.height());
-         current_toolTahta->scene->setImage(desk);
-         //timerCopy->start(1000);
-         /*****************************/
-        // FileCrud *fc=new FileCrud();
-        // fc->dosya="E-Tahta.copy.ini";
-        // if(fc->fileexists()) fc->fileremove();
-        // fc->fileWrite("copy=0");
-    qDebug()<<"copy çalıştı";
-    //kw->handButtonSlot();
-}
-void MainWindow::slotScaleSceneItem(double sizex,double sizey)
-{/*
-    foreach(QGraphicsItem* item, currentTab()->scene->items()){
-        VERectangle * selection = dynamic_cast<VERectangle *>(item);
-        if(selection)
-        {
-            if(selection->sekilTr!=0){
-              //  PageItem* page =currentTab()->m_pageItems.at((selection->pageOfNumber));
-                //const QRectF pageRect = page->boundingRect().translated(page->pos());
-
-                //qDebug()<<"currentpage:"<<currentTab()->currentPage()-1<<selection->pageOfNumber;
-                ///if(currentTab()->currentPage()-1==selection->pageOfNumber)
-              ///      selection->setVisible(true);
-               /// else selection->setVisible(false);
-                // qDebug()<<"render param:"<<page->m_renderParam.resolutionX() * page->m_renderParam.scaleFactor() / 72.0;
-                selection->setRect(0,0,selection->rect().width()*sizex,selection->rect().height()*sizey);
-                selection->setPos(selection->pos().x()*sizex,selection->pos().y()*sizey);
-            }
-
-            if(selection->sekilTr!=0&&
-
-             selection->pageOfNumber==currentTab()->scene->pageOfNumberScene&&
-             selection->sekilTr==DiagramItem::DiagramType::PatternPage){
-             PageItem* page =currentTab()->m_pageItems.at((selection->pageOfNumber));
-             const QRectF pageItemRect = page->boundingRect().translated(page->pos());
-
-            /// selection->setImage(currentTab()->scene->myImage);
-             selection->setRect(0,0,pageItemRect.width(),pageItemRect.height());
-             selection->setPos(pageItemRect.left(),pageItemRect.top());
-
-             selection->update();
-             }
-        }
-     }
-
-currentTab()->update();
-*/
-}
-void MainWindow::slotHand()
-{
-   // qDebug()<<"hand";
-
-  current_toolTahta->scene->sceneMode=Scene::Mode::SelectObject;
-  current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
-  /*  setDragMode(QGraphicsView::ScrollHandDrag);
-  scene->pageOfNumberScene=currentTab()->currentPage()-1;
-  PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-   const QRectF pageItemRect = page->boundingRect().translated(page->pos());
-   currentTab()->scene->pageItemRect=pageItemRect;
-*/
-   foreach(QGraphicsItem* item, current_toolTahta->scene->items()){
-       VERectangle * selection = dynamic_cast<VERectangle *>(item);
-       if(selection)
-       {
-           if(selection->sekilTr==DiagramItem::DiagramType::PatternPage){
-              // qDebug()<<"arka plan";
-              /* if(currentTab()->currentPage()-1==selection->pageOfNumber)
-                selection->setVisible(false);
-                */update();
-              }
-       }
-    }
-//    tvl->hide();
-
-}
-void MainWindow::slotPenInit()
-{   current_toolTahta->scene->setPenSize(kw->penSize);
-    current_toolTahta->scene->setPenAlpha(kw->penAlpha);
-    current_toolTahta->scene->setPenColor(kw->penColor);
-    current_toolTahta->scene->setPenStyle(kw->penStyle);
-
-    current_toolTahta->scene->mySekilType=kw->sekilType;
-    current_toolTahta->scene->setSekilKalemColor(kw->penColor);
-    current_toolTahta->scene->mySekilPenStyle=kw->penStyle;
-    current_toolTahta->scene->setSekilZeminColor(kw->sekilZeminColor);
-    current_toolTahta->scene->setSekilPenSize(kw->penSize);
-
-    current_toolTahta->scene->sceneGridYatay=false;
-    current_toolTahta->scene->sceneGridDikey=false;
-    current_toolTahta->scene->sceneGuzelYazi=false;
-    current_toolTahta->scene->setSekilTanimlamaStatus(false);
-    current_toolTahta->scene->pageOfNumberScene=0;
-       /*******************önemli ayarlar**************************************/
-  ///    setContinuousMode(false);     //sayfalar birleşik gözükmeyecek
-   ///   setLayoutMode(SinglePageMode);//Tek sayfa gösterme ayarlandı
-
-       //currentTab()->setScaleMode(FitToPageWidthMode);//sayfayı orijinal boyutta göster
-  ///   setScaleMode(FitToPageSizeMode);//sayfayı sığdır fit to window
-     ///  kw->pageOfNumber->setText(QString::number(currentTab()->currentPage())+" / "+
-     ///                           QString::number(currentTab()->numberOfPages()));
-      /* currentTab()->scene->pageOfNumberScene=currentTab()->currentPage()-1;
-       PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-       const QRectF pageItemRect = page->boundingRect().translated(page->pos());
-       currentTab()->scene->pageItemRect=pageItemRect;
-     **/
-        kalemZeminModeSignalSlot(DiagramItem::DiagramType::TransparanPage);
-        current_toolTahta->scene->makeItemsControllable(false);
-
-       connect(current_toolTahta->scene, SIGNAL(sceneItemAddedSignal()),
-       this,SLOT(sceneItemAddedSignalSlot()));
-       sceneItemAddedSignalSlot();
-       kw->handButtonSlot();
-       //kalemPenModeSignalSlot(DiagramItem::DiagramType::NormalPen);
 
 
-
-}
-void MainWindow::kalemPenModeSignalSlot(DiagramItem::DiagramType type)
-{
-  //current_toolTahta->penTuval.
-  //  qDebug()<<"pen mode:"<<type;
-}
 void MainWindow::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
 {
 
@@ -571,7 +230,7 @@ if(DiagramItem::DiagramType::CizgiliKagit==type) {current_toolTahta->scene->donS
 
 
 if(DiagramItem::DiagramType::TransparanPage==type){
-   //   qDebug()<<"seffaf zemin";
+      qDebug()<<"seffaf zemin";
     kw->pagePattern=type;
     kw->sekilZeminColor=QColor(0,0,0,0);
     current_toolTahta->scene->sceneGridYatay=false;
@@ -817,7 +476,7 @@ foreach(QGraphicsItem* item,current_toolTahta->scene->items()){
             // qDebug()<<"zemin..x";
             // selection->setRect(0,0,current_toolTahta->width(),current_toolTahta->height());
            //  selection->setPos(current_toolTahta->left(),current_toolTahta->top());
-             selection->setPos(current_toolTahta->pos());
+            // selection->setPos(current_toolTahta->pos());
             current_toolTahta->scene->removeItem(selection);
             // selection->update();
              }
@@ -845,7 +504,10 @@ foreach(QGraphicsItem* item,current_toolTahta->scene->items()){
    zeminItem->setZValue(-200);
 
   // zeminItem->setSelected(false);
-   zeminItem->update();
+
+   zeminItem->fareState(false);
+   //current_toolTahta->scene->makeItemsControllable(false);
+
 //}
 
 }
@@ -972,12 +634,7 @@ void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
 }
 void MainWindow::kalemColorSignalSlot(QString colorType, QColor color)
 {
- // qDebug()<<"colorsignal slot"<<colorType<<color;
- //  current_toolTahta->scene->pageOfNumberScene=currentTab()->currentPage()-1;
-   /* PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-    const QRectF pageItemRect = page->boundingRect().translated(page->pos());
-    currentTab()->scene->pageItemRect=pageItemRect;
-*/
+
   if (colorType=="penColor"){
      // qDebug()<<"penColor";
     kw->penColor=color;
@@ -993,13 +650,11 @@ void MainWindow::kalemColorSignalSlot(QString colorType, QColor color)
   if (colorType=="zeminGridColor"){
      //qDebug()<<"sekilZeminColor"<<color;
      kw->zeminGridColor=color;
-     //currentTab()->scene->setSekilZeminColor(kw->sekilZeminColor);
-   }
+    }
   if (colorType=="zeminColor"){
-     qDebug()<<"zeminColor"<<color;
+     //qDebug()<<"zeminColor"<<color;
      kw->sekilZeminColor=color;
      kalemZeminModeSignalSlot(DiagramItem::DiagramType::CustomColorPage);
-     //currentTab()->scene->setSekilZeminColor(kw->sekilZeminColor);
    }
 
    /*if(colorType=="pencolor") setPenColor(renk);
@@ -1010,216 +665,7 @@ void MainWindow::kalemColorSignalSlot(QString colorType, QColor color)
    */
 
 }
-void MainWindow::mainClipBoard(QPoint pos,bool copy,bool zoom)
-{
-/*
-    if(copy) selectCopySlot(pos);///Kopyalama
-    if(zoom) selectZoomSlot(pos);
 
-  //  qDebug()<<"mainClipBoard gerçekleşti";
-   // copyWidget();
-
-*/
-}
-void MainWindow::selectCopySlot(QPoint pos)
-{
-   /* const QClipboard *cb = QApplication::clipboard();
-    const QMimeData *md = cb->mimeData();
-    QImage img;
-    if (md->hasImage())
-    {
-        img=QImage(cb->image());
-       //  logo->setPixmap(QPixmap::fromImage(img).scaled(400,300,Qt::IgnoreAspectRatio));
-    }
-    else if(md->formats().contains(QStringLiteral("text/uri-list")))
-    {
-       img=QImage(QUrl(cb->text()).toLocalFile());
-
-    }
-
-    // logo->setPixmap(QPixmap::fromImage(img).scaled(400,300,Qt::IgnoreAspectRatio));
-    currentTab()->scene->sceneMode=Scene::Mode::CopyMode;
-    tempCopyModeItemToRectDraw=new VERectangle(currentTab()->scene);
-    tempCopyModeItemToRectDraw->sekilTur(DiagramItem::DiagramType::Copy);
-    QPixmap temp=QPixmap::fromImage(img).scaled(img.width(),img.height(),Qt::IgnoreAspectRatio);
-
-    tempCopyModeItemToRectDraw->setImage(temp);
-    currentTab()->scene->addItem(tempCopyModeItemToRectDraw);
-    tempCopyModeItemToRectDraw->setRect(0,0,temp.width(),temp.height());
-
-    tempCopyModeItemToRectDraw->pageOfNumber=currentTab()->currentPage()-1;
-    PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-        const QRectF pageRect = page->boundingRect().translated(page->pos());
-    //tempCopyModeItemToRectDraw->setPos(pageRect.left(),pageRect.top()+pageRect.height()/3);
-    tempCopyModeItemToRectDraw->setPos(pageRect.left()+pageRect.width()/2-temp.width()/2,pageRect.top()+pageRect.height()/2-temp.height()/2);
-
-    tempCopyModeItemToRectDraw->fareState(false);
-    currentTab()->scene->makeItemsControllable(false);
-    tempCopyModeItemToRectDraw->fareState(true);
-    tempCopyModeItemToRectDraw->sekilTr=DiagramItem::DiagramType::Copy;
-
-   // currentTab()->scene->sceneMode=Scene::Mode::SelectObject;
-    currentTab()->scene->graphicsList.append(tempCopyModeItemToRectDraw);
-    currentTab()->scene->graphicsListTemp.append(tempCopyModeItemToRectDraw);
-    currentTab()->scene->historyBack.append(tempCopyModeItemToRectDraw);
-    currentTab()->scene->historyBackAction.append("added");
-    depo::historyBackCount=currentTab()->scene->historyBack.count();
-    depo::historyNextCount=currentTab()->scene->historyNext.count();
-
-    tempCopyModeItemToRectDraw=0;
-   // kalemModeSignalSlot(Scene::Mode::NoMode,DiagramItem::DiagramType::NoType);
-   // kw->buttonStateClear();
-    //kw->handButton->setChecked(true);
-    currentTab()->scene->update();
-    page->update();
-    kw->handButtonSlot();
-    */
-}
-void MainWindow::selectZoomSlot(QPoint pos)
-{
- /*   const QClipboard *cb = QApplication::clipboard();
-    const QMimeData *md = cb->mimeData();
-    QImage img;
-    if (md->hasImage())
-    {
-        img=QImage(cb->image());
-       //  logo->setPixmap(QPixmap::fromImage(img).scaled(400,300,Qt::IgnoreAspectRatio));
-    }
-    else if(md->formats().contains(QStringLiteral("text/uri-list")))
-    {
-       img=QImage(QUrl(cb->text()).toLocalFile());
-
-    }
-
-    // logo->setPixmap(QPixmap::fromImage(img).scaled(400,300,Qt::IgnoreAspectRatio));
-    ///currentTab()->scene->sceneMode=Scene::Mode::CopyMode;
-    ///tempCopyModeItemToRectDraw=new VERectangle(currentTab()->scene);
-   /// tempCopyModeItemToRectDraw->sekilTur(DiagramItem::DiagramType::Copy);
-    QPixmap temp=QPixmap::fromImage(img).scaled(img.width(),img.height(),Qt::IgnoreAspectRatio);
-   // QLabel *logo=new QLabel();
-   // logo->setPixmap(temp);
-    //logo->show();
-
-
-   /// tempCopyModeItemToRectDraw->setImage(temp);
-   /// currentTab()->scene->addItem(tempCopyModeItemToRectDraw);
-   /// tempCopyModeItemToRectDraw->setRect(0,0,temp.width(),temp.height());
-
-   /// tempCopyModeItemToRectDraw->pageOfNumber=currentTab()->currentPage()-1;
-  ////  PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-  ////  const QRectF pageRect = page->boundingRect().translated(page->pos());
- ////   qDebug()<<pageRect<<pageRect.left()<<pageRect.top();
-
-    //tempCopyModeItemToRectDraw->setPos(pageRect.left(),pageRect.top()+pageRect.height()/3);
-   /// tempCopyModeItemToRectDraw->setPos(pageRect.left()+pageRect.width()/2-temp.width()/2,pageRect.top()+pageRect.height()/2-temp.height()/2);
-   // on_zoomIn_triggered();
-   /// page->setPos(pageRect.left()-50,pageRect.top());
- /// on_fitToPageSizeMode_triggered(true);
-
-     // currentTab()->on_pages_zoomToSelection(currentTab()->currentPage(),rt);
-    PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-        const QRectF pageRect = page->boundingRect().translated(page->pos());
-    //qDebug()<<"1. ölçek:"<<pageRect.height();
-  // currentTab()->scene->sceneMode=Scene::Mode::DrawRectangle;
-        VERectangle *gri= new VERectangle(currentTab()->scene);
-        gri->sekilTur(DiagramItem::DiagramType::Dortgen);
-        gri->setRect(0,0,temp.width(),temp.height());
-        gri->setPos(pos.x()+pageRect.left(),pos.y());
-       // gri->setPos(pos.x()+pageRect.left(),pos.y(),temp.width(),temp.height());
-        currentTab()->scene->addItem(gri);
-        gri->fareState(false);
-        currentTab()->scene->makeItemsControllable(false);
-        gri->fareState(true);
-        currentTab()->scene->sceneMode=Scene::Mode::SelectObject;
-
-        on_fitToPageWidthMode_triggered(true);
-       // on_zoomIn_triggered();
-        //on_zoomIn_triggered();
-        if(m_tabWidget->hasCurrent())
-
-        {
-
-            bool ok = false;
-
-            qreal scaleFactor =100 / 100.0;
-
-            scaleFactor = qMax(scaleFactor, s_settings->documentView().minimumScaleFactor());
-            scaleFactor = qMin(scaleFactor, s_settings->documentView().maximumScaleFactor());
-
-
-                currentTab()->setScaleFactor(scaleFactor);
-                currentTab()->setScaleMode(ScaleFactorMode);
-
-
-            on_currentTab_scaleFactorChanged(currentTab()->scaleFactor());
-            on_currentTab_scaleModeChanged(currentTab()->scaleMode());
-        }*/
-       // on_zoomIn_triggered();
-
-
-
-  /*  const QRectF pageRect1 = page->boundingRect().translated(page->pos());
-    //qDebug()<<"2. ölçek:"<<pageRect1.height();
-    // qDebug()<<"ölçek:"<<pageRect1.height()/pageRect.height();
-    qreal sx=pageRect1.width()/pageRect.width();
-    qreal sy=pageRect1.height()/pageRect.height();
-    slotScaleSceneItem(sx,sy);
-
-    gri->fareState(true);
-
-//
-    QRectF rt=QRectF(gri->boundingRect());
-  //  page->zoomToSelection(currentTab()->currentPage(),rt);
-   qDebug()<<"point"<<gri->pos()<<gri->boundingRect().translated(gri->pos());
-   qDebug()<<"page"<<page->pos()<<pageRect1<<pageRect1.height()/2;
-
-   QPointF gripos=gri->boundingRect().translated(gri->pos()).center();
-   QPointF pagepos=page->boundingRect().translated(page->pos()).center();
-   qDebug()<<"fark"<<gripos.y()<<pagepos.y()<<pagepos.y()-gripos.y();
-
-  // page->setPos(mapToGlobal(currentTab()->mapFromScene(gri->boundingRect().center())));
-   if(gripos.y()>pageRect1.height()/4*3&&gripos.y()<pageRect1.height())
-   {
-       page->setPos(pageRect1.left(),pageRect1.top()-gripos.y());
-       qDebug()<<"alt-alt";
-   }
-
-   if(gripos.y()>pageRect1.height()/2&&gripos.y()<pageRect1.height()/4*3)
-   {
-       page->setPos(pageRect1.left(),pageRect1.top()-gripos.y()/2);
-       qDebug()<<"alt-ust";
-   }
-
-
-   if(gripos.y()>pageRect1.height()/4&&gripos.y()<pageRect1.height()/2)
-   {
-       page->setPos(pageRect1.left(),pageRect1.top()+gripos.y()/2);
-       qDebug()<<"ust-alt";
-   }
-   if(gripos.y()<pageRect1.height()/4&&gripos.y()>pageRect1.top())
-   {
-       page->setPos(pageRect1.left(),page->boundingRect().top()+gripos.y()/2);
-       qDebug()<<"ust-ust";
-   }
-    currentTab()->scene->removeItem(gri);
-
-   // slotHand();
-   // kalemModeSignalSlot(Scene::Mode::NoMode,DiagramItem::DiagramType::NoType);
-   // kw->buttonStateClear();
-   // kw->handButton->setChecked(true);
-    currentTab()->scene->update();
-    page->update();
-
-    kw->modeKontrolSlot();
-    */
-}
-void MainWindow::sceneItemAddedSignalSlot()
-{
-   //qDebug()<<"item eklendi";
-  /* if(depo::historyBackCount>0)kw->undoButton->setEnabled(true);else kw->undoButton->setEnabled(false);
-   if(depo::historyNextCount>0)kw->redoButton->setEnabled(true);else kw->redoButton->setEnabled(false);
-*/
-}
 
 MainWindow::~MainWindow()
 {

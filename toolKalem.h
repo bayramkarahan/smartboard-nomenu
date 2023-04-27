@@ -17,7 +17,9 @@
 #include<QPrinter>
 #include<QMessageBox>
 #include<QPdfWriter>
-
+#include<QDesktopWidget>
+#include<QApplication>
+#include<QScreen>
 class QMouseEvent;
 class toolKalem : public QFrame
 {
@@ -64,6 +66,8 @@ public:
     QHBoxLayout *sceneListButtonLayout;
     void penToScene();
     void sceneToPen();
+    void copyButtonSlot();
+    void eraseButtonSlot();
 signals:
     void kalemColorSignal(QString colorType,QColor color);
     void kalemModeSignal(Scene::Mode mode,DiagramItem::DiagramType type);

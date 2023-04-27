@@ -184,8 +184,38 @@ int myPenSize=scene->myPenSize;
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
-   painter.drawLine(lastPoint, endPoint);
+    /***************************************************************************/
+    if(scene->sceneMode==Scene::Mode::DrawPenPattern)
+    {
+        qreal spacing=0.1;
+        QPainterPath path;
+        path.moveTo(lastPoint);
+        path.lineTo(endPoint);
+        qreal length = path.length();
+        qreal pos = 0;
+        ///https://stackoverflow.com/questions/18502611/line-interpolation-in-qt
+        QPixmap myPixmapForNow;
+        if(!myPixmapForNow.load(":/icons/k1.png")){
+            qWarning("Failed to load");
+        }
 
+        myPixmapForNow= myPixmapForNow.scaled(myPenSize,myPenSize);
+        while (pos < length) {
+            qreal percent = path.percentAtLength(pos);
+            ///drawYourPixmapAt(path.pointAtPercent(percent)); // pseudo method, use QPainter and your brush pixmap instead
+            //painter.drawPoint(path.pointAtPercent(percent));
+            painter.drawPixmap(path.pointAtPercent(percent),myPixmapForNow);
+            //painter.drawEllipse(path.pointAtPercent(percent),myPenSize,myPenSize);
+
+            //  qDebug()<<path.pointAtPercent(percent);
+            pos += spacing;
+        }
+    }
+    if(scene->sceneMode==Scene::Mode::DrawPen)
+    {
+        painter.drawLine(lastPoint, endPoint);
+    }
+    /*******************************************************************************/
     int rad = (myPenSize / 2) + 2;
     update(QRect(lastPoint, endPoint).normalized()
            .adjusted(-rad, -rad, +rad, +rad));

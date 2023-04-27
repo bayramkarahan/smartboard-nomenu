@@ -134,5 +134,7 @@
         <file>icons/open.svg</file>
         <file>icons/desktop.svg</file>
         <file>icons/smartboard.svg</file>
+        <file>icons/k1.png</file>
+        <file>icons/patternpen.svg</file>
     </qresource>
 </RCC>

@@ -24,24 +24,10 @@ public:
      toolKalemMenu *current_toolKalemMenu;
     toolPageMenu *curent_pageMenu;
 public slots:
-     void kalemZeminModeSignalSlot(DiagramItem::DiagramType type);
-    void kalemPenModeSignalSlot(DiagramItem::DiagramType type);
+    void kalemZeminModeSignalSlot(DiagramItem::DiagramType type);
     void kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type);
     void kalemColorSignalSlot(QString colorType, QColor color);
     void kalemSekilModeSignalSlot(DiagramItem::DiagramType type);
-   // void slotBos();
-    void slotPenInit();
-    void slotErase();
-    void slotHand();
-    void slotCopy();
-    void selectCopySlot(QPoint pos);
-    void selectZoomSlot(QPoint pos);
-
-    //void slotJumpPage();
-   // void slotSearch();
-    void slotScaleSceneItem(double sizex, double sizey);
-    void mainClipBoard(QPoint pos, bool copy, bool zoom);
-    void sceneItemAddedSignalSlot();
 
 private:
 

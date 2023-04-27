@@ -109,6 +109,15 @@ void toolKalem::clearButtonSlot()
     //emit kalemModeSignal(Scene::Mode::ClearMode,DiagramItem::DiagramType::NoType);
 }
 
+void toolKalem::eraseButtonSlot()
+{
+    QPalette palet;
+    palet.setBrush(QPalette::Background,QColor(0,0,0,0));
+    current_toolTahta->setPalette(palet);
+    current_toolTahta->scene->setEraseSize(penSize*2);
+    current_toolTahta->scene->sceneMode=Scene::Mode::EraseMode;
+    current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
+}
 void toolKalem::modeKontrolSlot()
 {
 
@@ -225,6 +234,34 @@ void toolKalem::penToScene()
 
 }
 
+void toolKalem::copyButtonSlot()
+{
+
+    //qDebug()<<"kopy kalem çalıştı"<<screenDesktop;
+    //if (!screenDesktop)kalemButtonClick();
+    current_toolTahta->scene->makeItemsControllable(false);
+        current_toolTahta->scene->setMode(Scene::Mode::CopyMode, DiagramItem::DiagramType::Copy);
+        //currentScreenMode=Scene::Mode::CopyMode;
+       // iconButton();
+        //buttonColorClear();
+        current_toolTahta->scene->setSekilTanimlamaStatus(false);
+         /*palette->setColor(QPalette::Button, QColor(212,0,0,255));
+         secButton->setPalette(*palette);
+         secButton->setAutoFillBackground(true);
+         */
+       //
+
+         QPixmap desk = qApp->screens().at(0)->grabWindow(QDesktopWidget().winId(),0,0,parentw,parenth);
+         current_toolTahta->scene->setImage(desk);
+         //timerCopy->start(1000);
+         /*****************************/
+        // FileCrud *fc=new FileCrud();
+        // fc->dosya="E-Tahta.copy.ini";
+        // if(fc->fileexists()) fc->fileremove();
+        // fc->fileWrite("copy=0");
+    //qDebug()<<"copy çalıştı";
+    //kw->handButtonSlot();
+}
 void toolKalem::sceneToPen()
 {
     penSize=current_toolTahta->scene->myPenSize;
@@ -254,7 +291,7 @@ void toolKalem::desktopButtonSlot()
         penDesktopStatus=true;
         current_toolTahta->hide();
         //emit kalemModeSignal(Scene::Mode::PenMode,DiagramItem::DiagramType::NoType);
-        desktopButton->setIcon(QIcon(":/icons/app.svg"));
+        desktopButton->setIcon(QIcon(":/icons/smartboard.svg"));
 
     }else
     {
@@ -303,10 +340,11 @@ copyButton=butonToolSlot(copyButton,"",":icons/copy.png",QColor(255,0,0,0),en*1.
 copyButton->setCheckable(true);
 connect(copyButton, &QToolButton::clicked, [=]() {
     buttonStateClear();copyButton->setChecked(true);
+    copyButtonSlot();
    // current_toolTahta->gv->show();
    // current_toolTahta->gv->setEnabled(true);
 
-    emit kalemModeSignal(Scene::Mode::CopyMode,DiagramItem::DiagramType::NoType);
+    emit kalemModeSignal(Scene::Mode::CopyMode,DiagramItem::DiagramType::Copy);
    });
 
 penButton = new QToolButton(this);
@@ -325,6 +363,7 @@ eraseButton->setCheckable(true);
 eraseButton->setIconSize(QSize(en*0.8,boy*0.8));
 connect(eraseButton, &QToolButton::clicked, [=]() {
        buttonStateClear();eraseButton->setChecked(true);
+       eraseButtonSlot();
        emit kalemModeSignal(Scene::Mode::EraseMode,DiagramItem::DiagramType::NoType);
    });
 
@@ -351,9 +390,10 @@ undoButton=butonToolSlot(undoButton,"",":icons/undo.png",QColor(255,0,0,0),en*0.
 undoButton->setIconSize(QSize(en*0.8,boy*0.8));
 connect(undoButton, &QToolButton::clicked, [=]() {
     //emit kalemModeSignal(Scene::Mode::GeriAlMode,DiagramItem::DiagramType::NoType);
+    Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
     current_toolTahta->scene->setMode(Scene::Mode::GeriAlMode, DiagramItem::DiagramType::NoType);
+    current_toolTahta->scene->sceneMode=tempmode;
     secSayfaButtonClick(current_toolTahta->current_sceneIndex);
-
 });
 
 redoButton = new QToolButton(urw);
@@ -361,9 +401,10 @@ redoButton=butonToolSlot(redoButton,"",":icons/redo.png",QColor(255,0,0,0),en*0.
 redoButton->setIconSize(QSize(en*0.8,boy*0.8));
 connect(redoButton, &QToolButton::clicked, [=]() {
    // emit kalemModeSignal(Scene::Mode::IleriAlMode,DiagramItem::DiagramType::NoType);
+    Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
     current_toolTahta->scene->setMode(Scene::Mode::IleriAlMode, DiagramItem::DiagramType::NoType);
+    current_toolTahta->scene->sceneMode=tempmode;
     secSayfaButtonClick(current_toolTahta->current_sceneIndex);
-
 });
 
 QHBoxLayout *line00 = new QHBoxLayout;
@@ -1296,6 +1337,7 @@ QWidget *toolKalem::eraseTopMenu(int _boy)
 
     connect(temizleMenuButton, &QPushButton::clicked, [=]() {
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+        clearButtonSlot();
        });
 
     auto layout = new QGridLayout(menu);
@@ -2391,7 +2433,7 @@ QWidget *toolKalem::penTopMenu(int _boy)
     kalemMenuButton=butonSlot(kalemMenuButton,"",":icons/pen.svg",QColor(255,0,0,0),e,b,e,b);
     connect(kalemMenuButton, &QPushButton::clicked, [=]() {
         // menu->close();  qDebug()<<b;
-       // current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
+        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
         current_toolTahta->scene->setSekilTanimlamaStatus(false);
         emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NormalPen);
        // qDebug()<<"pen normal";
@@ -2406,6 +2448,16 @@ QWidget *toolKalem::penTopMenu(int _boy)
         current_toolTahta->scene->sceneMode=Scene::Mode::DrawPenFosfor;
         current_toolTahta->scene->setSekilTanimlamaStatus(false);
         current_toolTahta->scene->setPenAlpha(50);
+       });
+
+    QPushButton *patternKalemButton=new QPushButton();
+    patternKalemButton=butonSlot(patternKalemButton,"",":icons/patternpen.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(patternKalemButton, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PatternPen);
+       // menu->close();
+        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPenPattern;
+        current_toolTahta->scene->setSekilTanimlamaStatus(false);
+        //current_toolTahta->scene->setPenAlpha(50);
        });
 
 
@@ -2494,15 +2546,21 @@ QWidget *toolKalem::penTopMenu(int _boy)
  //   layout->addWidget(geriAlButton,1,2,1,1);
 //    layout->addWidget(new QLabel("<font size=1>Geri Al</font>"),2,2,1,1,Qt::AlignHCenter);
     QLabel *kl=new QLabel("Kalem");
+    QLabel *pkl=new QLabel("Desen Kalem");
+
     QLabel *fkl=new QLabel("Fosforlu Kalem");
     QLabel *akl=new QLabel("Akıllı Kalem");
     kl->setFont(ff);    fkl->setFont(ff);    akl->setFont(ff);
-    layout->addWidget(kalemMenuButton,0,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(fosforluKalemButton,0,2,1,1,Qt::AlignHCenter);
-    layout->addWidget(kalemSekilTanimlama,0,3,1,1,Qt::AlignHCenter);
-    layout->addWidget(kl,1,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(fkl,1,2,1,1,Qt::AlignHCenter);
-    layout->addWidget(akl,1,3,1,1,Qt::AlignHCenter);
+    layout->addWidget(kalemMenuButton,0,5,1,1,Qt::AlignHCenter);
+    layout->addWidget(patternKalemButton,0,10,1,1,Qt::AlignHCenter);
+
+    layout->addWidget(fosforluKalemButton,0,15,1,1,Qt::AlignHCenter);
+    layout->addWidget(kalemSekilTanimlama,0,20,1,1,Qt::AlignHCenter);
+    layout->addWidget(kl,1,5,1,1,Qt::AlignHCenter);
+    layout->addWidget(fkl,1,10,1,1,Qt::AlignHCenter);
+    layout->addWidget(akl,1,15,1,1,Qt::AlignHCenter);
+    layout->addWidget(pkl,1,20,1,1,Qt::AlignHCenter);
+
 
    // layout->addWidget(penSize,5,1,1,3,Qt::AlignHCenter);
 
@@ -2514,7 +2572,7 @@ QWidget *toolKalem::penTopMenu(int _boy)
     layout1->addWidget(nokta10);
     layout1->addWidget(nokta12);
     layout1->addWidget(nokta14);
-    layout->addLayout(layout1, 0,4,2,1,Qt::AlignHCenter);
+    layout->addLayout(layout1, 0,30,2,1,Qt::AlignHCenter);
 
     //QGridLayout *renkloyout = new QGridLayout;
     //renkloyout->setContentsMargins(0,0,0,0);
@@ -2525,7 +2583,7 @@ QWidget *toolKalem::penTopMenu(int _boy)
    // QLabel *renk= new QLabel("Kalem Rengi");      renk->setFont(ff);
    // renkloyout->addWidget(renk, 1,0,1,1,Qt::AlignHCenter);
    // layout->addWidget(cw, 0,5,2,1,Qt::AlignCenter);
-    layout->addWidget(cw, 0,5,2,1,Qt::AlignHCenter);
+    layout->addWidget(cw, 0,40,2,1,Qt::AlignHCenter);
    // layout->addWidget(renk, 1,5,1,1,Qt::AlignHCenter);
 
 
@@ -2533,12 +2591,12 @@ QWidget *toolKalem::penTopMenu(int _boy)
     QLabel *fk=new QLabel("Kesik");
     QLabel *fn=new QLabel("Noktalı");
     fd->setFont(ff);    fk->setFont(ff);    fn->setFont(ff);
-    layout->addWidget(penStyleSolidLine, 0, 8,1,1,Qt::AlignHCenter);
-    layout->addWidget(penStyleDashLine, 0, 9,1,1,Qt::AlignHCenter);
-    layout->addWidget(penStyleDotLine, 0, 10,1,1,Qt::AlignHCenter);
-    layout->addWidget(fd,1,8,1,1,Qt::AlignHCenter);
-    layout->addWidget(fk,1,9,1,1,Qt::AlignHCenter);
-    layout->addWidget(fn,1,10,1,1,Qt::AlignHCenter);
+    layout->addWidget(penStyleSolidLine, 0, 45,1,1,Qt::AlignHCenter);
+    layout->addWidget(penStyleDashLine, 0, 46,1,1,Qt::AlignHCenter);
+    layout->addWidget(penStyleDotLine, 0, 47,1,1,Qt::AlignHCenter);
+    layout->addWidget(fd,1,45,1,1,Qt::AlignHCenter);
+    layout->addWidget(fk,1,46,1,1,Qt::AlignHCenter);
+    layout->addWidget(fn,1,47,1,1,Qt::AlignHCenter);
 return menu;
 }
 
