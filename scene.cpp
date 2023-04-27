@@ -228,7 +228,7 @@ void Scene::donSlot(DiagramItem::DiagramType type)
 
               if(DiagramItem::DiagramType::CizgiliKagit==mySekilType)
               {
-                  GridLines *gridLines = new GridLines (width(), height(),60,true,false,false,mySekilZeminColor, myPenColor);
+                  GridLines *gridLines = new GridLines (width(), height(),60,true,false,false,myzeminDolguColor, myPenColor);
                   QPixmap bkgnd=gridLines->PixItem(gridLines,width(), height());
                pg=bkgnd;
               }
@@ -239,7 +239,7 @@ void Scene::donSlot(DiagramItem::DiagramType type)
 
              QPixmap tmp(pg.width(),pg.height());
              // tmp.fill(QColor(QColor(255,0,0,255)));
-              tmp.fill(QColor(mySekilZeminColor));
+              tmp.fill(QColor(myzeminDolguColor));
 
               QPainter painter(&tmp);
               painter.drawPixmap(QPoint{}, pg, pg.rect());
@@ -343,8 +343,8 @@ else if(mySekilType==DiagramItem::DiagramType::CizgiliKagit){
 else if(mySekilType==DiagramItem::DiagramType::Resim){
    qDebug()<<"dotslot pattern";
     //itemToRectDraw->setPos(qFabs(screenSize.width()/2)-205,qFabs(screenSize.height()/2)-255);
-     itemToRectDraw->setRect(0,0,pageItemRect.width()/3,pageItemRect.height()/3);
-     itemToRectDraw->setPos(pageItemRect.left()+pageItemRect.width()/2-pageItemRect.width()/6,pageItemRect.top()+pageItemRect.height()/2-pageItemRect.height()/6);
+     itemToRectDraw->setRect(0,0,width()/3,height()/3);
+     //itemToRectDraw->setPos(pageItemRect.left()+pageItemRect.width()/2-pageItemRect.width()/6,pageItemRect.top()+pageItemRect.height()/2-pageItemRect.height()/6);
 }
 
 //else itemToRectDraw->setRect(0,0,event->scenePos().x() - origPoint.x(),event->scenePos().y() - origPoint.y());

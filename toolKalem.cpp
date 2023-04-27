@@ -196,6 +196,7 @@ void toolKalem::penToScene()
     current_toolTahta->scene->setPenAlpha(penAlpha);
     current_toolTahta->scene->setPenColor(penColor);
     current_toolTahta->scene->setPenStyle(penStyle);
+    current_toolTahta->scene->myzeminDolguColor=zeminDolguColor;
 
     current_toolTahta->scene->mySekilType=sekilType;
     current_toolTahta->scene->setSekilKalemColor(penColor);
@@ -270,6 +271,8 @@ void toolKalem::sceneToPen()
     penStyle=current_toolTahta->scene->myPenStyle;
     sekilType=current_toolTahta->scene->mySekilType;
     sekilZeminColor=current_toolTahta->scene->mySekilKalemColor;
+    zeminDolguColor=current_toolTahta->scene->myzeminDolguColor;
+
     //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
     //   current_toolTahta->scene->makeItemsControllable(false);
     // connect(current_toolTahta->scene, SIGNAL(sceneItemAddedSignal()),
@@ -2550,16 +2553,16 @@ QWidget *toolKalem::penTopMenu(int _boy)
 
     QLabel *fkl=new QLabel("Fosforlu Kalem");
     QLabel *akl=new QLabel("Akıllı Kalem");
-    kl->setFont(ff);    fkl->setFont(ff);    akl->setFont(ff);
+    kl->setFont(ff);    fkl->setFont(ff);    akl->setFont(ff); pkl->setFont(ff);
     layout->addWidget(kalemMenuButton,0,5,1,1,Qt::AlignHCenter);
     layout->addWidget(patternKalemButton,0,10,1,1,Qt::AlignHCenter);
-
     layout->addWidget(fosforluKalemButton,0,15,1,1,Qt::AlignHCenter);
     layout->addWidget(kalemSekilTanimlama,0,20,1,1,Qt::AlignHCenter);
+
     layout->addWidget(kl,1,5,1,1,Qt::AlignHCenter);
-    layout->addWidget(fkl,1,10,1,1,Qt::AlignHCenter);
-    layout->addWidget(akl,1,15,1,1,Qt::AlignHCenter);
-    layout->addWidget(pkl,1,20,1,1,Qt::AlignHCenter);
+    layout->addWidget(pkl,1,10,1,1,Qt::AlignHCenter);
+    layout->addWidget(fkl,1,15,1,1,Qt::AlignHCenter);
+    layout->addWidget(akl,1,20,1,1,Qt::AlignHCenter);
 
 
    // layout->addWidget(penSize,5,1,1,3,Qt::AlignHCenter);
@@ -3028,14 +3031,7 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
 
     });
 
-   QPushButton *zeminTemizleSayfaButton = new QPushButton;
-   zeminTemizleSayfaButton=butonSlot(zeminTemizleSayfaButton,"",":icons/zemintemizle.png",QColor(255,0,0,0),e,b,e,b);
-   zeminTemizleSayfaButton->setFlat(true);
-   connect(zeminTemizleSayfaButton, &QPushButton::clicked, [=]()
-    {
-       emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
 
-    });
 
     QPushButton *gridRenkButton = new QPushButton;
     gridRenkButton=butonSlot(gridRenkButton,"",":icons/gridrenk.png",QColor(255,0,0,0),e,b,e,b);
@@ -3046,13 +3042,13 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     {
     });
 
-    QPushButton *zeminRenkButton = new QPushButton;
+    QPushButton *zeminDolguRenkButton = new QPushButton;
 
-     zeminRenkButton=butonSlot(zeminRenkButton,"",":icons/zeminrenk.png",QColor(255,0,0,0),e,b,e,b);
-     zeminRenkButton->setFlat(true);
-     QMenu *zcm=colorMenu("sekilZeminColor","dikey",en,boy,true);
-      zeminRenkButton->setMenu(zcm);
-     connect(zeminRenkButton, &QPushButton::clicked, [=]()
+     zeminDolguRenkButton=butonSlot(zeminDolguRenkButton,"",":icons/zeminrenk.png",QColor(255,0,0,0),e,b,e,b);
+     zeminDolguRenkButton->setFlat(true);
+     QMenu *zcm=colorMenu("zeminDolguColor","dikey",en,boy,true);
+      zeminDolguRenkButton->setMenu(zcm);
+     connect(zeminDolguRenkButton, &QPushButton::clicked, [=]()
      {
      });
 
@@ -3063,30 +3059,34 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
    layout->addWidget(izometrikKagit,0,6,1,1,Qt::AlignHCenter);
    layout->addWidget(kareliKagit,0,7,1,1,Qt::AlignHCenter);
    layout->addWidget(cizgiliKagit,0,8,1,1,Qt::AlignHCenter);
-
+   layout->addWidget(zeminDolguRenkButton,0,9,1,1,Qt::AlignHCenter);
    QLabel *noktali=new QLabel("Noktalı");   noktali->setFont(ffl);
    QLabel *izometrik=new QLabel("İzometrik"); izometrik->setFont(ffl);
    QLabel *kareli=new QLabel("Kareli");    kareli->setFont(ffl);
    QLabel *cizgili=new QLabel("Çizgili");   cizgili->setFont(ffl);
+   QLabel *zeminrengitahta=new QLabel("Dolgu Rengi");  zeminrengitahta->setFont(ffl);
+
+
    layout->addWidget(noktali,1,5,1,1,Qt::AlignHCenter);
    layout->addWidget(izometrik,1,6,1,1,Qt::AlignHCenter);
    layout->addWidget(kareli,1,7,1,1,Qt::AlignHCenter);
    layout->addWidget(cizgili,1,8,1,1,Qt::AlignHCenter);
+   layout->addWidget(zeminrengitahta,1,9,1,1,Qt::AlignHCenter);
 
-   layout->addWidget(nkoordinat,0,9,1,1,Qt::AlignHCenter);
-   layout->addWidget(hnkoordinat,0,10,1,1,Qt::AlignHCenter);
-   layout->addWidget(ndogru,0,11,1,1,Qt::AlignHCenter);
-   layout->addWidget(nnkoordinat,0,12,1,1,Qt::AlignHCenter);
+   layout->addWidget(nkoordinat,0,10,1,1,Qt::AlignHCenter);
+   layout->addWidget(hnkoordinat,0,11,1,1,Qt::AlignHCenter);
+   layout->addWidget(ndogru,0,12,1,1,Qt::AlignHCenter);
+   layout->addWidget(nnkoordinat,0,13,1,1,Qt::AlignHCenter);
 
    QLabel *skoordinatl=new QLabel("S.Koordinat");   skoordinatl->setFont(ffl);
    QLabel *hnkoordinatl=new QLabel("Y. Koordinat"); hnkoordinatl->setFont(ffl);
    QLabel *ndogrul=new QLabel("Sayı Doğrusu");      ndogrul->setFont(ffl);
    QLabel *nnkoordinatl=new QLabel("Koordinat");    nnkoordinatl->setFont(ffl);
 
-   layout->addWidget(skoordinatl,1,9,1,1,Qt::AlignHCenter);
-   layout->addWidget(hnkoordinatl,1,10,1,1,Qt::AlignHCenter);
-   layout->addWidget(ndogrul,1,11,1,1,Qt::AlignHCenter);
-   layout->addWidget(nnkoordinatl,1,12,1,1,Qt::AlignHCenter);
+   layout->addWidget(skoordinatl,1,10,1,1,Qt::AlignHCenter);
+   layout->addWidget(hnkoordinatl,1,11,1,1,Qt::AlignHCenter);
+   layout->addWidget(ndogrul,1,12,1,1,Qt::AlignHCenter);
+   layout->addWidget(nnkoordinatl,1,13,1,1,Qt::AlignHCenter);
 
     layout->addWidget(zeminSeffafButton,0,15,1,1,Qt::AlignHCenter);
     layout->addWidget(zeminSiyahButton,0,16,1,1,Qt::AlignHCenter);
@@ -3096,7 +3096,7 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     QLabel *seffaftahta=new QLabel("Şeffaf Tahta");   seffaftahta->setFont(ffl);
     QLabel *siyahtahta=new QLabel("Siyah Tahta"); siyahtahta->setFont(ffl);
     QLabel *beyaztahta=new QLabel("Beyaz Tahta");      beyaztahta->setFont(ffl);
-    QLabel *customtahta=new QLabel("S. Renk Tahta");    customtahta->setFont(ffl);
+    QLabel *customtahta=new QLabel("Tahta Rengi");    customtahta->setFont(ffl);
 
     layout->addWidget(seffaftahta,1,15,1,1,Qt::AlignHCenter);
     layout->addWidget(siyahtahta,1,16,1,1,Qt::AlignHCenter);
@@ -3120,19 +3120,15 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     layout->addWidget(gyazitahta,1,23,1,1,Qt::AlignHCenter);
 
 
-    layout->addWidget(zeminTemizleSayfaButton,0,25,1,1,Qt::AlignHCenter);
-    layout->addWidget(zeminDesenEkleSayfaButton,0,26,1,1,Qt::AlignHCenter);
+     layout->addWidget(zeminDesenEkleSayfaButton,0,26,1,1,Qt::AlignHCenter);
     layout->addWidget(gridRenkButton,0,27,1,1,Qt::AlignHCenter);
-    layout->addWidget(zeminRenkButton,0,28,1,1,Qt::AlignHCenter);
+
     QLabel *temizletahta=new QLabel("Tahta Temizle");   temizletahta->setFont(ffl);
     QLabel *desenekletahta=new QLabel("Desen Ekle");    desenekletahta->setFont(ffl);
     QLabel *cizgirengitahta=new QLabel("Çizgi Rengi");  cizgirengitahta->setFont(ffl);
-    QLabel *zeminrengitahta=new QLabel("Zemin Rengi");  zeminrengitahta->setFont(ffl);
 
-    layout->addWidget(temizletahta,1,25,1,1,Qt::AlignHCenter);
-    layout->addWidget(desenekletahta,1,26,1,1,Qt::AlignHCenter);
+     layout->addWidget(desenekletahta,1,26,1,1,Qt::AlignHCenter);
     layout->addWidget(cizgirengitahta,1,27,1,1,Qt::AlignHCenter);
-    layout->addWidget(zeminrengitahta,1,28,1,1,Qt::AlignHCenter);
 
     QWidget *cm=cizgiBoyutMenu();
     cm->setVisible(true);
@@ -3512,12 +3508,13 @@ QPixmap toolKalem::image(const QPolygonF &myPolygon,int w,int h) const
     return pixmap;
 }
 
-QPixmap toolKalem::zeminImage(const QPolygonF &myPolygon, int w, int h, QColor color,int pensize) const
+QPixmap toolKalem::zeminImage(const QPolygonF &myPolygon, int w, int h,QColor zemincolor, QColor cizgicolor,int pensize) const
 {
     QPixmap pixmap(w, h);
-    pixmap.fill(Qt::transparent);
+    //pixmap.fill(Qt::transparent);
+    pixmap.fill(zemincolor);
     QPainter painter(&pixmap);
-    painter.setPen(QPen(color, pensize));
+    painter.setPen(QPen(cizgicolor, pensize));
   // painter.translate(en, boy);
     painter.drawPolyline(myPolygon);
     return pixmap;
@@ -3657,7 +3654,7 @@ void toolKalem::secSayfaButtonClick(int index)
     current_toolTahta->scene=current_toolTahta->sceneList[current_toolTahta->current_sceneIndex];
     current_toolTahta->gv->setScene(current_toolTahta->scene);
   ///  qDebug()<<"ekle button click"<<sceneSayfaNumber<<sceneSayfaActiveNumber<<scene->pdfObjectAdded<<scene->pdfObjectShow<<scene->pdfPageNumber;
-    sceneToPen();
+    //sceneToPen();
     // currentScreenMode=scene->sceneMode;         ///çok önemli
     /// current_toolTahta->scene->sceneMode=currentScreenMode;         ///çok önemli
 

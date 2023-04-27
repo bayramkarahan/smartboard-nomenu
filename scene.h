@@ -125,11 +125,14 @@ public:
     bool pdfObjectShow=false;
     int pdfPageNumber=-1;
     QColor myPenColor;
+
     int myPenAlpha;
     int myPenSize;
     int mySekilPenSize;
     QColor mySekilZeminColor;
     QColor mySekilKalemColor;
+    QColor myzeminDolguColor;
+
     Qt::PenStyle myPenStyle;
     Qt::PenStyle mySekilPenStyle;
     int myEraseSize;

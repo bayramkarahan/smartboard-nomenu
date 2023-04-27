@@ -47,11 +47,13 @@ public:
 
     QColor sekilZeminColor=QColor(255,255,255,0);
     QColor zeminColor=QColor(0,0,0,0);
+    QColor zeminDolguColor=QColor(0,0,0,0);
+
     QColor zeminGridColor=QColor(0,0,0,255);
     DiagramItem::DiagramType sekilType=DiagramItem::DiagramType::NoType;
     DiagramItem::DiagramType pagePattern=DiagramItem::DiagramType::TransparanPage;
     QToolButton *penColorButton;
-    QPixmap zeminImage(const QPolygonF &myPolygon, int w, int h, QColor color, int pensize) const;
+    QPixmap zeminImage(const QPolygonF &myPolygon, int w, int h, QColor zemincolor, QColor cizgicolor, int pensize) const;
     QToolButton *handButton;
     QToolButton *desktopButton;
     QToolButton *copyButton;

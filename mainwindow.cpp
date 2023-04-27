@@ -136,13 +136,13 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
     if(current_toolKalemMenu->isVisible()) current_toolKalemMenu->close();
    if(mode==Scene::Mode::DrawPen)
    {
-       current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(screenSize.height()*0.045),screenSize.width()*0.8,screenSize.height()*0.045);
+       current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045);
        current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,2);
        current_toolKalemMenu->show();
    }
    if(mode==Scene::Mode::EraseMode)
    {
-       current_toolKalemMenu=new toolKalemMenu(kw->eraseTopMenu(screenSize.height()*0.045),screenSize.width()*0.3,screenSize.height()*0.045);
+       current_toolKalemMenu=new toolKalemMenu(kw->eraseTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045);
        current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,2);
        current_toolKalemMenu->show();
    }
@@ -154,7 +154,7 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
    }
    if(mode==Scene::Mode::ZeminMode)
    {
-       current_toolKalemMenu=new toolKalemMenu(kw->zeminTopMenu(screenSize.height()*0.045),screenSize.width()*0.93,screenSize.height()*0.045);
+       current_toolKalemMenu=new toolKalemMenu(kw->zeminTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045);
        current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,2);
        current_toolKalemMenu->show();
    }
@@ -208,11 +208,6 @@ void MainWindow::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
 
 qDebug()<<"Zemin Türü Seçiliyor:"<<type;
 
-  /* current_toolTahta->scene->pageOfNumberScene=currentTab()->currentPage()-1;
-    PageItem* page =currentTab()->m_pageItems.at((currentTab()->currentPage()-1));
-    const QRectF pageItemRect = page->boundingRect().translated(page->pos());
-    current_toolTahta->scene->pageItemRect=pageItemRect;
-   */
     current_toolTahta->scene->setSekilZeminColor(kw->sekilZeminColor);
     current_toolTahta->scene->setSekilPenSize(kw->penSize);
     current_toolTahta->scene->setSekilKalemColor(kw->penColor);
@@ -232,13 +227,13 @@ if(DiagramItem::DiagramType::CizgiliKagit==type) {current_toolTahta->scene->donS
 if(DiagramItem::DiagramType::TransparanPage==type){
       qDebug()<<"seffaf zemin";
     kw->pagePattern=type;
-    kw->sekilZeminColor=QColor(0,0,0,0);
+    kw->zeminColor=QColor(0,0,0,0);
     current_toolTahta->scene->sceneGridYatay=false;
     current_toolTahta->scene->sceneGridDikey=false;
     current_toolTahta->scene->sceneGuzelYazi=false;
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->zeminColor, kw->penColor);
     QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
    current_toolTahta->scene->myImage= bkgnd;
    // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
@@ -247,14 +242,14 @@ if(DiagramItem::DiagramType::TransparanPage==type){
 if(DiagramItem::DiagramType::BlackPage==type){
    // qDebug()<<"siyah zemin";
     kw->pagePattern=type;
-    kw->sekilZeminColor=QColor(0,0,0,255);
+    kw->zeminColor=QColor(0,0,0,255);
 
     current_toolTahta->scene->sceneGridYatay=false;
     current_toolTahta->scene->sceneGridDikey=false;
     current_toolTahta->scene->sceneGuzelYazi=false;
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (current_toolTahta->width(),current_toolTahta->height(),kw->gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi, kw->sekilZeminColor, kw->penColor);
+    GridLines *gridLines = new GridLines (current_toolTahta->width(),current_toolTahta->height(),kw->gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi, kw->zeminColor, kw->penColor);
     QPixmap bkgnd=gridLines->PixItem(gridLines,current_toolTahta->width(),current_toolTahta->height());
 
     current_toolTahta->scene->myImage=bkgnd;
@@ -263,16 +258,15 @@ if(DiagramItem::DiagramType::BlackPage==type){
    // kw->buttonStateClear();
    // kw->penButton->setChecked(true);
   }
-
 if(DiagramItem::DiagramType::WhitePage==type){
     kw->pagePattern=type;
-    kw->sekilZeminColor=QColor(255,255,255,255);
+    kw->zeminColor=QColor(255,255,255,255);
     current_toolTahta->scene->sceneGridYatay=false;
     current_toolTahta->scene->sceneGridDikey=false;
     current_toolTahta->scene->sceneGuzelYazi=false;
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->zeminColor, kw->penColor);
     QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
     current_toolTahta->scene->myImage=bkgnd;
    // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
@@ -288,7 +282,7 @@ if(DiagramItem::DiagramType::CustomColorPage==type){
     current_toolTahta->scene->sceneGuzelYazi=false;
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->zeminColor, kw->penColor);
     QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
     current_toolTahta->scene->myImage=bkgnd;
    // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
@@ -297,7 +291,6 @@ if(DiagramItem::DiagramType::CustomColorPage==type){
     kw->penButton->setChecked(true);
 */
 }
-
 if(DiagramItem::DiagramType::CizgiliPage==type){
     kw->pagePattern=type;
     current_toolTahta->scene->sceneGridYatay=true;
@@ -305,7 +298,7 @@ if(DiagramItem::DiagramType::CizgiliPage==type){
     current_toolTahta->scene->sceneGuzelYazi=false;
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->zeminGridColor);
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->zeminColor, kw->zeminGridColor);
     QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
     current_toolTahta->scene->myImage=bkgnd;
    // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
@@ -321,7 +314,7 @@ if(DiagramItem::DiagramType::KareliPage==type){
     current_toolTahta->scene->sceneGuzelYazi=false;
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->zeminGridColor);
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->zeminColor, kw->zeminGridColor);
     QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
     current_toolTahta->scene->myImage=bkgnd;
    // currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
@@ -338,12 +331,46 @@ if(DiagramItem::DiagramType::MuzikPage==type){
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
     DiagramItem *ditem=new DiagramItem();
-    QPixmap pim(kw->zeminImage(ditem->sekilStore(DiagramItem::DiagramType::Muzik,QRectF(QPointF(0,0),QPointF(current_toolTahta->width(),current_toolTahta->height()))),current_toolTahta->width(),current_toolTahta->height(),kw->zeminGridColor,2));
+    QPixmap pim(kw->zeminImage(ditem->sekilStore(DiagramItem::DiagramType::Muzik,QRectF(QPointF(0,0),QPointF(current_toolTahta->width(),current_toolTahta->height()))),current_toolTahta->width(),current_toolTahta->height(),kw->zeminColor,kw->zeminGridColor,2));
     current_toolTahta->scene->myImage=pim;
-    //currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-   /* kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
-    kw->buttonStateClear();
-    kw->penButton->setChecked(true);
+/*
+    VERectangle*  itemToRectDraw = new VERectangle(current_toolTahta->scene);
+    itemToRectDraw->sekilTur(DiagramItem::DiagramType::Copy);
+    //itemToRectDraw->setPen(QPen(mySekilKalemColor, mySekilPenSize, mySekilPenStyle));
+    //itemToRectDraw->setBrush(mySekilZeminColor);
+    QPixmap temp(":icons/musicikon.png");
+    itemToRectDraw->setPos(QPoint(50,this->height()/3*0));
+    itemToRectDraw->setImage(temp);
+    itemToRectDraw->setRect(0,0,75,250);
+    current_toolTahta->scene->addItem(itemToRectDraw);
+    itemToRectDraw->fareState(false);
+    itemToRectDraw = 0;
+
+   // VERectangle*
+            itemToRectDraw = new VERectangle(current_toolTahta->scene);
+    itemToRectDraw->sekilTur(DiagramItem::DiagramType::Copy);
+    //itemToRectDraw->setPen(QPen(mySekilKalemColor, mySekilPenSize, mySekilPenStyle));
+    //itemToRectDraw->setBrush(mySekilZeminColor);
+    //QPixmap temp(":icons/musicikon.png");
+    itemToRectDraw->setPos(QPoint(50,this->height()/3*1));
+    itemToRectDraw->setImage(temp);
+    itemToRectDraw->setRect(0,0,75,250);
+    current_toolTahta->scene->addItem(itemToRectDraw);
+    itemToRectDraw->fareState(false);
+    itemToRectDraw = 0;
+
+    //VERectangle*
+            itemToRectDraw = new VERectangle(current_toolTahta->scene);
+    itemToRectDraw->sekilTur(DiagramItem::DiagramType::Copy);
+   // itemToRectDraw->setPen(QPen(mySekilKalemColor, mySekilPenSize, mySekilPenStyle));
+   // itemToRectDraw->setBrush(mySekilZeminColor);
+    //QPixmap temp(":icons/musicikon.png");
+    itemToRectDraw->setPos(QPoint(50,this->height()/3*2));
+    itemToRectDraw->setImage(temp);
+    itemToRectDraw->setRect(0,0,75,250);
+    current_toolTahta->scene->addItem(itemToRectDraw);
+    itemToRectDraw->fareState(false);
+    itemToRectDraw = 0;
 */
   }
 if(DiagramItem::DiagramType::GuzelYaziPage==type){
@@ -353,7 +380,7 @@ if(DiagramItem::DiagramType::GuzelYaziPage==type){
     current_toolTahta->scene->sceneGuzelYazi=true;
     ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
     QSize screenSize = qApp->screens()[0]->size();
-    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
+    GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi,kw->zeminColor, kw->penColor);
     QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
     current_toolTahta->scene->myImage=bkgnd;
     //currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
@@ -362,11 +389,12 @@ if(DiagramItem::DiagramType::GuzelYaziPage==type){
     kw->penButton->setChecked(true);
 */
   }
-
 if(DiagramItem::DiagramType::CustomImagePage==type)
-{ kw->pagePattern=type;
+{
+    kw->pagePattern=type;
+    Qt::WindowFlags flags = 0;
+   //if(screenDesktop==true) ekranButtonClick();
 
-   /* Qt::WindowFlags flags = 0;
     flags |= Qt::Window;
     flags |= Qt::X11BypassWindowManagerHint;
     flags |= Qt::CustomizeWindowHint;
@@ -379,9 +407,9 @@ if(DiagramItem::DiagramType::CustomImagePage==type)
     flags |= Qt::SplashScreen;
     flags |= Qt::X11BypassWindowManagerHint;
     flags |= Qt::WindowStaysOnTopHint;
-    // */
-QFileDialog abc;
-   // abc.setWindowFlags(flags);
+    // QFileDialog abc;
+    abc.setWindowFlags(flags);
+
     QString os="";
 #ifdef WIN32
     // Windows code here
@@ -400,22 +428,8 @@ QFileDialog abc;
             if(abc.selectedFiles()[0]!="")
             {
                 QPixmap image = QPixmap(abc.selectedFiles()[0]);
-
-               /* currentTab()->scene->sceneGridYatay=false;
-                currentTab()->scene->sceneGridDikey=false;
-                currentTab()->scene->sceneGuzelYazi=true;
-                ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
-                //QSize screenSize = qApp->screens()[0]->size();
-                //GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,currentTab()->scene->sceneGridYatay,currentTab()->scene->sceneGridDikey,currentTab()->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
-               */// QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
                current_toolTahta->scene->myImage=image;
-                //currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-
-               // currentTab()->scene->setImage(image);
-                 //currentTab()->scene->donSlot(type);
-
-
-            }
+             }
         }
 
     }
@@ -429,37 +443,18 @@ QFileDialog abc;
             if(abc.selectedFiles()[0]!="")
             {
                 QPixmap image = QPixmap(abc.selectedFiles()[0]);
-
-                /*currentTab()->scene->sceneGridYatay=false;
-                currentTab()->scene->sceneGridDikey=false;
-                currentTab()->scene->sceneGuzelYazi=true;
-                ///qDebug()<<myGridSize<<gridYatay<<gridDikey<<guzelYazi<<myZeminColor<< myGridColor;
-                QSize screenSize = qApp->screens()[0]->size();
-                //GridLines *gridLines = new GridLines (screenSize.width(), screenSize.height(),kw->gridSize*3.4,currentTab()->scene->sceneGridYatay,currentTab()->scene->sceneGridDikey,currentTab()->scene->sceneGuzelYazi,kw->sekilZeminColor, kw->penColor);
-               */// QPixmap bkgnd=gridLines->PixItem(gridLines,screenSize.width(),screenSize.height());
                 current_toolTahta->scene->myImage=image;
-                //currentTab()->scene->donSlot(DiagramItem::DiagramType::PatternPage);
-
-               // currentTab()->scene->setImage(image);
-                // currentTab()->scene->donSlot(type);
-
+                current_toolTahta->scene->donSlot(DiagramItem::DiagramType::PatternPage);
             }
         }
 
     }
 
-   /* flags |= Qt::Window;
+    flags |= Qt::Window;
     flags |= Qt::X11BypassWindowManagerHint;
     flags |= Qt::WindowStaysOnTopHint;
-    this->setWindowFlags(flags);
-    show();*/
-   // currentTab()->scene->mySekilType=type;
-
-   /* kalemModeSignalSlot(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
-    kw->buttonStateClear();
-    kw->penButton->setChecked(true);
-    */
-
+    kw->setWindowFlags(flags);
+    kw->show();
 }
 
 bool pageadd=false;
@@ -509,7 +504,7 @@ foreach(QGraphicsItem* item,current_toolTahta->scene->items()){
    //current_toolTahta->scene->makeItemsControllable(false);
 
 //}
-
+kw->secSayfaButtonClick(current_toolTahta->current_sceneIndex);
 }
 void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
    // qDebug()<<"sekil butonclick"<<type;
@@ -559,11 +554,12 @@ void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
 
     else if(DiagramItem::DiagramType::Resim==type)
     {
-        Qt::WindowFlags flags = 0;
+        qDebug()<<"resim";
+       Qt::WindowFlags flags = 0;
         flags |= Qt::Window;
         flags |= Qt::X11BypassWindowManagerHint;
         flags |= Qt::CustomizeWindowHint;
-        this->setWindowFlags(flags);
+        kw->setWindowFlags(flags);
 
         QFileDialog abc;
        /// abc.setSidebarUrls(urls);
@@ -585,9 +581,9 @@ void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
 
         if(os=="linux"){
             //qDebug()<<"linux fileopen";
-            abc.setWindowTitle("Resim Aç jpg png bmp");
+            abc.setWindowTitle("Resim Aç jpg png");
             abc.setDirectory(QDir::homePath()+"/Masaüstü");
-            abc.setNameFilter(tr("Image Files (*.png *.jpg *.bmp)"));
+            abc.setNameFilter(tr("Resim Dosyaları (*.png *.jpg *.bmp)"));
             if(abc.exec()) {
                 if(abc.selectedFiles()[0]!="")
                 {
@@ -621,8 +617,8 @@ void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
         flags |= Qt::Window;
         flags |= Qt::X11BypassWindowManagerHint;
         flags |= Qt::WindowStaysOnTopHint;
-        this->setWindowFlags(flags);
-        show();
+        kw->setWindowFlags(flags);
+        kw->show();
       current_toolTahta->scene->mySekilType=type;
     }
 
@@ -650,20 +646,20 @@ void MainWindow::kalemColorSignalSlot(QString colorType, QColor color)
   if (colorType=="zeminGridColor"){
      //qDebug()<<"sekilZeminColor"<<color;
      kw->zeminGridColor=color;
+     kalemModeSignalSlot(Scene::Mode::ZeminMode,kw->pagePattern);
+    // emit kalemModeSignal(Scene::Mode::ZeminMode,pagePattern);
+
     }
   if (colorType=="zeminColor"){
      //qDebug()<<"zeminColor"<<color;
-     kw->sekilZeminColor=color;
+     kw->zeminColor=color;
      kalemZeminModeSignalSlot(DiagramItem::DiagramType::CustomColorPage);
    }
-
-   /*if(colorType=="pencolor") setPenColor(renk);
-   if(colorType=="mySekilKalemColor")  mySekilKalemColor=renk;
-   if(colorType=="mySekilZeminColor")  mySekilZeminColor=renk;
-   if(colorType=="myZeminColor")  myZeminColor=renk;
-   if(colorType=="myGridColor")  myGridColor=renk;
-   */
-
+  if (colorType=="zeminDolguColor"){
+     //qDebug()<<"zeminDolguColor"<<color;
+     kw->zeminDolguColor=color;
+     current_toolTahta->scene->myzeminDolguColor=color;
+   }
 }
 
 
