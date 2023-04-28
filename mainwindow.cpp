@@ -6,7 +6,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   this->setFixedSize(300,600);
    // QGuiApplication::instance()->setW->setWindowIcon(QIcon(":icons/pencolor.png"));
-
     setWindowFlags(Qt::WindowStaysOnTopHint);
    // setWindowFlags(Qt::X11BypassWindowManagerHint);
    // setAttribute(Qt::WA_StaticContents);
@@ -16,8 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     boy=(screenSize.height()/100)*5.70;
     en=boy;
     //qDebug()<<"ekran boyutu:"<<screenSize;
-    //current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.6);
-    current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
+    current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.6);
+    //current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
     current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()/2);
     current_toolTahta->lower();
     current_toolTahta->lower();
@@ -161,6 +160,13 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
    if(mode==Scene::Mode::PdfMode)
    {
        current_toolKalemMenu=new toolKalemMenu(kw->pdfTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045);
+       current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,2);
+       current_toolKalemMenu->show();
+   }
+
+   if(mode==Scene::Mode::ToolMode)
+   {
+       current_toolKalemMenu=new toolKalemMenu(kw->toolTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045);
        current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,2);
        current_toolKalemMenu->show();
    }

@@ -440,33 +440,18 @@ connect(zeminButton, &QToolButton::clicked, [=]() {
     emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
    });
 
+
 QToolButton *pdfButton = new QToolButton(this);
 pdfButton=butonToolSlot(pdfButton,"",":icons/pdf.svg",QColor(255,0,0,0),en*1.5,boy);
 connect(pdfButton, &QToolButton::clicked, [=]() {
 emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
    });
 
-QToolButton *printButton = new QToolButton(this);
-printButton=butonToolSlot(printButton,"",":icons/print.png",QColor(255,0,0,0),en*1.5,boy);
-connect(printButton, &QToolButton::clicked, [=]() {
-    //emit kalemModeSignal(Scene::Mode::PrintMode,DiagramItem::DiagramType::NoType);
-    //QString fileName = QFileDialog::getSaveFileName(this, "Export PDF",QString(), "*.pdf");
-    QPrinter printer(QPrinter::HighResolution);
-    printer.setPageSize(QPrinter::A4);
-    //printer.setOrientation(Qt::Horizontal);
-    printer.setOrientation(QPrinter::Landscape);
-    //printer.setOutputFormat(QPrinter::PdfFormat);
-    //printer.setOutputFileName(fileName);
-    int filenumber=20;
-    // QSize screenSize = qApp->screens()[0]->size();
-    QPixmap pixMap =current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
-    QPainter p;
-    p.begin(&printer);
-    p.setWindow(QRect(0, 0, parentw,parenth));
-    p.drawPixmap (0, 0, pixMap);
-    p.end();
-});
-
+QToolButton *toolButton = new QToolButton(this);
+toolButton=butonToolSlot(toolButton,"Araç",":icons/tool.svg",QColor(255,0,0,0),en*1.5,boy);
+connect(toolButton, &QToolButton::clicked, [=]() {
+emit kalemModeSignal(Scene::Mode::ToolMode,DiagramItem::DiagramType::NoType);
+   });
 
 
 QToolButton *exitButton = new QToolButton(this);
@@ -500,11 +485,12 @@ layout->addWidget(penColorButton, 43, 0,1,2);
 layout->addWidget(urw, 45, 1,1,1);
 layout->addWidget(sekilButton, 50, 0,1,2);
 layout->addWidget(zeminButton, 60, 0,1,2);
+//layout->addWidget(saveButton, 65, 0,1,2);
 
 layout->addWidget(pdfButton, 70, 0,1,2);
 
 
-layout->addWidget(printButton, 91, 0,1,2);
+layout->addWidget(toolButton, 91, 0,1,2);
 
 layout->addWidget(exitButton, 95, 0,1,2);
 
@@ -1469,7 +1455,68 @@ QMenu *toolKalem::eraseMenu()
    // menu->setStyleSheet("QMenu { width: 290 px; height: 180 px; }");
    return menu;
 }
+QWidget *toolKalem::toolTopMenu(int _boy)
+{   int e=(_boy*0.8)/4*5;
+    int b=(_boy*0.6)/4*4.3;
+    QWidget *menu = new QWidget(this);
+    QFont ff( "Arial", 7, QFont::Normal);
 
+    QPushButton *saveButton=new QPushButton();
+    saveButton=butonSlot(saveButton,"",":icons/save.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(saveButton, &QPushButton::clicked, [=]() {
+    //emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
+        saveButtonClick();
+       });
+
+
+    QPushButton *printButton = new QPushButton(this);
+    printButton=butonSlot(printButton,"",":icons/print.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(printButton, &QPushButton::clicked, [=]() {
+        //emit kalemModeSignal(Scene::Mode::PrintMode,DiagramItem::DiagramType::NoType);
+        //QString fileName = QFileDialog::getSaveFileName(this, "Export PDF",QString(), "*.pdf");
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setPageSize(QPrinter::A4);
+        //printer.setOrientation(Qt::Horizontal);
+        printer.setOrientation(QPrinter::Landscape);
+        //printer.setOutputFormat(QPrinter::PdfFormat);
+        //printer.setOutputFileName(fileName);
+        int filenumber=20;
+        // QSize screenSize = qApp->screens()[0]->size();
+        QPixmap pixMap =current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+        QPainter p;
+        p.begin(&printer);
+        p.setWindow(QRect(0, 0, parentw,parenth));
+        p.drawPixmap (0, 0, pixMap);
+        p.end();
+    });
+
+    QPushButton *infoButton = new QPushButton(this);
+    infoButton=butonSlot(infoButton,"",":icons/info.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(infoButton, &QPushButton::clicked, [=]() {
+    //emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
+        infoButtonClick();
+       });
+     auto layout = new QGridLayout(menu);
+
+      layout->setContentsMargins(5, 3, 5, 1);
+    //layout->setMargin(0);
+   // layout->setColumnMinimumWidth(0, 37);
+
+
+    layout->addWidget(saveButton, 0, 1,1,1,Qt::AlignHCenter);
+    layout->addWidget(printButton, 0, 2,1,1,Qt::AlignHCenter);
+    layout->addWidget(infoButton, 0, 3,1,1,Qt::AlignHCenter);
+
+    QLabel *kaydetLabel=new QLabel("Ekranı Kaydet");
+    QLabel *printLabel=new QLabel("Ekranı Yazdır");
+    QLabel *infoLabel=new QLabel("Hakkında");
+
+    kaydetLabel->setFont(ff);printLabel->setFont(ff);infoLabel->setFont(ff);
+    layout->addWidget(kaydetLabel,1,1,1,1,Qt::AlignHCenter);
+    layout->addWidget(printLabel,1,2,1,1,Qt::AlignHCenter);
+    layout->addWidget(infoLabel,1,3,1,1,Qt::AlignHCenter);
+    return menu;
+}
 QMenu* toolKalem::sekilMenu()
 {
     int ken=300;
@@ -1485,7 +1532,7 @@ QMenu* toolKalem::sekilMenu()
     QPushButton *penStyleSolidLine = new QPushButton;
     penStyleSolidLine->setFixedSize(e, b);
     penStyleSolidLine->setIconSize(QSize(e,b));
-   // penStyleSolidLine->setFlat(true);
+   // penStyleSolidLine->setFlat(true;
     penStyleSolidLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::SolidLine,ken,ken));
     connect(penStyleSolidLine, &QPushButton::clicked, [=]() {
      emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::SolidLine);
@@ -3933,4 +3980,151 @@ void toolKalem::zoomnegatifSayfaButtonClick()
 
 
     }
+}
+
+void toolKalem::saveButtonClick(){
+    QSize sSize = qApp->screens()[0]->size();
+    QGraphicsTextItem *text = new QGraphicsTextItem(".");
+    current_toolTahta->scene->addItem(text);
+    text->setPos(0, 0);
+    QGraphicsTextItem *text1 = new QGraphicsTextItem(".");
+    current_toolTahta->scene->addItem(text1);
+    text1->setPos(sSize.width()-2, sSize.height()-2);
+
+    QPixmap pixmap(sSize.width(),sSize.height());
+    pixmap.fill(Qt::transparent);     // Start all pixels transparent
+    ///pixmap.fill(Qt::white);     // Start all pixels white
+    QPainter painter(&pixmap);
+    painter.setRenderHint(QPainter::Antialiasing);
+    current_toolTahta->scene->render(&painter); //scene.render
+    painter.setRenderHint(QPainter::Antialiasing, false);
+    painter.end();
+    QString os="";
+    #ifdef WIN32
+    // Windows code here
+        os="windows";
+    #else
+    // UNIX code here
+        os="linux";
+    #endif
+
+        if(os=="linux"){
+        QDir directory(QDir::homePath()+"/Masaüstü");
+        QStringList images = directory.entryList(QStringList() << "*.png" << "*.PNG",QDir::Files);
+        int deger=0;
+        foreach(QString filename, images) {
+            filename.chop(4);
+            QString dosya=filename.right(filename.size()-10);
+           /// qDebug() <<filename<<dosya;
+            if(deger<dosya.toInt()) deger=dosya.toInt();
+        }
+        deger++;
+        pixmap.save(QDir::homePath()+"/Masaüstü/screenshot"+QString::number(deger)+".png");
+    }
+     else{//windows işletim sistemi için
+        QDir directory(QDir::homePath()+"/desktop");
+        QStringList images = directory.entryList(QStringList() << "*.png" << "*.PNG",QDir::Files);
+        int deger=0;
+        foreach(QString filename, images) {
+            filename.chop(4);
+            QString dosya=filename.right(filename.size()-10);
+          ///  qDebug() <<filename<<dosya;
+            if(deger<dosya.toInt()) deger=dosya.toInt();
+        }
+        deger++;
+        pixmap.save(QDir::homePath()+"/desktop/screenshot"+QString::number(deger)+".png");
+
+        }
+
+    Qt::WindowFlags flags = 0;
+    flags |= Qt::Dialog;
+    flags |= Qt::X11BypassWindowManagerHint;
+
+    QMessageBox messageBox(current_toolTahta);
+    messageBox.setWindowFlags(flags);
+    messageBox.setText("Bilgi\t\t\t");
+    messageBox.setInformativeText("Ekran Görüntüsü Masaüstünüze Kaydedildi!");
+    QAbstractButton *evetButton =messageBox.addButton(tr("Tamam"), QMessageBox::ActionRole);
+   // QAbstractButton *hayirButton =messageBox.addButton(tr("Hayır"), QMessageBox::ActionRole);
+    messageBox.setIcon(QMessageBox::Information);
+    //messageBox.move(parentw/2,parenth/2);
+            messageBox.exec();
+
+
+}
+
+void toolKalem::infoButtonClick(){
+    QMessageBox msgBox;
+    msgBox.setText("Bu uygulama etkileşimli tahtalarda kullanılmak üzere yazılmıştır."
+                   "\n"
+                   "\nYapılabilecek Eylemler:"
+                   "\n\t* Çeşitli Kalem(Normal, Fosforlu)"
+                   "\n\t* Tahta Rengi (Şeffaf, Beyaz, Siyah,Özel Renk)"
+                   "\n\t* Tahta Desenleri(Yatay/Dikey Çizgi, Müzik,GüzelYazi)"
+                   "\n\t* Otomatik Silgi Seçimi(Kalem Kalınlığına Uygun)"
+                   "\n\t* Ekranda Taşıma Özelliği"
+                   "\n\t* Tam Ekran Modunda Çalışmalarda Üstte Konumlanma"
+                   "\n\t* Dışarıdan Arkaplan Resim Yükleme Özelliği"
+                   "\n\t* Ekran Görüntüsünü Kaydetme Özelliği"
+                   "\n\t* Geometrik Şekil Seçme,Taşıma,Boyutlandırma Özelliği"
+                   "\n\t* Farklı Sanal Masaüstünde Çalışma Özelliği"
+                   "\n\t* Geri ileri Alma Özelliği"
+                   "\n\t* Ekranın Her Alanına Yazma Özelliği"
+                   "\n\t* Pdf Dosyaları Yükleme ve Çalışma Kaydetme Özelliği"
+                   "\n\t* Nesne Olarak Resim Ekleme Özelliği"
+                   "\n\t* Yazdırma Özelliği"
+                   "\n\t* Ekranın Bölgesini (Kesme,Taşıma,Büyültme) Özelliği"
+                   "\n\t* Kullanıcı Ayarlarını Kaydetme ve Açma Özelliği"
+                   "\n\t* Sınavlar için Sayaç Özelliği"
+                   "\n*****************************************************************************"
+                   "\n   Copyright (C) 2023 by Bayram KARAHAN                                    "
+                   "\n\tgithub.com/bayramkarahan/E-Tahta"
+                   "\n\tbayramkarahan.blogspot.com"
+                   "\n\tbayramk@gmail.com  "
+                    "\n\n   This program is free software; you can redistribute it and/or modify    "
+                    "\n   it under the terms of the GNU General Public License as published by    "
+                    "\n   the Free Software Foundation; either version 3 of the License, or       "
+                    "\n   (at your option) any later version.                                     "
+                    "\n                                                                           "
+                    "\n   This program is distributed in the hope that it will be useful,         "
+                    "\n   but WITHOUT ANY WARRANTY; without even the implied warranty of          "
+                    "\n   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the           "
+                    "\n   GNU General Public License for more details.                            "
+                    "\n                                                                           "
+                    "\n   You should have received a copy of the GNU General Public License       "
+                    "\n   along with this program; if not, write to the                          "
+                    "\n   Free Software Foundation, Inc.,                                         "
+                    "\n   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA .          "
+
+                   );
+    msgBox.setWindowTitle("smartboard 1.0");
+    QFont ff( "Arial", 10, QFont::Normal);
+    msgBox.setFont(ff);
+
+
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    Qt::WindowFlags flags = 0;
+    flags |= Qt::Window;
+    flags |= Qt::X11BypassWindowManagerHint;
+    flags |= Qt::CustomizeWindowHint;
+     current_toolTahta->setWindowFlags(flags);
+
+    flags = 0;
+    flags |= Qt::Window;
+
+    //  QColorDialog abc;
+    msgBox.setWindowFlags(flags);
+
+
+
+    //msgBox.setDefaultButton(QMessageBox::Save);
+    msgBox.exec();
+    //   kalemEgitim();
+    flags |= Qt::Window;
+    flags |= Qt::X11BypassWindowManagerHint;
+    flags |= Qt::WindowStaysOnTopHint;
+    current_toolTahta->setWindowFlags(flags);
+     current_toolTahta->show();
+
+
 }

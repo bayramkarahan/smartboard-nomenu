@@ -108,6 +108,8 @@ public slots:
     QWidget* sekilTopMenu(int _boy);
     QWidget *zeminTopMenu(int _boy);
     QWidget *eraseTopMenu(int _boy);
+    QWidget *toolTopMenu(int _boy);
+
     QWidget *pageBottomMenu(int _boy);
     QWidget *pdfTopMenu(int _boy);
     void setEraseSize(int size);
@@ -121,6 +123,8 @@ public slots:
      void zoompozitifSayfaButtonClick();
      void zoomnegatifSayfaButtonClick();
      void sagSolHizala();
+     void saveButtonClick();
+     void infoButtonClick();
 private:
      bool sagSolHizaStatus;
 

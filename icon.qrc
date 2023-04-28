@@ -137,5 +137,8 @@
         <file>icons/k1.png</file>
         <file>icons/patternpen.svg</file>
         <file>icons/musicikon.png</file>
+        <file>icons/info.svg</file>
+        <file>icons/tool.svg</file>
+        <file>icons/print.svg</file>
     </qresource>
 </RCC>
