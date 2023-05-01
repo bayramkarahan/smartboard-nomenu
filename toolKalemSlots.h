@@ -18,6 +18,7 @@ void toolKalem::handButtonSlot()
     current_toolKalemMenu->hide();
     current_toolTahta->scene->sceneMode=Scene::Mode::SelectObject;
     current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
+    if(current_toolTahta->scene->pdfObjectAdded) current_toolTahta->scene->pdfMoved=true;
     emit kalemModeSignal(Scene::Mode::SelectObject,DiagramItem::NoType);
 
 }

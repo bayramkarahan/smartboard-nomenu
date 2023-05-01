@@ -220,7 +220,7 @@ connect(undoButton, &QToolButton::clicked, [=]() {
     Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
     current_toolTahta->scene->setMode(Scene::Mode::GeriAlMode, DiagramItem::DiagramType::NoType);
     current_toolTahta->scene->sceneMode=tempmode;
-    //secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+    secSayfaButtonClick(current_toolTahta->current_sceneIndex);
 });
 
 redoButton = new QToolButton(urw);
@@ -231,7 +231,7 @@ connect(redoButton, &QToolButton::clicked, [=]() {
     Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
     current_toolTahta->scene->setMode(Scene::Mode::IleriAlMode, DiagramItem::DiagramType::NoType);
     current_toolTahta->scene->sceneMode=tempmode;
-    //secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+    secSayfaButtonClick(current_toolTahta->current_sceneIndex);
 });
 
 QHBoxLayout *line00 = new QHBoxLayout;
@@ -281,6 +281,15 @@ connect(toolButton, &QToolButton::clicked, [=]() {
 emit kalemModeSignal(Scene::Mode::ToolMode,DiagramItem::DiagramType::NoType);
    });
 
+QToolButton *kimyaButton = new QToolButton(this);
+kimyaButton=butonToolSlot(kimyaButton,"Araç",":icons/kimya.svg",QColor(255,0,0,0),en*1.5,boy);
+connect(kimyaButton, &QToolButton::clicked, [=]() {
+    current_toolKalemMenu->toolKalemMenuOlustur(kimyaTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->show();
+
+    //mapButtonSlot();
+//emit kalemModeSignal(Scene::Mode::ToolMode,DiagramItem::DiagramType::NoType);
+   });
 
 QToolButton *exitButton = new QToolButton(this);
 exitButton=butonToolSlot(exitButton,"Kapat",":icons/close.svg",QColor(255,0,0,0),en*1.5,boy);
@@ -320,6 +329,8 @@ layout->addWidget(pdfButton, 70, 0,1,2);
 
 
 layout->addWidget(toolButton, 91, 0,1,2);
+layout->addWidget(kimyaButton, 92, 0,1,2);
+
 
 layout->addWidget(exitButton, 95, 0,1,2);
 

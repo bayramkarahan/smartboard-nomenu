@@ -406,6 +406,43 @@ QWidget *toolKalem::pdfTopMenu(int _boy)
     return menu;
 }
 
+QWidget *toolKalem::kimyaTopMenu(int _boy)
+{   int e=(en*0.8)/4*5;
+    int b=(boy*0.6)/4*4.3;
+    QWidget *menu = new QWidget(this);
+    QFont ff( "Arial", 7, QFont::Normal);
+
+    QPushButton *pdfOpenButton=new QPushButton();
+    pdfOpenButton=butonSlot(pdfOpenButton,"",":icons/periyodiktable.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(pdfOpenButton, &QPushButton::clicked, [=]() {
+        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
+        QPixmap image = QPixmap(":icons/periyodiktable.svg");
+        current_toolTahta->scene->setImage(image);
+        current_toolTahta->scene->donSlot(DiagramItem::DiagramType::Resim);
+        current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::Resim;
+
+    });
+
+    QPushButton *pdfSaveButton=new QPushButton();
+    pdfSaveButton=butonSlot(pdfSaveButton,"",":icons/pdfsave.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(pdfSaveButton, &QPushButton::clicked, [=]() {
+        //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+
+    });
+    QLabel *openLabel=new QLabel("Periyodik Tablo");      openLabel->setFont(ff);
+   // QLabel *saveLabel=new QLabel("Pdf Kaydet");  saveLabel->setFont(ff);
+
+    auto layout = new QGridLayout(menu);
+    layout->setContentsMargins(5, 3, 5, 1);
+    layout->addWidget(pdfOpenButton, 0, 1,1,1,Qt::AlignHCenter);
+ //   layout->addWidget(pdfSaveButton, 0, 2,1,1,Qt::AlignHCenter);
+     layout->addWidget(openLabel,1,1,1,1,Qt::AlignHCenter);
+//     layout->addWidget(saveLabel,1,2,1,1,Qt::AlignHCenter);
+    //  layout->setColumnStretch(6, 255);
+    //menu->setFixedSize(QSize(e*10,b*2));
+    return menu;
+}
+
 QWidget *toolKalem::eraseTopMenu(int _boy)
 {   int e=(_boy*0.8)/4*5;
     int b=(_boy*0.6)/4*4.3;

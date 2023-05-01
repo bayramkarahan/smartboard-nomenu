@@ -101,6 +101,11 @@ void toolTahta::mouseReleaseEvent(QMouseEvent *event)
         int imsy=msy-myPenSize;
         int imex=mex+myPenSize;
         int imey=mey+myPenSize;
+        //burası önemli. pdf ile taşıma yapınca kayma oluyor bunu düzeltmek için kontrol ediliyor.
+        //GraphicsView kenar kalınlığıda sebep olabilir. araştırılacak...
+        if(scene->pdfObjectAdded&&scene->pdfMoved)
+         startPoint=QPointF(imsx,imsy);
+            else
         startPoint=QPointF(imsx-1,imsy-1);
 
         VERectangle*  itemToRectDraw = new VERectangle(scene);

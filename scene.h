@@ -123,6 +123,7 @@ public:
     /************************************/
     bool pdfObjectAdded=false;
     bool pdfObjectShow=false;
+    bool pdfMoved=false;
     int pdfPageNumber=-1;
     QColor myPenColor;
 

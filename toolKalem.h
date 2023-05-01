@@ -121,6 +121,7 @@ public slots:
     QWidget *zeminTopMenu(int _boy);
     QWidget *eraseTopMenu(int _boy);
     QWidget *toolTopMenu(int _boy);
+    QWidget *kimyaTopMenu(int _boy);
 
     QWidget *pageBottomMenu(int _boy);
     QWidget *pdfTopMenu(int _boy);
