@@ -130,7 +130,7 @@ void toolKalem::penToScene()
 
 }
 
-toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, int parentw, int parenth, QWidget *parent)
+toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, toolKalemMenu *_toolKalemMenu,int parentw, int parenth, QWidget *parent)
         {
     penDesktopStatus=false;
     this->parentw=parentw;
@@ -141,6 +141,7 @@ toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, i
     mouseClick=false;
     currentMode=Scene::Mode::SelectObject;
     current_toolTahta=_toolTahta;
+    current_toolKalemMenu=_toolKalemMenu;
 
 /*******************************************************************/
 
@@ -251,6 +252,7 @@ sekilButton->setPopupMode(QToolButton::MenuButtonPopup);
 sekilButton->setCheckable(true);
 connect(sekilButton, &QToolButton::clicked, [=]() {
    buttonStateClear(); sekilButton->setChecked(true);
+   sekilButtonSlot();
    emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Cizgi);
    });
 
@@ -260,6 +262,7 @@ zeminButton->setMenu(zeminMenu());
 zeminButton->setPopupMode(QToolButton::MenuButtonPopup);
 
 connect(zeminButton, &QToolButton::clicked, [=]() {
+    zeminButtonSlot();
     emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
    });
 
@@ -267,12 +270,14 @@ connect(zeminButton, &QToolButton::clicked, [=]() {
 QToolButton *pdfButton = new QToolButton(this);
 pdfButton=butonToolSlot(pdfButton,"",":icons/pdf.svg",QColor(255,0,0,0),en*1.5,boy);
 connect(pdfButton, &QToolButton::clicked, [=]() {
+    pdfButtonSlot();
 emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
    });
 
 QToolButton *toolButton = new QToolButton(this);
 toolButton=butonToolSlot(toolButton,"Araç",":icons/tool.svg",QColor(255,0,0,0),en*1.5,boy);
 connect(toolButton, &QToolButton::clicked, [=]() {
+    toolButtonSlot();
 emit kalemModeSignal(Scene::Mode::ToolMode,DiagramItem::DiagramType::NoType);
    });
 

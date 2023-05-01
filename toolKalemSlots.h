@@ -15,7 +15,7 @@ void toolKalem::buttonStateClear()
 void toolKalem::handButtonSlot()
 {
     buttonStateClear();handButton->setChecked(true);
-
+    current_toolKalemMenu->hide();
     current_toolTahta->scene->sceneMode=Scene::Mode::SelectObject;
     current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
     emit kalemModeSignal(Scene::Mode::SelectObject,DiagramItem::NoType);
@@ -26,10 +26,10 @@ void toolKalem::penButtonSlot()
 {
     buttonStateClear();
     penButton->setChecked(true);
+    current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->show();
     current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
     //current_toolTahta->scene->setSekilTanimlamaStatus(false);
-
-
     current_toolTahta->penDrawingMain=true;
     current_toolTahta->gv->hide();
     current_toolTahta->gv->setEnabled(false);
@@ -52,6 +52,8 @@ void toolKalem::eraseButtonSlot()
     QPalette palet;
     palet.setBrush(QPalette::Background,QColor(0,0,0,0));
     current_toolTahta->setPalette(palet);
+    current_toolKalemMenu->toolKalemMenuOlustur(eraseTopMenu(parenth*0.045),parentw*0.2,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->show();
     current_toolTahta->scene->setEraseSize(penSize*2);
     current_toolTahta->scene->sceneMode=Scene::Mode::EraseMode;
     current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
@@ -60,6 +62,7 @@ void toolKalem::eraseButtonSlot()
 void toolKalem::copyButtonSlot()
 {
 
+    current_toolKalemMenu->hide();
     //qDebug()<<"kopy kalem çalıştı"<<screenDesktop;
     //if (!screenDesktop)kalemButtonClick();
     current_toolTahta->scene->makeItemsControllable(false);
@@ -86,6 +89,30 @@ void toolKalem::copyButtonSlot()
     //kw->handButtonSlot();
 }
 
+void toolKalem::zeminButtonSlot()
+{
+    current_toolKalemMenu->toolKalemMenuOlustur(zeminTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->show();
+
+}
+void toolKalem::sekilButtonSlot()
+{
+    current_toolKalemMenu->toolKalemMenuOlustur(sekilTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->show();
+
+}
+void toolKalem::pdfButtonSlot()
+{
+    current_toolKalemMenu->toolKalemMenuOlustur(pdfTopMenu(parenth*0.045),parentw*0.2,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->show();
+
+}
+void toolKalem::toolButtonSlot()
+{
+    current_toolKalemMenu->toolKalemMenuOlustur(toolTopMenu(parenth*0.045),parentw*0.2,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->show();
+
+}
 void toolKalem::sceneToPen()
 {
     penSize=current_toolTahta->scene->myPenSize;

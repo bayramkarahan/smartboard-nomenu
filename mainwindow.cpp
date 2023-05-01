@@ -24,9 +24,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     current_toolTahta->show();
 
+    /***************************Top Menu**********************************************/
+    //current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(screenSize.height()*0.05),screenSize.width()*0.8,screenSize.height()*0.05);
+    //current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,0);
+   // current_toolKalemMenu->show();
+    current_toolKalemMenu=new toolKalemMenu(new QWidget(),screenSize.width()*0.8,screenSize.height()*0.05);
+
 
  /******************************************************************************/
-   kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta,screenSize.width(),screenSize.height());
+   kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta,current_toolKalemMenu,screenSize.width(),screenSize.height());
    kw->setFixedSize(en*1.15,boy*0.8*12);
    kw->sagSolHizala();
   // kw->move(screenSize.width()-kw->width()-10,screenSize.height()/2- kw->height()/2);
@@ -40,10 +46,12 @@ MainWindow::MainWindow(QWidget *parent) :
                          "}");
 
    kw->show();
-   connect(kw, SIGNAL(desktopSignal()),
-           current_toolTahta, SLOT(toolTahta_DesktopSignalSlot()));
-   connect(kw, SIGNAL(penSignal()),
-           current_toolTahta, SLOT(toolTahta_PenSignalSlot()));
+   connect(kw, SIGNAL(desktopSignal()),current_toolTahta, SLOT(toolTahta_DesktopSignalSlot()));
+   connect(kw, SIGNAL(penSignal()),current_toolTahta, SLOT(toolTahta_PenSignalSlot()));
+
+   connect(kw, SIGNAL(desktopSignal()), current_toolKalemMenu, SLOT(toolKalemMenu_DesktopSignalSlot()));
+   connect(kw, SIGNAL(penSignal()),current_toolKalemMenu, SLOT(toolKalemMenu_PenSignalSlot()));
+
   /**************************************************************************/
    connect(kw, SIGNAL(kalemModeSignal(Scene::Mode,DiagramItem::DiagramType)),
            this, SLOT(kalemModeSignalSlot(Scene::Mode,DiagramItem::DiagramType)));
@@ -55,16 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
            this, SLOT(kalemSekilModeSignalSlot(DiagramItem::DiagramType)));
    /********************************************/
   // slotPenInit();
-   /***************************Top Menu**********************************************/
-   current_toolKalemMenu=new toolKalemMenu(kw->penTopMenu(screenSize.height()*0.05),screenSize.width()*0.8,screenSize.height()*0.05);
-   //current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,0);
-  // current_toolKalemMenu->show();
-   connect(kw, SIGNAL(desktopSignal()),
-           current_toolKalemMenu, SLOT(toolKalemMenu_DesktopSignalSlot()));
-   connect(kw, SIGNAL(penSignal()),
-           current_toolKalemMenu, SLOT(toolKalemMenu_PenSignalSlot()));
-
-   /***************************Bottom Menu**********************************************/
+      /***************************Bottom Menu**********************************************/
    curent_pageMenu=new toolPageMenu(kw->pageBottomMenu(screenSize.height()*0.045),screenSize.width()*0.85,screenSize.height()*0.045);
    curent_pageMenu->move(screenSize.width()/2-curent_pageMenu->width()/2,screenSize.height()-curent_pageMenu->height()*2.5);
    curent_pageMenu->show();
@@ -85,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 }
+
 void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type)
 {
     qDebug()<<"kw->currentMode:"<<kw->currentMode<<kw->oldMode;
@@ -94,20 +94,33 @@ void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType t
     if(kw->currentMode!=kw->oldMode)
     {
         //qDebug()<<"toolKalemMenu seçenekleri kontrol ediliyor";
-        if(current_toolKalemMenu->isVisible()) current_toolKalemMenu->close();
-        if(mode==Scene::Mode::DrawPen)
-            current_toolKalemMenu->toolKalemMenuOlustur(kw->penTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-        if(mode==Scene::Mode::EraseMode)
-            current_toolKalemMenu->toolKalemMenuOlustur(kw->eraseTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-        if(mode==Scene::Mode::SekilMode)
-            current_toolKalemMenu->toolKalemMenuOlustur(kw->sekilTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-        if(mode==Scene::Mode::ZeminMode)
-            current_toolKalemMenu->toolKalemMenuOlustur(kw->zeminTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-        if(mode==Scene::Mode::PdfMode)
-            current_toolKalemMenu->toolKalemMenuOlustur(kw->pdfTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-        if(mode==Scene::Mode::ToolMode)
-            current_toolKalemMenu->toolKalemMenuOlustur(kw->toolTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-        current_toolKalemMenu->show();
+       /*if(current_toolKalemMenu->isVisible())
+       {
+           qDebug()<<"toolKalemMenu kapatılıyorrrr";
+           current_toolKalemMenu->hide();
+       }*/
+       /*if(mode==Scene::Mode::DrawPen){
+           current_toolKalemMenu->toolKalemMenuOlustur(kw->penTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
+           current_toolKalemMenu->show();}
+       if(mode==Scene::Mode::EraseMode){
+           current_toolKalemMenu->toolKalemMenuOlustur(kw->eraseTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045,screenSize.width(),screenSize.height());
+           current_toolKalemMenu->show();}
+           */
+       /*if(mode==Scene::Mode::SekilMode){
+           current_toolKalemMenu->toolKalemMenuOlustur(kw->sekilTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
+           current_toolKalemMenu->show();}
+       if(mode==Scene::Mode::ZeminMode){
+           current_toolKalemMenu->toolKalemMenuOlustur(kw->zeminTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
+           current_toolKalemMenu->show();}
+       if(mode==Scene::Mode::PdfMode){
+           current_toolKalemMenu->toolKalemMenuOlustur(kw->pdfTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045,screenSize.width(),screenSize.height());
+           current_toolKalemMenu->show();}
+       if(mode==Scene::Mode::ToolMode){
+           current_toolKalemMenu->toolKalemMenuOlustur(kw->toolTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045,screenSize.width(),screenSize.height());
+           current_toolKalemMenu->show();}
+           */
+
+
     }
 
     if(Scene::Mode::DrawPen==mode&&(DiagramItem::DiagramType::NormalPen==type||DiagramItem::DiagramType::PatternPen==type))
@@ -509,7 +522,6 @@ void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
     else current_toolTahta->scene->mySekilType=type;
 
 }
-
 
 MainWindow::~MainWindow()
 {
