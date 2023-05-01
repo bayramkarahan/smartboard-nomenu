@@ -23,9 +23,6 @@ public:
      toolKalemMenu *current_toolKalemMenu;
      toolPageMenu *curent_pageMenu;
 public slots:
-    void kalemZeminModeSignalSlot(DiagramItem::DiagramType type);
-    void kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type);
-    void kalemSekilModeSignalSlot(DiagramItem::DiagramType type);
 
 private:
 

@@ -14,10 +14,10 @@ MainWindow::MainWindow(QWidget *parent) :
     screenSize = qApp->screens()[0]->size();
     boy=(screenSize.height()/100)*5.70;
     en=boy;
-    //qDebug()<<"ekran boyutu:"<<screenSize;
-    current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.4);
-    //current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
-    current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height());
+    qDebug()<<"ekran boyutu:"<<screenSize;
+    //current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.4);
+    current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
+    current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()/2);
     current_toolTahta->lower();
     current_toolTahta->lower();
     current_toolTahta->lower();
@@ -54,13 +54,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
   /**************************************************************************/
    connect(kw, SIGNAL(kalemModeSignal(Scene::Mode,DiagramItem::DiagramType)),
-           this, SLOT(kalemModeSignalSlot(Scene::Mode,DiagramItem::DiagramType)));
+           kw, SLOT(kalemModeSignalSlot(Scene::Mode,DiagramItem::DiagramType)));
 
    connect(kw, SIGNAL(kalemZeminModeSignal(DiagramItem::DiagramType)),
-           this, SLOT(kalemZeminModeSignalSlot(DiagramItem::DiagramType)));
+           kw, SLOT(kalemZeminModeSignalSlot(DiagramItem::DiagramType)));
 
    connect(kw, SIGNAL(kalemSekilModeSignal(DiagramItem::DiagramType)),
-           this, SLOT(kalemSekilModeSignalSlot(DiagramItem::DiagramType)));
+           kw, SLOT(kalemSekilModeSignalSlot(DiagramItem::DiagramType)));
    /********************************************/
   // slotPenInit();
       /***************************Bottom Menu**********************************************/
@@ -85,74 +85,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 }
 
-void MainWindow::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type)
-{
-    qDebug()<<"kw->currentMode:"<<kw->currentMode<<kw->oldMode;
-    kw->oldMode=kw->currentMode;    kw->currentMode=mode;
-    kw->oldType=kw->currentType;    kw->currentType=type;
-
-    if(kw->currentMode!=kw->oldMode)
-    {
-        //qDebug()<<"toolKalemMenu seçenekleri kontrol ediliyor";
-       /*if(current_toolKalemMenu->isVisible())
-       {
-           qDebug()<<"toolKalemMenu kapatılıyorrrr";
-           current_toolKalemMenu->hide();
-       }*/
-       /*if(mode==Scene::Mode::DrawPen){
-           current_toolKalemMenu->toolKalemMenuOlustur(kw->penTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-           current_toolKalemMenu->show();}
-       if(mode==Scene::Mode::EraseMode){
-           current_toolKalemMenu->toolKalemMenuOlustur(kw->eraseTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-           current_toolKalemMenu->show();}
-           */
-       /*if(mode==Scene::Mode::SekilMode){
-           current_toolKalemMenu->toolKalemMenuOlustur(kw->sekilTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-           current_toolKalemMenu->show();}
-       if(mode==Scene::Mode::ZeminMode){
-           current_toolKalemMenu->toolKalemMenuOlustur(kw->zeminTopMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-           current_toolKalemMenu->show();}
-       if(mode==Scene::Mode::PdfMode){
-           current_toolKalemMenu->toolKalemMenuOlustur(kw->pdfTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-           current_toolKalemMenu->show();}
-       if(mode==Scene::Mode::ToolMode){
-           current_toolKalemMenu->toolKalemMenuOlustur(kw->toolTopMenu(screenSize.height()*0.045),screenSize.width()*0.2,screenSize.height()*0.045,screenSize.width(),screenSize.height());
-           current_toolKalemMenu->show();}
-           */
-
-
-    }
-
-    if(Scene::Mode::DrawPen==mode&&(DiagramItem::DiagramType::NormalPen==type||DiagramItem::DiagramType::PatternPen==type))
-    {
-       /*
-        current_toolTahta->penDrawingMain=true;
-        current_toolTahta->gv->hide();
-        current_toolTahta->gv->setEnabled(false);
-        current_toolTahta->scene->makeItemsControllable(false);
-        QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
-        QPalette palet;
-        palet.setBrush(QPalette::Background,pixMap);
-        current_toolTahta->setPalette(palet);
-        */
-
-    }else
-    {
-        qDebug()<<"Kalem Dışında Faklı Bir Araç Seçildi";
-        current_toolTahta->penDrawingMain=false;
-        current_toolTahta->gv->show();
-        current_toolTahta->gv->setEnabled(true);
-        /***************************form ekran fotosu resetleniyor**************/
-        QPalette palet;
-        palet.setBrush(QPalette::Background,QColor(0,0,0,0));
-        current_toolTahta->setPalette(palet);
-        /***************************form ekran fotosu resetleniyor**************/
-    }
-
-    if(Scene::Mode::SekilMode==mode) kalemSekilModeSignalSlot(type);
-    if(Scene::Mode::ZeminMode==mode) kalemZeminModeSignalSlot(type);
-}
-
+/*
 void MainWindow::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
 {
 
@@ -295,7 +228,7 @@ if(DiagramItem::DiagramType::MuzikPage==type){
     itemToRectDraw->fareState(false);
     itemToRectDraw = 0;
 */
-  }
+ /* }
 if(DiagramItem::DiagramType::GuzelYaziPage==type){
     kw->pagePattern=type;
     current_toolTahta->scene->sceneGridYatay=false;
@@ -414,8 +347,8 @@ kw->currentMode=kw->oldMode;
 kw->currentType=kw->oldType;
 }
 */
-}
-
+///}
+/*
 void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
    // qDebug()<<"sekil butonclick"<<type;
     kw->sekilButtonIconSlot(type);//şekil buton iconu ayarlanıyor
@@ -522,7 +455,7 @@ void MainWindow::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
     else current_toolTahta->scene->mySekilType=type;
 
 }
-
+*/
 MainWindow::~MainWindow()
 {
 

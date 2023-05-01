@@ -630,12 +630,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
          emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::DotLine);
 
     });
-/********************************************************************/
-
-
     /***********************pergel cetvel gönye iletki***************/
-
-
     QPushButton *pergel = new QPushButton;
     pergel->setFixedSize(e*2, b);
     pergel->setIconSize(QSize(e*2,b));
@@ -1667,6 +1662,7 @@ QMenu* toolKalem::colorMenu(QString colorType,QString yon,int w,int h,bool close
     layout->setVerticalSpacing(2);
   //  layout->setColumnMinimumWidth(0, 37);
     if(yon=="dikey"){
+    layout->addWidget(color8Button, 0,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color1Button, 1,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color2Button, 2,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color3Button, 3,1,1,1,Qt::AlignHCenter);
@@ -1674,23 +1670,20 @@ QMenu* toolKalem::colorMenu(QString colorType,QString yon,int w,int h,bool close
     layout->addWidget(color5Button, 5,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color6Button, 6,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color7Button, 7,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(color8Button, 8,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color9Button, 9,1,1,1,Qt::AlignHCenter);
-  // layout->addWidget(color10Button, 10,1,1,1,Qt::AlignHCenter);
     layout->addWidget(color11Button, 11,1,1,1,Qt::AlignHCenter);
     }
     if(yon=="yatay"){
-    layout->addWidget(color1Button, 1,0,1,1,Qt::AlignHCenter);
-    layout->addWidget(color2Button, 1,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(color3Button, 1,2,1,1,Qt::AlignHCenter);
-    layout->addWidget(color4Button, 1,3,1,1,Qt::AlignHCenter);
-    layout->addWidget(color5Button, 1,4,1,1,Qt::AlignHCenter);
-    layout->addWidget(color6Button, 1,5,1,1,Qt::AlignHCenter);
-    layout->addWidget(color7Button, 1,6,1,1,Qt::AlignHCenter);
-    layout->addWidget(color8Button, 1,7,1,1,Qt::AlignHCenter);
+    layout->addWidget(color8Button, 1,0,1,1,Qt::AlignHCenter);
+    layout->addWidget(color1Button, 1,1,1,1,Qt::AlignHCenter);
+    layout->addWidget(color2Button, 1,2,1,1,Qt::AlignHCenter);
+    layout->addWidget(color3Button, 1,3,1,1,Qt::AlignHCenter);
+    layout->addWidget(color4Button, 1,4,1,1,Qt::AlignHCenter);
+    layout->addWidget(color5Button, 1,5,1,1,Qt::AlignHCenter);
+    layout->addWidget(color6Button, 1,6,1,1,Qt::AlignHCenter);
+    layout->addWidget(color7Button, 1,7,1,1,Qt::AlignHCenter);
     layout->addWidget(color9Button, 1,8,1,1,Qt::AlignHCenter);
-  // layout->addWidget(color10Button, 9,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(color11Button, 1,10,1,1,Qt::AlignHCenter);
+    layout->addWidget(color11Button, 1,9,1,1,Qt::AlignHCenter);
     }
 
     auto wa = new QWidgetAction(this);

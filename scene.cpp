@@ -263,7 +263,7 @@ void Scene::donSlot(DiagramItem::DiagramType type)
         //myImage.setToolTip("d-selee");
         itemToRectDraw->setImage(myImage);
         itemToRectDraw->setPos(width()/4,height()/4);
-        emit sceneItemAddedSignal(this,itemToRectDraw,true,mode,mySekilType);
+        emit sceneItemAddedSignal(this,itemToRectDraw,false,mode,mySekilType);
      }
 if(mySekilType==DiagramItem::DiagramType::Cetvel){
   //  itemToRectDraw->setPos(qFabs(screenSize.width()/2)-300,qFabs(screenSize.height()/2)-100);

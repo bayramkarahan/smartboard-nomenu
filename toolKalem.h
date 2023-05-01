@@ -140,6 +140,10 @@ public slots:
      void sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item ,bool additemstate, Scene::Mode mode, DiagramItem::DiagramType type);
      void sceneItemRemovedSignalSlot(Scene *scenetemp, QGraphicsItem *item, Scene::Mode mode);
      void kalemColorSignalSlot(QString colorType, QColor color);
+     void kalemSekilModeSignalSlot(DiagramItem::DiagramType type);
+     void kalemZeminModeSignalSlot(DiagramItem::DiagramType type);
+     void kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type);
+
 private:
      Qt::WindowFlags current_toolTahta_old_flags;
      bool sagSolHizaStatus;

@@ -3,7 +3,6 @@
 #include<toolKalem.h>
 void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdfPageIndex){
      qDebug()<<"Sayfa Ekleniyor: "<<insertIndex<<pdfObjectAdded<<pdfPageIndex;
-
    // bool initprg=false;
     if(current_toolTahta->sceneIndex==0&&current_toolTahta->current_sceneIndex==0)
     {
@@ -60,8 +59,8 @@ void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdf
       connect(_screenbtn, &QPushButton::clicked, [=]() {
           secSayfaButtonClick(_screenbtn->toolTip().toInt());
     });
-     // if(current_toolTahta->sceneIndex>1)
-        //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
+      if(pdfObjectAdded)
+          emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
 
       secSayfaButtonClick(_screenbtn->toolTip().toInt());
       penButtonSlot();
@@ -233,15 +232,13 @@ void toolKalem::pdfLoaderPage(int pageIndex)
   /// zeminBeyazButtonClick();///burada zemin beyaz yapılıyor
    // emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
    // Poppler::Page *page=current_toolTahta->doc->page(pageIndex);
-emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
+    //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
 
     //QImage image = doc->page(pageIndex)->renderToImage(125.0,125.0,-1,-1,-1,-1);
    // float scale = 72.0f * (float(current_toolTahta->doc->page(pageIndex)->pageSize().width()) / current_toolTahta->doc->page(pageIndex)->pageSizeF().width());
     QSize size = current_toolTahta->doc->page(pageIndex)->pageSize();
     float scale = 3.0;
     QImage  image = current_toolTahta->doc->page(pageIndex)->renderToImage(scale*72.0, scale*72.0, 0, 0, scale*size.width(), scale*size.height());
-
-
    // QImage image = current_toolTahta->doc->page(pageIndex)->renderToImage(150.0,150.0,current_toolTahta->doc->page(pageIndex)->pageSize().width(),current_toolTahta->doc->page(pageIndex)->pageSize().height());
 
     ///  view->setSceneRect(0,0,image.width(),image.height());
