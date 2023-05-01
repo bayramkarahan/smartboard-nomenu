@@ -20,6 +20,10 @@
 #include<QDesktopWidget>
 #include<QApplication>
 #include<QScreen>
+#include<toolsayac.h>
+#include<QSlider>
+
+
 class QMouseEvent;
 class toolKalem : public QFrame
 {
@@ -73,13 +77,15 @@ public:
 signals:
     void kalemColorSignal(QString colorType,QColor color);
     void kalemModeSignal(Scene::Mode mode,DiagramItem::DiagramType type);
-
     void kalemZeminModeSignal(DiagramItem::DiagramType type);
     void kalemPenModeSignal(DiagramItem::DiagramType type);
     void kalemSekilModeSignal(DiagramItem::DiagramType type);
+    void desktopSignal();
+    void penSignal();
+
 
 public slots:
-
+    void sayacCloseSignalSlot();
     void handButtonSlot();
     void penButtonSlot();
     void clearButtonSlot();
@@ -88,7 +94,7 @@ public slots:
    void buttonStateClear();
    void setGridSize(int s);
     QMenu *eraseMenu();
-    QWidget *cizgiBoyutMenu();
+    QWidget *cizgiGridBoyutMenu();
     void sekilButtonIconSlot(DiagramItem::DiagramType mySekilType);
     QPixmap lineImage(const QPolygonF &myPolygon,const Qt::PenStyle &stl,int w,int h) const;
     QPixmap imageEllipse(const QPolygonF &myPolygon, int w, int h) const;
@@ -123,9 +129,13 @@ public slots:
      void zoompozitifSayfaButtonClick();
      void zoomnegatifSayfaButtonClick();
      void sagSolHizala();
-     void saveButtonClick();
+     void saveSayfaButtonClick();
      void infoButtonClick();
+     void sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item ,bool additemstate, Scene::Mode mode, DiagramItem::DiagramType type);
+     void sceneItemRemovedSignalSlot(Scene *scenetemp, QGraphicsItem *item, Scene::Mode mode);
+     void kalemColorSignalSlot(QString colorType, QColor color);
 private:
+     Qt::WindowFlags current_toolTahta_old_flags;
      bool sagSolHizaStatus;
 
      int pdfPageList=0;

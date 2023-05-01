@@ -29,6 +29,7 @@ SOURCES += main.cpp\
     toolKalem.cpp \
     toolkalemmenu.cpp \
     toolpagemenu.cpp \
+    toolsayac.cpp \
     tooltahta.cpp \
     verectangle.cpp
 
@@ -39,12 +40,19 @@ HEADERS  += \
     filecrud.h \
     gridlines.h \
     mainwindow.h \
+    popMenus.h \
     popupmenu.h \
+    sayfaFunctions.h \
     scene.h \
     toolKalem.h \
+    toolKalemFunction.h \
+    toolKalemSignalSlots.h \
+    toolKalemSlots.h \
     toolkalemmenu.h \
     toolpagemenu.h \
+    toolsayac.h \
     tooltahta.h \
+    topMenus.h \
     verectangle.h
 
 FORMS    +=

@@ -52,7 +52,7 @@ public:
          GuzelYazi,Muzik,CizgiliSayfa,
          KareliKagit,CizgiliKagit,NoktaliKagit,IzometrikKagit,
          Kalem,Resim,Copy,DrawPath,DrawPoligon,Pdf,
-         SolidLine,DashLine,DotLine,
+         SolidLine,DashLine,DotLine,GraphicsLineItem,
          NormalPen,SmartPen,FosforluPen,PatternPen,
          PenSize2,PenSize4,PenSize6,PenSize8,PenSize10,PenSize12,PenSize14,
          PatternPage,

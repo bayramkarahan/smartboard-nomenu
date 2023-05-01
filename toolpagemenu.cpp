@@ -30,3 +30,14 @@ toolPageMenu::toolPageMenu(QWidget *_menu,int w, int h, QWidget *parent)
                         "}");
 
     }
+void toolPageMenu::toolPageMenu_DesktopSignalSlot()
+{
+qDebug()<<"toolPageMenu desktop seç masajı geldi...";
+hide();
+}
+
+void toolPageMenu::toolPageMenu_PenSignalSlot()
+{
+qDebug()<<"toolPageMenu pen seç masajı geldi...";
+show();
+}

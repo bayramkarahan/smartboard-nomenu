@@ -867,7 +867,7 @@ void VERectangle::paint (QPainter *painter, const QStyleOptionGraphicsItem *, QW
     else if(sekilTr==DiagramItem::DiagramType::Copy){
            painter->drawPixmap(0,0,myImage.scaled(this->rect().width(),this->rect().height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     }
-    else if(sekilTr==DiagramItem::DiagramType::Kalem){
+    else if(sekilTr==DiagramItem::DiagramType::NormalPen){
            painter->drawPixmap(0,0,myImage.scaled(this->rect().width(),this->rect().height(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation));
     }
 

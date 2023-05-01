@@ -104,7 +104,7 @@ void toolTahta::mouseReleaseEvent(QMouseEvent *event)
         startPoint=QPointF(imsx-1,imsy-1);
 
         VERectangle*  itemToRectDraw = new VERectangle(scene);
-        itemToRectDraw->sekilTur(DiagramItem::DiagramType::Kalem);
+        itemToRectDraw->sekilTur(DiagramItem::DiagramType::NormalPen);
         QRect selection;
         selection.setRect(imsx,imsy,imex-imsx,imey-imsy);
        // selection.setRect(msx-2,msy-2,(mex-msx)+4,(mey-msy)+4);
@@ -121,8 +121,10 @@ void toolTahta::mouseReleaseEvent(QMouseEvent *event)
        // itemToRectDraw->setPos(QPointF(-1,-1));
 
         itemToRectDraw->setImage(temp);
+        //scene->sceneItemAddedSignal(
+        emit scene->sceneItemAddedSignal(scene,itemToRectDraw,true,Scene::Mode::PenMode,itemToRectDraw->sekilTr);
+        /*
         scene->addItem(itemToRectDraw);
-
         scene->graphicsList.append(itemToRectDraw);
         scene->graphicsListTemp.append(itemToRectDraw);
         scene->historyBack.append(itemToRectDraw);
@@ -156,8 +158,21 @@ void toolTahta::paintEvent(QPaintEvent *event)
 }
 void toolTahta::clearImage()
 {
-   penTuval.fill(qRgba(0,0, 0, 0));
+    penTuval.fill(qRgba(0,0, 0, 0));
 }
+
+void toolTahta::toolTahta_DesktopSignalSlot()
+{
+qDebug()<<"tahta desktop seç masajı geldi...";
+hide();
+}
+
+void toolTahta::toolTahta_PenSignalSlot()
+{
+qDebug()<<"tahta pen seç masajı geldi...";
+show();
+}
+
 QImage toolTahta::copyImage(const QImage & input, const QRect & path){
     if(!input.isNull() && !path.isEmpty()){
         QRect r = path.intersected(input.rect());

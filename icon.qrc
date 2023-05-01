@@ -140,5 +140,9 @@
         <file>icons/info.svg</file>
         <file>icons/tool.svg</file>
         <file>icons/print.svg</file>
+        <file>icons/close.svg</file>
+        <file>icons/sayac.svg</file>
+        <file>icons/stopsayac.svg</file>
+        <file>icons/startsayac.svg</file>
     </qresource>
 </RCC>

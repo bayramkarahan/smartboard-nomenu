@@ -12,7 +12,6 @@
 #include<toolkalemmenu.h>
 #include<toolpagemenu.h>
 #include<QDesktopWidget>
-
 class MainWindow : public QWidget
 {
     Q_OBJECT
@@ -22,11 +21,10 @@ public:
     ~MainWindow();
      toolTahta *current_toolTahta;
      toolKalemMenu *current_toolKalemMenu;
-    toolPageMenu *curent_pageMenu;
+     toolPageMenu *curent_pageMenu;
 public slots:
     void kalemZeminModeSignalSlot(DiagramItem::DiagramType type);
     void kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type);
-    void kalemColorSignalSlot(QString colorType, QColor color);
     void kalemSekilModeSignalSlot(DiagramItem::DiagramType type);
 
 private:
@@ -35,14 +33,6 @@ private:
  QSize screenSize;
  int en;
  int boy;
- bool durum=false;
- QTimer *timer;
-
-private:
- void resizeEvent(QResizeEvent * event);
-
-private slots:
- void slotTimer();
 };
 
 #endif // MAINWINDOW_H

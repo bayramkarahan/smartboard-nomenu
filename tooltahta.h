@@ -39,7 +39,8 @@ public:
       int pdfFirstPageNumber=0;
       int pdfLastPageNumber=0;
 public slots:
-
+      void toolTahta_DesktopSignalSlot();
+      void toolTahta_PenSignalSlot();
 
 signals:
 protected:

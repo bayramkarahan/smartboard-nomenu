@@ -106,21 +106,9 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event){
           drawing=true;dragMove=false;
           QGraphicsView::DragMode vMode =QGraphicsView::NoDrag;
           makeItemsControllable(false);
-        //  vMode = QGraphicsView::RubberBandDrag;
-       ///  QGraphicsView* mView = views().at(0);
-       ///   if(mView)
-        ///   mView->setDragMode(vMode);
-         origPoint = event->scenePos();
+          origPoint = event->scenePos();
          points.clear();
-        /*
-         QGraphicsLineItem*  itemToPenDraw = new QGraphicsLineItem();
-         this->addItem(itemToPenDraw);
-         itemToPenDraw->setPen(QPen(myPenColor,myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin));
-         itemToPenDraw->setLine(origPoint.x(),origPoint.y() ,origPoint.x()+1,origPoint.y()+1);
-         graphicsList.append(itemToPenDraw);
-         graphicsListTemp.append(itemToPenDraw);
-         graphicsListpoints.append(itemToPenDraw);
-        */
+
          endPos=event->scenePos();
          points<<origPoint;
          //qDebug()<<"Fare Başlama Pozisyonu: "<<event->scenePos();
@@ -204,13 +192,14 @@ void Scene::donSlot(DiagramItem::DiagramType type)
     //qDebug()<<"Dön Slot";
       mySekilType=type;//önemli
        // QSize screenSize = qApp->screens()[0]->size();
-
+        Scene::Mode mode;
           if(DiagramItem::DiagramType::NoktaliKagit==mySekilType||
                   DiagramItem::DiagramType::KareliKagit==mySekilType||
                   DiagramItem::DiagramType::CizgiliKagit==mySekilType||
                   DiagramItem::DiagramType::Resim==mySekilType||
                   DiagramItem::DiagramType::IzometrikKagit==mySekilType)
           {
+              mode=Scene::Mode::ZeminMode;
              QPixmap pg;
                if(DiagramItem::DiagramType::NoktaliKagit==mySekilType)
                {
@@ -247,7 +236,7 @@ void Scene::donSlot(DiagramItem::DiagramType type)
 
               setImage(tmp);
          }
-
+        if(mode==0)  mode=Scene::Mode::SekilMode;
     if(DiagramItem::DiagramType::Pergel==mySekilType)setImage(QPixmap(":/icons/pergel.png"));
     if(DiagramItem::DiagramType::Cetvel==mySekilType)setImage(QPixmap(":/icons/cetvel.png"));
     if(DiagramItem::DiagramType::Iletki==mySekilType)setImage(QPixmap(":/icons/iletki.png"));
@@ -274,17 +263,8 @@ void Scene::donSlot(DiagramItem::DiagramType type)
         //myImage.setToolTip("d-selee");
         itemToRectDraw->setImage(myImage);
         itemToRectDraw->setPos(width()/4,height()/4);
-       // itemToRectDraw->setPos(pageItemRect.left(),pageItemRect.top()+pageItemRect.height()/5);
-        //qDebug()<<"buradayım"<<this->pageOfNumberScene<<pageItemRect;
-        //qDebug()<<qFabs(this->width()/2);
-        this->addItem(itemToRectDraw);
-        itemToRectDraw->pageOfNumber=this->pageOfNumberScene;
-        graphicsList.append(itemToRectDraw);
-        graphicsListTemp.append(itemToRectDraw);
-        historyBack.append(itemToRectDraw);
-        historyBackAction.append("added");
-        // itemToRectDraw->setToolTip("d-selee");
-    }
+        emit sceneItemAddedSignal(this,itemToRectDraw,true,mode,mySekilType);
+     }
 if(mySekilType==DiagramItem::DiagramType::Cetvel){
   //  itemToRectDraw->setPos(qFabs(screenSize.width()/2)-300,qFabs(screenSize.height()/2)-100);
 itemToRectDraw->setRect(0,0,width()/2,height()/7);
@@ -372,13 +352,9 @@ void Scene::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
            itemToRectDraw->setBrush(mySekilZeminColor);
            itemToRectDraw->setImage(myImage);
            itemToRectDraw->setPos(origPoint);
-           this->addItem(itemToRectDraw);
-           itemToRectDraw->pageOfNumber=this->pageOfNumberScene;
 
-           graphicsList.append(itemToRectDraw);
-           graphicsListTemp.append(itemToRectDraw);
-           historyBack.append(itemToRectDraw);
-           historyBackAction.append("added");
+           emit sceneItemAddedSignal(this,itemToRectDraw,false,DrawRectangle,itemToRectDraw->sekilTr);
+
    }
 
 
@@ -412,7 +388,7 @@ makeItemsControllable(false);
            itemToLineDraw = new QGraphicsLineItem();
            itemToLineDraw->setPen(pen);
            itemToLineDraw->setPos(origPoint);
-           this->addItem(itemToLineDraw);
+           emit sceneItemAddedSignal(this,itemToRectDraw,false,DrawRectangle,DiagramItem::GraphicsLineItem);
                }
        endPos=event->scenePos();
 
@@ -450,10 +426,10 @@ makeItemsControllable(false);
        sceneMoveState=true;
       // qDebug()<<"scene move pen";
        QGraphicsLineItem*  itemToPenDraw = new QGraphicsLineItem();
-       this->addItem(itemToPenDraw);
+       emit sceneItemAddedSignal(this,itemToPenDraw,false,DrawPen,DiagramItem::GraphicsLineItem);
        itemToPenDraw->setPen(QPen(myPenColor,myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin));
       auto *point=new QGraphicsLineItem();
-      addItem(point);
+      emit sceneItemAddedSignal(this,point,false,DrawPen,DiagramItem::GraphicsLineItem);
       point->setPen(QPen(myPenColor,myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin));
        //  qDebug()<<"1";
        if(tv!=0){
@@ -507,10 +483,9 @@ if(tv->centerPoint==false)
    }
    case DrawPenFosforTrue:{
        QGraphicsLineItem*  itemToPenDraw = new QGraphicsLineItem();
-       this->addItem(itemToPenDraw);
        itemToPenDraw->setPen(QPen(QColor(myPenColor.red(),myPenColor.green(),myPenColor.blue(),myPenAlpha),myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin));
        itemToPenDraw->setLine(origPoint.x(),origPoint.y(),event->scenePos().x(),event->scenePos().y() );
-
+       emit sceneItemAddedSignal(this,itemToPenDraw,false,DrawPen,DiagramItem::FosforluPen);
        graphicsList.append(itemToPenDraw);
        graphicsListTemp.append(itemToPenDraw);
        ///historyBack.append(itemToRectDraw);
@@ -580,40 +555,34 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
              //itemToRectDraw->fareState(true);
              //this->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
          }
-
-         else
-         { if(itemToRectDraw!=0) itemToRectDraw->fareState(true);
-              this->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
-
-
-             //  this->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
-
-         }
+        else
+        { if(itemToRectDraw!=0) itemToRectDraw->fareState(true);
+            this->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
+            //  this->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
+        }
         //this->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
-
-         itemToRectDraw = 0;
-         //
-          drawing = false;
-
-           dragMove=true;
-         //mwindow->sekilButtonClick();
+        itemToRectDraw = 0;
+        //
+        drawing = false;
+        dragMove=true;
+        //mwindow->sekilButtonClick();
         break;}
     case DrawPenTrue:{
-       // qDebug()<<"6";
-           // qDebug()<<"scene realese"<< sceneMoveState<<points.count();
-            drawing = false;
-            QPixmap *pixmap4;
-            if(tv!=0){
+        // qDebug()<<"6";
+        // qDebug()<<"scene realese"<< sceneMoveState<<points.count();
+        drawing = false;
+        QPixmap *pixmap4;
+        if(tv!=0){
             if(tv->rotateState){
-               // tv->rotateState = false;
+                // tv->rotateState = false;
 
-                   dragMove=true;
+                dragMove=true;
                 sceneMoveState=false;
                 tv=0;
-               //  qDebug()<<"7";
+                //  qDebug()<<"7";
                 break;}
-            }
-      /*  if(mySekilTanimlamaStatus) {
+        }
+        /*  if(mySekilTanimlamaStatus) {
             //sekilTanimlama();
             //removeOddItem();
 
@@ -624,22 +593,22 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
             break;
             }*/
         /******************************************************/
- //qDebug()<<"8";
+        //qDebug()<<"8";
 
         QPen pen(myPenColor,myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin);
         QPainterPath path;
         path.moveTo(points.at(0));
-//qDebug()<<"tek tıklama "<<points.size();
+        //qDebug()<<"tek tıklama "<<points.size();
         if(points.size()<3)
         {
-           // qDebug()<<"scene realese----------------------------"<< sceneMoveState<<points.count();
+            // qDebug()<<"scene realese----------------------------"<< sceneMoveState<<points.count();
 
             sx=sx-1;
             sy=sy-1;
             ex=ex+1;
             ey=ey+1;
             QPointF temppoint=points.at(0);
-                        points.clear();
+            points.clear();
             points<<QPointF(temppoint.x()-1,temppoint.y()-1)<<temppoint<<
                     QPointF(temppoint.x()+1,temppoint.y()+1);
             path.lineTo(points.at(0));
@@ -652,53 +621,54 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
         if(points.size()>2)
         {
 
-        int i=1;
-        int k=3;
-      int  kx=qFabs(sx-ex)/points.count();
-      int  ky=qFabs(sy-ey)/points.count();
-      //  qDebug()<<"path"<<points.count()<<"g:"<<kx<<"y:"<<ky;       // qDebug()<<qFabs(sx-ex);
-//qDebug()<<"point sayısı: "<<points.size();
-      if(sceneMoveState) //eğer move olayı olmussa
-        {
+            int i=1;
+            int k=3;
+            int  kx=qFabs(sx-ex)/points.count();
+            int  ky=qFabs(sy-ey)/points.count();
+            //  qDebug()<<"path"<<points.count()<<"g:"<<kx<<"y:"<<ky;       // qDebug()<<qFabs(sx-ex);
+            //qDebug()<<"point sayısı: "<<points.size();
+            if(sceneMoveState) //eğer move olayı olmussa
+            {
 
-          while (i +3< points.size()) {
-              /*if (kx<1||ky<1)
+                while (i +3< points.size()) {
+                    /*if (kx<1||ky<1)
                   path.lineTo(points.at(i+k));
               else path.cubicTo(points.at(i), points.at(i+1), points.at(i+2));
 
               //path.cubicTo(points.at(i)+startPos, points.at(i+3)+startPos, points.at(i+6)+startPos);
 */
-             path.cubicTo(points.at(i), points.at(i+1), points.at(i+2));
-           //  qDebug()<<i<<i+1<<i+2;
-              i +=k;
-          }
-       //   if ((points.size()-i)==0){qDebug()<<points.size()<<i<<"0 eksik";path.cubicTo(points.at(i-1), points.at(i), points.at(i+1));}
-          if ((points.size()-i)==1){/*qDebug()<<points.size()<<i<<"1 eksik";*/path.cubicTo(points.at(i-1), points.at(i), points.at(i));}
-          if ((points.size()-i)==2){/*qDebug()<<points.size()<<i<<"2 eksik";*/path.cubicTo(points.at(i), points.at(i+1), points.at(i+1));}
-          if ((points.size()-i)==3){/*qDebug()<<points.size()<<i<<"3 eksik";*/path.cubicTo(points.at(i+1), points.at(i+2), points.at(i+2));}
-         // if ((points.size()-i)>3){qDebug()<<points.size()<<i<<"dikkattttttt eksik";}
-         // qDebug()<<"path"<<path;
-         // qDebug()<<"point"<<points;
+                    path.cubicTo(points.at(i), points.at(i+1), points.at(i+2));
+                    //  qDebug()<<i<<i+1<<i+2;
+                    i +=k;
+                }
+                //   if ((points.size()-i)==0){qDebug()<<points.size()<<i<<"0 eksik";path.cubicTo(points.at(i-1), points.at(i), points.at(i+1));}
+                if ((points.size()-i)==1){/*qDebug()<<points.size()<<i<<"1 eksik";*/path.cubicTo(points.at(i-1), points.at(i), points.at(i));}
+                if ((points.size()-i)==2){/*qDebug()<<points.size()<<i<<"2 eksik";*/path.cubicTo(points.at(i), points.at(i+1), points.at(i+1));}
+                if ((points.size()-i)==3){/*qDebug()<<points.size()<<i<<"3 eksik";*/path.cubicTo(points.at(i+1), points.at(i+2), points.at(i+2));}
+                // if ((points.size()-i)>3){qDebug()<<points.size()<<i<<"dikkattttttt eksik";}
+                // qDebug()<<"path"<<path;
+                // qDebug()<<"point"<<points;
 
             }
 
-          while(!graphicsListpoints.isEmpty())
-          {
-          removeItem(graphicsListpoints.last());
-          delete graphicsListpoints.last();
-          graphicsListpoints.removeLast();
- //qDebug()<<"deneme";
-          }update();
+            while(!graphicsListpoints.isEmpty())
+            {
+                emit sceneItemRemovedSignal(this,graphicsListpoints.last(),DrawPen);
+                removeItem(graphicsListpoints.last());
+                delete graphicsListpoints.last();
+                graphicsListpoints.removeLast();
+                //qDebug()<<"deneme";
+            }update();
 
         }
         else
         {
             graphicsListpoints.clear();
         }
-       // addPath(path,pen);
+        // addPath(path,pen);
         //path.clear();
 
-/******************************************/
+        /******************************************/
         QPixmap pixmap(qFabs(sx-ex)+myPenSize*2, qFabs(sy-ey)+myPenSize*2);
         pixmap.fill(Qt::transparent);
         QPainter painter(&pixmap);
@@ -707,7 +677,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
         painter.setWindow(QRect(sx-myPenSize, sy-myPenSize,qFabs(sx-ex)+myPenSize*2, qFabs(sy-ey)+myPenSize*2));
         painter.setPen(pen);
         painter.strokePath(path,pen);
-/**********************************************/
+        /**********************************************/
         if(mySekilTanimlamaStatus) {
             QPixmap pixmap1(qFabs(sx-ex)+myPenSize*2, qFabs(sy-ey)+myPenSize*2);
             pixmap1.fill(Qt::white);
@@ -717,73 +687,59 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
             painter1.setWindow(QRect(sx-myPenSize, sy-myPenSize,qFabs(sx-ex)+myPenSize*2, qFabs(sy-ey)+myPenSize*2));
             painter1.setPen(pen);
             painter1.strokePath(path,pen);
-           QString sonuc=shapeDetect(pixmap1);
-          /// qDebug()<<"Algılanan Şekil: "<<sonuc;
-           //DiagramItem *ditem=new DiagramItem();
-         //  scene->setMode(Scene::Mode::DrawRectangle, DiagramItem::DiagramType::Ucgen);
-           itemToRectDraw = new VERectangle(this);
-           bool std=false;
-           if (sonuc=="0") {std=false;}
-           if (sonuc=="1") {std=false;}
-           if (sonuc=="2")  {std=false;}
-           if (sonuc=="3"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Ucgen);std=true;}
-           if (sonuc=="4"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Dortgen);std=true;}
-           if (sonuc=="5"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Besgen);std=true;}
-           if (sonuc=="6"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Altigen);std=true;}
-           if (sonuc=="7"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Cember);std=true;}
-           if (sonuc=="8"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Cember);std=true;}
-           if(std==true)
-           {
-           itemToRectDraw->setPen(pen);
-          // itemToRectDraw->setImage(pixmap);
-           itemToRectDraw->setPos(sx-myPenSize,sy-myPenSize);
-           this->addItem(itemToRectDraw);
-           itemToRectDraw->pageOfNumber=this->pageOfNumberScene;
+            QString sonuc=shapeDetect(pixmap1);
+            /// qDebug()<<"Algılanan Şekil: "<<sonuc;
+            //DiagramItem *ditem=new DiagramItem();
+            //  scene->setMode(Scene::Mode::DrawRectangle, DiagramItem::DiagramType::Ucgen);
+            itemToRectDraw = new VERectangle(this);
+            bool std=false;
+            if (sonuc=="0") {std=false;}
+            if (sonuc=="1") {std=false;}
+            if (sonuc=="2")  {std=false;}
+            if (sonuc=="3"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Ucgen);std=true;}
+            if (sonuc=="4"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Dortgen);std=true;}
+            if (sonuc=="5"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Besgen);std=true;}
+            if (sonuc=="6"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Altigen);std=true;}
+            if (sonuc=="7"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Cember);std=true;}
+            if (sonuc=="8"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Cember);std=true;}
+            if(std==true)
+            {
+                itemToRectDraw->setPen(pen);
+                // itemToRectDraw->setImage(pixmap);
+                itemToRectDraw->setPos(sx-myPenSize,sy-myPenSize);
 
-           graphicsList.append(itemToRectDraw);
-           graphicsListTemp.append(itemToRectDraw);
-           historyBack.append(itemToRectDraw);
-           historyBackAction.append("added");
-           }else{
-               itemToRectDraw=0;
-           }
-           // break;
+                emit sceneItemAddedSignal(this,itemToRectDraw,true,DrawPen,itemToRectDraw->sekilTr);
+
+            }else{
+                itemToRectDraw=0;
             }
+            // break;
+        }
 
         /****************************************************************/
-         if(!itemToRectDraw){
-             itemToRectDraw = new VERectangle(this);
-             itemToRectDraw->sekilTur(DiagramItem::DiagramType::Resim);
-             itemToRectDraw->setPen(pen);
-             itemToRectDraw->setImage(pixmap);
-             itemToRectDraw->setPos(sx-myPenSize,sy-myPenSize);
-             this->addItem(itemToRectDraw);
-             itemToRectDraw->pageOfNumber=this->pageOfNumberScene;
+        if(!itemToRectDraw){
+            itemToRectDraw = new VERectangle(this);
+            itemToRectDraw->sekilTur(DiagramItem::DiagramType::Resim);
+            itemToRectDraw->setPen(pen);
+            itemToRectDraw->setImage(pixmap);
+            itemToRectDraw->setPos(sx-myPenSize,sy-myPenSize);
+            emit sceneItemAddedSignal(this,itemToRectDraw,true,DrawPen,itemToRectDraw->sekilTr);
 
-            // emit sceneItemAddedSignal(itemToRectDraw);
-
-             graphicsList.append(itemToRectDraw);
-             graphicsListTemp.append(itemToRectDraw);
-             historyBack.append(itemToRectDraw);
-             historyBackAction.append("added");
-            // addPath(path,pen);
-           // addPixmap(pixmap);
-            /// itemToRectDraw->sekilTr=DiagramItem::DiagramType::Pdf;
-     }
-         itemToRectDraw->setRect(0,0,qFabs(sx-ex)+2*myPenSize,qFabs(sy-ey)+2*myPenSize);
-         //  itemToRectDraw->setRect(0,0,qFabs(startPos.x()),qFabs(event->scenePos().y() - origPoint.y()));
-     itemToRectDraw->fareState(false);
-       // }
-     itemToRectDraw = 0;
+        }
+        itemToRectDraw->setRect(0,0,qFabs(sx-ex)+2*myPenSize,qFabs(sy-ey)+2*myPenSize);
+        //  itemToRectDraw->setRect(0,0,qFabs(startPos.x()),qFabs(event->scenePos().y() - origPoint.y()));
+        itemToRectDraw->fareState(false);
+        // }
+        itemToRectDraw = 0;
 
         dragMove=true;
-     sceneMoveState=false;
+        sceneMoveState=false;
 
-     /******************************************************/
+        /******************************************************/
         //itemToLineDraw = 0;
-       // itemToPenDraw=0;
-         //  qDebug()<<"Fare Bitiş Pozisyonu: "<<event->scenePos();
-       //    if(mySekilTanimlamaStatus) sekilTanimlama();
+        // itemToPenDraw=0;
+        //  qDebug()<<"Fare Bitiş Pozisyonu: "<<event->scenePos();
+        //    if(mySekilTanimlamaStatus) sekilTanimlama();
         break;
     }
     case DrawPenFosforTrue:{
@@ -806,6 +762,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 
           while(!graphicsListpoints.isEmpty())
           {
+          emit sceneItemRemovedSignal(this,graphicsListpoints.last(),EraseMode);
           removeItem(graphicsListpoints.last());
           delete graphicsListpoints.last();
           graphicsListpoints.removeLast();
@@ -827,24 +784,12 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
               itemToRectDraw->setPen(pen);
               itemToRectDraw->setImage(pixmap);
               itemToRectDraw->setPos(sx-myPenSize,sy-myPenSize);
-              this->addItem(itemToRectDraw);
-              itemToRectDraw->pageOfNumber=this->pageOfNumberScene;
 
-              graphicsList.append(itemToRectDraw);
-              graphicsListTemp.append(itemToRectDraw);
-              historyBack.append(itemToRectDraw);
-              historyBackAction.append("added");
-
-             // addPath(path,pen);
-             // addPixmap(pixmap);
       }
           itemToRectDraw->setRect(0,0,qFabs(sx-ex)+2*myPenSize,qFabs(sy-ey)+2*myPenSize);
-
-          //  itemToRectDraw->setRect(0,0,qFabs(startPos.x()),qFabs(event->scenePos().y() - origPoint.y()));
-      itemToRectDraw->fareState(false);
-        // }
+          itemToRectDraw->fareState(false);
+          emit sceneItemAddedSignal(this,itemToRectDraw,true,DrawPenFosfor,itemToRectDraw->sekilTr);
       itemToRectDraw = 0;
-        //itemToLineDraw = 0;
         break;}
     case CopyModeTrue:{
 
@@ -865,15 +810,10 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
             itemToRectDraw->setPos(QPoint(origPoint.x()-1,origPoint.y()-1));
            // itemToRectDraw->setImage(myImage);
            /// myImage.save(QDir::homePath()+"/Masaüstü/screenshot.png");
-
             itemToRectDraw->setImage(temp);
-
             itemToRectDraw->setRect(0,0,event->scenePos().x() - origPoint.x(),event->scenePos().y() - origPoint.y());
-            this->addItem(itemToRectDraw);
-            itemToRectDraw->pageOfNumber=this->pageOfNumberScene;
-
-             itemToRectDraw->fareState(false);
-
+            emit sceneItemAddedSignal(this,itemToRectDraw,true,CopyMode,itemToRectDraw->sekilTr);
+            itemToRectDraw->fareState(false);
           ///  tempCopyModeItemToRectDraw=itemToRectDraw;///Çok önemli
             makeItemsControllable(false);
             itemToRectDraw->fareState(true);
@@ -908,7 +848,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 
     depo::historyBackCount=historyBack.count();
     depo::historyNextCount=historyNext.count();
-    emit sceneItemAddedSignal();
+   // emit sceneItemAddedSignal();
 
     origPoint = event->scenePos();
     this->update();
@@ -948,11 +888,6 @@ for(int i=sy;i<=ey;i+=5)
        {
           alan=alan+25;
            item=0;
- /*QGraphicsLineItem*  itemToPenDraw = new QGraphicsLineItem();
- this->addItem(itemToPenDraw);
- itemToPenDraw->setPen(QPen(QColor(0,0,50,20),myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin));
- itemToPenDraw->setLine(j,i,j+1,i);
-*/
     }
    }
 }
@@ -986,12 +921,8 @@ else if(k>6) mySekilType=DiagramItem::DiagramType::Cember;
      itemToRectDraw->setPen(QPen(QColor(0,0,0,255), 4, Qt::SolidLine));
      itemToRectDraw->setBrush(mySekilZeminColor);
      itemToRectDraw->setPos(sx,sy);
-
-     this->addItem(itemToRectDraw);
-     itemToRectDraw->pageOfNumber=this->pageOfNumberScene;
-
-
-     itemToRectDraw->setRect(0,0,qFabs(sx-ex),qFabs(sy-ey));
+     emit sceneItemAddedSignal(this,itemToRectDraw,true,DrawPen,mySekilType);
+    itemToRectDraw->setRect(0,0,qFabs(sx-ex),qFabs(sy-ey));
      itemToRectDraw->fareState(true);
  }
 /*************************************************/
@@ -1001,6 +932,7 @@ else if(k>6) mySekilType=DiagramItem::DiagramType::Cember;
 void Scene::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Delete)
         foreach(QGraphicsItem* item, selectedItems()){
+            emit sceneItemRemovedSignal(this,item,EraseMode);
             removeItem(item);
             delete item;
         }
@@ -1026,6 +958,7 @@ void Scene::removeOddItem(){
                 historyBack.append(itemselection);
                 historyBackAction.append("deleted");
                 removeItem(itemselection);
+                emit sceneItemRemovedSignal(this,item,EraseMode);
                 update();
             }
         }
@@ -1034,9 +967,11 @@ void Scene::removeOddItem(){
         if(selection)
         {
             //qDebug()<<"line silindi";
+
+            emit sceneItemRemovedSignal(this,item,EraseMode);
             removeItem(item);
             delete item;
-            update();
+              update();
         }
     }
     depo::historyBackCount=this->historyBack.count();
@@ -1066,7 +1001,9 @@ void Scene::removeAllItem(){
                 /// qDebug()<<"verectangle silindi";
                 historyBack.append(itemselection);
                 historyBackAction.append("deleted");
-                removeItem(itemselection);
+
+                 removeItem(itemselection);
+                 emit sceneItemRemovedSignal(this,itemselection,EraseMode);
                 update();
             }
         }
@@ -1075,7 +1012,9 @@ void Scene::removeAllItem(){
         if(selection)
         {
             //qDebug()<<"line silindi";
+
             removeItem(item);
+            emit sceneItemRemovedSignal(this,item,EraseMode);
             delete item;
             update();
         }
@@ -1111,65 +1050,65 @@ void Scene::setMode(Mode mode,DiagramItem::DiagramType sekil){
         vMode = QGraphicsView::NoDrag;
     }
 
-   else if(mode == GeriAlMode){
-    //qDebug()<<" scene Geri Al";
-      //  qDebug()<<"Geri Al"<<"historycount"<<Scene::graphicsListHistoryBack.count();
+    else if(mode == GeriAlMode){
+       //qDebug()<<" scene Geri Al";
+         //  qDebug()<<"Geri Al"<<"historycount"<<Scene::graphicsListHistoryBack.count();
 
-        if(!historyBack.isEmpty())
-        {
-            // qDebug()<<graphicsList.last();
-            if(historyBackAction.last()=="added"&&!historyBack.isEmpty())
-            {
-                historyNext.append(historyBack.last());
-                historyNextAction.append(historyBackAction.last());
+           if(!historyBack.isEmpty())
+           {
+               // qDebug()<<graphicsList.last();
+               if(historyBackAction.last()=="added"&&!historyBack.isEmpty())
+               {
+                   historyNext.append(historyBack.last());
+                   historyNextAction.append(historyBackAction.last());
+                   emit sceneItemRemovedSignal(this,historyBack.last(),GeriAlMode);
+                   removeItem(historyBack.last());
 
-                removeItem(historyBack.last());
+                   historyBack.removeLast();
+                   historyBackAction.removeLast();
+                  // qDebug()<<"added calıştı";
+               }
+           }
+           if(!historyBack.isEmpty())
+           {
+               if (historyBackAction.last()=="deleted")
+               {
+                 //  historyNext.append(historyBack.last());
+                 //  historyNextAction.append(historyBackAction.last());
 
-                historyBack.removeLast();
-                historyBackAction.removeLast();
-               // qDebug()<<"added calıştı";
-            }
-        }
-        if(!historyBack.isEmpty())
-        {
-            if (historyBackAction.last()=="deleted")
-            {
-              //  historyNext.append(historyBack.last());
-              //  historyNextAction.append(historyBackAction.last());
+                   addItem(historyBack.last());
+                   historyBack.removeLast();
+                   historyBackAction.removeLast();
+                   //qDebug()<<"deleted calıştı";
 
-                addItem(historyBack.last());
-                historyBack.removeLast();
-                historyBackAction.removeLast();
-                //qDebug()<<"deleted calıştı";
+               }
 
-            }
+               //graphicsListNext.append(graphicsList.last());
+               //  delete graphicsList.last();
 
-            //graphicsListNext.append(graphicsList.last());
-            //  delete graphicsList.last();
+               update();
+           }
+           depo::historyBackCount=historyBack.count();
+           depo::historyNextCount=historyNext.count();
 
-            update();
-        }
-        depo::historyBackCount=historyBack.count();
-        depo::historyNextCount=historyNext.count();
+       }
+       else if(mode == IleriAlMode){
+          // qDebug()<<"scene ileri Al";
+           if(!historyNext.isEmpty())
+           {
+               VERectangle * selection = dynamic_cast<VERectangle *>(historyNext.last());
+               this->addItem(selection);
+               historyBack.append(selection);
+               historyBackAction.append(historyNextAction.last());
+              //graphicsListTemp.append(graphicsListNext.last());
+               historyNext.removeLast();
+               historyNextAction.removeLast();
+               update();
+           }
+           depo::historyBackCount=historyBack.count();
+           depo::historyNextCount=historyNext.count();
 
-    }
-    else if(mode == IleriAlMode){
-       // qDebug()<<"scene ileri Al";
-        if(!historyNext.isEmpty())
-        {
-            VERectangle * selection = dynamic_cast<VERectangle *>(historyNext.last());
-            this->addItem(selection);
-            historyBack.append(selection);
-            historyBackAction.append(historyNextAction.last());
-           //graphicsListTemp.append(graphicsListNext.last());
-            historyNext.removeLast();
-            historyNextAction.removeLast();
-            update();
-        }
-        depo::historyBackCount=historyBack.count();
-        depo::historyNextCount=historyNext.count();
-
-        }
+           }
     else if(mode == ScreenMode){
 
     }
