@@ -13,7 +13,9 @@ public:
 public slots:
       void toolPageMenu_DesktopSignalSlot();
       void toolPageMenu_PenSignalSlot();
-
+      void toolPageMenuOlustur(QWidget *_menu, int w, int h, int parentw, int parenth);
+private:
+       QGridLayout *mainlayout;
 };
 
 #endif // TOOLPAGEMENU_H

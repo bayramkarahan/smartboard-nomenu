@@ -88,7 +88,7 @@ public:
               EraseMode,ClearMode,
               IleriAlMode,GeriAlMode,PenMode,DesktopMode,CopyMode,FitWindowMode,FitPageMode,
               NextPageMode,BackPageMode,ZoomPozitifMode,ZoomNegatifMode,ZoomSelectionMode,
-               ZeminMode,SekilMode,PanelSideLeftRight,PanelSideBottom,
+               ZeminMode,SekilMode,PanelSideLeftRight,PanelSideBottom,KimyaMode,
                ColorMode,BlueColorMode,RedColorMode,BlackColorMode,GreenColorMode,
               ListMode,SearchMode,JumpPageMode,SaveMode,PrintMode,PdfMode,ExitMode,ToolMode};
     enum ModeTrue {DrawPenTrue,DrawPenFosforTrue,DrawLineTrue,CopyModeTrue,DrawRectangleTrue,EraseModeTrue,SelectObjectTrue,NoModeTrue};

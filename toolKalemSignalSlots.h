@@ -41,6 +41,12 @@ void toolKalem::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType ty
 
     if(Scene::Mode::SekilMode==mode) kalemSekilModeSignalSlot(type);
     if(Scene::Mode::ZeminMode==mode) kalemZeminModeSignalSlot(type);
+
+    current_toolTahta->raise();
+    raise();
+    current_toolPageMenu->raise();
+    current_toolKalemMenu->raise();
+    //current_toolTahta->lower();
 }
 
 
@@ -56,7 +62,11 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
     depo::historyBackCount=scenetemp->historyBack.count();
     depo::historyNextCount=scenetemp->historyNext.count();
     qDebug()<<"scene nesne eklendi.....";
-
+    if(mode==Scene::KimyaMode&&type==DiagramItem::DiagramType::Resim)
+    {
+        handButtonSlot();
+        current_toolKalemMenu->show();
+    }
 }
 
 void toolKalem::sceneItemRemovedSignalSlot(Scene *scenetemp, QGraphicsItem *item,Scene::Mode mode)

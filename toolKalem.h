@@ -23,7 +23,7 @@
 #include<toolsayac.h>
 #include<QSlider>
 #include<toolkalemmenu.h>
-
+#include<toolpagemenu.h>
 class QMouseEvent;
 class toolKalem : public QFrame
 {
@@ -39,7 +39,7 @@ public:
 
     QPoint offset;
     bool mouseClick;
-    explicit toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, toolKalemMenu *_toolKalemMenu, int parentw, int parenth, QWidget *parent = nullptr);
+    explicit toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, toolKalemMenu *_toolKalemMenu, toolPageMenu *_toolPageMenu, int parentw, int parenth, QWidget *parent = nullptr);
     int en;
     int boy;
 
@@ -70,6 +70,7 @@ public:
     QMenu *penMenu();
     toolTahta *current_toolTahta;
     toolKalemMenu *current_toolKalemMenu;
+    toolPageMenu *current_toolPageMenu;
     QHBoxLayout *sceneListButtonLayout;
     void penToScene();
     void sceneToPen();

@@ -416,28 +416,28 @@ QWidget *toolKalem::kimyaTopMenu(int _boy)
     periyodikcetvelButton=butonSlot(periyodikcetvelButton,"",":icons/periyodiktable.svg",QColor(255,0,0,0),e,b,e,b);
     connect(periyodikcetvelButton, &QPushButton::clicked, [=]() {
         emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        addObjectScene(":icons/periyodiktable.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        addObjectScene(":icons/periyodiktable.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parentw*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
     });
 
     QPushButton *hidrojenButton=new QPushButton();
     hidrojenButton=butonSlot(hidrojenButton,"",":icons/hidrojen.svg",QColor(255,0,0,0),e,b,e,b);
     connect(hidrojenButton, &QPushButton::clicked, [=]() {
         emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        addObjectScene(":icons/hidrojen.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        addObjectScene(":icons/hidrojen.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
     });
 
     QPushButton *azotButton=new QPushButton();
     azotButton=butonSlot(azotButton,"",":icons/azot.svg",QColor(255,0,0,0),e,b,e,b);
     connect(azotButton, &QPushButton::clicked, [=]() {
         emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        addObjectScene(":icons/azot.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        addObjectScene(":icons/azot.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
     });
 
     QPushButton *oksijenButton=new QPushButton();
     oksijenButton=butonSlot(oksijenButton,"",":icons/oksijen.svg",QColor(255,0,0,0),e,b,e,b);
     connect(oksijenButton, &QPushButton::clicked, [=]() {
         emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        addObjectScene(":icons/oksijen.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        addObjectScene(":icons/oksijen.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
     });
 
 

@@ -18,9 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.4);
     current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
     current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()/2);
-    current_toolTahta->lower();
-    current_toolTahta->lower();
-    current_toolTahta->lower();
+
 
     current_toolTahta->show();
 
@@ -29,10 +27,13 @@ MainWindow::MainWindow(QWidget *parent) :
     //current_toolKalemMenu->move(screenSize.width()/2-current_toolKalemMenu->width()/2,0);
    // current_toolKalemMenu->show();
     current_toolKalemMenu=new toolKalemMenu(new QWidget(),screenSize.width()*0.8,screenSize.height()*0.05);
+    /***************************Bottom Menu**********************************************/
+    curent_pageMenu=new toolPageMenu(new QWidget(),screenSize.width()*0.85,screenSize.height()*0.045);
+ //curent_pageMenu=new toolPageMenu(kw->pageBottomMenu(screenSize.height()*0.045),screenSize.width()*0.85,screenSize.height()*0.045);
 
 
  /******************************************************************************/
-   kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta,current_toolKalemMenu,screenSize.width(),screenSize.height());
+   kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta,current_toolKalemMenu,curent_pageMenu,screenSize.width(),screenSize.height());
    kw->setFixedSize(en*1.15,boy*0.8*14);
    kw->sagSolHizala();
   // kw->move(screenSize.width()-kw->width()-10,screenSize.height()/2- kw->height()/2);
@@ -63,24 +64,24 @@ MainWindow::MainWindow(QWidget *parent) :
            kw, SLOT(kalemSekilModeSignalSlot(DiagramItem::DiagramType)));
    /********************************************/
   // slotPenInit();
-      /***************************Bottom Menu**********************************************/
-   curent_pageMenu=new toolPageMenu(kw->pageBottomMenu(screenSize.height()*0.045),screenSize.width()*0.85,screenSize.height()*0.045);
-   curent_pageMenu->move(screenSize.width()/2-curent_pageMenu->width()/2,screenSize.height()-curent_pageMenu->height()*2.5);
-   curent_pageMenu->show();
-   /**************************************************************************/
+    /**************************************************************************/
    connect(kw, SIGNAL(desktopSignal()),
            curent_pageMenu, SLOT(toolPageMenu_DesktopSignalSlot()));
    connect(kw, SIGNAL(penSignal()),
            curent_pageMenu, SLOT(toolPageMenu_PenSignalSlot()));
+   curent_pageMenu->toolPageMenuOlustur(kw->pageBottomMenu(screenSize.height()*0.045),screenSize.width()*0.85,screenSize.height()*0.045,screenSize.width(),screenSize.height());
+   curent_pageMenu->move(screenSize.width()/2-curent_pageMenu->width()/2,screenSize.height()-curent_pageMenu->height()*2.5);
+   curent_pageMenu->show();
 
    /*******************ilk Açılış Hazırlığı****************************/
    kw->ekleSayfaButtonClick(-1,false,-1);
    //kalemModeSignalSlot(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
    //kw->penButtonSlot();
    //kw->desktopButtonSlot();
-   kw->raise();kw->raise();
-   curent_pageMenu->raise();curent_pageMenu->raise();
-   current_toolKalemMenu->raise();current_toolKalemMenu->raise();
+   kw->raise();
+   curent_pageMenu->raise();
+   current_toolKalemMenu->raise();
+   current_toolTahta->lower();
 
 
 }

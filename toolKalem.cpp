@@ -130,7 +130,7 @@ void toolKalem::penToScene()
 
 }
 
-toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, toolKalemMenu *_toolKalemMenu,int parentw, int parenth, QWidget *parent)
+toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, toolKalemMenu *_toolKalemMenu, toolPageMenu *_toolPageMenu, int parentw, int parenth, QWidget *parent)
         {
     penDesktopStatus=false;
     this->parentw=parentw;
@@ -142,6 +142,8 @@ toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, t
     currentMode=Scene::Mode::SelectObject;
     current_toolTahta=_toolTahta;
     current_toolKalemMenu=_toolKalemMenu;
+    current_toolPageMenu=_toolPageMenu;
+
 
 /*******************************************************************/
 
