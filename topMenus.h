@@ -415,12 +415,26 @@ QWidget *toolKalem::kimyaTopMenu(int _boy)
     QPushButton *pdfOpenButton=new QPushButton();
     pdfOpenButton=butonSlot(pdfOpenButton,"",":icons/periyodiktable.svg",QColor(255,0,0,0),e,b,e,b);
     connect(pdfOpenButton, &QPushButton::clicked, [=]() {
+         Scene::Mode mode;
+        if(mode==0)  mode=Scene::Mode::SekilMode;
         emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
         QPixmap image = QPixmap(":icons/periyodiktable.svg");
         current_toolTahta->scene->setImage(image);
-        current_toolTahta->scene->donSlot(DiagramItem::DiagramType::Resim);
+     //   current_toolTahta->scene->donSlot(DiagramItem::DiagramType::Resim);
         current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::Resim;
 
+        VERectangle  *itemToRectDraw = new VERectangle( current_toolTahta->scene);
+        itemToRectDraw->sekilTur(DiagramItem::DiagramType::Resim);
+        itemToRectDraw->setImage(image);
+       // itemToRectDraw->setBrush(current_toolTahta->scene->mySekilZeminColor);
+        itemToRectDraw->setPos(parentw/4,parenth/4);
+
+        itemToRectDraw->setRect(0,0,parentw/3,parenth/3);
+         emit current_toolTahta->scene->sceneItemAddedSignal(current_toolTahta->scene,itemToRectDraw,true,mode,current_toolTahta->scene->mySekilType);
+        current_toolTahta->scene->makeItemsControllable(false);
+        itemToRectDraw->fareState(true);
+        current_toolTahta->scene->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
+        itemToRectDraw=0;
     });
 
     QPushButton *pdfSaveButton=new QPushButton();
