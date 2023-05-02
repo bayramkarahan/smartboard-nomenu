@@ -455,4 +455,20 @@ void toolKalem::saveSayfaButtonClick(){
 
 }
 
+ void toolKalem::addObjectScene(QString dosya,Scene::Mode mode,DiagramItem::DiagramType type,float w,float h,int posx,int posy,bool select)
+ {
+     QPixmap image = QPixmap(dosya);
+     //current_toolTahta->scene->setImage(image);
+     current_toolTahta->scene->mySekilType=type;
+     VERectangle  *itemToRectDraw = new VERectangle(current_toolTahta->scene);
+     itemToRectDraw->sekilTur(type);
+     itemToRectDraw->setImage(image);
+     itemToRectDraw->setPos(posx,posy);
+     itemToRectDraw->setRect(0,0,w,h);
+     emit current_toolTahta->scene->sceneItemAddedSignal(current_toolTahta->scene,itemToRectDraw,true,mode,current_toolTahta->scene->mySekilType);
+     current_toolTahta->scene->makeItemsControllable(false);
+     itemToRectDraw->fareState(select);
+     current_toolTahta->scene->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
+     itemToRectDraw=0;
+ }
 #endif // SAYFAFUNCTIONS_H

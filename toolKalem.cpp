@@ -286,9 +286,13 @@ kimyaButton=butonToolSlot(kimyaButton,"Araç",":icons/kimya.svg",QColor(255,0,0,
 connect(kimyaButton, &QToolButton::clicked, [=]() {
     current_toolKalemMenu->toolKalemMenuOlustur(kimyaTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
+   });
 
-    //mapButtonSlot();
-//emit kalemModeSignal(Scene::Mode::ToolMode,DiagramItem::DiagramType::NoType);
+QToolButton *sosyalButton = new QToolButton(this);
+sosyalButton=butonToolSlot(sosyalButton,"Araç",":icons/sosyal.svg",QColor(255,0,0,0),en*1.5,boy);
+connect(sosyalButton, &QToolButton::clicked, [=]() {
+    current_toolKalemMenu->toolKalemMenuOlustur(sosyalTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->show();
    });
 
 QToolButton *exitButton = new QToolButton(this);
@@ -330,9 +334,10 @@ layout->addWidget(pdfButton, 70, 0,1,2);
 
 layout->addWidget(toolButton, 91, 0,1,2);
 layout->addWidget(kimyaButton, 92, 0,1,2);
+layout->addWidget(sosyalButton, 93, 0,1,2);
 
 
-layout->addWidget(exitButton, 95, 0,1,2);
+layout->addWidget(exitButton,100, 0,1,2);
 
 this->setLayout(layout);
 

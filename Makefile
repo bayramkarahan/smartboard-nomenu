@@ -449,6 +449,7 @@ qrc_icon.cpp: icon.qrc \
 		icons/pen1.png \
 		icons/izometrikpage.svg \
 		icons/kimya.svg \
+		icons/haritadilsiz.png \
 		icons/kup.png \
 		icons/tool.svg \
 		icons/musicikon.png \
@@ -458,6 +459,7 @@ qrc_icon.cpp: icon.qrc \
 		icons/ndogru.png \
 		icons/view-refresh.svg \
 		icons/media-seek-forward.svg \
+		icons/haritabitkiortusu.png \
 		icons/pen.png \
 		icons/qpdfview_win32.ico \
 		icons/clear.png \
@@ -487,6 +489,7 @@ qrc_icon.cpp: icon.qrc \
 		icons/go-up.svg \
 		icons/zoomselect.png \
 		icons/go-jump.svg \
+		icons/haritaakarsu.png \
 		icons/process-stop.svg \
 		icons/go-previous.svg \
 		icons/k1.png \
@@ -501,6 +504,8 @@ qrc_icon.cpp: icon.qrc \
 		icons/document-print.svg \
 		icons/nextpage.png \
 		icons/nonumbercoordinate.svg \
+		icons/azot.svg \
+		icons/sosyal.svg \
 		icons/print.png \
 		icons/griddikey.png \
 		icons/document-open.svg \
@@ -510,6 +515,7 @@ qrc_icon.cpp: icon.qrc \
 		icons/gridrenk.png \
 		icons/cizgilisayfa.png \
 		icons/pergel.png \
+		icons/hidrojen.svg \
 		icons/e-tahta.png \
 		icons/undo.png \
 		icons/qpdfview_win32.rc \
@@ -520,6 +526,7 @@ qrc_icon.cpp: icon.qrc \
 		icons/redo.png \
 		icons/guzelyazisayfa.png \
 		icons/jumppage.png \
+		icons/oksijen.svg \
 		icons/karelikagit.png \
 		icons/zoom-in.svg \
 		icons/edit-find.svg \
@@ -533,6 +540,7 @@ qrc_icon.cpp: icon.qrc \
 		icons/object-rotate-left.svg \
 		icons/hand.png \
 		icons/smartboard.svg \
+		icons/haritamaden.png \
 		icons/hnkoordinat.png \
 		icons/pdfsave.svg \
 		icons/zoompagefit.svg \
@@ -549,12 +557,14 @@ qrc_icon.cpp: icon.qrc \
 		icons/rightside.svg \
 		icons/nnkoordinat.png \
 		icons/periyodiktable.svg \
+		icons/haritaplato.png \
 		icons/search.png \
 		icons/backpage.png \
 		icons/go-first.svg \
 		icons/fitpagesize.png \
 		icons/zeminCustomColor.png \
 		icons/close.png \
+		icons/haritadag.png \
 		icons/move.png \
 		icons/nkoordinat.png \
 		icons/panelside.png \
@@ -564,6 +574,7 @@ qrc_icon.cpp: icon.qrc \
 		icons/iletki.png \
 		icons/zoompagepozitif.svg \
 		icons/qpdfview_os2.ico \
+		icons/haritaova.png \
 		icons/tab-new.svg \
 		icons/pop.png \
 		icons/folder.svg \

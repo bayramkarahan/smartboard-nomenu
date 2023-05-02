@@ -122,6 +122,7 @@ public slots:
     QWidget *eraseTopMenu(int _boy);
     QWidget *toolTopMenu(int _boy);
     QWidget *kimyaTopMenu(int _boy);
+    QWidget *sosyalTopMenu(int _boy);
 
     QWidget *pageBottomMenu(int _boy);
     QWidget *pdfTopMenu(int _boy);
@@ -137,6 +138,7 @@ public slots:
      void zoomnegatifSayfaButtonClick();
      void sagSolHizala();
      void saveSayfaButtonClick();
+     void addObjectScene(QString dosya, Scene::Mode mode, DiagramItem::DiagramType type, float w, float h , int posx, int posy, bool select);
      void infoButtonClick();
      void sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item ,bool additemstate, Scene::Mode mode, DiagramItem::DiagramType type);
      void sceneItemRemovedSignalSlot(Scene *scenetemp, QGraphicsItem *item, Scene::Mode mode);

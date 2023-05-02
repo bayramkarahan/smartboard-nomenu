@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
  /******************************************************************************/
    kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta,current_toolKalemMenu,screenSize.width(),screenSize.height());
-   kw->setFixedSize(en*1.15,boy*0.8*13);
+   kw->setFixedSize(en*1.15,boy*0.8*14);
    kw->sagSolHizala();
   // kw->move(screenSize.width()-kw->width()-10,screenSize.height()/2- kw->height()/2);
   // kw->setStyleSheet("background-color:rgb(220, 220, 220);");

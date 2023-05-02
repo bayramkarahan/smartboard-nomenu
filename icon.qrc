@@ -146,5 +146,16 @@
         <file>icons/startsayac.svg</file>
         <file>icons/periyodiktable.svg</file>
         <file>icons/kimya.svg</file>
+        <file>icons/hidrojen.svg</file>
+        <file>icons/oksijen.svg</file>
+        <file>icons/azot.svg</file>
+        <file>icons/sosyal.svg</file>
+        <file>icons/haritaakarsu.png</file>
+        <file>icons/haritabitkiortusu.png</file>
+        <file>icons/haritadag.png</file>
+        <file>icons/haritadilsiz.png</file>
+        <file>icons/haritamaden.png</file>
+        <file>icons/haritaova.png</file>
+        <file>icons/haritaplato.png</file>
     </qresource>
 </RCC>
