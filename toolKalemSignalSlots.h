@@ -62,23 +62,68 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
     depo::historyBackCount=scenetemp->historyBack.count();
     depo::historyNextCount=scenetemp->historyNext.count();
     qDebug()<<"scene nesne eklendi.....";
-    if(mode==Scene::KimyaMode&&type==DiagramItem::DiagramType::Resim)
+    /*if(mode==Scene::KimyaMode&&type==DiagramItem::DiagramType::Resim)
     {
-        handButtonSlot();
-        current_toolKalemMenu->show();
-    }
+        qDebug()<<"Kimya Seçtiniz...";
+        /***************************form ekran fotosu resetleniyor**************/
+      /*  QPalette palet;
+        palet.setBrush(QPalette::Background,QColor(0,0,0,0));
+        current_toolTahta->setPalette(palet);
+
+       //handButtonSlot();
+       //current_toolKalemMenu->show();
+    }*/
     if(mode==Scene::ZeminMode&&(type==DiagramItem::DiagramType::NoktaliKagit||
                                 type==DiagramItem::DiagramType::IzometrikKagit||
                                 type==DiagramItem::DiagramType::CizgiliKagit||
                                 type==DiagramItem::DiagramType::KareliKagit))
     {
         //qDebug()<<"noktalı kağıt seçtiniz...";
-        handButtonSlot();
-        current_toolKalemMenu->show();
+        //handButtonSlot();
+        //current_toolKalemMenu->show();
     }
+    if(mode==Scene::ZeminMode&&type==DiagramItem::DiagramType::PatternPage)
+    {
+        qDebug()<<"Zemin Eklendi.....";
+        if(oldMode==Scene::PenMode&&oldType==DiagramItem::DiagramType::NormalPen||
+                DiagramItem::DiagramType::PatternPen)
+        {
+             qDebug()<<"Kalem Seçili";
+           /* current_toolTahta->penDrawingMain=true;
+            current_toolTahta->gv->hide();
+            current_toolTahta->gv->setEnabled(false);
+            current_toolTahta->scene->makeItemsControllable(false);
+            QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+            QPalette palet;
+            palet.setBrush(QPalette::Background,pixMap);
+            current_toolTahta->setPalette(palet);*/
+        }else
+        {
+            qDebug()<<"Kalem Dışında Araç Seçildi";
+           /* current_toolTahta->penDrawingMain=false;
+            current_toolTahta->gv->show();
+            current_toolTahta->gv->setEnabled(true);
+            /***************************form ekran fotosu resetleniyor**************/
+          /*  QPalette palet;
+            palet.setBrush(QPalette::Background,QColor(0,0,0,0));
+            current_toolTahta->setPalette(palet);
+           // handButtonSlot();*/
+        }
+
+
+        /***************************form ekran fotosu resetleniyor**************/
+      /*  QPalette palet;
+        palet.setBrush(QPalette::Background,QColor(0,0,0,0));
+        current_toolTahta->setPalette(palet);
+
+       //
+       //current_toolKalemMenu->show();
+       */
+    }
+
 }
 
-void toolKalem::sceneItemRemovedSignalSlot(Scene *scenetemp, QGraphicsItem *item,Scene::Mode mode)
+void toolKalem::sceneItemRemovedSignalSlot(Scene *scenetemp, Scene::Mode mode)
 {
     /*scenetemp->addItem(item);
     scenetemp->graphicsList.append(item);
@@ -374,11 +419,13 @@ foreach(QGraphicsItem* item,current_toolTahta->scene->items()){
    zeminItem->setPen(QPen(current_toolTahta->scene->mySekilKalemColor, penSize, current_toolTahta->scene->mySekilPenStyle));
    zeminItem->sekilTur(DiagramItem::DiagramType::PatternPage);
    zeminItem->setImage(current_toolTahta->scene->myImage);
-   current_toolTahta->scene->addItem(zeminItem);
+   /*current_toolTahta->scene->addItem(zeminItem);
    current_toolTahta->scene->graphicsList.append(zeminItem);
    current_toolTahta->scene->graphicsListTemp.append(zeminItem);
    current_toolTahta->scene->historyBack.append(zeminItem);
    current_toolTahta->scene->historyBackAction.append("added");
+   */
+   emit current_toolTahta->scene->sceneItemAddedSignal(current_toolTahta->scene,zeminItem,false,Scene::ZeminMode,DiagramItem::DiagramType::PatternPage);
    zeminItem->setRect(0,0,current_toolTahta->width(),current_toolTahta->height());
    zeminItem->setPos(0,0);
    zeminItem->setZValue(-200);
@@ -386,7 +433,7 @@ foreach(QGraphicsItem* item,current_toolTahta->scene->items()){
    zeminItem->fareState(false);
    //current_toolTahta->scene->makeItemsControllable(false);
 //}
-secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+///secSayfaButtonClick(current_toolTahta->current_sceneIndex);
 
 /*if(kw->oldMode==Scene::Mode::DrawPen&&kw->oldType==DiagramItem::DiagramType::NormalPen)
 {

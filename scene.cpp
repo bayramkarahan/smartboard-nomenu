@@ -653,7 +653,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 
             while(!graphicsListpoints.isEmpty())
             {
-                emit sceneItemRemovedSignal(this,graphicsListpoints.last(),DrawPen);
+                emit sceneItemRemovedSignal(this,DrawPen);
                 removeItem(graphicsListpoints.last());
                 delete graphicsListpoints.last();
                 graphicsListpoints.removeLast();
@@ -762,7 +762,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 
           while(!graphicsListpoints.isEmpty())
           {
-          emit sceneItemRemovedSignal(this,graphicsListpoints.last(),EraseMode);
+          emit sceneItemRemovedSignal(this,EraseMode);
           removeItem(graphicsListpoints.last());
           delete graphicsListpoints.last();
           graphicsListpoints.removeLast();
@@ -932,7 +932,7 @@ else if(k>6) mySekilType=DiagramItem::DiagramType::Cember;
 void Scene::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Delete)
         foreach(QGraphicsItem* item, selectedItems()){
-            emit sceneItemRemovedSignal(this,item,EraseMode);
+            emit sceneItemRemovedSignal(this,EraseMode);
             removeItem(item);
             delete item;
         }
@@ -958,7 +958,7 @@ void Scene::removeOddItem(){
                 historyBack.append(itemselection);
                 historyBackAction.append("deleted");
                 removeItem(itemselection);
-                emit sceneItemRemovedSignal(this,item,EraseMode);
+
                 update();
             }
         }
@@ -968,7 +968,7 @@ void Scene::removeOddItem(){
         {
             //qDebug()<<"line silindi";
 
-            emit sceneItemRemovedSignal(this,item,EraseMode);
+
             removeItem(item);
             delete item;
               update();
@@ -976,6 +976,7 @@ void Scene::removeOddItem(){
     }
     depo::historyBackCount=this->historyBack.count();
     depo::historyNextCount=this->historyNext.count();
+    emit sceneItemRemovedSignal(this,EraseMode);
 }
 void Scene::slotMove(QGraphicsItem *signalOwner, qreal dx, qreal dy)
 {
@@ -1003,7 +1004,7 @@ void Scene::removeAllItem(){
                 historyBackAction.append("deleted");
 
                  removeItem(itemselection);
-                 emit sceneItemRemovedSignal(this,itemselection,EraseMode);
+
                 update();
             }
         }
@@ -1014,7 +1015,7 @@ void Scene::removeAllItem(){
             //qDebug()<<"line silindi";
 
             removeItem(item);
-            emit sceneItemRemovedSignal(this,item,EraseMode);
+
             delete item;
             update();
         }
@@ -1023,7 +1024,7 @@ void Scene::removeAllItem(){
     depo::historyBackCount=this->historyBack.count();
     depo::historyNextCount=this->historyNext.count();
 
-
+   emit sceneItemRemovedSignal(this,EraseMode);
 }
 void Scene::setParent(QMainWindow* _mwindow)
 {
@@ -1061,7 +1062,7 @@ void Scene::setMode(Mode mode,DiagramItem::DiagramType sekil){
                {
                    historyNext.append(historyBack.last());
                    historyNextAction.append(historyBackAction.last());
-                   emit sceneItemRemovedSignal(this,historyBack.last(),GeriAlMode);
+                   emit sceneItemRemovedSignal(this,GeriAlMode);
                    removeItem(historyBack.last());
 
                    historyBack.removeLast();

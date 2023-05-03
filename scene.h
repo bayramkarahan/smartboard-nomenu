@@ -182,7 +182,7 @@ signals:
     void signalSelectItem(QGraphicsItem *item);
     void signalNewSelectItem(QGraphicsItem *item);
     void sceneItemAddedSignal(Scene *scene,QGraphicsItem* item,bool additemstate,Scene::Mode mode,DiagramItem::DiagramType type);
-    void sceneItemRemovedSignal(Scene *scene,QGraphicsItem* item,Scene::Mode mode);
+    void sceneItemRemovedSignal(Scene *scene,Scene::Mode mode);
 
 public slots:
     void slotMove(QGraphicsItem *signalOwner, qreal dx, qreal dy);

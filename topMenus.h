@@ -415,15 +415,20 @@ QWidget *toolKalem::kimyaTopMenu(int _boy)
     QPushButton *periyodikcetvelButton=new QPushButton();
     periyodikcetvelButton=butonSlot(periyodikcetvelButton,"",":icons/periyodiktable.svg",QColor(255,0,0,0),e,b,e,b);
     connect(periyodikcetvelButton, &QPushButton::clicked, [=]() {
+        //handButtonSlot();
+        addObjectScene(":icons/periyodiktable.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
         emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        addObjectScene(":icons/periyodiktable.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parentw*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        penButtonSlot();
     });
 
     QPushButton *hidrojenButton=new QPushButton();
     hidrojenButton=butonSlot(hidrojenButton,"",":icons/hidrojen.svg",QColor(255,0,0,0),e,b,e,b);
     connect(hidrojenButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
+          emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
         addObjectScene(":icons/hidrojen.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+
+    //penButtonSlot();
+        handButtonSlot();
     });
 
     QPushButton *azotButton=new QPushButton();
@@ -784,8 +789,8 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     pergel->setFlat(true);
     pergel->setIcon(QIcon(":icons/pergel.png"));
     connect(pergel, &QPushButton::clicked, [=]() {
-          emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Pergel);
-
+         // emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Pergel);
+        addObjectScene(":icons/pergel.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Pergel,parentw*0.8,parenth*0.8,parentw/2-(parentw*0.8)/2,parenth/2-(parenth*0.8)/2,true);
       //  menu->close();
     });
 

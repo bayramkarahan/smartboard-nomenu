@@ -22,7 +22,7 @@ void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdf
   ///  qDebug()<<"ekle sayfa2"<<sceneSayfaNumber<<sceneSayfaActiveNumber<<pdfObjectAdded;
      current_toolTahta->_scene = new Scene(current_toolTahta->gv);
      connect(current_toolTahta->_scene, SIGNAL(sceneItemAddedSignal(Scene*,QGraphicsItem*,bool,Scene::Mode,DiagramItem::DiagramType) ), this, SLOT(sceneItemAddedSignalSlot(Scene*,QGraphicsItem*,bool,Scene::Mode,DiagramItem::DiagramType) ) );
-     connect(current_toolTahta->_scene, SIGNAL(sceneItemRemovedSignal(Scene*,QGraphicsItem*,Scene::Mode) ), this, SLOT(sceneItemRemovedSignalSlot(Scene*,QGraphicsItem*,Scene::Mode) ) );
+     connect(current_toolTahta->_scene, SIGNAL(sceneItemRemovedSignal(Scene*,Scene::Mode) ), this, SLOT(sceneItemRemovedSignalSlot(Scene*,Scene::Mode) ) );
 
      current_toolTahta->_scene->pdfObjectAdded=pdfObjectAdded;
      current_toolTahta->_scene->pdfPageNumber=pdfPageIndex;
@@ -463,12 +463,12 @@ void toolKalem::saveSayfaButtonClick(){
      VERectangle  *itemToRectDraw = new VERectangle(current_toolTahta->scene);
      itemToRectDraw->sekilTur(type);
      itemToRectDraw->setImage(image);
+     emit current_toolTahta->scene->sceneItemAddedSignal(current_toolTahta->scene,itemToRectDraw,true,mode,current_toolTahta->scene->mySekilType);
      itemToRectDraw->setPos(posx,posy);
      itemToRectDraw->setRect(0,0,w,h);
-     emit current_toolTahta->scene->sceneItemAddedSignal(current_toolTahta->scene,itemToRectDraw,true,mode,current_toolTahta->scene->mySekilType);
-     current_toolTahta->scene->makeItemsControllable(false);
+      current_toolTahta->scene->makeItemsControllable(false);
      itemToRectDraw->fareState(select);
-     current_toolTahta->scene->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
+     //current_toolTahta->scene->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
      itemToRectDraw=0;
  }
 #endif // SAYFAFUNCTIONS_H

@@ -142,7 +142,7 @@ public slots:
      void addObjectScene(QString dosya, Scene::Mode mode, DiagramItem::DiagramType type, float w, float h , int posx, int posy, bool select);
      void infoButtonClick();
      void sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item ,bool additemstate, Scene::Mode mode, DiagramItem::DiagramType type);
-     void sceneItemRemovedSignalSlot(Scene *scenetemp, QGraphicsItem *item, Scene::Mode mode);
+     void sceneItemRemovedSignalSlot(Scene *scenetemp, Scene::Mode mode);
      void kalemColorSignalSlot(QString colorType, QColor color);
      void kalemSekilModeSignalSlot(DiagramItem::DiagramType type);
      void kalemZeminModeSignalSlot(DiagramItem::DiagramType type);
