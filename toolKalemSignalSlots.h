@@ -67,6 +67,15 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
         handButtonSlot();
         current_toolKalemMenu->show();
     }
+    if(mode==Scene::ZeminMode&&(type==DiagramItem::DiagramType::NoktaliKagit||
+                                type==DiagramItem::DiagramType::IzometrikKagit||
+                                type==DiagramItem::DiagramType::CizgiliKagit||
+                                type==DiagramItem::DiagramType::KareliKagit))
+    {
+        //qDebug()<<"noktalı kağıt seçtiniz...";
+        handButtonSlot();
+        current_toolKalemMenu->show();
+    }
 }
 
 void toolKalem::sceneItemRemovedSignalSlot(Scene *scenetemp, QGraphicsItem *item,Scene::Mode mode)
@@ -81,6 +90,9 @@ void toolKalem::sceneItemRemovedSignalSlot(Scene *scenetemp, QGraphicsItem *item
 
     qDebug()<<"scene nesne Silindi......";
     secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+   currentMode= oldMode;
+   currentType=oldType;
+
 }
 
 void toolKalem::kalemColorSignalSlot(QString colorType, QColor color)
