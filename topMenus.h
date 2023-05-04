@@ -406,7 +406,7 @@ QWidget *toolKalem::pdfTopMenu(int _boy)
     return menu;
 }
 
-QWidget *toolKalem::kimyaTopMenu(int _boy)
+QWidget *toolKalem::fenTopMenu(int _boy)
 {   int e=(en*0.8)/4*5;
     int b=(boy*0.6)/4*4.3;
     QWidget *menu = new QWidget(this);
@@ -415,34 +415,36 @@ QWidget *toolKalem::kimyaTopMenu(int _boy)
     QPushButton *periyodikcetvelButton=new QPushButton();
     periyodikcetvelButton=butonSlot(periyodikcetvelButton,"",":icons/periyodiktable.svg",QColor(255,0,0,0),e,b,e,b);
     connect(periyodikcetvelButton, &QPushButton::clicked, [=]() {
+        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+         addObjectScene(":icons/periyodiktable.svg",Scene::Mode::FenMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
+         emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
         //handButtonSlot();
-        addObjectScene(":icons/periyodiktable.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        penButtonSlot();
     });
 
     QPushButton *hidrojenButton=new QPushButton();
     hidrojenButton=butonSlot(hidrojenButton,"",":icons/hidrojen.svg",QColor(255,0,0,0),e,b,e,b);
     connect(hidrojenButton, &QPushButton::clicked, [=]() {
-          emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        addObjectScene(":icons/hidrojen.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
-
-    //penButtonSlot();
-        handButtonSlot();
+        oldMode=Scene::Mode::SelectObject;oldType=DiagramItem::DiagramType::NoType;
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        addObjectScene(":icons/hidrojen.svg",Scene::Mode::FenMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        handButtonSlot(false);
     });
 
     QPushButton *azotButton=new QPushButton();
     azotButton=butonSlot(azotButton,"",":icons/azot.svg",QColor(255,0,0,0),e,b,e,b);
     connect(azotButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        addObjectScene(":icons/azot.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        addObjectScene(":icons/azot.svg",Scene::Mode::FenMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        handButtonSlot(false);
     });
 
     QPushButton *oksijenButton=new QPushButton();
     oksijenButton=butonSlot(oksijenButton,"",":icons/oksijen.svg",QColor(255,0,0,0),e,b,e,b);
     connect(oksijenButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        addObjectScene(":icons/oksijen.svg",Scene::Mode::KimyaMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        addObjectScene(":icons/oksijen.svg",Scene::Mode::FenMode,DiagramItem::DiagramType::Resim,parenth*0.8,parenth*0.8,parentw*0.1,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        handButtonSlot(false);
     });
 
 
@@ -477,51 +479,58 @@ QWidget *toolKalem::sosyalTopMenu(int _boy)
     QPushButton *haritadilsizButton=new QPushButton();
     haritadilsizButton=butonSlot(haritadilsizButton,"",":icons/haritadilsiz.png",QColor(255,0,0,0),e,b,e,b);
     connect(haritadilsizButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
         addObjectScene(":icons/haritadilsiz.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
 
     QPushButton *haritaakarsuButton=new QPushButton();
     haritaakarsuButton=butonSlot(haritaakarsuButton,"",":icons/haritaakarsu.png",QColor(255,0,0,0),e,b,e,b);
     connect(haritaakarsuButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
         addObjectScene(":icons/haritaakarsu.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
 
     QPushButton *haritadagButton=new QPushButton();
     haritadagButton=butonSlot(haritadagButton,"",":icons/haritadag.png",QColor(255,0,0,0),e,b,e,b);
     connect(haritadagButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-        addObjectScene(":icons/haritadag.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+       addObjectScene(":icons/haritadag.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+       emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+       penButtonSlot(false);
     });
 
     QPushButton *haritaplatoButton=new QPushButton();
     haritaplatoButton=butonSlot(haritaplatoButton,"",":icons/haritaplato.png",QColor(255,0,0,0),e,b,e,b);
     connect(haritaplatoButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
         addObjectScene(":icons/haritaplato.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
 
 
     QPushButton *haritaovaButton=new QPushButton();
     haritaovaButton=butonSlot(haritaovaButton,"",":icons/haritaova.png",QColor(255,0,0,0),e,b,e,b);
     connect(haritaovaButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
         addObjectScene(":icons/haritaova.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
 
     QPushButton *haritabitkiortusuButton=new QPushButton();
     haritabitkiortusuButton=butonSlot(haritabitkiortusuButton,"",":icons/haritabitkiortusu.png",QColor(255,0,0,0),e,b,e,b);
     connect(haritabitkiortusuButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
         addObjectScene(":icons/haritabitkiortusu.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
 
     QPushButton *haritamadenButton=new QPushButton();
     haritamadenButton=butonSlot(haritamadenButton,"",":icons/haritamaden.png",QColor(255,0,0,0),e,b,e,b);
     connect(haritamadenButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
         addObjectScene(":icons/haritamaden.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
 
 
@@ -1439,14 +1448,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     //penStyleSolidLine->setFlat(true);
     noktaliKagit->setIcon(QIcon(":icons/dotpage.svg"));
     connect(noktaliKagit, &QPushButton::clicked, [=]() {
-        oldMode=Scene::Mode::PenMode;
-        oldType=DiagramItem::DiagramType::NormalPen;
-  // emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NoktaliKagit);
-    addObjectScene(":icons/noktalikagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::NoktaliKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
-    //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-    //penButtonSlot();
-
-       // menu->close();
+        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        addObjectScene(":icons/noktalikagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::NoktaliKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
+        //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
 
     QPushButton *izometrikKagit = new QPushButton;
@@ -1455,9 +1460,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     izometrikKagit->setIconSize(QSize(e,b));
     //penStyleDashLine->setFlat(true);
     connect(izometrikKagit, &QPushButton::clicked, [=]() {
-    emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::IzometrikKagit);
-     // menu->close();
-
+        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        addObjectScene(":icons/izometrikkagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::IzometrikKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
+        //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
 
     QPushButton *kareliKagit = new QPushButton;
@@ -1466,10 +1472,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     kareliKagit->setIconSize(QSize(e,b));
     // penStyleDotLine->setFlat(true);
     connect(kareliKagit, &QPushButton::clicked, [=]() {
-    emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::KareliKagit);
-
-       // menu->close();
-
+        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        addObjectScene(":icons/karelikagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::KareliKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
+        //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
 
     QPushButton *cizgiliKagit = new QPushButton;
@@ -1478,9 +1484,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     cizgiliKagit->setIconSize(QSize(e,b));
     //penStyleDotLine->setFlat(true);
     connect(cizgiliKagit, &QPushButton::clicked, [=]() {
-      emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::CizgiliKagit);
-        //   menu->close();
-
+        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        addObjectScene(":icons/cizgilikagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::CizgiliKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
+        //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
     });
     /***********************ndogru nnkoordinat  hnkoordinat nkoordinat***************/
 
@@ -1491,8 +1498,12 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     //penStyleSolidLine->setFlat(true);
     ndogru->setIcon(QIcon(":icons/ndogru.png"));
     connect(ndogru, &QPushButton::clicked, [=]() {
-      emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NDogru);
-     // menu->close();
+      //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NDogru);
+        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        addObjectScene(":icons/ndogru.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::NDogru,parentw/2,parenth/20,parentw/2-(parentw/2)/2,parenth/2,false);
+        //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        handButtonSlot(false);
+
     });
 
     QPushButton *nnkoordinat = new QPushButton;

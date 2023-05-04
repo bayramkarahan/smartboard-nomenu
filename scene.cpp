@@ -129,7 +129,7 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event){
          break;
      }
      case CopyMode:{sceneModeTrue=CopyModeTrue;
-          qDebug()<<"crop başladı";
+         // qDebug()<<"crop başladı";
           origPoint = event->scenePos();
            QGraphicsView::DragMode vMode =QGraphicsView::NoDrag;
           vMode = QGraphicsView::RubberBandDrag;
@@ -138,14 +138,14 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event){
           QGraphicsView* mView = views().at(0);
           if(mView)
            mView->setDragMode(vMode);
-          qDebug()<<"seçme ayaralanıyor....";
+          //qDebug()<<"seçme ayaralanıyor....";
                    break;}
      case EraseMode:{sceneModeTrue=EraseModeTrue;
          //qDebug()<<"silme tıklandı";
         drawing=true;
         makeItemsControllable(true);
        int boyut;
-        boyut=myEraseSize*3;
+        boyut=myEraseSize;
         QRect rect(QPoint(event->scenePos().toPoint().x()-boyut,event->scenePos().toPoint().y()-boyut),QPoint(event->scenePos().toPoint().x()+boyut,event->scenePos().toPoint().y()+boyut) );
         QPainterPath pp;
         pp.addRect(rect);
@@ -653,8 +653,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 
             while(!graphicsListpoints.isEmpty())
             {
-                emit sceneItemRemovedSignal(this,DrawPen);
-                removeItem(graphicsListpoints.last());
+                emit sceneItemRemovedSignal(this,DrawPen,graphicsListpoints.last(),false);
+                //removeItem(graphicsListpoints.last());
                 delete graphicsListpoints.last();
                 graphicsListpoints.removeLast();
                 //qDebug()<<"deneme";
@@ -762,8 +762,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 
           while(!graphicsListpoints.isEmpty())
           {
-          emit sceneItemRemovedSignal(this,EraseMode);
-          removeItem(graphicsListpoints.last());
+          emit sceneItemRemovedSignal(this,EraseMode,graphicsListpoints.last(),false);
+          //removeItem(graphicsListpoints.last());
           delete graphicsListpoints.last();
           graphicsListpoints.removeLast();
 
@@ -820,7 +820,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
             //myImage;
             itemToRectDraw = 0;
             drawing = false;
-            this->setMode(Scene::Mode::SelectObject, DiagramItem::DiagramType::NoType);
+            this->setMode(Scene::Mode::NoMode, DiagramItem::DiagramType::NoType);
            /// dragMove=true;
             //this->removeItem(text);
             //this->removeItem(text1);
@@ -833,7 +833,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 */
 
         }
-        qDebug()<<"copy bitti";
+       // qDebug()<<"copy bitti";
 
         break;}
     case EraseModeTrue:{
@@ -932,8 +932,8 @@ else if(k>6) mySekilType=DiagramItem::DiagramType::Cember;
 void Scene::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Delete)
         foreach(QGraphicsItem* item, selectedItems()){
-            emit sceneItemRemovedSignal(this,EraseMode);
-            removeItem(item);
+            emit sceneItemRemovedSignal(this,EraseMode,item,false);
+            //removeItem(item);
             delete item;
         }
     else
@@ -952,12 +952,14 @@ void Scene::removeOddItem(){
             VERectangle * itemselection = dynamic_cast<VERectangle *>(item);
             if(itemselection->sekilTr!=DiagramItem::DiagramType::PatternPage&&
                itemselection->sekilTr!=DiagramItem::DiagramType::Pdf&&
-               itemselection->pageOfNumber==pageOfNumberScene)
+               (itemselection->sekilTr==DiagramItem::DiagramType::NormalPen||
+                itemselection->sekilTr==DiagramItem::DiagramType::PatternPen))
             {
                 /// qDebug()<<"verectangle silindi";
                 historyBack.append(itemselection);
                 historyBackAction.append("deleted");
-                removeItem(itemselection);
+                 emit sceneItemRemovedSignal(this,EraseMode,itemselection,false);
+                //removeItem(itemselection);
 
                 update();
             }
@@ -968,15 +970,15 @@ void Scene::removeOddItem(){
         {
             //qDebug()<<"line silindi";
 
-
-            removeItem(item);
+            emit sceneItemRemovedSignal(this,EraseMode,item,false);
+            //removeItem(item);
             delete item;
               update();
         }
     }
     depo::historyBackCount=this->historyBack.count();
     depo::historyNextCount=this->historyNext.count();
-    emit sceneItemRemovedSignal(this,EraseMode);
+
 }
 void Scene::slotMove(QGraphicsItem *signalOwner, qreal dx, qreal dy)
 {
@@ -1002,8 +1004,8 @@ void Scene::removeAllItem(){
                 /// qDebug()<<"verectangle silindi";
                 historyBack.append(itemselection);
                 historyBackAction.append("deleted");
-
-                 removeItem(itemselection);
+                emit sceneItemRemovedSignal(this,ClearMode,itemselection,false);
+                // removeItem(itemselection);
 
                 update();
             }
@@ -1013,8 +1015,8 @@ void Scene::removeAllItem(){
         if(selection)
         {
             //qDebug()<<"line silindi";
-
-            removeItem(item);
+              emit sceneItemRemovedSignal(this,ClearMode,selection,false);
+            //removeItem(item);
 
             delete item;
             update();
@@ -1024,7 +1026,7 @@ void Scene::removeAllItem(){
     depo::historyBackCount=this->historyBack.count();
     depo::historyNextCount=this->historyNext.count();
 
-   emit sceneItemRemovedSignal(this,EraseMode);
+
 }
 void Scene::setParent(QMainWindow* _mwindow)
 {
@@ -1062,8 +1064,8 @@ void Scene::setMode(Mode mode,DiagramItem::DiagramType sekil){
                {
                    historyNext.append(historyBack.last());
                    historyNextAction.append(historyBackAction.last());
-                   emit sceneItemRemovedSignal(this,GeriAlMode);
-                   removeItem(historyBack.last());
+                   emit sceneItemRemovedSignal(this,GeriAlMode,historyBack.last(),false);
+                  // removeItem(historyBack.last());
 
                    historyBack.removeLast();
                    historyBackAction.removeLast();

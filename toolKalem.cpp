@@ -17,7 +17,7 @@ void toolKalem::modeKontrolSlot()
 {
 
 //qDebug()<<"oldMode:"<<oldMode<<"currentMode"<<currentMode;
-    qDebug()<<"Mode-Type(kalem:16-43;hand:1-0):"<<oldMode<<oldType;
+   // qDebug()<<"Mode-Type(kalem:16-43;hand:1-0):"<<oldMode<<oldType;
     if(oldMode==Scene::DrawPen&&(oldType==DiagramItem::DiagramType::NormalPen||
                                  oldType==DiagramItem::DiagramType::PatternPen))
     {
@@ -34,7 +34,7 @@ void toolKalem::modeKontrolSlot()
         /******************view ekran fotosu alındı forma yansıtıldı*************/
         QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
         QPalette palet1;
-        palet.setBrush(QPalette::Background,pixMap);
+        palet1.setBrush(QPalette::Background,pixMap);
         current_toolTahta->setPalette(palet1);
         /****************************Kalem Seçimi Ayarı Yapıldı**************************/
         current_toolTahta->penDrawingMain=true;
@@ -43,13 +43,11 @@ void toolKalem::modeKontrolSlot()
         current_toolTahta->scene->makeItemsControllable(false);
 
 
-        current_toolPageMenu->raise();
-        current_toolTahta->raise();
-        raise();
-        current_toolKalemMenu->raise();
+
     }else
         {
-            qDebug()<<"Kalem Dışında Araç Seçildi";
+            qDebug()<<"Kalem Dışında Araç Seçildi:"<<oldMode;
+
             current_toolTahta->penDrawingMain=false;
             current_toolTahta->gv->show();
             current_toolTahta->gv->setEnabled(true);
@@ -57,7 +55,13 @@ void toolKalem::modeKontrolSlot()
             QPalette palet;
             palet.setBrush(QPalette::Background,QColor(0,0,0,0));
             current_toolTahta->setPalette(palet);
+
         }
+    /**************************önemli bir Yer**************************/
+    current_toolPageMenu->raise();
+    current_toolTahta->raise();
+    raise();
+    current_toolKalemMenu->raise();
 
  /*   if(oldMode==Scene::Mode::DrawPen||
             oldMode==Scene::Mode::SelectObject||
@@ -168,7 +172,7 @@ void toolKalem::penToScene()
    // handButtonSlot();
     //kalemPenModeSignalSlot(DiagramItem::DiagramType::NormalPen);
 
-    emit kalemModeSignal(currentMode,currentType);
+    //emit kalemModeSignal(currentMode,currentType);
 
 }
 
@@ -181,7 +185,6 @@ toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, t
     en=_en;
     boy=_boy;
     mouseClick=false;
-    currentMode=Scene::Mode::SelectObject;
     current_toolTahta=_toolTahta;
     current_toolKalemMenu=_toolKalemMenu;
     current_toolPageMenu=_toolPageMenu;
@@ -192,7 +195,7 @@ toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, t
     desktopButton = new QToolButton(this);
     desktopButton=butonToolSlot(desktopButton,"",":icons/desktop.svg",QColor(255,0,0,0),en*1.5,boy);
     desktopButton->setCheckable(true);
-    desktopButton->setChecked(true);
+    //desktopButton->setChecked(true);
     connect(desktopButton, &QToolButton::clicked, [=]() {
         desktopButtonSlot();
 
@@ -201,21 +204,21 @@ toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, t
 handButton = new QToolButton(this);
 handButton=butonToolSlot(handButton,"",":icons/hand.png",QColor(255,0,0,0),en*1.5,boy);
 handButton->setCheckable(true);
-handButton->setChecked(true);
+//handButton->setChecked(true);
 connect(handButton, &QToolButton::clicked, [=]() {
-    handButtonSlot();
+    handButtonSlot(true);
      });
 
 copyButton = new QToolButton(this);
 copyButton=butonToolSlot(copyButton,"",":icons/copy.png",QColor(255,0,0,0),en*1.5,boy);
 copyButton->setCheckable(true);
 connect(copyButton, &QToolButton::clicked, [=]() {
-    buttonStateClear();copyButton->setChecked(true);
+
     copyButtonSlot();
    // current_toolTahta->gv->show();
    // current_toolTahta->gv->setEnabled(true);
 
-    emit kalemModeSignal(Scene::Mode::CopyMode,DiagramItem::DiagramType::Copy);
+   // emit kalemModeSignal(Scene::Mode::CopyMode,DiagramItem::DiagramType::Copy);
    });
 
 penButton = new QToolButton(this);
@@ -225,7 +228,7 @@ penButton->setMenu(penMenu());
 penButton->setPopupMode(QToolButton::MenuButtonPopup);
 penButton->setCheckable(true);
 connect(penButton, &QToolButton::clicked, [=]() {
-penButtonSlot();
+penButtonSlot(true);
 });
 
 eraseButton = new QToolButton(this);
@@ -233,9 +236,8 @@ eraseButton=butonToolSlot(eraseButton,"Silgi",":icons/erase.png",QColor(255,0,0,
 eraseButton->setCheckable(true);
 eraseButton->setIconSize(QSize(en*0.8,boy*0.8));
 connect(eraseButton, &QToolButton::clicked, [=]() {
-       buttonStateClear();eraseButton->setChecked(true);
        eraseButtonSlot();
-       emit kalemModeSignal(Scene::Mode::EraseMode,DiagramItem::DiagramType::NoType);
+       //emit kalemModeSignal(Scene::Mode::EraseMode,DiagramItem::DiagramType::NoType);
    });
 
 QToolButton *clearButton = new QToolButton(this);
@@ -307,7 +309,7 @@ zeminButton->setPopupMode(QToolButton::MenuButtonPopup);
 
 connect(zeminButton, &QToolButton::clicked, [=]() {
     zeminButtonSlot();
-    emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+    //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
    });
 
 
@@ -325,10 +327,10 @@ connect(toolButton, &QToolButton::clicked, [=]() {
 emit kalemModeSignal(Scene::Mode::ToolMode,DiagramItem::DiagramType::NoType);
    });
 
-QToolButton *kimyaButton = new QToolButton(this);
-kimyaButton=butonToolSlot(kimyaButton,"Araç",":icons/kimya.svg",QColor(255,0,0,0),en*1.5,boy);
-connect(kimyaButton, &QToolButton::clicked, [=]() {
-    current_toolKalemMenu->toolKalemMenuOlustur(kimyaTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
+QToolButton *fenButton = new QToolButton(this);
+fenButton=butonToolSlot(fenButton,"Araç",":icons/fen.svg",QColor(255,0,0,0),en*1.5,boy);
+connect(fenButton, &QToolButton::clicked, [=]() {
+    current_toolKalemMenu->toolKalemMenuOlustur(fenTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
    });
 
@@ -377,16 +379,13 @@ layout->addWidget(pdfButton, 70, 0,1,2);
 
 
 layout->addWidget(toolButton, 91, 0,1,2);
-layout->addWidget(kimyaButton, 92, 0,1,2);
+layout->addWidget(fenButton, 92, 0,1,2);
 layout->addWidget(sosyalButton, 93, 0,1,2);
 
 
 layout->addWidget(exitButton,100, 0,1,2);
 
 this->setLayout(layout);
-
-penToScene();
-
 connect(this, SIGNAL(kalemColorSignal(QString,QColor)),
            this, SLOT(kalemColorSignalSlot(QString,QColor)));
 }

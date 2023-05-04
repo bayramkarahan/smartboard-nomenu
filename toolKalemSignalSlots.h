@@ -50,7 +50,7 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
 {
     scenetemp->addItem(item);
     current_toolTahta->update();
-    if (additemstate) secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+   /// if (additemstate) secSayfaButtonClick(current_toolTahta->current_sceneIndex);
     scenetemp->graphicsList.append(item);
     scenetemp->graphicsListTemp.append(item);
     scenetemp->historyBack.append(item);
@@ -58,10 +58,15 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
     depo::historyBackCount=scenetemp->historyBack.count();
     depo::historyNextCount=scenetemp->historyNext.count();
     qDebug()<<"scene nesne eklendi.....";
-
-    /*if(mode==Scene::KimyaMode&&type==DiagramItem::DiagramType::Resim)
+    if(mode==Scene::CopyMode) handButtonSlot(true);
+    if(mode==Scene::FenMode)
     {
-        qDebug()<<"Kimya Seçtiniz...";
+        //qDebug()<<"Fen Seçtiniz...";
+       //currentMode=oldMode;currentType=oldType;
+
+    //current_toolKalemMenu->show();
+    }
+    /*    qDebug()<<"Kimya Seçtiniz...";
         /***************************form ekran fotosu resetleniyor**************/
       /*  QPalette palet;
         palet.setBrush(QPalette::Background,QColor(0,0,0,0));
@@ -98,20 +103,21 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
 
 }
 
-void toolKalem::sceneItemRemovedSignalSlot(Scene *scenetemp, Scene::Mode mode)
+void toolKalem::sceneItemRemovedSignalSlot(Scene *scenetemp, Scene::Mode mode, QGraphicsItem * item, bool deleteAction)
 {
-    /*scenetemp->addItem(item);
+   /* scenetemp->addItem(item);
     scenetemp->graphicsList.append(item);
     scenetemp->graphicsListTemp.append(item);
     scenetemp->historyBack.append(item);
     scenetemp->historyBackAction.append("added");
     depo::historyBackCount=scenetemp->historyBack.count();
     depo::historyNextCount=scenetemp->historyNext.count();*/
+    scenetemp->removeItem(item);
 
     qDebug()<<"scene nesne Silindi......";
-    secSayfaButtonClick(current_toolTahta->current_sceneIndex);
-   currentMode= oldMode;
-   currentType=oldType;
+    if(mode==Scene::EraseMode) eraseButtonSlot();
+    if(mode==Scene::ClearMode) {currentMode= oldMode;currentType=oldType;}
+      modeKontrolSlot();
 
 }
 

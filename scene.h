@@ -88,7 +88,7 @@ public:
               EraseMode,ClearMode,
               IleriAlMode,GeriAlMode,PenMode,DesktopMode,CopyMode,FitWindowMode,FitPageMode,
               NextPageMode,BackPageMode,ZoomPozitifMode,ZoomNegatifMode,ZoomSelectionMode,
-               ZeminMode,SekilMode,PanelSideLeftRight,PanelSideBottom,KimyaMode,
+               ZeminMode,SekilMode,PanelSideLeftRight,PanelSideBottom,FenMode,
                ColorMode,BlueColorMode,RedColorMode,BlackColorMode,GreenColorMode,
               ListMode,SearchMode,JumpPageMode,SaveMode,PrintMode,PdfMode,ExitMode,ToolMode};
     enum ModeTrue {DrawPenTrue,DrawPenFosforTrue,DrawLineTrue,CopyModeTrue,DrawRectangleTrue,EraseModeTrue,SelectObjectTrue,NoModeTrue};
@@ -182,7 +182,7 @@ signals:
     void signalSelectItem(QGraphicsItem *item);
     void signalNewSelectItem(QGraphicsItem *item);
     void sceneItemAddedSignal(Scene *scene,QGraphicsItem* item,bool additemstate,Scene::Mode mode,DiagramItem::DiagramType type);
-    void sceneItemRemovedSignal(Scene *scene,Scene::Mode mode);
+    void sceneItemRemovedSignal(Scene *scene,Scene::Mode mode,QGraphicsItem * selection,bool deleteAction);
 
 public slots:
     void slotMove(QGraphicsItem *signalOwner, qreal dx, qreal dy);

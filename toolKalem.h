@@ -33,7 +33,6 @@ public:
     Scene::Mode currentMode;
     DiagramItem::DiagramType oldType;
     DiagramItem::DiagramType currentType;
-    QString panelSide="Right";
     GridLines * gridLines; ///< this is my custom QGraphicsItem
     bool penDesktopStatus;
 
@@ -93,8 +92,8 @@ signals:
 
 public slots:
     void sayacCloseSignalSlot();
-    void handButtonSlot();
-    void penButtonSlot();
+    void handButtonSlot(bool menushow);
+    void penButtonSlot(bool menushow);
     void clearButtonSlot();
     void modeKontrolSlot();
     void desktopButtonSlot();
@@ -122,7 +121,7 @@ public slots:
     QWidget *zeminTopMenu(int _boy);
     QWidget *eraseTopMenu(int _boy);
     QWidget *toolTopMenu(int _boy);
-    QWidget *kimyaTopMenu(int _boy);
+    QWidget *fenTopMenu(int _boy);
     QWidget *sosyalTopMenu(int _boy);
 
     QWidget *pageBottomMenu(int _boy);
@@ -142,7 +141,7 @@ public slots:
      void addObjectScene(QString dosya, Scene::Mode mode, DiagramItem::DiagramType type, float w, float h , int posx, int posy, bool select);
      void infoButtonClick();
      void sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item ,bool additemstate, Scene::Mode mode, DiagramItem::DiagramType type);
-     void sceneItemRemovedSignalSlot(Scene *scenetemp, Scene::Mode mode);
+     void sceneItemRemovedSignalSlot(Scene *scenetemp, Scene::Mode mode, QGraphicsItem *item,bool deleteAction);
      void kalemColorSignalSlot(QString colorType, QColor color);
      void kalemSekilModeSignalSlot(DiagramItem::DiagramType type);
      void kalemZeminModeSignalSlot(DiagramItem::DiagramType type);

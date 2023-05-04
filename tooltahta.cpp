@@ -5,11 +5,12 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     setFixedSize(w,h);
     setWindowFlags(Qt::FramelessWindowHint);
     setWindowFlags(Qt::WindowStaysOnTopHint);
-    //setWindowFlags(Qt::X11BypassWindowManagerHint);
+    setWindowFlags(Qt::X11BypassWindowManagerHint);
     setAttribute(Qt::WA_StaticContents);
     setAttribute(Qt::WA_TranslucentBackground, true);
     this->setAttribute(Qt::WA_NoSystemBackground, false);
     // qDebug()<<"pentuval:"<<penTuval.width()<<penTuval.height();
+    //this->setStyleSheet("background-color:rgb(0,0,240,255);");
     resizeImage(&penTuval,QSize(width(),height()),qRgba(0, 0,0 ,0));
     //qDebug()<<"pentuval:"<<penTuval.width()<<penTuval.height();
     //qDebug()<<"toolTahta:"<<width()<<height();
@@ -20,7 +21,7 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     gv->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     //gv->setAttribute(Qt::WA_TranslucentBackground);
     gv->viewport()->setAutoFillBackground(false);
-   // gv->setStyleSheet("background-color:rgb(0,0,240,255);");
+   //gv->setStyleSheet("background-color:rgb(0,0,240,255);");
     gv->setRenderHint(QPainter::Antialiasing);
     gv->setFixedSize(this->width(),this->height());
     scene = new Scene(gv);

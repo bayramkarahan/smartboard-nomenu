@@ -22,7 +22,7 @@ void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdf
   ///  qDebug()<<"ekle sayfa2"<<sceneSayfaNumber<<sceneSayfaActiveNumber<<pdfObjectAdded;
      current_toolTahta->_scene = new Scene(current_toolTahta->gv);
      connect(current_toolTahta->_scene, SIGNAL(sceneItemAddedSignal(Scene*,QGraphicsItem*,bool,Scene::Mode,DiagramItem::DiagramType) ), this, SLOT(sceneItemAddedSignalSlot(Scene*,QGraphicsItem*,bool,Scene::Mode,DiagramItem::DiagramType) ) );
-     connect(current_toolTahta->_scene, SIGNAL(sceneItemRemovedSignal(Scene*,Scene::Mode) ), this, SLOT(sceneItemRemovedSignalSlot(Scene*,Scene::Mode) ) );
+     connect(current_toolTahta->_scene, SIGNAL(sceneItemRemovedSignal(Scene*,Scene::Mode,QGraphicsItem *,bool) ), this, SLOT(sceneItemRemovedSignalSlot(Scene*,Scene::Mode,QGraphicsItem *,bool) ) );
 
      current_toolTahta->_scene->pdfObjectAdded=pdfObjectAdded;
      current_toolTahta->_scene->pdfPageNumber=pdfPageIndex;
@@ -32,7 +32,7 @@ void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdf
      current_toolTahta->scene->setSceneRect(current_toolTahta->gv->pos().x(),current_toolTahta->gv->pos().y(), current_toolTahta->gv->width(),current_toolTahta->gv->height());
      penToScene();
     // pageNumberPopLabel->setText("Sayfa( "+QString::number(sceneSayfaNumber+1)+" / "+QString::number(sceneSayfaActiveNumber+1)+" )");
-    ///kalemButtonClick();
+
     auto _screenbtn = new QToolButton(pageListwg);
     _screenbtn->setFixedSize(QSize(boy,boy));
     _screenbtn->setIconSize(QSize(boy*0.7,boy*0.7));
@@ -63,7 +63,7 @@ void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdf
           emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
 
       secSayfaButtonClick(_screenbtn->toolTip().toInt());
-      penButtonSlot();
+      penButtonSlot(true);
 }
 
 void toolKalem::silSayfaButtonClick(){
@@ -457,10 +457,18 @@ void toolKalem::saveSayfaButtonClick(){
 
  void toolKalem::addObjectScene(QString dosya,Scene::Mode mode,DiagramItem::DiagramType type,float w,float h,int posx,int posy,bool select)
  {
-     QPixmap image = QPixmap(dosya);
+     QPixmap image;
+     if(DiagramItem::DiagramType::CizgiliKagit==type)
+     {
+         GridLines *gridLines = new GridLines (width(), height(),60,true,false,false,zeminDolguColor, penColor);
+         image=gridLines->PixItem(gridLines,width(), height());
+     }
+     else
+     image = QPixmap(dosya);
      //current_toolTahta->scene->setImage(image);
      current_toolTahta->scene->mySekilType=type;
      VERectangle  *itemToRectDraw = new VERectangle(current_toolTahta->scene);
+     itemToRectDraw->setZValue(-100);
      itemToRectDraw->sekilTur(type);
      itemToRectDraw->setImage(image);
      emit current_toolTahta->scene->sceneItemAddedSignal(current_toolTahta->scene,itemToRectDraw,true,mode,current_toolTahta->scene->mySekilType);

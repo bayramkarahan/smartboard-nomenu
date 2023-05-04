@@ -12,10 +12,11 @@ void toolKalem::buttonStateClear()
 
 }
 
-void toolKalem::handButtonSlot()
+void toolKalem::handButtonSlot(bool menushow)
 {
     buttonStateClear();handButton->setChecked(true);
-    current_toolKalemMenu->hide();
+    if(menushow) current_toolKalemMenu->hide();
+
     currentMode=Scene::Mode::SelectObject;oldMode=Scene::Mode::SelectObject;
     currentType=DiagramItem::DiagramType::NoType;;oldType=DiagramItem::DiagramType::NoType;;
 
@@ -25,79 +26,72 @@ void toolKalem::handButtonSlot()
 modeKontrolSlot();
 }
 
-void toolKalem::penButtonSlot()
+void toolKalem::penButtonSlot(bool menushow)
 {
     buttonStateClear();penButton->setChecked(true);
-    current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
-    current_toolKalemMenu->show();
+    if(menushow){
+        current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
+        current_toolKalemMenu->show();
+    }
     current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
-    currentMode=Scene::Mode::PenMode;oldMode=Scene::Mode::DrawPen;
+    currentMode=Scene::Mode::DrawPen;oldMode=Scene::Mode::DrawPen;
     currentType=DiagramItem::DiagramType::NormalPen;;oldType=DiagramItem::DiagramType::NormalPen;;
 
     //current_toolTahta->scene->setSekilTanimlamaStatus(false);
-    current_toolTahta->penDrawingMain=true;
+    /*current_toolTahta->penDrawingMain=true;
     current_toolTahta->gv->hide();
     current_toolTahta->gv->setEnabled(false);
     current_toolTahta->scene->makeItemsControllable(false);
     QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
     QPalette palet;
     palet.setBrush(QPalette::Background,pixMap);
-    current_toolTahta->setPalette(palet);
+    current_toolTahta->setPalette(palet);*/
+
     modeKontrolSlot();
     //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NormalPen);
 }
 
 void toolKalem::clearButtonSlot()
 {
-     current_toolTahta->scene->removeAllItem();
+    oldMode=currentMode;
+    oldType=currentType;
+    current_toolTahta->scene->removeAllItem();
 }
 
 void toolKalem::eraseButtonSlot()
 {
-    QPalette palet;
-    palet.setBrush(QPalette::Background,QColor(0,0,0,0));
-    current_toolTahta->setPalette(palet);
+    buttonStateClear();eraseButton->setChecked(true);
     current_toolKalemMenu->toolKalemMenuOlustur(eraseTopMenu(parenth*0.045),parentw*0.2,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
-    current_toolTahta->scene->setEraseSize(penSize*2);
+    current_toolTahta->scene->setEraseSize(penSize);
     current_toolTahta->scene->sceneMode=Scene::Mode::EraseMode;
     current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
+    currentMode=Scene::Mode::EraseMode;oldMode=Scene::Mode::EraseMode;
+    currentType=DiagramItem::DiagramType::NoType;oldType=DiagramItem::DiagramType::NoType;
+    modeKontrolSlot();
 }
 
 void toolKalem::copyButtonSlot()
 {
-
+      buttonStateClear();copyButton->setChecked(true);
     current_toolKalemMenu->hide();
-    //qDebug()<<"kopy kalem çalıştı"<<screenDesktop;
-    //if (!screenDesktop)kalemButtonClick();
-    current_toolTahta->scene->makeItemsControllable(false);
-        current_toolTahta->scene->setMode(Scene::Mode::CopyMode, DiagramItem::DiagramType::Copy);
-        //currentScreenMode=Scene::Mode::CopyMode;
-       // iconButton();
-        //buttonColorClear();
-        current_toolTahta->scene->setSekilTanimlamaStatus(false);
-         /*palette->setColor(QPalette::Button, QColor(212,0,0,255));
-         secButton->setPalette(*palette);
-         secButton->setAutoFillBackground(true);
-         */
-       //
+    current_toolTahta->scene->setMode(Scene::Mode::CopyMode, DiagramItem::DiagramType::Copy);
+    current_toolTahta->scene->sceneMode=Scene::Mode::CopyMode;
+    current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::Copy;
+    oldMode=Scene::Mode::CopyMode;oldType=DiagramItem::DiagramType::NoType;
+    currentMode=Scene::Mode::CopyMode;currentType=DiagramItem::DiagramType::Copy;
 
-         QPixmap desk = qApp->screens().at(0)->grabWindow(QDesktopWidget().winId(),0,0,parentw,parenth);
-         current_toolTahta->scene->setImage(desk);
-         //timerCopy->start(1000);
-         /*****************************/
-        // FileCrud *fc=new FileCrud();
-        // fc->dosya="E-Tahta.copy.ini";
-        // if(fc->fileexists()) fc->fileremove();
-        // fc->fileWrite("copy=0");
-    //qDebug()<<"copy çalıştı";
-    //kw->handButtonSlot();
+    current_toolTahta->scene->setSekilTanimlamaStatus(false);
+    QPixmap desk = qApp->screens().at(0)->grabWindow(QDesktopWidget().winId(),0,0,parentw,parenth);
+    current_toolTahta->scene->setImage(desk);
+    modeKontrolSlot();
 }
 
 void toolKalem::zeminButtonSlot()
 {
     current_toolKalemMenu->toolKalemMenuOlustur(zeminTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
+    //emit kalemZeminModeSignal(DiagramItem::DiagramType::TransparanPage);
 
 }
 void toolKalem::sekilButtonSlot()
@@ -159,7 +153,7 @@ void toolKalem::desktopButtonSlot()
         //current_toolTahta->show();
         emit penSignal();
         penDesktopStatus=false;
-        penButtonSlot();
+        penButtonSlot(true);
         //emit kalemModeSignal(Scene::Mode::DesktopMode,DiagramItem::DiagramType::NoType);
         desktopButton->setIcon(QIcon(":/icons/desktop.svg"));
     }
