@@ -16,20 +16,24 @@ void toolKalem::handButtonSlot()
 {
     buttonStateClear();handButton->setChecked(true);
     current_toolKalemMenu->hide();
+    currentMode=Scene::Mode::SelectObject;oldMode=Scene::Mode::SelectObject;
+    currentType=DiagramItem::DiagramType::NoType;;oldType=DiagramItem::DiagramType::NoType;;
+
     current_toolTahta->scene->sceneMode=Scene::Mode::SelectObject;
     current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::NoType;
     if(current_toolTahta->scene->pdfObjectAdded) current_toolTahta->scene->pdfMoved=true;
-    emit kalemModeSignal(Scene::Mode::SelectObject,DiagramItem::NoType);
-
+modeKontrolSlot();
 }
 
 void toolKalem::penButtonSlot()
 {
-    buttonStateClear();
-    penButton->setChecked(true);
+    buttonStateClear();penButton->setChecked(true);
     current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
     current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
+    currentMode=Scene::Mode::PenMode;oldMode=Scene::Mode::DrawPen;
+    currentType=DiagramItem::DiagramType::NormalPen;;oldType=DiagramItem::DiagramType::NormalPen;;
+
     //current_toolTahta->scene->setSekilTanimlamaStatus(false);
     current_toolTahta->penDrawingMain=true;
     current_toolTahta->gv->hide();
@@ -39,8 +43,8 @@ void toolKalem::penButtonSlot()
     QPalette palet;
     palet.setBrush(QPalette::Background,pixMap);
     current_toolTahta->setPalette(palet);
-
-    emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NormalPen);
+    modeKontrolSlot();
+    //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NormalPen);
 }
 
 void toolKalem::clearButtonSlot()

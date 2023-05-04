@@ -17,8 +17,49 @@ void toolKalem::modeKontrolSlot()
 {
 
 //qDebug()<<"oldMode:"<<oldMode<<"currentMode"<<currentMode;
+    qDebug()<<"Mode-Type(kalem:16-43;hand:1-0):"<<oldMode<<oldType;
+    if(oldMode==Scene::DrawPen&&(oldType==DiagramItem::DiagramType::NormalPen||
+                                 oldType==DiagramItem::DiagramType::PatternPen))
+    {
+        qDebug()<<"Kalem Seçili";
+        /***************************form ekran fotosu resetleniyor**************/
+        QPalette palet;
+        palet.setBrush(QPalette::Background,QColor(0,0,0,0));
+        current_toolTahta->setPalette(palet);
+        /***************************view gösterildi**************/
+         current_toolTahta->penDrawingMain=false;
+        current_toolTahta->gv->show();
+        current_toolTahta->gv->setEnabled(true);
+        current_toolTahta->scene->makeItemsControllable(false);
+        /******************view ekran fotosu alındı forma yansıtıldı*************/
+        QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+        QPalette palet1;
+        palet.setBrush(QPalette::Background,pixMap);
+        current_toolTahta->setPalette(palet1);
+        /****************************Kalem Seçimi Ayarı Yapıldı**************************/
+        current_toolTahta->penDrawingMain=true;
+        current_toolTahta->gv->hide();
+        current_toolTahta->gv->setEnabled(false);
+        current_toolTahta->scene->makeItemsControllable(false);
 
-    if(oldMode==Scene::Mode::DrawPen||
+
+        current_toolPageMenu->raise();
+        current_toolTahta->raise();
+        raise();
+        current_toolKalemMenu->raise();
+    }else
+        {
+            qDebug()<<"Kalem Dışında Araç Seçildi";
+            current_toolTahta->penDrawingMain=false;
+            current_toolTahta->gv->show();
+            current_toolTahta->gv->setEnabled(true);
+            /***************************form ekran fotosu resetleniyor**************/
+            QPalette palet;
+            palet.setBrush(QPalette::Background,QColor(0,0,0,0));
+            current_toolTahta->setPalette(palet);
+        }
+
+ /*   if(oldMode==Scene::Mode::DrawPen||
             oldMode==Scene::Mode::SelectObject||
             oldMode==Scene::Mode::EraseMode||
             oldMode==Scene::Mode::SekilMode)
@@ -83,7 +124,8 @@ void toolKalem::modeKontrolSlot()
         emit kalemModeSignal(oldMode,oldType);
 
 
-}
+}*/
+
 }
 
 void toolKalem::penToScene()
@@ -289,14 +331,14 @@ connect(kimyaButton, &QToolButton::clicked, [=]() {
     current_toolKalemMenu->toolKalemMenuOlustur(kimyaTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
    });
-/*
+
 QToolButton *sosyalButton = new QToolButton(this);
 sosyalButton=butonToolSlot(sosyalButton,"Araç",":icons/sosyal.svg",QColor(255,0,0,0),en*1.5,boy);
 connect(sosyalButton, &QToolButton::clicked, [=]() {
     current_toolKalemMenu->toolKalemMenuOlustur(sosyalTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
    });
-*/
+
 QToolButton *exitButton = new QToolButton(this);
 exitButton=butonToolSlot(exitButton,"Kapat",":icons/close.svg",QColor(255,0,0,0),en*1.5,boy);
 connect(exitButton, &QToolButton::clicked, [=]() {
@@ -336,7 +378,7 @@ layout->addWidget(pdfButton, 70, 0,1,2);
 
 layout->addWidget(toolButton, 91, 0,1,2);
 layout->addWidget(kimyaButton, 92, 0,1,2);
-//layout->addWidget(sosyalButton, 93, 0,1,2);
+layout->addWidget(sosyalButton, 93, 0,1,2);
 
 
 layout->addWidget(exitButton,100, 0,1,2);

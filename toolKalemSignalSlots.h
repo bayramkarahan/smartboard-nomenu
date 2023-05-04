@@ -5,15 +5,11 @@
 void toolKalem::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type)
 {
     qDebug()<<"kw->currentMode:"<<currentMode<<oldMode;
-    oldMode=currentMode;    currentMode=mode;
-    oldType=currentType;    currentType=type;
+   // oldMode=currentMode;    currentMode=mode;
+   // oldType=currentType;    currentType=type;
 
-    if(currentMode!=oldMode)
-    {
 
-    }
-
-    if(Scene::Mode::DrawPen==mode&&(DiagramItem::DiagramType::NormalPen==type||DiagramItem::DiagramType::PatternPen==type))
+   /* if(Scene::Mode::DrawPen==mode&&(DiagramItem::DiagramType::NormalPen==type||DiagramItem::DiagramType::PatternPen==type))
     {
        /*
         current_toolTahta->penDrawingMain=true;
@@ -26,26 +22,26 @@ void toolKalem::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType ty
         current_toolTahta->setPalette(palet);
         */
 
-    }else
+    /*}else
     {
         qDebug()<<"Kalem Dışında Faklı Bir Araç Seçildi";
         current_toolTahta->penDrawingMain=false;
         current_toolTahta->gv->show();
         current_toolTahta->gv->setEnabled(true);
         /***************************form ekran fotosu resetleniyor**************/
-        QPalette palet;
+     /*   QPalette palet;
         palet.setBrush(QPalette::Background,QColor(0,0,0,0));
         current_toolTahta->setPalette(palet);
         /***************************form ekran fotosu resetleniyor**************/
-    }
+   /* }
 
     if(Scene::Mode::SekilMode==mode) kalemSekilModeSignalSlot(type);
     if(Scene::Mode::ZeminMode==mode) kalemZeminModeSignalSlot(type);
-
-    current_toolTahta->raise();
+*/
+   /* current_toolTahta->raise();
     raise();
-    current_toolPageMenu->raise();
-    current_toolKalemMenu->raise();
+    current_toolPageMenu->lower();
+    current_toolKalemMenu->raise();*/
     //current_toolTahta->lower();
 }
 
@@ -62,6 +58,7 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
     depo::historyBackCount=scenetemp->historyBack.count();
     depo::historyNextCount=scenetemp->historyNext.count();
     qDebug()<<"scene nesne eklendi.....";
+
     /*if(mode==Scene::KimyaMode&&type==DiagramItem::DiagramType::Resim)
     {
         qDebug()<<"Kimya Seçtiniz...";
@@ -73,42 +70,19 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
        //handButtonSlot();
        //current_toolKalemMenu->show();
     }*/
-    if(mode==Scene::ZeminMode&&(type==DiagramItem::DiagramType::NoktaliKagit||
+  /*  if(mode==Scene::ZeminMode&&(type==DiagramItem::DiagramType::NoktaliKagit||
                                 type==DiagramItem::DiagramType::IzometrikKagit||
                                 type==DiagramItem::DiagramType::CizgiliKagit||
                                 type==DiagramItem::DiagramType::KareliKagit))
     {
-        //qDebug()<<"noktalı kağıt seçtiniz...";
+        qDebug()<<"noktalı kağıt seçtiniz...";
         //handButtonSlot();
         //current_toolKalemMenu->show();
     }
     if(mode==Scene::ZeminMode&&type==DiagramItem::DiagramType::PatternPage)
     {
         qDebug()<<"Zemin Eklendi.....";
-        if(oldMode==Scene::PenMode&&oldType==DiagramItem::DiagramType::NormalPen||
-                DiagramItem::DiagramType::PatternPen)
-        {
-             qDebug()<<"Kalem Seçili";
-           /* current_toolTahta->penDrawingMain=true;
-            current_toolTahta->gv->hide();
-            current_toolTahta->gv->setEnabled(false);
-            current_toolTahta->scene->makeItemsControllable(false);
-            QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
-            QPalette palet;
-            palet.setBrush(QPalette::Background,pixMap);
-            current_toolTahta->setPalette(palet);*/
-        }else
-        {
-            qDebug()<<"Kalem Dışında Araç Seçildi";
-           /* current_toolTahta->penDrawingMain=false;
-            current_toolTahta->gv->show();
-            current_toolTahta->gv->setEnabled(true);
-            /***************************form ekran fotosu resetleniyor**************/
-          /*  QPalette palet;
-            palet.setBrush(QPalette::Background,QColor(0,0,0,0));
-            current_toolTahta->setPalette(palet);
-           // handButtonSlot();*/
-        }
+
 
 
         /***************************form ekran fotosu resetleniyor**************/
@@ -119,7 +93,8 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
        //
        //current_toolKalemMenu->show();
        */
-    }
+   // }
+  modeKontrolSlot();
 
 }
 

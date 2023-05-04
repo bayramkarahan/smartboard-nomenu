@@ -1439,7 +1439,12 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     //penStyleSolidLine->setFlat(true);
     noktaliKagit->setIcon(QIcon(":icons/dotpage.svg"));
     connect(noktaliKagit, &QPushButton::clicked, [=]() {
-   emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NoktaliKagit);
+        oldMode=Scene::Mode::PenMode;
+        oldType=DiagramItem::DiagramType::NormalPen;
+  // emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NoktaliKagit);
+    addObjectScene(":icons/noktalikagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::NoktaliKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
+    //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
+    //penButtonSlot();
 
        // menu->close();
     });
