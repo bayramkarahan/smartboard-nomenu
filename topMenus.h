@@ -768,7 +768,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
    // penStyleSolidLine->setFlat(true);
     penStyleSolidLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::SolidLine,ken,ken));
     connect(penStyleSolidLine, &QPushButton::clicked, [=]() {
-     emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::SolidLine);
+     emit kalemSekilModeSignalSlot(DiagramItem::DiagramType::SolidLine);
 
     });
 
@@ -778,7 +778,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     penStyleDashLine->setIconSize(QSize(e,b));
    // penStyleDashLine->setFlat(true);
     connect(penStyleDashLine, &QPushButton::clicked, [=]() {
-  emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::DashLine);
+  emit kalemSekilModeSignalSlot(DiagramItem::DiagramType::DashLine);
 
     });
 
@@ -788,7 +788,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     penStyleDotLine->setIconSize(QSize(e,b));
    // penStyleDotLine->setFlat(true);
     connect(penStyleDotLine, &QPushButton::clicked, [=]() {
-         emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::DotLine);
+         emit kalemSekilModeSignalSlot(DiagramItem::DiagramType::DotLine);
 
     });
     /***********************pergel cetvel gönye iletki***************/
@@ -798,21 +798,20 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     pergel->setFlat(true);
     pergel->setIcon(QIcon(":icons/pergel.png"));
     connect(pergel, &QPushButton::clicked, [=]() {
-         // emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Pergel);
-        addObjectScene(":icons/pergel.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Pergel,parentw*0.8,parenth*0.8,parentw/2-(parentw*0.8)/2,parenth/2-(parenth*0.8)/2,true);
-      //  menu->close();
-    });
+        addObjectScene(":icons/pergel.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Pergel,parentw/10,parenth/5,parentw/2-(parentw/10)/2,parenth/2-(parenth/5)/2,true);
+      //if(oldMode==Scene::DrawPen)penButtonSlot(false);
+        handButtonSlot(false);
+      });
 
     QPushButton *cetvel = new QPushButton;
     cetvel->setIcon(QIcon(":icons/cetvel.png"));
     cetvel->setFixedSize(e*2, b);
     cetvel->setIconSize(QSize(e*2,b));
     cetvel->setFlat(true);
-    connect(cetvel, &QPushButton::clicked, [=]() {
-         emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Cetvel);
-
-     //   menu->close();
-
+    connect(cetvel, &QPushButton::clicked, [=]() { 
+        addObjectScene(":icons/cetvel.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Cetvel,parentw/2,parenth/7,parentw/2-(parentw/2)/2,parenth/2-(parenth/7)/2,true);
+      //if(oldMode==Scene::DrawPen)penButtonSlot(false);
+        handButtonSlot(false);
     });
 
     QPushButton *gonye = new QPushButton;
@@ -821,10 +820,9 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     gonye->setIconSize(QSize(e*2,b));
     gonye->setFlat(true);
     connect(gonye, &QPushButton::clicked, [=]() {
-         emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Gonye);
-
-    //    menu->close();
-
+         addObjectScene(":icons/gonye.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Gonye,parentw/4,parenth/3,parentw/2-(parentw/4)/2,parenth/2-(parenth/3)/2,true);
+      //if(oldMode==Scene::DrawPen)penButtonSlot(false);
+        handButtonSlot(false);
     });
 
     QPushButton *iletki = new QPushButton;
@@ -833,10 +831,9 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     iletki->setIconSize(QSize(e*2,b));
     iletki->setFlat(true);
     connect(iletki, &QPushButton::clicked, [=]() {
-          emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Iletki);
-
-      //  menu->close();
-
+         addObjectScene(":icons/iletki.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Iletki,parentw/4,parenth/3,parentw/2-(parentw/4)/2,parenth/2-(parenth/3)/2,true);
+      //if(oldMode==Scene::DrawPen)penButtonSlot(false);
+        handButtonSlot(false);
     });
 
 
@@ -849,8 +846,10 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     kup->setFlat(true);
     kup->setIcon(QIcon(":/icons/kup.png"));
     connect(kup, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Kup);
-    //     menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Kup);
+        //addObjectScene(":icons/kup.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Kup,parentw/4,parenth/3,parentw/2-(parentw/4)/2,parenth/2-(parenth/3)/2,true);
+     //if(oldMode==Scene::DrawPen)penButtonSlot(false);
+       //handButtonSlot(false);
     });
 
     QPushButton *silindir = new QPushButton;
@@ -1448,10 +1447,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     //penStyleSolidLine->setFlat(true);
     noktaliKagit->setIcon(QIcon(":icons/dotpage.svg"));
     connect(noktaliKagit, &QPushButton::clicked, [=]() {
-        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        oldMode=Scene::Mode::DrawPen;oldType=DiagramItem::DiagramType::NormalPen;
         addObjectScene(":icons/noktalikagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::NoktaliKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
         //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
-        penButtonSlot(false);
+        if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
 
     QPushButton *izometrikKagit = new QPushButton;
@@ -1460,10 +1459,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     izometrikKagit->setIconSize(QSize(e,b));
     //penStyleDashLine->setFlat(true);
     connect(izometrikKagit, &QPushButton::clicked, [=]() {
-        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        oldMode=Scene::Mode::DrawPen;oldType=DiagramItem::DiagramType::NormalPen;
         addObjectScene(":icons/izometrikkagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::IzometrikKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
         //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
-        penButtonSlot(false);
+        if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
 
     QPushButton *kareliKagit = new QPushButton;
@@ -1472,10 +1471,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     kareliKagit->setIconSize(QSize(e,b));
     // penStyleDotLine->setFlat(true);
     connect(kareliKagit, &QPushButton::clicked, [=]() {
-        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        oldMode=Scene::Mode::DrawPen;oldType=DiagramItem::DiagramType::NormalPen;
         addObjectScene(":icons/karelikagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::KareliKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
         //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
-        penButtonSlot(false);
+       if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
 
     QPushButton *cizgiliKagit = new QPushButton;
@@ -1484,10 +1483,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     cizgiliKagit->setIconSize(QSize(e,b));
     //penStyleDotLine->setFlat(true);
     connect(cizgiliKagit, &QPushButton::clicked, [=]() {
-        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        oldMode=Scene::Mode::DrawPen;oldType=DiagramItem::DiagramType::NormalPen;
         addObjectScene(":icons/cizgilikagit.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::CizgiliKagit,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,false);
         //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
-        penButtonSlot(false);
+        if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
     /***********************ndogru nnkoordinat  hnkoordinat nkoordinat***************/
 
@@ -1498,10 +1497,8 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     //penStyleSolidLine->setFlat(true);
     ndogru->setIcon(QIcon(":icons/ndogru.png"));
     connect(ndogru, &QPushButton::clicked, [=]() {
-      //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NDogru);
         oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
-        addObjectScene(":icons/ndogru.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::NDogru,parentw/2,parenth/20,parentw/2-(parentw/2)/2,parenth/2,false);
-        //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        addObjectScene(":icons/ndogru.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::NDogru,parentw/2,parenth/20,parentw/2-(parentw/2)/2,parenth/2,true);
         handButtonSlot(false);
 
     });
@@ -1512,8 +1509,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     nnkoordinat->setIconSize(QSize(e,b));
     //penStyleDashLine->setFlat(true);
     connect(nnkoordinat, &QPushButton::clicked, [=]() {
-      emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NNKoordinat);
-    //  menu->close();
+      //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NNKoordinat);
+        oldMode=Scene::Mode::DrawPen;oldType=DiagramItem::DiagramType::NormalPen;
+        addObjectScene(":icons/nnkoordinat.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::NNKoordinat,parentw/2,parenth/2,parentw/2-(parentw/2)/2,parenth/4,true);
+        handButtonSlot(false);
 
     });
 
@@ -1523,9 +1522,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     hnkoordinat->setIconSize(QSize(e,b));
     // penStyleDotLine->setFlat(true);
     connect(hnkoordinat, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::HNKoordinat);
-    //menu->close();
-
+       // emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::HNKoordinat);
+        oldMode=Scene::Mode::DrawPen;oldType=DiagramItem::DiagramType::NormalPen;
+        addObjectScene(":icons/hnkoordinat.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::HNKoordinat,parentw/2,parenth/2,parentw/2-(parentw/2)/2,parenth/4,true);
+        handButtonSlot(false);
     });
 
     QPushButton *nkoordinat = new QPushButton;
@@ -1534,9 +1534,10 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     nkoordinat->setIconSize(QSize(e,b));
     // penStyleDotLine->setFlat(true);
     connect(nkoordinat, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::NKoordinat);
-     //menu->close();
-
+      //menu->close();
+        oldMode=Scene::Mode::PenMode;oldType=DiagramItem::DiagramType::NormalPen;
+        addObjectScene(":icons/nkoordinat.png",Scene::Mode::ZeminMode,DiagramItem::DiagramType::NKoordinat,parentw/2,parenth/2,parentw/2-(parentw/2)/2,parenth/4,true);
+        handButtonSlot(false);
     });
 
     /*****************************************************/
@@ -1545,7 +1546,8 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     zeminSeffafButton->setFlat(true);
     connect(zeminSeffafButton, &QPushButton::clicked, [=]()
     {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::TransparanPage);
+         if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
 
     QPushButton *zeminSiyahButton=new QPushButton();
@@ -1553,16 +1555,16 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     zeminSiyahButton->setFlat(true);
     connect(zeminSiyahButton, &QPushButton::clicked, [=]()
     {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::BlackPage);
-
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::BlackPage);
+          if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
     QPushButton *zeminBeyazButton=new QPushButton();
     zeminBeyazButton=butonSlot(zeminBeyazButton,"",":icons/whiteboard.png",QColor(255,0,0,0),e,b,e,b);
     zeminBeyazButton->setFlat(true);
     connect(zeminBeyazButton, &QPushButton::clicked, [=]()
     {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
-
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+         if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
     QPushButton *zeminCustomColorButton=new QPushButton();
      zeminCustomColorButton=butonSlot(zeminCustomColorButton,"",":icons/zeminCustomColor.png",QColor(255,0,0,0),e,b,e,b);
@@ -1583,7 +1585,8 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     zeminCizgiliSayfaButton->setFlat(true);
     connect(zeminCizgiliSayfaButton, &QPushButton::clicked, [=]()
     {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::CizgiliPage);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::CizgiliPage);
+         if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
 
     QPushButton *zeminKareliSayfaButton = new QPushButton;
@@ -1591,7 +1594,8 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     zeminKareliSayfaButton->setFlat(true);
     connect(zeminKareliSayfaButton, &QPushButton::clicked, [=]()
     {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::KareliPage);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::KareliPage);
+         if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
 
     QPushButton *zeminMuzikSayfaButton=new QPushButton();
@@ -1599,7 +1603,8 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     zeminMuzikSayfaButton->setFlat(true);
     connect(zeminMuzikSayfaButton, &QPushButton::clicked, [=]()
     {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::MuzikPage);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::MuzikPage);
+         if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
 
 
@@ -1608,7 +1613,8 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     zeminGuzelYaziSayfaButton->setFlat(true);
     connect(zeminGuzelYaziSayfaButton, &QPushButton::clicked, [=]()
     {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::GuzelYaziPage);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::GuzelYaziPage);
+         if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
 
 
@@ -1617,7 +1623,8 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     zeminDesenEkleSayfaButton->setFlat(true);
     connect(zeminDesenEkleSayfaButton, &QPushButton::clicked, [=]()
     {
-        emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::CustomImagePage);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::CustomImagePage);
+         if(oldMode==Scene::DrawPen)penButtonSlot(false);
 
     });
 

@@ -11,6 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
     en=boy;
     //qDebug()<<"ekran boyutu:"<<screenSize;
     //current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.4);
+    //current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()*0.85);
+
     current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
     current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()/2);
     current_toolTahta->show();

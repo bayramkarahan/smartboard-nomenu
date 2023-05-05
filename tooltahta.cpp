@@ -5,7 +5,7 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     setFixedSize(w,h);
     setWindowFlags(Qt::FramelessWindowHint);
     setWindowFlags(Qt::WindowStaysOnTopHint);
-    setWindowFlags(Qt::X11BypassWindowManagerHint);
+    //setWindowFlags(Qt::X11BypassWindowManagerHint);
     setAttribute(Qt::WA_StaticContents);
     setAttribute(Qt::WA_TranslucentBackground, true);
     this->setAttribute(Qt::WA_NoSystemBackground, false);
@@ -82,8 +82,8 @@ void toolTahta::mouseMoveEvent(QMouseEvent *event)
 }
 void toolTahta::mouseReleaseEvent(QMouseEvent *event)
 {
-  /*  qDebug()<<"tooltahta mouse release";
-    qDebug()<<"penDrawingMain:"<<penDrawingMain;
+    qDebug()<<"tooltahta mouse release";
+  /*  qDebug()<<"penDrawingMain:"<<penDrawingMain;
     qDebug()<<"drawStatus:"<<drawStatus;
 */
 
@@ -142,19 +142,35 @@ void toolTahta::mouseReleaseEvent(QMouseEvent *event)
         //itemToRectDraw->setRect(0,0,this->width(),this->height());
         itemToRectDraw->fareState(false);
         itemToRectDraw = 0;
-        clearImage();
+        /*clearImage();
         QPalette palet1;
         palet1.setBrush(QPalette::Background,QColor(0,0,0,0));
         this->setPalette(palet1);
 
 
-        QPixmap pixMap = gv->grab(gv->sceneRect().toRect());
+       QPixmap pixMap = gv->grab(gv->sceneRect().toRect());
         QPalette palet;
         //pixMap.save("deneme.png");
         palet.setBrush(QPalette::Background,pixMap);
         this->setPalette(palet);
         // pageList[sceneSayfaActiveNumber]->setIcon(QIcon(pixMap));////önemli
+        */
+        gvToTahta();
     }
+}
+void toolTahta::gvToTahta()
+{
+    clearImage();
+    QPalette palet1;
+    palet1.setBrush(QPalette::Background,QColor(0,0,0,0));
+    this->setPalette(palet1);
+
+
+   QPixmap pixMap = gv->grab(gv->sceneRect().toRect());
+    QPalette palet;
+    //pixMap.save("deneme.png");
+    palet.setBrush(QPalette::Background,pixMap);
+    this->setPalette(palet);
 }
 void toolTahta::paintEvent(QPaintEvent *event)
 {

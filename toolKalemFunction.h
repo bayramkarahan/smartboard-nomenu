@@ -5,7 +5,8 @@ void toolKalem::setGridSize(int s)
 {
     gridSize=s;
     gridSizePopLabel->setText("Satır ve Sütun Genişliği: "+QString::number(gridSize));
-    emit kalemModeSignal(Scene::Mode::ZeminMode,pagePattern);
+    emit kalemZeminModeSignalSlot(pagePattern);
+    if(oldMode==Scene::DrawPen)penButtonSlot(false);
     //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NoType);
     //buttonStateClear();
     //penButton->setChecked(true);

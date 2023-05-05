@@ -41,6 +41,7 @@ public:
 public slots:
       void toolTahta_DesktopSignalSlot();
       void toolTahta_PenSignalSlot();
+      void gvToTahta();
 
 signals:
 protected:

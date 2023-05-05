@@ -458,10 +458,27 @@ void toolKalem::saveSayfaButtonClick(){
  void toolKalem::addObjectScene(QString dosya,Scene::Mode mode,DiagramItem::DiagramType type,float w,float h,int posx,int posy,bool select)
  {
      QPixmap image;
-     if(DiagramItem::DiagramType::CizgiliKagit==type)
+
+     if(DiagramItem::DiagramType::NoktaliKagit==type||
+             DiagramItem::DiagramType::KareliKagit==type||
+             DiagramItem::DiagramType::CizgiliKagit==type||
+             DiagramItem::DiagramType::Resim==type||
+             DiagramItem::DiagramType::IzometrikKagit==type)
      {
+         QPixmap pg;
+         if(DiagramItem::DiagramType::CizgiliKagit==type){
          GridLines *gridLines = new GridLines (width(), height(),60,true,false,false,zeminDolguColor, penColor);
-         image=gridLines->PixItem(gridLines,width(), height());
+         pg=gridLines->PixItem(gridLines,width(), height());
+         }else
+             pg = QPixmap(dosya);
+         QPixmap tmp(pg.width(),pg.height());
+         // tmp.fill(QColor(QColor(255,0,0,255)));
+          tmp.fill(QColor(zeminDolguColor));
+
+          QPainter painter(&tmp);
+          painter.drawPixmap(QPoint{}, pg, pg.rect());
+          painter.end();
+          image = tmp;
      }
      else
      image = QPixmap(dosya);

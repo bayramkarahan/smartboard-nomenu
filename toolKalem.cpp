@@ -23,27 +23,26 @@ void toolKalem::modeKontrolSlot()
     {
         qDebug()<<"Kalem Seçili";
         /***************************form ekran fotosu resetleniyor**************/
-        QPalette palet;
+       /* QPalette palet;
         palet.setBrush(QPalette::Background,QColor(0,0,0,0));
         current_toolTahta->setPalette(palet);
         /***************************view gösterildi**************/
-         current_toolTahta->penDrawingMain=false;
+         /*current_toolTahta->penDrawingMain=false;
         current_toolTahta->gv->show();
         current_toolTahta->gv->setEnabled(true);
         current_toolTahta->scene->makeItemsControllable(false);
         /******************view ekran fotosu alındı forma yansıtıldı*************/
-        QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+        //current_toolTahta->scene->update();
+       /* QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
         QPalette palet1;
         palet1.setBrush(QPalette::Background,pixMap);
         current_toolTahta->setPalette(palet1);
         /****************************Kalem Seçimi Ayarı Yapıldı**************************/
+        current_toolTahta->gvToTahta();
         current_toolTahta->penDrawingMain=true;
         current_toolTahta->gv->hide();
         current_toolTahta->gv->setEnabled(false);
         current_toolTahta->scene->makeItemsControllable(false);
-
-
-
     }else
         {
             qDebug()<<"Kalem Dışında Araç Seçildi:"<<oldMode;

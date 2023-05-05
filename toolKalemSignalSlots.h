@@ -58,6 +58,7 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
     depo::historyBackCount=scenetemp->historyBack.count();
     depo::historyNextCount=scenetemp->historyNext.count();
     qDebug()<<"scene nesne eklendi.....";
+    modeKontrolSlot();
     if(mode==Scene::CopyMode) handButtonSlot(true);
     if(mode==Scene::FenMode)
     {
@@ -65,6 +66,18 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
        //currentMode=oldMode;currentType=oldType;
 
     //current_toolKalemMenu->show();
+    }
+    if(mode==Scene::ZeminMode)
+    {
+       // current_toolTahta->scene->makeItemsControllable(false);
+    /*    if(oldMode==Scene::DrawPen)
+        {qDebug()<<"Zemin-kalem...";
+            penButtonSlot(false);
+        }
+            else
+        {
+            currentMode=oldMode;currentType=oldType;
+        }*/
     }
     /*    qDebug()<<"Kimya Seçtiniz...";
         /***************************form ekran fotosu resetleniyor**************/
@@ -99,7 +112,7 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
        //current_toolKalemMenu->show();
        */
    // }
-  modeKontrolSlot();
+
 
 }
 
@@ -140,13 +153,15 @@ void toolKalem::kalemColorSignalSlot(QString colorType, QColor color)
      //qDebug()<<"sekilZeminColor"<<color;
      zeminGridColor=color;
     // kalemModeSignalSlot(Scene::Mode::ZeminMode,pagePattern);
-     emit kalemModeSignal(Scene::Mode::ZeminMode,pagePattern);
+     emit kalemZeminModeSignal(pagePattern);
+      if(oldMode==Scene::DrawPen)penButtonSlot(false);
 
     }
   if (colorType=="zeminColor"){
      //qDebug()<<"zeminColor"<<color;
      zeminColor=color;
      emit kalemZeminModeSignal(DiagramItem::DiagramType::CustomColorPage);
+     if(oldMode==Scene::DrawPen)penButtonSlot(false);
      //emit kalemModeSignal(Scene::Mode::ZeminMode,pagePattern);
    }
   if (colorType=="zeminDolguColor"){
@@ -166,13 +181,13 @@ current_toolTahta->show();
 void toolKalem::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
 {
 
-//qDebug()<<"Zemin Türü Seçiliyor:"<<type;
+qDebug()<<"Zemin Türü Seçiliyor:"<<type;
 
     current_toolTahta->scene->setSekilZeminColor(sekilZeminColor);
     current_toolTahta->scene->setSekilPenSize(penSize);
     current_toolTahta->scene->setSekilKalemColor(penColor);
     //current_toolTahta->scene->sceneMode=Scene::Mode::DrawRectangle;
-
+/*
 if(DiagramItem::DiagramType::NDogru==type){ current_toolTahta->scene->donSlot(type);return;}
 if(DiagramItem::DiagramType::NKoordinat==type){ current_toolTahta->scene->donSlot(type);return;}
 if(DiagramItem::DiagramType::NNKoordinat==type){current_toolTahta->scene->donSlot(type);return;}
@@ -181,7 +196,7 @@ if(DiagramItem::DiagramType::NoktaliKagit==type) {current_toolTahta->scene->donS
 if(DiagramItem::DiagramType::IzometrikKagit==type){ current_toolTahta->scene->donSlot(type);return;}
 if(DiagramItem::DiagramType::KareliKagit==type) {current_toolTahta->scene->donSlot(type);return;}
 if(DiagramItem::DiagramType::CizgiliKagit==type) {current_toolTahta->scene->donSlot(type);return;}
-
+*/
 if(DiagramItem::DiagramType::TransparanPage==type){
       qDebug()<<"seffaf zemin"<<current_toolTahta->scene->sceneMode;
     pagePattern=type;
@@ -196,7 +211,7 @@ if(DiagramItem::DiagramType::TransparanPage==type){
    current_toolTahta->scene->myImage= bkgnd;
   }
 if(DiagramItem::DiagramType::BlackPage==type){
-   // qDebug()<<"siyah zemin";
+    qDebug()<<"siyah zemin";
     pagePattern=type;
     zeminColor=QColor(0,0,0,255);
     current_toolTahta->scene->sceneGridYatay=false;
@@ -207,6 +222,7 @@ if(DiagramItem::DiagramType::BlackPage==type){
     GridLines *gridLines = new GridLines (current_toolTahta->width(),current_toolTahta->height(),gridSize*10,current_toolTahta->scene->sceneGridYatay,current_toolTahta->scene->sceneGridDikey,current_toolTahta->scene->sceneGuzelYazi, zeminColor, penColor);
     QPixmap bkgnd=gridLines->PixItem(gridLines,current_toolTahta->width(),current_toolTahta->height());
     current_toolTahta->scene->myImage=bkgnd;
+    //penButtonSlot(false);
   }
 if(DiagramItem::DiagramType::WhitePage==type){
     pagePattern=type;
