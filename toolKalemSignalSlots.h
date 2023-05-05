@@ -57,9 +57,25 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
     scenetemp->historyBackAction.append("added");
     depo::historyBackCount=scenetemp->historyBack.count();
     depo::historyNextCount=scenetemp->historyNext.count();
-    qDebug()<<"scene nesne eklendi.....";
-    modeKontrolSlot();
+    qDebug()<<"scene nesne eklendi....."<<mode<<type;
+
     if(mode==Scene::CopyMode) handButtonSlot(true);
+   /* if(type==(DiagramItem::DiagramType::Ok||DiagramItem::DiagramType::Cizgi||
+              DiagramItem::DiagramType::CiftOk||DiagramItem::DiagramType::Ucgen||
+              DiagramItem::DiagramType::DikUcgen||DiagramItem::DiagramType::Dortgen||
+              DiagramItem::DiagramType::Cember||DiagramItem::DiagramType::Yamuk||
+              DiagramItem::DiagramType::Besgen||DiagramItem::DiagramType::Altigen||
+              DiagramItem::DiagramType::Sekizgen))*/
+    if(type==DiagramItem::DiagramType::Ok||type==DiagramItem::DiagramType::Cizgi||
+            type==DiagramItem::DiagramType::CiftOk||type==DiagramItem::DiagramType::Ucgen||
+            type==DiagramItem::DiagramType::DikUcgen||type==DiagramItem::DiagramType::Dortgen||
+            type==DiagramItem::DiagramType::Cember||type==DiagramItem::DiagramType::Yamuk||
+            type==DiagramItem::DiagramType::Besgen||type==DiagramItem::DiagramType::Altigen||
+            type==DiagramItem::DiagramType::Sekizgen)
+    {
+       // qDebug()<<"Şekil Eklediniz..";
+        handButtonSlot(false);
+    }
     if(mode==Scene::FenMode)
     {
         //qDebug()<<"Fen Seçtiniz...";
@@ -79,6 +95,7 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
             currentMode=oldMode;currentType=oldType;
         }*/
     }
+    modeKontrolSlot();
     /*    qDebug()<<"Kimya Seçtiniz...";
         /***************************form ekran fotosu resetleniyor**************/
       /*  QPalette palet;
@@ -446,16 +463,18 @@ kw->currentType=kw->oldType;
 
 void toolKalem::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
     qDebug()<<"sekil butonclick"<<type;
+
     sekilButtonIconSlot(type);//şekil buton iconu ayarlanıyor
+
     current_toolTahta->scene->setSekilPenSize(penSize);
     current_toolTahta->scene->setSekilKalemColor(penColor);
     current_toolTahta->scene->setSekilZeminColor(sekilZeminColor);
     current_toolTahta->scene->sceneMode=Scene::Mode::DrawRectangle;
-
-    if(DiagramItem::DiagramType::Pergel==type){ current_toolTahta->scene->donSlot(type);return;}
-    if(DiagramItem::DiagramType::Gonye==type){ current_toolTahta->scene->donSlot(type);return;}
-    if(DiagramItem::DiagramType::Cetvel==type){current_toolTahta->scene->donSlot(type);return;}
-    if(DiagramItem::DiagramType::Iletki==type){ current_toolTahta->scene->donSlot(type);return;}
+    currentMode=Scene::Mode::SekilMode;
+    oldMode=Scene::Mode::SekilMode;
+    currentType=type;
+    oldType=type;
+    modeKontrolSlot();
 
    if(DiagramItem::DiagramType::Kure==type)
     {

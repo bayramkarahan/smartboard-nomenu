@@ -34,8 +34,10 @@ void toolKalem::penButtonSlot(bool menushow)
         current_toolKalemMenu->show();
     }
     current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
-    currentMode=Scene::Mode::DrawPen;oldMode=Scene::Mode::DrawPen;
-    currentType=DiagramItem::DiagramType::NormalPen;;oldType=DiagramItem::DiagramType::NormalPen;;
+    currentMode=Scene::Mode::DrawPen;
+    oldMode=Scene::Mode::DrawPen;
+    currentType=DiagramItem::DiagramType::NormalPen;
+    oldType=DiagramItem::DiagramType::NormalPen;;
 
     //current_toolTahta->scene->setSekilTanimlamaStatus(false);
     /*current_toolTahta->penDrawingMain=true;

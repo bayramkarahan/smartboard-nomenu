@@ -847,10 +847,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     kup->setIcon(QIcon(":/icons/kup.png"));
     connect(kup, &QPushButton::clicked, [=]() {
         emit kalemSekilModeSignal(DiagramItem::DiagramType::Kup);
-        //addObjectScene(":icons/kup.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Kup,parentw/4,parenth/3,parentw/2-(parentw/4)/2,parenth/2-(parenth/3)/2,true);
-     //if(oldMode==Scene::DrawPen)penButtonSlot(false);
-       //handButtonSlot(false);
-    });
+       });
 
     QPushButton *silindir = new QPushButton;
     silindir->setIcon(QIcon(":icons/silindir.png"));
@@ -858,10 +855,8 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     silindir->setIconSize(QSize(e*2,b));
     silindir->setFlat(true);
     connect(silindir, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Silindir);
-    //    menu->close();
-
-    });
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Silindir);
+     });
 
     QPushButton *pramit = new QPushButton;
     pramit->setIcon(QIcon(":icons/pramit.png"));
@@ -869,9 +864,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     pramit->setIconSize(QSize(e*2,b));
     pramit->setFlat(true);
     connect(pramit, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Pramit);
-     //   menu->close();
-
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Pramit);
     });
 
     QPushButton *kure = new QPushButton;
@@ -880,9 +873,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     kure->setIconSize(QSize(e*2,b));
     kure->setFlat(true);
     connect(kure, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Kure);
-    // menu->close();
-
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Kure);
     });
 
     /***********************************************************/
@@ -893,8 +884,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     cizgi->setFlat(true);
     cizgi->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Cizgi,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(cizgi, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Cizgi);
-     //   menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Cizgi);
     });
 
     QPushButton *ok= new QPushButton;
@@ -903,9 +893,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     ok->setFlat(true);
     ok->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Ok,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(ok, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Ok);
-
-   // menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Ok);
     });
 
     QPushButton *ciftok= new QPushButton;
@@ -914,8 +902,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     ciftok->setFlat(true);
     ciftok->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::CiftOk,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(ciftok, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::CiftOk);
-     //   menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::CiftOk);
     });
 
     QPushButton *ucgen= new QPushButton;
@@ -924,8 +911,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     ucgen->setFlat(true);
     ucgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Ucgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(ucgen, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Ucgen);
-     //    menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Ucgen);
     });
 
     QPushButton *dortgen= new QPushButton;
@@ -934,8 +920,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     dortgen->setFlat(true);
     dortgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Dortgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(dortgen, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Dortgen);
-    //    menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Dortgen);
     });
 
     QPushButton *cember= new QPushButton;
@@ -944,8 +929,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     cember->setFlat(true);
     cember->setIcon(imageEllipse(ditem->sekilStore(DiagramItem::DiagramType::Cember,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(cember, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Cember);
-     //  menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Cember);
     });
 
     QPushButton *baklava= new QPushButton;
@@ -954,8 +938,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     baklava->setFlat(true);
     baklava->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Baklava,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(baklava, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Baklava);
-    //     menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Baklava);
     });
 
     QPushButton *yamuk= new QPushButton;
@@ -964,8 +947,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     yamuk->setFlat(true);
     yamuk->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Yamuk,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(yamuk, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Yamuk);
-     //     menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Yamuk);
     });
 
     QPushButton *besgen= new QPushButton;
@@ -974,8 +956,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     besgen->setFlat(true);
     besgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Besgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(besgen, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Besgen);
-    //    menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Besgen);
      });
 
     QPushButton *altigen= new QPushButton;
@@ -984,9 +965,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     altigen->setFlat(true);
     altigen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Altigen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(altigen, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Altigen);
-
-    //  menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Altigen);
     });
 
     QPushButton *sekizgen= new QPushButton;
@@ -995,8 +974,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     sekizgen->setFlat(true);
     sekizgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Sekizgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(sekizgen, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Sekizgen);
-   //       menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Sekizgen);
     });
 
     QPushButton *dikucgen= new QPushButton;
@@ -1005,8 +983,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     dikucgen->setFlat(true);
     dikucgen->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::DikUcgen,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(dikucgen, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::DikUcgen);
-   //  menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::DikUcgen);
     });
 
     QPushButton *guzelyazi= new QPushButton;
@@ -1015,8 +992,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     //guzelyazi->setFlat(true);
     guzelyazi->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::GuzelYazi,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(guzelyazi, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::GuzelYazi);
-    // menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::GuzelYazi);
     });
 
     QPushButton *muzik= new QPushButton;
@@ -1025,7 +1001,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     //muzik->setFlat(true);
     muzik->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::Muzik,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(muzik, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Muzik);
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Muzik);
    // menu->close();
     });
 
@@ -1035,8 +1011,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
    // cizgilisayfa->setFlat(true);
     cizgilisayfa->setIcon(image(ditem->sekilStore(DiagramItem::DiagramType::CizgiliSayfa,QRectF(QPointF(b,b),QPointF(ken-b,ken-b))),ken,ken));
     connect(cizgilisayfa, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::CizgiliSayfa);
-        // menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::CizgiliSayfa);
     });
     QPushButton *resimEkle= new QPushButton;
     resimEkle->setFixedSize(e*2, b*1.5);
@@ -1044,9 +1019,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     resimEkle->setFlat(true);
     resimEkle->setIcon(QIcon(":icons/addimage.png"));
     connect(resimEkle, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim);
-
-       //  menu->close();
+        emit kalemSekilModeSignal(DiagramItem::DiagramType::Resim);
     });
 
     QPushButton *sekilKalemRenkButton=new QPushButton();
@@ -1058,8 +1031,6 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     sekilZeminRenkButton->setIconSize(QSize(e,b));
     connect(sekilZeminRenkButton, &QPushButton::clicked, [=]() {
         colorMenu("sekilZeminColor","dikey",en,boy,true)->exec(mapToGlobal(mapToParent(menu->pos())));
-
-         //menu->close();
     });
 
     auto layout = new QGridLayout(menu);
