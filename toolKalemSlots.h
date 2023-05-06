@@ -138,7 +138,8 @@ void toolKalem::zeminButtonSlot()
 {
     current_toolKalemMenu->toolKalemMenuOlustur(zeminTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
-    //emit kalemZeminModeSignal(DiagramItem::DiagramType::TransparanPage);
+    emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+    current_toolTahta->gvToTahta();
 
 }
 void toolKalem::sekilButtonSlot()

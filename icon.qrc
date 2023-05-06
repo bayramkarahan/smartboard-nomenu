@@ -160,5 +160,6 @@
         <file>icons/haritabolge.svg</file>
         <file>icons/haritail.svg</file>
         <file>icons/haritabosdilsiz.svg</file>
+        <file>icons/animasyon.gif</file>
     </qresource>
 </RCC>

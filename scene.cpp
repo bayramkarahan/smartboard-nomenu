@@ -457,7 +457,7 @@ if(tv->centerPoint==false)
        }
 
        }else{
-           qDebug()<<"4";
+           ///qDebug()<<"4";
           // QLine *lin=new QLine(origPoint.x(),origPoint.y(),event->scenePos().x(),event->scenePos().y() );
 
            //itemToPenDraw->setLine(lin);

@@ -3,8 +3,9 @@
 # Project created by QtCreator 2015-09-24T19:55:44
 #
 #-------------------------------------------------
-
-QT       += core gui printsupport
+#sudo apt-get install qtmultimedia5-dev
+#sudo apt install gstreamer1.0-libav
+QT       += core gui printsupport multimedia multimediawidgets
 INCLUDEPATH += \
                 /usr/include/opencv4
                 /usr/include

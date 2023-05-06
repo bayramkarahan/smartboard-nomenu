@@ -302,7 +302,7 @@ connect(sekilButton, &QToolButton::clicked, [=]() {
    });
 
 zeminButton = new QToolButton(this);
-zeminButton=butonToolSlot(zeminButton,"Arkaplan",":icons/transparanboard.png",QColor(255,0,0,0),en*1.5,boy);
+zeminButton=butonToolSlot(zeminButton,"Arkaplan",":icons/whiteboard.png",QColor(255,0,0,0),en*1.5,boy);
 //zeminButton->setMenu(zeminMenu());
 //zeminButton->setPopupMode(QToolButton::MenuButtonPopup);
 

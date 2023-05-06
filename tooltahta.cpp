@@ -9,6 +9,7 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     setAttribute(Qt::WA_StaticContents);
     setAttribute(Qt::WA_TranslucentBackground, true);
     this->setAttribute(Qt::WA_NoSystemBackground, false);
+   // setAttribute(Qt::WA_AcceptTouchEvents);
     // qDebug()<<"pentuval:"<<penTuval.width()<<penTuval.height();
     //this->setStyleSheet("background-color:rgb(0,0,240,255);");
     resizeImage(&penTuval,QSize(width(),height()),qRgba(0, 0,0 ,0));
@@ -26,6 +27,8 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     gv->setFixedSize(this->width(),this->height());
     scene = new Scene(gv);
     gv->setScene(scene);
+   // scene->setAttribute(Qt::WA_AcceptTouchEvents);
+    //gv->setAttribute(Qt::WA_AcceptTouchEvents);
     scene->setSceneRect(this->pos().x(),this->pos().y(), this->width(),this->height());
     scene->sceneGridYatay=false;
     scene->sceneGridDikey=false;

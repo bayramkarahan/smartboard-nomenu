@@ -1,6 +1,13 @@
 #ifndef TOPMENUS_H
 #define TOPMENUS_H
 #include<toolKalem.h>
+#include<QGraphicsVideoItem>
+#include<QMediaPlayer>
+#include<QMovie>
+#include<QGraphicsProxyWidget>
+#include<QDial>
+#include<QSizeGrip>
+
 QWidget *toolKalem::cizgiGridBoyutMenu()
 {     int e=(en*0.8)/4*5.5;
       int b=(boy*0.6)/4*5;
@@ -370,7 +377,58 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     connect(leftsidePageButton, &QPushButton::clicked, [=]() {
         sagSolHizala();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
-       });
+      /*  QDial *dial = new QDial;// dial object
+           dial->setGeometry(300,300,80,80);// placing on mouse position
+           QSizeGrip * sizeGrip = new QSizeGrip(dial);
+
+           QHBoxLayout *layout = new QHBoxLayout(dial);
+           layout->setContentsMargins(0, 0, 0, 0);
+           layout->addWidget(sizeGrip, 0, Qt::AlignRight | Qt::AlignBottom);
+
+           QGraphicsWidget* parentWidget = new QGraphicsWidget();//make parent of widget
+           parentWidget->setCursor(Qt::SizeAllCursor);
+           parentWidget->setGeometry(300,300,200,200);
+           //parentWidget->setFlags(QGraphicsItem::ItemIsMovable |QGraphicsItem::ItemIsMovable| QGraphicsItem::ItemIsSelectable );
+           current_toolTahta->scene->addItem(parentWidget);
+
+           QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
+           proxy->setWidget(dial);
+           proxy->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable );
+
+           proxy->setParentItem(parentWidget);*/
+      /*  QLabel *gif_anim = new QLabel();
+        QMovie *movie = new QMovie(":icons/animasyon.gif");
+        gif_anim->setMovie(movie);
+        movie->start();
+        QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
+            proxy->setWidget(gif_anim);
+            proxy->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable );
+             current_toolTahta->scene->addItem(proxy);
+*/
+
+       /* QGraphicsProxyWidget ideoItem *video_item = new QGraphicsVideoItem();
+        current_toolTahta->scene->addItem(video_item);
+        video_item->setPos(0,0);
+       video_item->setZValue(200);
+        QMediaPlayer *media_player = new QMediaPlayer(current_toolTahta->scene);
+        media_player->setVideoOutput(video_item );
+       // media_player ->setMedia(QUrl(":icons/animasyon.gif"));
+        media_player->setMedia(QUrl::fromLocalFile(QFileInfo("/home/by/animasyon.gif").absoluteFilePath()));
+
+        media_player->;*/
+        /*QLabel* aniLabel = new QLabel();
+                QMovie* aniMovie = new QMovie( ":icons/animasyon.gif", QByteArray(), this );
+                QGraphicsProxyWidget* aniWidget = new QGraphicsProxyWidget();
+                aniLabel->setAttribute( Qt::WA_NoSystemBackground );
+                aniLabel->setMovie( aniMovie );
+                aniWidget->setWidget( aniLabel );
+                current_toolTahta->scene->addItem(aniWidget);
+                aniWidget->setPos( aniLabel->size().width(),
+                                              aniLabel->size().height() );
+                           // aniLabel->show();
+                            aniMovie->start();
+                            */
+    });
 
     rightsidePageButton=new QPushButton();
     rightsidePageButton=butonSlot(rightsidePageButton,"",":icons/rightside.svg",QColor(255,0,0,0),e,b,e,b);
