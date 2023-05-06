@@ -57,8 +57,8 @@ void toolKalem::modeKontrolSlot()
 
         }
     /**************************önemli bir Yer**************************/
-    current_toolPageMenu->raise();
     current_toolTahta->raise();
+    current_toolPageMenu->raise();
     raise();
     current_toolKalemMenu->raise();
 
@@ -223,8 +223,8 @@ connect(copyButton, &QToolButton::clicked, [=]() {
 penButton = new QToolButton(this);
 penButton=butonToolSlot(penButton,"Kalem",":icons/pen.svg",QColor(255,0,0,0),en*1.5,boy);
 penButton->setIconSize(QSize(en*0.8,boy*1.3));
-penButton->setMenu(penMenu());
-penButton->setPopupMode(QToolButton::MenuButtonPopup);
+//penButton->setMenu(penMenu());
+//penButton->setPopupMode(QToolButton::MenuButtonPopup);
 penButton->setCheckable(true);
 connect(penButton, &QToolButton::clicked, [=]() {
 penButtonSlot(true);
@@ -245,7 +245,7 @@ clearButton->setIconSize(QSize(en*1,boy*1));
 connect(clearButton, &QToolButton::clicked, [=]() {
   clearButtonSlot();
 });
-
+/*
 penColorButton = new QToolButton(this);
 penColorButton=butonToolSlot(penColorButton,"",":icons/pencolor.png",QColor(0,0,0,255),en*1.5,boy*0.8);
 connect(penColorButton, &QToolButton::clicked, [=]() {
@@ -253,8 +253,8 @@ connect(penColorButton, &QToolButton::clicked, [=]() {
  menu->show();menu->hide();
  colorMenu("penColor","yatay",en,boy,true)->exec(mapToGlobal(penColorButton->pos())-QPoint(menu->width(),0));
 
-});
-
+});*/
+/*
 QWidget *urw=new QWidget(this);
 urw->setFixedSize(en*1.5,boy);
 undoButton = new QToolButton(urw);
@@ -286,44 +286,44 @@ line00->addWidget(redoButton,Qt::AlignHCenter);
 line00->setContentsMargins(0,0, 0,0);
 line00->setSpacing(1);
 urw->setLayout(line00);
-
+*/
 sekilButton = new QToolButton(this);
 DiagramItem *ditem=new DiagramItem();int ken=300;
 QPixmap pixmap(image(ditem->sekilStore(DiagramItem::DiagramType::Cizgi,QRectF(QPointF(20,50),QPointF(ken-70,ken-70))),ken,ken));
 sekilButton=butonToolSlot(sekilButton,"Şekiller",":icons/transparanboard.png",QColor(255,0,0,0),en*1.5,boy);
 sekilButton->setIcon(pixmap);
-sekilButton->setMenu(sekilMenu());
-sekilButton->setPopupMode(QToolButton::MenuButtonPopup);
+//sekilButton->setMenu(sekilMenu());
+//sekilButton->setPopupMode(QToolButton::MenuButtonPopup);
 sekilButton->setCheckable(true);
 connect(sekilButton, &QToolButton::clicked, [=]() {
    buttonStateClear(); sekilButton->setChecked(true);
    sekilButtonSlot();
-   emit kalemModeSignal(Scene::Mode::SekilMode,DiagramItem::DiagramType::Cizgi);
+   emit kalemSekilModeSignal(DiagramItem::DiagramType::Cizgi);
    });
 
 zeminButton = new QToolButton(this);
 zeminButton=butonToolSlot(zeminButton,"Arkaplan",":icons/transparanboard.png",QColor(255,0,0,0),en*1.5,boy);
-zeminButton->setMenu(zeminMenu());
-zeminButton->setPopupMode(QToolButton::MenuButtonPopup);
+//zeminButton->setMenu(zeminMenu());
+//zeminButton->setPopupMode(QToolButton::MenuButtonPopup);
 
 connect(zeminButton, &QToolButton::clicked, [=]() {
     zeminButtonSlot();
     //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
    });
 
-
+/*
 QToolButton *pdfButton = new QToolButton(this);
 pdfButton=butonToolSlot(pdfButton,"",":icons/pdf.svg",QColor(255,0,0,0),en*1.5,boy);
 connect(pdfButton, &QToolButton::clicked, [=]() {
     pdfButtonSlot();
-emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
+    //emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
    });
-
+*/
 QToolButton *toolButton = new QToolButton(this);
 toolButton=butonToolSlot(toolButton,"Araç",":icons/tool.svg",QColor(255,0,0,0),en*1.5,boy);
 connect(toolButton, &QToolButton::clicked, [=]() {
     toolButtonSlot();
-emit kalemModeSignal(Scene::Mode::ToolMode,DiagramItem::DiagramType::NoType);
+    //emit kalemModeSignal(Scene::Mode::ToolMode,DiagramItem::DiagramType::NoType);
    });
 
 QToolButton *fenButton = new QToolButton(this);
@@ -336,7 +336,7 @@ connect(fenButton, &QToolButton::clicked, [=]() {
 QToolButton *sosyalButton = new QToolButton(this);
 sosyalButton=butonToolSlot(sosyalButton,"Araç",":icons/sosyal.svg",QColor(255,0,0,0),en*1.5,boy);
 connect(sosyalButton, &QToolButton::clicked, [=]() {
-    current_toolKalemMenu->toolKalemMenuOlustur(sosyalTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->toolKalemMenuOlustur(sosyalTopMenu(parenth*0.045),parentw*0.5,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
    });
 
@@ -365,22 +365,20 @@ layout->addWidget(clearButton, 30, 0,1,2);
 layout->addWidget(redButton, 41, 0,1,2);
 layout->addWidget(blueButton, 42, 0,1,2);
 */
-layout->addWidget(penColorButton, 43, 0,1,2);
+///layout->addWidget(penColorButton, 43, 0,1,2);
 
 //layout->addWidget(undoButton, 45, 0,1,1);
 //layout->addWidget(redoButton, 45, 1,1,1);
-layout->addWidget(urw, 45, 1,1,1);
+///layout->addWidget(urw, 45, 1,1,1);
 layout->addWidget(sekilButton, 50, 0,1,2);
 layout->addWidget(zeminButton, 60, 0,1,2);
 //layout->addWidget(saveButton, 65, 0,1,2);
 
-layout->addWidget(pdfButton, 70, 0,1,2);
+///layout->addWidget(pdfButton, 70, 0,1,2);
 
-
-layout->addWidget(toolButton, 91, 0,1,2);
 layout->addWidget(fenButton, 92, 0,1,2);
 layout->addWidget(sosyalButton, 93, 0,1,2);
-
+layout->addWidget(toolButton, 94, 0,1,2);
 
 layout->addWidget(exitButton,100, 0,1,2);
 

@@ -82,7 +82,6 @@ public:
 
 signals:
     void kalemColorSignal(QString colorType,QColor color);
-    void kalemModeSignal(Scene::Mode mode,DiagramItem::DiagramType type);
     void kalemZeminModeSignal(DiagramItem::DiagramType type);
     void kalemPenModeSignal(DiagramItem::DiagramType type);
     void kalemSekilModeSignal(DiagramItem::DiagramType type);
@@ -94,18 +93,22 @@ public slots:
     void sayacCloseSignalSlot();
     void handButtonSlot(bool menushow);
     void penButtonSlot(bool menushow);
+    void smartpenButtonSlot(bool menushow);
+    void fosforpenButtonSlot(bool menushow);
+    void patternpenButtonSlot(bool menushow);
+
     void clearButtonSlot();
     void modeKontrolSlot();
     void desktopButtonSlot();
-   void buttonStateClear();
-   void setGridSize(int s);
-    QMenu *eraseMenu();
+    void buttonStateClear();
+    void setGridSize(int s);
+
     QWidget *cizgiGridBoyutMenu();
     void sekilButtonIconSlot(DiagramItem::DiagramType mySekilType);
     QPixmap lineImage(const QPolygonF &myPolygon,const Qt::PenStyle &stl,int w,int h) const;
     QPixmap imageEllipse(const QPolygonF &myPolygon, int w, int h) const;
     QPixmap image(const QPolygonF &myPolygon, int w, int h) const;
-    QMenu *sekilMenu();
+
     QMenu *colorMenu(QString colorType, QString yon, int w, int h, bool close);
     QWidget *colorWidget(QString colorType, QString yon, int w, int h, bool close);
 
@@ -145,7 +148,6 @@ public slots:
      void kalemColorSignalSlot(QString colorType, QColor color);
      void kalemSekilModeSignalSlot(DiagramItem::DiagramType type);
      void kalemZeminModeSignalSlot(DiagramItem::DiagramType type);
-     void kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type);
 
 private:
      Qt::WindowFlags current_toolTahta_old_flags;
@@ -156,7 +158,7 @@ private:
      int parentw;
      int parenth;
      QString title;
-     QMenu *zeminMenu();
+
      QMenu *pageMenu();
      QPalette *palette;
      QLabel *eraseSizePopLabel;

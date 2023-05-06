@@ -33,24 +33,69 @@ void toolKalem::penButtonSlot(bool menushow)
         current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
         current_toolKalemMenu->show();
     }
+    penButton->setIcon(QIcon(":icons/pen.svg"));
     current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
     currentMode=Scene::Mode::DrawPen;
     oldMode=Scene::Mode::DrawPen;
     currentType=DiagramItem::DiagramType::NormalPen;
-    oldType=DiagramItem::DiagramType::NormalPen;;
+    oldType=DiagramItem::DiagramType::NormalPen;
+modeKontrolSlot();
+}
+void toolKalem::patternpenButtonSlot(bool menushow)
+{
 
-    //current_toolTahta->scene->setSekilTanimlamaStatus(false);
-    /*current_toolTahta->penDrawingMain=true;
-    current_toolTahta->gv->hide();
-    current_toolTahta->gv->setEnabled(false);
-    current_toolTahta->scene->makeItemsControllable(false);
-    QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
-    QPalette palet;
-    palet.setBrush(QPalette::Background,pixMap);
-    current_toolTahta->setPalette(palet);*/
+    buttonStateClear();penButton->setChecked(true);
+    if(menushow){
+        current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
+        current_toolKalemMenu->show();
+    }
+    penButton->setIcon(QIcon(":icons/patternpen.svg"));
+    current_toolTahta->scene->setSekilTanimlamaStatus(false);
+    current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
+    currentMode=Scene::Mode::DrawPen;
+    oldMode=Scene::Mode::DrawPen;
+    currentType=DiagramItem::DiagramType::PatternPen;
+    oldType=DiagramItem::DiagramType::PatternPen;
+    current_toolTahta->scene->sceneMode=Scene::Mode::DrawPenPattern;
 
-    modeKontrolSlot();
-    //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NormalPen);
+
+modeKontrolSlot();
+}
+
+void toolKalem::smartpenButtonSlot(bool menushow)
+{
+    buttonStateClear();penButton->setChecked(true);
+    if(menushow){
+        current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
+        current_toolKalemMenu->show();
+    }
+     penButton->setIcon(QIcon(":icons/smartpen.png"));
+    current_toolTahta->scene->setSekilTanimlamaStatus(true);
+    current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::SmartPen;
+    current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
+    currentMode=Scene::Mode::DrawPen;
+    oldMode=Scene::Mode::DrawPen;
+    currentType=DiagramItem::DiagramType::SmartPen;
+    oldType=DiagramItem::DiagramType::SmartPen;;
+modeKontrolSlot();
+
+}
+void toolKalem::fosforpenButtonSlot(bool menushow)
+{
+    buttonStateClear();penButton->setChecked(true);
+    if(menushow){
+        current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
+        current_toolKalemMenu->show();
+    }
+      penButton->setIcon(QIcon(":icons/fosforlupen.png"));
+    current_toolTahta->scene->setSekilTanimlamaStatus(false);
+    current_toolTahta->scene->setPenAlpha(50);
+    current_toolTahta->scene->sceneMode=Scene::Mode::DrawPenFosfor;
+    currentMode=Scene::Mode::DrawPenFosfor;
+    oldMode=Scene::Mode::DrawPenFosfor;
+    currentType=DiagramItem::DiagramType::FosforluPen;
+    oldType=DiagramItem::DiagramType::FosforluPen;;
+modeKontrolSlot();
 }
 
 void toolKalem::clearButtonSlot()

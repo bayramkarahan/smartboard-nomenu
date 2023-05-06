@@ -426,10 +426,11 @@ makeItemsControllable(false);
        sceneMoveState=true;
       // qDebug()<<"scene move pen";
        QGraphicsLineItem*  itemToPenDraw = new QGraphicsLineItem();
-       emit sceneItemAddedSignal(this,itemToPenDraw,false,DrawPen,DiagramItem::GraphicsLineItem);
+       addItem(itemToPenDraw);
+       //emit sceneItemAddedSignal(this,itemToPenDraw,false,DrawPen,DiagramItem::GraphicsLineItem);
        itemToPenDraw->setPen(QPen(myPenColor,myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin));
       auto *point=new QGraphicsLineItem();
-      emit sceneItemAddedSignal(this,point,false,DrawPen,DiagramItem::GraphicsLineItem);
+      //emit sceneItemAddedSignal(this,point,false,DrawPen,DiagramItem::GraphicsLineItem);
       point->setPen(QPen(myPenColor,myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin));
        //  qDebug()<<"1";
        if(tv!=0){
@@ -701,7 +702,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
             if (sonuc=="5"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Besgen);std=true;}
             if (sonuc=="6"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Altigen);std=true;}
             if (sonuc=="7"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Cember);std=true;}
-            if (sonuc=="8"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Cember);std=true;}
+            if (sonuc=="8"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Sekizgen);std=true;}
             if(std==true)
             {
                 itemToRectDraw->setPen(pen);
@@ -762,7 +763,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 
           while(!graphicsListpoints.isEmpty())
           {
-          emit sceneItemRemovedSignal(this,EraseMode,graphicsListpoints.last(),false);
+          emit sceneItemRemovedSignal(this,DrawPenFosfor,graphicsListpoints.last(),false);
           //removeItem(graphicsListpoints.last());
           delete graphicsListpoints.last();
           graphicsListpoints.removeLast();

@@ -157,5 +157,8 @@
         <file>icons/haritamaden.png</file>
         <file>icons/haritaova.png</file>
         <file>icons/haritaplato.png</file>
+        <file>icons/haritabolge.svg</file>
+        <file>icons/haritail.svg</file>
+        <file>icons/haritabosdilsiz.svg</file>
     </qresource>
 </RCC>

@@ -59,6 +59,231 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
 
     QFont ff( "Arial", 7, QFont::Normal);
 
+    QPushButton *saveButton=new QPushButton();
+    saveButton=butonSlot(saveButton,"",":icons/save.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    connect(saveButton, &QPushButton::clicked, [=]() {
+    //emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
+        saveSayfaButtonClick();
+       });
+
+
+    QPushButton *printButton = new QPushButton(this);
+    printButton=butonSlot(printButton,"",":icons/print.svg",QColor(255,0,0,0),e*0.7,b,e,b);
+    connect(printButton, &QPushButton::clicked, [=]() {
+        //emit kalemModeSignal(Scene::Mode::PrintMode,DiagramItem::DiagramType::NoType);
+        //QString fileName = QFileDialog::getSaveFileName(this, "Export PDF",QString(), "*.pdf");
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setPageSize(QPrinter::A4);
+        //printer.setOrientation(Qt::Horizontal);
+        printer.setOrientation(QPrinter::Landscape);
+        //printer.setOutputFormat(QPrinter::PdfFormat);
+        //printer.setOutputFileName(fileName);
+        int filenumber=20;
+        // QSize screenSize = qApp->screens()[0]->size();
+        QPixmap pixMap =current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+        QPainter p;
+        p.begin(&printer);
+        p.setWindow(QRect(0, 0, parentw,parenth));
+        p.drawPixmap (0, 0, pixMap);
+        p.end();
+    });
+
+    QPushButton *pdfOpenButton=new QPushButton();
+    pdfOpenButton=butonSlot(pdfOpenButton,"",":icons/pdfopen.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    connect(pdfOpenButton, &QPushButton::clicked, [=]() {
+        //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+
+        bool fileSelected=false;
+        Qt::WindowFlags flags = 0;
+       //if(screenDesktop==true) ekranButtonClick();
+
+        flags |= Qt::Window;
+        flags |= Qt::X11BypassWindowManagerHint;
+        flags |= Qt::CustomizeWindowHint;
+        this->setWindowFlags(flags);
+
+        QFileDialog abc;
+       /// abc.setSidebarUrls(urls);
+        abc.setFileMode(QFileDialog::AnyFile);
+
+        flags |= Qt::SplashScreen;
+        flags |= Qt::X11BypassWindowManagerHint;
+        flags |= Qt::WindowStaysOnTopHint;
+        // QFileDialog abc;
+        abc.setWindowFlags(flags);
+
+        QString os="";
+    #ifdef WIN32
+        // Windows code here
+        os="windows";
+    #else
+        // UNIX code here
+        os="linux";
+    #endif
+
+        if(os=="linux"){
+            //qDebug()<<"linux fileopen";
+            abc.setWindowTitle("Pdf Dosyası Aç");
+            abc.setDirectory(QDir::homePath()+"/Masaüstü");
+            abc.setNameFilter(tr("PDF file (*.pdf)"));
+            abc.setWindowModality( Qt::WindowModal );
+            abc.setFileMode( QFileDialog::AnyFile );
+            abc.setModal(true);
+               abc.setWindowModality(Qt::ApplicationModal);
+
+            if(abc.exec()) {
+                if(abc.selectedFiles()[0].contains(".pdf", Qt::CaseInsensitive)) fileSelected=true;
+
+               //..
+
+            }
+           // int i =
+                 //   abc.show();
+             //   qDebug() << "Dialog result: " << i;
+
+    //if(screenDesktop==false) ekranButtonClick();
+        }
+        else
+        {
+            //qDebug()<<"windows fileopen";
+            abc.setWindowTitle("Pdf Dosya Aç");
+            abc.setDirectory(QDir::homePath()+"/desktop");
+            abc.setNameFilter(tr("PDF file (*.pdf)"));
+            abc.setWindowModality( Qt::WindowModal );
+            abc.setFileMode( QFileDialog::AnyFile );
+            int i = abc.exec();
+                qDebug() << "Dialog result: " << i;
+
+            if(abc.exec()) {
+                if(abc.selectedFiles()[0].contains(".pdf", Qt::CaseInsensitive)) fileSelected=true;
+
+            ///    if(screenDesktop==false) ekranButtonClick();
+
+            }
+            //qDebug()<<"selam";
+
+
+        }
+
+        flags |= Qt::Window;
+        flags |= Qt::X11BypassWindowManagerHint;
+        flags |= Qt::WindowStaysOnTopHint;
+        this->setWindowFlags(flags);
+        show();
+
+
+        if(fileSelected==false) return;
+        fileSelected=false;
+       // Poppler::Document *doc
+         current_toolTahta->doc = Poppler::Document::load(abc.selectedFiles()[0]);
+       current_toolTahta->doc->setRenderHint(Poppler::Document::TextAntialiasing,true);
+        current_toolTahta->doc->setRenderHint(Poppler::Document::Antialiasing,true);
+        current_toolTahta->doc->setRenderHint(Poppler::Document::TextHinting,true);
+        current_toolTahta->doc->setRenderHint(Poppler::Document::TextSlightHinting,true);
+        current_toolTahta->doc->setRenderHint(Poppler::Document::ThinLineSolid,true);
+        current_toolTahta->doc->setRenderBackend(Poppler::Document::ArthurBackend);
+
+        current_toolTahta->pdfPageCount=current_toolTahta->doc->numPages();
+        current_toolTahta->pdfFirstPageNumber=0;
+        current_toolTahta->pdfLastPageNumber=0;
+        //******************Load Pdf File************************************
+        if(current_toolTahta->pdfPageCount>0)
+        {
+
+
+            //pdfobjectnumber=1;
+           // pdfPageList=1;
+            ileriSayfaButtonClick();
+
+            //sceneSayfaActiveNumber=0;
+           // scene=sceneSayfa[sceneSayfaActiveNumber];
+           // view->setScene(scene);
+           // if(scene->pdfObjectAdded&&scene->pdfObjectShow==false) pdfLoaderPage(sceneSayfaActiveNumber);///pdf page loader
+            //currentScreenModeSlot();
+        }
+    });
+
+    QPushButton *pdfSaveButton=new QPushButton();
+    pdfSaveButton=butonSlot(pdfSaveButton,"",":icons/pdfsave.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    connect(pdfSaveButton, &QPushButton::clicked, [=]() {
+        //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+        Qt::WindowFlags flags = 0;
+        flags |= Qt::Dialog;
+        flags |= Qt::X11BypassWindowManagerHint;
+
+        QMessageBox messageBox(this);
+        messageBox.setWindowFlags(flags);
+        messageBox.setText("Bilgi\t\t\t\t\t\t");
+        messageBox.setInformativeText("Pdf Dosyası Masaüstünüze Kaydedilecek\n"
+                                      "Bu İşlem Kaydedeceğiniz Sayfa Sayısına Göre Zaman Alacaktır\n"
+                                      "İşlemler Tamamlanana Kadar Lütfen Bekleyiniz... ");
+        QAbstractButton *evetButton =messageBox.addButton(tr("Tamam"), QMessageBox::ActionRole);
+        messageBox.setIcon(QMessageBox::Information);
+        messageBox.exec();
+        /**********************************************************************************************************/
+        QString fileName;
+        QString os="";
+        #ifdef WIN32
+        // Windows code here
+        os="windows";
+        #else
+        // UNIX code here
+            os="linux";
+        #endif
+
+            if(os=="linux"){
+            fileName=QDir::homePath()+"/Masaüstü/E-Tahta.pdf";
+            }
+        else{//windows
+            fileName=QDir::homePath()+"/desktop/E-Tahta.pdf";
+           }
+
+
+            QFile f(fileName);
+               f.open(QIODevice::WriteOnly);
+               QPdfWriter* pdfWriter = new QPdfWriter(&f);
+
+            //QPdfWriter *pdfWriter(&f);
+    //pdfWriter.setPageSize(QPageSize(100,100));
+    pdfWriter->setPageSizeMM(QSizeF(current_toolTahta->gv->sceneRect().toRect().width(), current_toolTahta->gv->sceneRect().toRect().height()));
+    QPainter painter(pdfWriter);
+    //qDebug()<<"Sayfacreate Start"<<QDateTime::currentDateTime();
+    for(int i=0;i<current_toolTahta->sceneListButton.length();i++) {
+          secSayfaButtonClick(i);///sayfalar sırayla pdf yapılıyor
+                 current_toolTahta->scene->makeItemsControllable(false);
+                 painter.setWindow(QRect(0, 0, current_toolTahta->gv->sceneRect().toRect().width(), current_toolTahta->gv->sceneRect().toRect().height()));
+                 QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+                 painter.drawPixmap(0,0,pixMap);
+
+        if(i!=current_toolTahta->sceneListButton.length()-1)pdfWriter->newPage();
+    }
+    //qDebug()<<"Sayfacreate End"<<QDateTime::currentDateTime();
+    painter.end();
+    delete pdfWriter;
+    f.close();
+
+    QString st;
+    st.append(QDir::homePath()+"/Masaüstü/E-Tahta.pdf");
+    st.append("\n\nDosyası Masaüstünüze Kaydedildi. ");
+
+
+     Qt::WindowFlags flagss = 0;
+     flagss |= Qt::Dialog;
+     flagss |= Qt::X11BypassWindowManagerHint;
+
+     QMessageBox messageBox1(this);
+     messageBox1.setWindowFlags(flagss);
+     messageBox1.setText("Bilgi\t\t\t");
+     messageBox1.setInformativeText(st);
+     QAbstractButton *evetButton1 =messageBox1.addButton(tr("Tamam"), QMessageBox::ActionRole);
+    // QAbstractButton *hayirButton =messageBox.addButton(tr("Hayır"), QMessageBox::ActionRole);
+     messageBox1.setIcon(QMessageBox::Information);
+             messageBox1.exec();
+
+    });
+   /* QLabel *pdfopenLabel=new QLabel("Pdf Aç");      pdfopenLabel->setFont(ff);
+    QLabel *pdfsaveLabel=new QLabel("Pdf Kaydet");  pdfsaveLabel->setFont(ff);
+    */
     delPageButton=new QPushButton();
     delPageButton=butonSlot(delPageButton,"",":icons/delpage.svg",QColor(255,0,0,0),e,b,e,b);
 
@@ -89,12 +314,13 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     nextPageButton=butonSlot(nextPageButton,"",":icons/nextpage.svg",QColor(255,0,0,0),e,b,e,b);
 
     connect(nextPageButton, &QPushButton::clicked, [=]() {
-        if(current_toolTahta->sceneIndex>current_toolTahta->current_sceneIndex)
+          ileriSayfaButtonClick();
+       /* if(current_toolTahta->sceneIndex>current_toolTahta->current_sceneIndex)
         {
             current_toolTahta->current_sceneIndex++;
+
             qDebug()<<"current_toolTahta->current_sceneIndex:"<<current_toolTahta->current_sceneIndex;
-        }
-        //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
+        }*/
 
     });
 
@@ -102,12 +328,13 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     backPageButton=butonSlot(backPageButton,"",":icons/backpage.svg",QColor(255,0,0,0),e,b,e,b);
 
     connect(backPageButton, &QPushButton::clicked, [=]() {
-        if (current_toolTahta->sceneIndex>0&&current_toolTahta->current_sceneIndex>0)
+        /*if (current_toolTahta->sceneIndex>0&&current_toolTahta->current_sceneIndex>0)
         {
             current_toolTahta->current_sceneIndex--;
             qDebug()<<"current_toolTahta->current_sceneIndex:"<<current_toolTahta->current_sceneIndex;
          }
-
+*/
+          geriSayfaButtonClick();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
 
@@ -173,19 +400,34 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     layout->setContentsMargins(0, 0, 0, 1);
     //layout->setMargin(0);
    // layout->setColumnMinimumWidth(0, 37);
+    QWidget *pdfWidget=new QWidget();
+    auto pdfwidgetlayout = new QGridLayout(pdfWidget);
+    pdfWidget->setFixedSize(3*e,b);
+    pdfwidgetlayout->setContentsMargins(0, 0, 0, 1);
+    pdfwidgetlayout->addWidget(pdfOpenButton, 0, 1,1,1,Qt::AlignHCenter);
+    pdfwidgetlayout->addWidget(pdfSaveButton, 0, 2,1,1,Qt::AlignHCenter);
+    pdfwidgetlayout->addWidget(saveButton, 0, 3,1,1,Qt::AlignHCenter);
+    pdfwidgetlayout->addWidget(printButton, 0, 4,1,1,Qt::AlignHCenter);
 
+    layout->addWidget(leftsidePageButton, 0, 5,1,1,Qt::AlignHCenter);
+    layout->addWidget(pdfWidget, 0, 6,1,1,Qt::AlignHCenter);
 
-    layout->addWidget(leftsidePageButton, 0, 1,1,1,Qt::AlignHCenter);
-    layout->addWidget(backPageButton, 0, 2,1,1,Qt::AlignHCenter);
-    layout->addWidget(addPageButton, 0, 3,1,1,Qt::AlignHCenter);
-    layout->addWidget(pageListwg, 0, 4,1,1,Qt::AlignHCenter);
+    layout->addWidget(backPageButton, 0, 9,1,1,Qt::AlignHCenter);
+    layout->addWidget(addPageButton, 0, 10,1,1,Qt::AlignHCenter);
+    layout->addWidget(pageListwg, 0, 11,1,1,Qt::AlignHCenter);
+    layout->addWidget(delPageButton, 0, 15,1,1,Qt::AlignHCenter);
+    layout->addWidget(nextPageButton, 0, 16,1,1,Qt::AlignHCenter);
 
-    layout->addWidget(delPageButton, 0, 6,1,1,Qt::AlignHCenter);
-    layout->addWidget(nextPageButton, 0, 7,1,1,Qt::AlignHCenter);
-    layout->addWidget(zoomnegatifPageButton, 0, 8,1,1,Qt::AlignHCenter);
-    layout->addWidget(zoompozitifPageButton, 0, 9,1,1,Qt::AlignHCenter);
-    layout->addWidget(zoomfitPageButton, 0, 10,1,1,Qt::AlignHCenter);
-    layout->addWidget(rightsidePageButton, 0, 11,1,1,Qt::AlignHCenter);
+    QWidget *pdfZoomWidget=new QWidget();
+    auto pdfzoomwidgetlayout = new QGridLayout(pdfZoomWidget);
+    pdfZoomWidget->setFixedSize(3*e,b);
+    pdfzoomwidgetlayout->setContentsMargins(0, 0, 0, 1);
+    pdfzoomwidgetlayout->addWidget(zoomnegatifPageButton, 0, 1,1,1,Qt::AlignHCenter);
+    pdfzoomwidgetlayout->addWidget(zoompozitifPageButton, 0, 2,1,1,Qt::AlignHCenter);
+    pdfzoomwidgetlayout->addWidget(zoomfitPageButton, 0, 3,1,1,Qt::AlignHCenter);
+    layout->addWidget(pdfZoomWidget, 0, 18,1,1,Qt::AlignHCenter);
+
+    layout->addWidget(rightsidePageButton, 0, 20,1,1,Qt::AlignHCenter);
 
        //menu->setFixedSize(QSize(e*20,b));
    // menu->setStyleSheet("QMenu { width: 290 px; height: 180 px; }");
@@ -532,11 +774,36 @@ QWidget *toolKalem::sosyalTopMenu(int _boy)
         emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
         penButtonSlot(false);
     });
-
+/****************************************************************/
+    QPushButton *haritailButton=new QPushButton();
+    haritailButton=butonSlot(haritailButton,"",":icons/haritail.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(haritailButton, &QPushButton::clicked, [=]() {
+        addObjectScene(":icons/haritail.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
+    });
+    QPushButton *haritabosdilsizButton=new QPushButton();
+    haritabosdilsizButton=butonSlot(haritabosdilsizButton,"",":icons/haritabosdilsiz.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(haritabosdilsizButton, &QPushButton::clicked, [=]() {
+        addObjectScene(":icons/haritabosdilsiz.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
+    });
+    QPushButton *haritabolgeButton=new QPushButton();
+    haritabolgeButton=butonSlot(haritabolgeButton,"",":icons/haritabolge.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(haritabolgeButton, &QPushButton::clicked, [=]() {
+        addObjectScene(":icons/haritabolge.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Resim,parentw*0.9,parenth*0.8,parentw*0.05,parenth*0.07,true);
+        emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+        penButtonSlot(false);
+    });
 
 
 
     QLabel *haritadilsizLabel=new QLabel("Dilsiz");  haritadilsizLabel->setFont(ff);
+    QLabel *haritabosdilsizLabel=new QLabel("B.Dilsiz");  haritabosdilsizLabel->setFont(ff);
+    QLabel *haritailLabel=new QLabel("İl");  haritailLabel->setFont(ff);
+    QLabel *haritabolgeLabel=new QLabel("Bölge");  haritabolgeLabel->setFont(ff);
+
     QLabel *haritaakarsuLabel=new QLabel("Akarsu");  haritaakarsuLabel->setFont(ff);
     QLabel *haritadagLabel=new QLabel("Dağ");  haritadagLabel->setFont(ff);
     QLabel *haritaplatoLabel=new QLabel("Plato");  haritaplatoLabel->setFont(ff);
@@ -546,21 +813,27 @@ QWidget *toolKalem::sosyalTopMenu(int _boy)
 
     auto layout = new QGridLayout(menu);
     layout->setContentsMargins(5, 3, 5, 1);
-    layout->addWidget(haritadilsizButton, 0, 1,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritaakarsuButton, 0, 2,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritadagButton, 0, 3,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritaplatoButton, 0, 4,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritaovaButton, 0, 5,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritabitkiortusuButton, 0, 6,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritamadenButton, 0, 7,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritadilsizButton, 0, 5,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritabosdilsizButton, 0, 6,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritailButton, 0, 7,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritabolgeButton, 0, 8,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritaakarsuButton, 0, 15,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritadagButton, 0, 16,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritaplatoButton, 0, 17,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritaovaButton, 0, 20,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritabitkiortusuButton, 0, 21,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritamadenButton, 0, 22,1,1,Qt::AlignHCenter);
 
-    layout->addWidget(haritadilsizLabel,1,1,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritaakarsuLabel,1,2,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritadagLabel,1,3,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritaplatoLabel,1,4,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritaovaLabel,1,5,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritabitkiortusuLabel,1,6,1,1,Qt::AlignHCenter);
-    layout->addWidget(haritamadenLabel,1,7,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritadilsizLabel,1,5,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritabosdilsizLabel,1,6,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritailLabel,1,7,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritabolgeLabel,1,8,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritaakarsuLabel,1,15,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritadagLabel,1,16,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritaplatoLabel,1,17,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritaovaLabel,1,20,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritabitkiortusuLabel,1,21,1,1,Qt::AlignHCenter);
+    layout->addWidget(haritamadenLabel,1,22,1,1,Qt::AlignHCenter);
 
     //  layout->setColumnStretch(6, 255);
     //menu->setFixedSize(QSize(e*10,b*2));
@@ -1134,7 +1407,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
   QGridLayout *renkloyout = new QGridLayout;
 
   QWidget *cw=colorWidget("sekilZeminColor","yatay",en*0.8,boy,false);
-  cw->setFixedSize(en*9,boy*0.7);
+  cw->setFixedSize(en*10,boy*0.7);
   cw->setVisible(true);
   renkloyout->addWidget(cw, 0,0,1,1,Qt::AlignHCenter);
   QLabel *renk= new QLabel("Şekil Dolgu Rengi");      renk->setFont(ff);
@@ -1175,7 +1448,7 @@ QWidget *toolKalem::penTopMenu(int _boy)
     penStyleSolidLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::SolidLine,ken,ken));
     connect(penStyleSolidLine, &QPushButton::clicked, [=]() {
         // setPenStyle(Qt::SolidLine);
-         emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SolidLine);
+       //  emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SolidLine);
         current_toolTahta->scene->setSekilPenStyle(Qt::SolidLine);
         current_toolTahta->scene->setPenStyle(Qt::SolidLine);
         //  menu->close();
@@ -1188,7 +1461,7 @@ QWidget *toolKalem::penTopMenu(int _boy)
     penStyleDashLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::DashLine,ken,ken));
     connect(penStyleDashLine, &QPushButton::clicked, [=]() {
         // setPenStyle(Qt::DashLine);
-         emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DashLine);
+        // emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DashLine);
         //menu->close();
         current_toolTahta->scene->setPenStyle(Qt::DashLine);
         current_toolTahta->scene->setSekilPenStyle(Qt::DashLine);
@@ -1201,20 +1474,20 @@ QWidget *toolKalem::penTopMenu(int _boy)
     penStyleDotLine->setIcon(lineImage(ditem->sekilStore(DiagramItem::DiagramType::Kalem,QRectF(QPointF(0,0),QPointF(ken,ken))),Qt::DotLine,ken,ken));
     connect(penStyleDotLine, &QPushButton::clicked, [=]() {
         //setPenStyle(Qt::DotLine);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DotLine);
+       //emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::DotLine);
         //menu->close();
         current_toolTahta->scene->setPenStyle(Qt::DotLine);
-        current_toolTahta-> scene->setSekilPenStyle(Qt::DotLine);
+        current_toolTahta->scene->setSekilPenStyle(Qt::DotLine);
     });
 
     QPushButton *kalemSekilTanimlama= new QPushButton;
      kalemSekilTanimlama=butonSlot(kalemSekilTanimlama,"",":icons/smartpen.png",QColor(255,0,0,0),e,b,e,b);
     connect(kalemSekilTanimlama, &QPushButton::clicked, [=]()
     {
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SmartPen);
+       // emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::SmartPen);
         // menu->close();
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
-        current_toolTahta->scene->setSekilTanimlamaStatus(true);
+
+smartpenButtonSlot(true);
     });
 
 
@@ -1223,32 +1496,20 @@ QWidget *toolKalem::penTopMenu(int _boy)
     kalemMenuButton->setIconSize(QSize(e,b));*/
     kalemMenuButton=butonSlot(kalemMenuButton,"",":icons/pen.svg",QColor(255,0,0,0),e,b,e,b);
     connect(kalemMenuButton, &QPushButton::clicked, [=]() {
-        // menu->close();  qDebug()<<b;
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
-        current_toolTahta->scene->setSekilTanimlamaStatus(false);
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::NormalPen);
-       // qDebug()<<"pen normal";
-       // current_toolTahta->gv->hide();
+
+        penButtonSlot(true);
        });
 
     QPushButton *fosforluKalemButton=new QPushButton();
     fosforluKalemButton=butonSlot(fosforluKalemButton,"",":icons/fosforlupen.png",QColor(255,0,0,0),e,b,e,b);
     connect(fosforluKalemButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::FosforluPen);
-       // menu->close();
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPenFosfor;
-        current_toolTahta->scene->setSekilTanimlamaStatus(false);
-        current_toolTahta->scene->setPenAlpha(50);
+         fosforpenButtonSlot(true);
        });
 
     QPushButton *patternKalemButton=new QPushButton();
     patternKalemButton=butonSlot(patternKalemButton,"",":icons/patternpen.svg",QColor(255,0,0,0),e,b,e,b);
     connect(patternKalemButton, &QPushButton::clicked, [=]() {
-        emit kalemModeSignal(Scene::Mode::DrawPen,DiagramItem::DiagramType::PatternPen);
-       // menu->close();
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawPenPattern;
-        current_toolTahta->scene->setSekilTanimlamaStatus(false);
-        //current_toolTahta->scene->setPenAlpha(50);
+       patternpenButtonSlot(true);
        });
 
 
@@ -1368,7 +1629,7 @@ QWidget *toolKalem::penTopMenu(int _boy)
     //QGridLayout *renkloyout = new QGridLayout;
     //renkloyout->setContentsMargins(0,0,0,0);
     QWidget *cw=colorWidget("penColor","yatay",en*0.8,boy*0.8,false);
-    cw->setFixedSize(en*9,boy);
+    cw->setFixedSize(en*10,boy);
     cw->setVisible(true);
    // renkloyout->addWidget(cw, 0,0,1,1,Qt::AlignHCenter);
    // QLabel *renk= new QLabel("Kalem Rengi");      renk->setFont(ff);

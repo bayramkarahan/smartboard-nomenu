@@ -2,50 +2,6 @@
 #define TOOLKALEMSIGNALSLOTS_H
 #include<toolKalem.h>
 
-void toolKalem::kalemModeSignalSlot(Scene::Mode mode,DiagramItem::DiagramType type)
-{
-    qDebug()<<"kw->currentMode:"<<currentMode<<oldMode;
-   // oldMode=currentMode;    currentMode=mode;
-   // oldType=currentType;    currentType=type;
-
-
-   /* if(Scene::Mode::DrawPen==mode&&(DiagramItem::DiagramType::NormalPen==type||DiagramItem::DiagramType::PatternPen==type))
-    {
-       /*
-        current_toolTahta->penDrawingMain=true;
-        current_toolTahta->gv->hide();
-        current_toolTahta->gv->setEnabled(false);
-        current_toolTahta->scene->makeItemsControllable(false);
-        QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
-        QPalette palet;
-        palet.setBrush(QPalette::Background,pixMap);
-        current_toolTahta->setPalette(palet);
-        */
-
-    /*}else
-    {
-        qDebug()<<"Kalem Dışında Faklı Bir Araç Seçildi";
-        current_toolTahta->penDrawingMain=false;
-        current_toolTahta->gv->show();
-        current_toolTahta->gv->setEnabled(true);
-        /***************************form ekran fotosu resetleniyor**************/
-     /*   QPalette palet;
-        palet.setBrush(QPalette::Background,QColor(0,0,0,0));
-        current_toolTahta->setPalette(palet);
-        /***************************form ekran fotosu resetleniyor**************/
-   /* }
-
-    if(Scene::Mode::SekilMode==mode) kalemSekilModeSignalSlot(type);
-    if(Scene::Mode::ZeminMode==mode) kalemZeminModeSignalSlot(type);
-*/
-   /* current_toolTahta->raise();
-    raise();
-    current_toolPageMenu->lower();
-    current_toolKalemMenu->raise();*/
-    //current_toolTahta->lower();
-}
-
-
 void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, bool additemstate, Scene::Mode mode, DiagramItem::DiagramType type)
 {
     scenetemp->addItem(item);
@@ -57,24 +13,26 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
     scenetemp->historyBackAction.append("added");
     depo::historyBackCount=scenetemp->historyBack.count();
     depo::historyNextCount=scenetemp->historyNext.count();
-    qDebug()<<"scene nesne eklendi....."<<mode<<type;
+    qDebug()<<"scene nesne eklendi....."<<mode<<type<<oldMode<<oldType;
 
     if(mode==Scene::CopyMode) handButtonSlot(true);
-   /* if(type==(DiagramItem::DiagramType::Ok||DiagramItem::DiagramType::Cizgi||
-              DiagramItem::DiagramType::CiftOk||DiagramItem::DiagramType::Ucgen||
-              DiagramItem::DiagramType::DikUcgen||DiagramItem::DiagramType::Dortgen||
-              DiagramItem::DiagramType::Cember||DiagramItem::DiagramType::Yamuk||
-              DiagramItem::DiagramType::Besgen||DiagramItem::DiagramType::Altigen||
-              DiagramItem::DiagramType::Sekizgen))*/
-    if(type==DiagramItem::DiagramType::Ok||type==DiagramItem::DiagramType::Cizgi||
+    if(mode==Scene::DrawRectangle&&(type==DiagramItem::DiagramType::Ok||type==DiagramItem::DiagramType::Cizgi||
             type==DiagramItem::DiagramType::CiftOk||type==DiagramItem::DiagramType::Ucgen||
             type==DiagramItem::DiagramType::DikUcgen||type==DiagramItem::DiagramType::Dortgen||
             type==DiagramItem::DiagramType::Cember||type==DiagramItem::DiagramType::Yamuk||
             type==DiagramItem::DiagramType::Besgen||type==DiagramItem::DiagramType::Altigen||
-            type==DiagramItem::DiagramType::Sekizgen)
+            type==DiagramItem::DiagramType::Sekizgen||type==DiagramItem::DiagramType::Baklava||
+            type==DiagramItem::DiagramType::Kup||type==DiagramItem::DiagramType::Silindir||
+            type==DiagramItem::DiagramType::Pramit||type==DiagramItem::DiagramType::Kure))
     {
-       // qDebug()<<"Şekil Eklediniz..";
-        handButtonSlot(false);
+        // qDebug()<<"Şekil Eklediniz..";
+        if(mode==Scene::DrawRectangle&&(type==DiagramItem::DiagramType::Cizgi||
+                                        type==DiagramItem::DiagramType::Ok||
+                                        type==DiagramItem::DiagramType::CiftOk))
+        {
+
+        }else
+                handButtonSlot(false);
     }
     if(mode==Scene::FenMode)
     {
@@ -82,6 +40,20 @@ void toolKalem::sceneItemAddedSignalSlot(Scene *scenetemp, QGraphicsItem *item, 
        //currentMode=oldMode;currentType=oldType;
 
     //current_toolKalemMenu->show();
+    }
+    if(mode==Scene::DrawPen&&oldMode==Scene::DrawPen&&oldType==DiagramItem::DiagramType::SmartPen)
+    {
+        qDebug()<<"Akıllı  Nesne Eklediniz....";
+       //handButtonSlot(false);
+        smartpenButtonSlot(true);
+
+    }
+    if(mode==Scene::DrawPenFosfor&&type==DiagramItem::DiagramType::Resim)
+    {
+        qDebug()<<"Fosforlu Kalem Eklediniz....";
+       //handButtonSlot(false);
+        fosforpenButtonSlot(false);
+
     }
     if(mode==Scene::ZeminMode)
     {
@@ -145,6 +117,7 @@ void toolKalem::sceneItemRemovedSignalSlot(Scene *scenetemp, Scene::Mode mode, Q
     scenetemp->removeItem(item);
 
     qDebug()<<"scene nesne Silindi......";
+     if(mode==Scene::DrawPenFosfor) fosforpenButtonSlot(false);
     if(mode==Scene::EraseMode) eraseButtonSlot();
     if(mode==Scene::ClearMode) {currentMode= oldMode;currentType=oldType;}
       modeKontrolSlot();
@@ -463,7 +436,6 @@ kw->currentType=kw->oldType;
 
 void toolKalem::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
     qDebug()<<"sekil butonclick"<<type;
-
     sekilButtonIconSlot(type);//şekil buton iconu ayarlanıyor
 
     current_toolTahta->scene->setSekilPenSize(penSize);
@@ -475,33 +447,11 @@ void toolKalem::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
     currentType=type;
     oldType=type;
     modeKontrolSlot();
-
-   if(DiagramItem::DiagramType::Kure==type)
-    {
-
-        current_toolTahta->scene->mySekilType=type;
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawRectangle;
-        current_toolTahta->scene->myImage=QPixmap(":/icons/kure.png");
-      }
-    else if(DiagramItem::DiagramType::Silindir==type)
-    {
-        current_toolTahta->scene->mySekilType=type;
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawRectangle;
-        current_toolTahta->scene->myImage=QPixmap(":/icons/silindir.png");
-      }
-    else if(DiagramItem::DiagramType::Kup==type)
-    {
-      current_toolTahta->scene->mySekilType=type;
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawRectangle;
-       current_toolTahta->scene->myImage=QPixmap(":/icons/kup.png");
-      }
-    else if(DiagramItem::DiagramType::Pramit==type)
-    {
-        current_toolTahta->scene->mySekilType=type;
-        current_toolTahta->scene->sceneMode=Scene::Mode::DrawRectangle;
-        current_toolTahta->scene->myImage=QPixmap(":/icons/pramit.png");
-      }
-
+    current_toolTahta->scene->mySekilType=type;
+   if(DiagramItem::DiagramType::Kure==type) current_toolTahta->scene->myImage=QPixmap(":/icons/kure.png");
+    else if(DiagramItem::DiagramType::Silindir==type) current_toolTahta->scene->myImage=QPixmap(":/icons/silindir.png");
+    else if(DiagramItem::DiagramType::Kup==type) current_toolTahta->scene->myImage=QPixmap(":/icons/kup.png");
+    else if(DiagramItem::DiagramType::Pramit==type) current_toolTahta->scene->myImage=QPixmap(":/icons/pramit.png");
     else if(DiagramItem::DiagramType::Resim==type)
     {
         qDebug()<<"resim";

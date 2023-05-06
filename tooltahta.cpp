@@ -5,7 +5,7 @@ toolTahta::toolTahta(int w, int h, QWidget *parent):QWidget()
     setFixedSize(w,h);
     setWindowFlags(Qt::FramelessWindowHint);
     setWindowFlags(Qt::WindowStaysOnTopHint);
-    //setWindowFlags(Qt::X11BypassWindowManagerHint);
+    setWindowFlags(Qt::X11BypassWindowManagerHint);
     setAttribute(Qt::WA_StaticContents);
     setAttribute(Qt::WA_TranslucentBackground, true);
     this->setAttribute(Qt::WA_NoSystemBackground, false);
@@ -215,7 +215,7 @@ void toolTahta::drawLineTo(const QPoint &endPoint)
 int myPenSize=scene->myPenSize;
 //Qt::SolidLine myPenStyle;
     QPainter painter(&penTuval);
-    QPen pen=QPen( scene->myPenColor, scene->myPenSize, Qt::SolidLine, Qt::RoundCap ,Qt::RoundJoin);
+    QPen pen=QPen( scene->myPenColor, scene->myPenSize, scene->myPenStyle, Qt::RoundCap ,Qt::RoundJoin);
     pen.setCosmetic(true);
     painter.setPen(pen);
     painter.setRenderHint(QPainter::Antialiasing);

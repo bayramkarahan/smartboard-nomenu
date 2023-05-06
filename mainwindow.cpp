@@ -13,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent) :
     current_toolTahta=new toolTahta(screenSize.width()*0.7,screenSize.height()*0.4);
     current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()*0.85);
 
-    //current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
-    //current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()/2);
+    current_toolTahta=new toolTahta(screenSize.width(),screenSize.height());
+    current_toolTahta->move(screenSize.width()/2-current_toolTahta->width()/2,screenSize.height()/2-current_toolTahta->height()/2);
     current_toolTahta->show();
     /***************************Top Menu**********************************************/
     current_toolKalemMenu=new toolKalemMenu(new QWidget(),screenSize.width()*0.8,screenSize.height()*0.05);
@@ -22,8 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     curent_pageMenu=new toolPageMenu(new QWidget(),screenSize.width()*0.85,screenSize.height()*0.045);
     //curent_pageMenu=new toolPageMenu(kw->pageBottomMenu(screenSize.height()*0.045),screenSize.width()*0.85,screenSize.height()*0.045);
     /******************************************************************************/
-    kw=new toolKalem("Kalem",en*1/3*2-2,boy*0.8,current_toolTahta,current_toolKalemMenu,curent_pageMenu,screenSize.width(),screenSize.height());
-    kw->setFixedSize(en*1.15,boy*0.8*14);
+    kw=new toolKalem("Kalem",en*0.55,boy*0.7,current_toolTahta,current_toolKalemMenu,curent_pageMenu,screenSize.width(),screenSize.height());
+    kw->setFixedSize(en*1.0,boy*0.75*11);
     kw->sagSolHizala();
     // kw->move(screenSize.width()-kw->width()-10,screenSize.height()/2- kw->height()/2);
     // kw->setStyleSheet("background-color:rgb(220, 220, 220);");
@@ -43,9 +43,9 @@ MainWindow::MainWindow(QWidget *parent) :
    connect(kw, SIGNAL(penSignal()),current_toolKalemMenu, SLOT(toolKalemMenu_PenSignalSlot()));
 
   /**************************************************************************/
-   connect(kw, SIGNAL(kalemModeSignal(Scene::Mode,DiagramItem::DiagramType)),
+  /* connect(kw, SIGNAL(kalemModeSignal(Scene::Mode,DiagramItem::DiagramType)),
            kw, SLOT(kalemModeSignalSlot(Scene::Mode,DiagramItem::DiagramType)));
-
+*/
    connect(kw, SIGNAL(kalemZeminModeSignal(DiagramItem::DiagramType)),
            kw, SLOT(kalemZeminModeSignalSlot(DiagramItem::DiagramType)));
 

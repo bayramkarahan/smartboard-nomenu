@@ -6,19 +6,19 @@ void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdf
    // bool initprg=false;
     if(current_toolTahta->sceneIndex==0&&current_toolTahta->current_sceneIndex==0)
     {
-        //initprg=true;
+
         current_toolTahta->sceneIndex++;
         current_toolTahta->current_sceneIndex=0;
        // current_toolTahta->sceneList.removeAt(0);
         //if(pdfobjectnumber==1&&pdfObjectAdded==false) pdfObjectAdded=true;
     }else
     {
-        //initprg=false;
-        current_toolTahta->sceneIndex++;
 
+        current_toolTahta->sceneIndex++;
       if(insertIndex==-1)current_toolTahta->current_sceneIndex=current_toolTahta->sceneIndex-1;
       else current_toolTahta->current_sceneIndex++;
     }
+
   ///  qDebug()<<"ekle sayfa2"<<sceneSayfaNumber<<sceneSayfaActiveNumber<<pdfObjectAdded;
      current_toolTahta->_scene = new Scene(current_toolTahta->gv);
      connect(current_toolTahta->_scene, SIGNAL(sceneItemAddedSignal(Scene*,QGraphicsItem*,bool,Scene::Mode,DiagramItem::DiagramType) ), this, SLOT(sceneItemAddedSignalSlot(Scene*,QGraphicsItem*,bool,Scene::Mode,DiagramItem::DiagramType) ) );
@@ -59,8 +59,9 @@ void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdf
       connect(_screenbtn, &QPushButton::clicked, [=]() {
           secSayfaButtonClick(_screenbtn->toolTip().toInt());
     });
+
       if(pdfObjectAdded)
-          emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::WhitePage);
+          emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
 
       secSayfaButtonClick(_screenbtn->toolTip().toInt());
       penButtonSlot(true);
@@ -68,7 +69,7 @@ void toolKalem::ekleSayfaButtonClick(int insertIndex,bool pdfObjectAdded,int pdf
 
 void toolKalem::silSayfaButtonClick(){
    /// if(sceneSayfaNumber>0)sceneSayfaNumber--;
-    if(current_toolTahta->sceneIndex>0){
+    if(current_toolTahta->sceneIndex>0&&!current_toolTahta->scene->pdfObjectAdded){
       // qDebug()<<"sil sayfa-1";
         QPalette palet;
         palet.setBrush(QPalette::Background,QColor(0,0,0,0));
@@ -103,38 +104,47 @@ void toolKalem::secSayfaButtonClick(int index)
 
     for(int i=0;i<current_toolTahta->sceneListButton.length();i++)
     {
-        palette->setColor(QPalette::Button, QColor(225,225,225,100));
-        current_toolTahta->sceneListButton[i]->setPalette(*palette);
+         palet.setColor(QPalette::Button, QColor(225,225,225,100));
+        current_toolTahta->sceneListButton[i]->setPalette(palet);
         current_toolTahta->sceneListButton[i]->setAutoFillBackground(true);
-
     }
-    palette->setColor(QPalette::Button, QColor(255,0,0,100));
-    current_toolTahta->sceneListButton[index]->setPalette(*palette);
+
+    palet.setColor(QPalette::Button, QColor(255,0,0,100));
+    current_toolTahta->sceneListButton[index]->setPalette(palet);
     current_toolTahta->sceneListButton[index]->setAutoFillBackground(true);
 
     if(current_toolTahta->scene->pdfObjectAdded&&current_toolTahta->scene->pdfObjectShow==false&&
             current_toolTahta->scene->pdfPageNumber<=current_toolTahta->pdfPageCount-1)
       pdfLoaderPage(current_toolTahta->scene->pdfPageNumber);///pdf page loader
 /***************************form ekran fotosu ayarlanıyor**************/
-    qDebug()<<"Sayfa Seçiliyor ve Yenileniyor";
+    qDebug()<<"Sayfa Seçiliyor ve Yenileniyor"<<current_toolTahta->sceneIndex;
     QPixmap pixMap = current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
     QPalette palet1;
     palet1.setBrush(QPalette::Background,pixMap);
     current_toolTahta->setPalette(palet1);
+
 /********************************************************************/
+    if(current_toolTahta->sceneIndex>14)
+    {
+        nextPageButton->show();
+        backPageButton->show();
+    }
+    else
+    {
+        nextPageButton->hide();
+        backPageButton->hide();
+    }
     if(current_toolTahta->scene->pdfObjectAdded)
    {
      //  qDebug()<<"sayfa ekle8";
-       nextPageButton->show();
-       backPageButton->show();
+
        zoompozitifPageButton->show();
        zoomnegatifPageButton->show();
        zoomfitPageButton->show();
 
    }else
    {
-        nextPageButton->hide();
-        backPageButton->hide();
+
         zoompozitifPageButton->hide();
         zoomnegatifPageButton->hide();
         zoomfitPageButton->hide();
@@ -155,6 +165,8 @@ void toolKalem::secSayfaButtonClick(int index)
        delPageButton->setEnabled(false);
 
    }
+
+
 }
 
 
