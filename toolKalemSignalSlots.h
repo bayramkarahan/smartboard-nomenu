@@ -166,6 +166,7 @@ void toolKalem::sayacCloseSignalSlot()
 //qDebug()<<"sayac Kapandı..";
 current_toolTahta->setWindowFlags(current_toolTahta_old_flags);
 current_toolTahta->show();
+modeKontrolSlot();
 }
 
 void toolKalem::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
