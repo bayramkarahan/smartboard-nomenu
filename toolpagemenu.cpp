@@ -50,10 +50,12 @@ void toolPageMenu::toolPageMenuOlustur(QWidget *_menu, int w, int h, int parentw
                */
     //menuStatus=true;
     menu=_menu;
-    //repaint();
+    //repaint();------------
     // menu->setVisible(true);
     this->setFixedSize(w,h);
-    this->move(parentw/2-w/2,2);
+    this->move(parentw/2-w/2,parenth-h-h);///sayafada nerede konumlanacağını belirlendiğimiz yer...
+
+//toolKalemMenuAsagiYukariHizalaStatusSlot();
     /// QGridLayout *mainlayout = new QGridLayout(this);
     ///      mainlayout->setContentsMargins(0,0,0,0);
     mainlayout->addWidget(menu);

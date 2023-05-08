@@ -371,10 +371,10 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
 
-    leftsidePageButton=new QPushButton();
-    leftsidePageButton=butonSlot(leftsidePageButton,"",":icons/leftside.svg",QColor(255,0,0,0),e,b,e,b);
+    leftrightButton=new QPushButton();
+    leftrightButton=butonSlot(leftrightButton,"",":icons/leftright.svg",QColor(255,0,0,0),e,b,e,b);
 
-    connect(leftsidePageButton, &QPushButton::clicked, [=]() {
+    connect(leftrightButton, &QPushButton::clicked, [=]() {
         sagSolHizala();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
       /*  QDial *dial = new QDial;// dial object
@@ -430,11 +430,11 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
                             */
     });
 
-    rightsidePageButton=new QPushButton();
-    rightsidePageButton=butonSlot(rightsidePageButton,"",":icons/rightside.svg",QColor(255,0,0,0),e,b,e,b);
+    updownButton=new QPushButton();
+    updownButton=butonSlot(updownButton,"",":icons/updown.svg",QColor(255,0,0,0),e,b,e,b);
 
-    connect(rightsidePageButton, &QPushButton::clicked, [=]() {
-        sagSolHizala();
+    connect(updownButton, &QPushButton::clicked, [=]() {
+        toolKalemMenuAsagiYukariHizalaStatusSlot();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
 
@@ -467,7 +467,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     pdfwidgetlayout->addWidget(saveButton, 0, 3,1,1,Qt::AlignHCenter);
     pdfwidgetlayout->addWidget(printButton, 0, 4,1,1,Qt::AlignHCenter);
 
-    layout->addWidget(leftsidePageButton, 0, 5,1,1,Qt::AlignHCenter);
+    layout->addWidget(leftrightButton, 0, 5,1,1,Qt::AlignHCenter);
     layout->addWidget(pdfWidget, 0, 6,1,1,Qt::AlignHCenter);
 
     layout->addWidget(backPageButton, 0, 9,1,1,Qt::AlignHCenter);
@@ -485,7 +485,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     pdfzoomwidgetlayout->addWidget(zoomfitPageButton, 0, 3,1,1,Qt::AlignHCenter);
     layout->addWidget(pdfZoomWidget, 0, 18,1,1,Qt::AlignHCenter);
 
-    layout->addWidget(rightsidePageButton, 0, 20,1,1,Qt::AlignHCenter);
+    layout->addWidget(updownButton, 0, 20,1,1,Qt::AlignHCenter);
 
        //menu->setFixedSize(QSize(e*20,b));
    // menu->setStyleSheet("QMenu { width: 290 px; height: 180 px; }");

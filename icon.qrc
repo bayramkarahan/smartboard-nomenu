@@ -116,8 +116,6 @@
         <file>icons/zoompagenegatif.svg</file>
         <file>icons/zoompagefit.svg</file>
         <file>icons/zoompagepozitif.svg</file>
-        <file>icons/leftside.svg</file>
-        <file>icons/rightside.svg</file>
         <file>icons/pen.svg</file>
         <file>icons/e-tahta.png</file>
         <file>icons/dotpage.svg</file>
@@ -161,5 +159,7 @@
         <file>icons/haritail.svg</file>
         <file>icons/haritabosdilsiz.svg</file>
         <file>icons/animasyon.gif</file>
+        <file>icons/leftright.svg</file>
+        <file>icons/updown.svg</file>
     </qresource>
 </RCC>

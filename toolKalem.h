@@ -140,6 +140,7 @@ public slots:
      void zoompozitifSayfaButtonClick();
      void zoomnegatifSayfaButtonClick();
      void sagSolHizala();
+     void toolKalemMenuAsagiYukariHizalaStatusSlot();
      void saveSayfaButtonClick();
      void addObjectScene(QString dosya, Scene::Mode mode, DiagramItem::DiagramType type, float w, float h , int posx, int posy, bool select);
      void infoButtonClick();
@@ -152,7 +153,7 @@ public slots:
 private:
      Qt::WindowFlags current_toolTahta_old_flags;
      bool sagSolHizaStatus;
-
+     bool toolKalemMenuAsagiYukariHizalaStatus;
      int pdfPageList=0;
      int ekliSayfa=1;
      int parentw;
@@ -171,8 +172,8 @@ private:
     QPushButton *nextPageButton;
     QPushButton *zoomnegatifPageButton;
     QPushButton *backPageButton;
-    QPushButton *rightsidePageButton;
-    QPushButton *leftsidePageButton;
+    QPushButton *updownButton;
+    QPushButton *leftrightButton;
     QPushButton *zoomfitPageButton;
     QPushButton *zoompozitifPageButton;
     protected:

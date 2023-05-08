@@ -208,6 +208,21 @@ void toolKalem::desktopButtonSlot()
 
 }
 
+
+void toolKalem::toolKalemMenuAsagiYukariHizalaStatusSlot()
+{
+    if (!toolKalemMenuAsagiYukariHizalaStatus)
+    {
+        current_toolKalemMenu->move(parentw/2-current_toolKalemMenu->width()/2,parenth-current_toolKalemMenu->height()*3);
+        toolKalemMenuAsagiYukariHizalaStatus=true;
+    }else
+    {     current_toolKalemMenu->move(parentw/2-current_toolKalemMenu->width()/2,2);
+
+         toolKalemMenuAsagiYukariHizalaStatus=false;
+    }
+
+}
+
 void toolKalem::sagSolHizala()
 {
     if (!sagSolHizaStatus)

@@ -56,7 +56,7 @@ void toolKalemMenu::toolKalemMenuOlustur(QWidget *_menu, int w, int h, int paren
     //repaint();
     // menu->setVisible(true);
     this->setFixedSize(w,h);
-    this->move(parentw/2-w/2,2);
+    this->move(parentw/2-w/2,2);///sayfada nerede konumlanacağını belirlediğimiz yer...
     /// QGridLayout *mainlayout = new QGridLayout(this);
     ///      mainlayout->setContentsMargins(0,0,0,0);
     mainlayout->addWidget(menu);
