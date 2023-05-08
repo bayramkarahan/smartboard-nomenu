@@ -163,8 +163,9 @@ void toolKalem::kalemColorSignalSlot(QString colorType, QColor color)
 
 void toolKalem::sayacCloseSignalSlot()
 {
-//qDebug()<<"sayac Kapandı..";
-current_toolTahta->setWindowFlags(current_toolTahta_old_flags);
+qDebug()<<"sayac Kapandı..";
+//current_toolTahta->setWindowFlags(current_toolTahta_old_flags);
+ emit penSignal();
 current_toolTahta->show();
 modeKontrolSlot();
 }

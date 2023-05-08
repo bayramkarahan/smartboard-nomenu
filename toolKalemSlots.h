@@ -138,7 +138,7 @@ void toolKalem::zeminButtonSlot()
 {
     current_toolKalemMenu->toolKalemMenuOlustur(zeminTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
-    emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+    //emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
     current_toolTahta->gvToTahta();
 
 }
@@ -204,21 +204,6 @@ void toolKalem::desktopButtonSlot()
         penButtonSlot(true);
         //emit kalemModeSignal(Scene::Mode::DesktopMode,DiagramItem::DiagramType::NoType);
         desktopButton->setIcon(QIcon(":/icons/desktop.svg"));
-    }
-
-}
-
-
-void toolKalem::toolKalemMenuAsagiYukariHizalaStatusSlot()
-{
-    if (!toolKalemMenuAsagiYukariHizalaStatus)
-    {
-        current_toolKalemMenu->move(parentw/2-current_toolKalemMenu->width()/2,parenth-current_toolKalemMenu->height()*3);
-        toolKalemMenuAsagiYukariHizalaStatus=true;
-    }else
-    {     current_toolKalemMenu->move(parentw/2-current_toolKalemMenu->width()/2,2);
-
-         toolKalemMenuAsagiYukariHizalaStatus=false;
     }
 
 }

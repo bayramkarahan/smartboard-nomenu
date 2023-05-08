@@ -32,9 +32,12 @@ toolKalemMenu::toolKalemMenu(QWidget *_menu,int w, int h, QWidget *parent)
                             "}");
 
 menuStatus=true;
+toolKalemMenuAsagiYukariHizalaStatus=false;
 }
 void toolKalemMenu::toolKalemMenuOlustur(QWidget *_menu, int w, int h, int parentw, int parenth)
 {
+   this->parentw=parentw;
+    this->parenth=parenth;
     qDeleteAll(this->findChildren<QWidget *>(QString(), Qt::FindDirectChildrenOnly));
 
     /* if (menuStatus) {
@@ -56,7 +59,16 @@ void toolKalemMenu::toolKalemMenuOlustur(QWidget *_menu, int w, int h, int paren
     //repaint();
     // menu->setVisible(true);
     this->setFixedSize(w,h);
-    this->move(parentw/2-w/2,2);///sayfada nerede konumlanacağını belirlediğimiz yer...
+    //this->move(parentw/2-w/2,2);///sayfada nerede konumlanacağını belirlediğimiz yer...
+    /**********************************************************************************/
+    if (toolKalemMenuAsagiYukariHizalaStatus)
+    {
+        this->move(parentw/2- this->width()/2,parenth- this->height()*3-1);
+    }else
+    {
+         this->move(parentw/2- this->width()/2,2); }
+    /*********************************************************************************/
+
     /// QGridLayout *mainlayout = new QGridLayout(this);
     ///      mainlayout->setContentsMargins(0,0,0,0);
     mainlayout->addWidget(menu);
@@ -68,6 +80,18 @@ void toolKalemMenu::toolKalemMenuOlustur(QWidget *_menu, int w, int h, int paren
                         "background-color:rgba(240,240,240,255);"
                         "}");
 
+
+}
+void toolKalemMenu::toolKalemMenuAsagiYukariHizalaStatusSlot()
+{
+    if (!toolKalemMenuAsagiYukariHizalaStatus)
+    {
+         this->move(parentw/2- this->width()/2,parenth- this->height()*3-1);
+        toolKalemMenuAsagiYukariHizalaStatus=true;
+    }else
+    {      this->move(parentw/2- this->width()/2,2);
+         toolKalemMenuAsagiYukariHizalaStatus=false;
+    }
 
 }
 void toolKalemMenu::toolKalemMenu_DesktopSignalSlot()

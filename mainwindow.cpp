@@ -55,7 +55,6 @@ MainWindow::MainWindow(QWidget *parent) :
     /**************************************************************************/
    connect(kw, SIGNAL(desktopSignal()),curent_pageMenu, SLOT(toolPageMenu_DesktopSignalSlot()));
    connect(kw, SIGNAL(penSignal()),curent_pageMenu, SLOT(toolPageMenu_PenSignalSlot()));
-   kw->toolKalemMenuAsagiYukariHizalaStatusSlot();
    curent_pageMenu->toolPageMenuOlustur(kw->pageBottomMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
    //curent_pageMenu->move(screenSize.width()/2-curent_pageMenu->width()/2,screenSize.height()-curent_pageMenu->height()*2.5);
    curent_pageMenu->show();

@@ -174,6 +174,8 @@ void toolTahta::gvToTahta()
     //pixMap.save("deneme.png");
     palet.setBrush(QPalette::Background,pixMap);
     this->setPalette(palet);
+    sceneListButton[current_sceneIndex]->setIcon(QIcon(pixMap));////önemli
+
 }
 void toolTahta::paintEvent(QPaintEvent *event)
 {

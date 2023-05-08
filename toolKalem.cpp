@@ -49,6 +49,14 @@ void toolKalem::modeKontrolSlot()
     raise();
     current_toolKalemMenu->raise();
 
+   /* QPixmap pixMap =current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
+     QPalette palet;
+     //pixMap.save("deneme.png");
+     palet.setBrush(QPalette::Background,pixMap);
+     this->setPalette(palet);
+     current_toolPageMenu->
+     pageList[sceneSayfaActiveNumber]->setIcon(QIcon(pixMap));////önemli
+    */
  /*   if(oldMode==Scene::Mode::DrawPen||
             oldMode==Scene::Mode::SelectObject||
             oldMode==Scene::Mode::EraseMode||

@@ -88,8 +88,9 @@ toolSayac::toolSayac(int w, int h, QWidget *parent)
       sayacStartButton->hide();
       sayacCloseButton->hide();
       ///zeminSeffafButtonClick();///burada zemin beyaz yapılıyor
-      emit sayacCloseSignal();
+     emit sayacCloseSignal();
       this->close();
+
       /*flags |= Qt::Window;
       flags |= Qt::X11BypassWindowManagerHint;
       flags |= Qt::WindowStaysOnTopHint;

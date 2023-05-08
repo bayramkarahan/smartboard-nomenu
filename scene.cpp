@@ -1055,65 +1055,65 @@ void Scene::setMode(Mode mode,DiagramItem::DiagramType sekil){
     }
 
     else if(mode == GeriAlMode){
-       //qDebug()<<" scene Geri Al";
-         //  qDebug()<<"Geri Al"<<"historycount"<<Scene::graphicsListHistoryBack.count();
+     //qDebug()<<"Geri Al";
+       //  qDebug()<<"Geri Al"<<"historycount"<<Scene::graphicsListHistoryBack.count();
 
-           if(!historyBack.isEmpty())
-           {
-               // qDebug()<<graphicsList.last();
-               if(historyBackAction.last()=="added"&&!historyBack.isEmpty())
-               {
-                   historyNext.append(historyBack.last());
-                   historyNextAction.append(historyBackAction.last());
-                   emit sceneItemRemovedSignal(this,GeriAlMode,historyBack.last(),false);
-                  // removeItem(historyBack.last());
+         if(!historyBack.isEmpty())
+         {
+             // qDebug()<<graphicsList.last();
+             if(historyBackAction.last()=="added"&&!historyBack.isEmpty())
+             {
+                 historyNext.append(historyBack.last());
+                 historyNextAction.append(historyBackAction.last());
 
-                   historyBack.removeLast();
-                   historyBackAction.removeLast();
-                  // qDebug()<<"added calıştı";
-               }
-           }
-           if(!historyBack.isEmpty())
-           {
-               if (historyBackAction.last()=="deleted")
-               {
-                 //  historyNext.append(historyBack.last());
-                 //  historyNextAction.append(historyBackAction.last());
+                 removeItem(historyBack.last());
 
-                   addItem(historyBack.last());
-                   historyBack.removeLast();
-                   historyBackAction.removeLast();
-                   //qDebug()<<"deleted calıştı";
+                 historyBack.removeLast();
+                 historyBackAction.removeLast();
+                // qDebug()<<"added calıştı";
+             }
+         }
+         if(!historyBack.isEmpty())
+         {
+             if (historyBackAction.last()=="deleted")
+             {
+               //  historyNext.append(historyBack.last());
+               //  historyNextAction.append(historyBackAction.last());
 
-               }
+                 addItem(historyBack.last());
+                 historyBack.removeLast();
+                 historyBackAction.removeLast();
+                 //qDebug()<<"deleted calıştı";
 
-               //graphicsListNext.append(graphicsList.last());
-               //  delete graphicsList.last();
+             }
 
-               update();
-           }
-           depo::historyBackCount=historyBack.count();
-           depo::historyNextCount=historyNext.count();
+             //graphicsListNext.append(graphicsList.last());
+             //  delete graphicsList.last();
 
-       }
-       else if(mode == IleriAlMode){
-          // qDebug()<<"scene ileri Al";
-           if(!historyNext.isEmpty())
-           {
-               VERectangle * selection = dynamic_cast<VERectangle *>(historyNext.last());
-               this->addItem(selection);
-               historyBack.append(selection);
-               historyBackAction.append(historyNextAction.last());
-              //graphicsListTemp.append(graphicsListNext.last());
-               historyNext.removeLast();
-               historyNextAction.removeLast();
-               update();
-           }
-           depo::historyBackCount=historyBack.count();
-           depo::historyNextCount=historyNext.count();
+             update();
+         }
+         depo::historyBackCount=historyBack.count();
+         depo::historyNextCount=historyNext.count();
 
-           }
-    else if(mode == ScreenMode){
+     }
+     else if(mode == IleriAlMode){
+         //qDebug()<<"ileri Al";
+         if(!historyNext.isEmpty())
+         {
+             VERectangle * selection = dynamic_cast<VERectangle *>(historyNext.last());
+             this->addItem(selection);
+             historyBack.append(selection);
+             historyBackAction.append(historyNextAction.last());
+            //graphicsListTemp.append(graphicsListNext.last());
+             historyNext.removeLast();
+             historyNextAction.removeLast();
+             update();
+         }
+         depo::historyBackCount=historyBack.count();
+         depo::historyNextCount=historyNext.count();
+
+         }
+      else if(mode == ScreenMode){
 
     }
     else if(mode == TransparanMode){

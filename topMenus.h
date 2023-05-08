@@ -59,7 +59,7 @@ QWidget *toolKalem::cizgiGridBoyutMenu()
 }
 
 QWidget *toolKalem::pageBottomMenu(int _boy)
-{   int e=(_boy*0.8)/4*7;
+{   int e=(_boy*0.8)/4*6;
     int b=(_boy*0.6)/4*5;
     QWidget *menu = new QWidget(this);
 
@@ -346,7 +346,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
        });
 
     zoomnegatifPageButton=new QPushButton();
-    zoomnegatifPageButton=butonSlot(zoomnegatifPageButton,"",":icons/zoompagenegatif.svg",QColor(255,0,0,0),e,b,e,b);
+    zoomnegatifPageButton=butonSlot(zoomnegatifPageButton,"",":icons/zoompagenegatif.svg",QColor(255,0,0,0),e*0.7,b,e,b);
 
     connect(zoomnegatifPageButton, &QPushButton::clicked, [=]() {
         zoomnegatifSayfaButtonClick();
@@ -355,7 +355,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
 
 
     zoompozitifPageButton=new QPushButton();
-    zoompozitifPageButton=butonSlot(zoompozitifPageButton,"",":icons/zoompagepozitif.svg",QColor(255,0,0,0),e,b,e,b);
+    zoompozitifPageButton=butonSlot(zoompozitifPageButton,"",":icons/zoompagepozitif.svg",QColor(255,0,0,0),e*0.7,b,e,b);
 
     connect(zoompozitifPageButton, &QPushButton::clicked, [=]() {
         zoompozitifSayfaButtonClick();
@@ -364,7 +364,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
 
 
     zoomfitPageButton=new QPushButton();
-    zoomfitPageButton=butonSlot(zoomfitPageButton,"",":icons/zoompagefit.svg",QColor(255,0,0,0),e,b,e,b);
+    zoomfitPageButton=butonSlot(zoomfitPageButton,"",":icons/zoompagefit.svg",QColor(255,0,0,0),e*0.7,b,e,b);
 
     connect(zoomfitPageButton, &QPushButton::clicked, [=]() {
         zoomfitSayfaButtonClick();
@@ -434,19 +434,19 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     updownButton=butonSlot(updownButton,"",":icons/updown.svg",QColor(255,0,0,0),e,b,e,b);
 
     connect(updownButton, &QPushButton::clicked, [=]() {
-        toolKalemMenuAsagiYukariHizalaStatusSlot();
+        current_toolKalemMenu->toolKalemMenuAsagiYukariHizalaStatusSlot();
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
 
     pageListwg=new QWidget(menu);
-    pageListwg->setFixedSize(e*12,b);
+    pageListwg->setFixedSize(e*12,b*1.1);
    /// pageListwg->setPalette(*palette);
    // pageListwg->move(this->width()/4,this->height()-boy-boy);
     //pageListwg->setAutoFillBackground(true);
     pageListwg->setObjectName("pageListwg");
 
     pageListwg->setStyleSheet("QWidget#pageListwg{"
-                          "border: 0.5px solid rgba(62, 140, 220,20);"
+                          "border: 0.5px solid rgba(62, 140, 220,100);"
                           "border-radius: 5px;"
                           "background-color:rgba(255,255,255,0);"
                           "}");
@@ -459,6 +459,69 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     //layout->setMargin(0);
    // layout->setColumnMinimumWidth(0, 37);
     QWidget *pdfWidget=new QWidget();
+   /*pdfWidget->setObjectName("pdfWidget");
+    pdfWidget->setStyleSheet("QWidget#pdfWidget{"
+                          "border: 0.5px solid rgba(62, 140, 220,100);"
+                          "border-radius: 5px;"
+                          "background-color:rgba(220,220,220,190);"
+                          "}");*/
+  /******************************undo redo*******************************************/
+    QWidget *urw=new QWidget(this);
+    urw->setFixedSize(e*1.4,b);
+    QPushButton *_undoButton=new QPushButton();
+    _undoButton=butonSlot(_undoButton,"",":icons/undo.png",QColor(255,0,0,0),e*0.7,b,e,b);
+    connect(_undoButton, &QPushButton::clicked, [=]() {
+        //emit kalemModeSignal(Scene::Mode::GeriAlMode,DiagramItem::DiagramType::NoType);
+        Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
+        current_toolTahta->scene->setMode(Scene::Mode::GeriAlMode, DiagramItem::DiagramType::NoType);
+        current_toolTahta->scene->sceneMode=tempmode;
+        secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+    });
+
+    QPushButton *_redoButton=new QPushButton();
+    _redoButton=butonSlot(_redoButton,"",":icons/redo.png",QColor(255,0,0,0),e*0.7,b,e,b);
+    connect(redoButton, &QPushButton::clicked, [=]() {
+        // emit kalemModeSignal(Scene::Mode::IleriAlMode,DiagramItem::DiagramType::NoType);
+         Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
+         current_toolTahta->scene->setMode(Scene::Mode::IleriAlMode, DiagramItem::DiagramType::NoType);
+         current_toolTahta->scene->sceneMode=tempmode;
+         secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+    });
+
+    QHBoxLayout *line00 = new QHBoxLayout;
+    line00->addWidget(_undoButton,Qt::AlignHCenter);
+    line00->addWidget(_redoButton,Qt::AlignHCenter);
+
+    line00->setContentsMargins(0,0, 0,0);
+    line00->setSpacing(1);
+    urw->setLayout(line00);
+    /******************************undo redo*******************************************/
+    /******************************seffaf beyaz sayfa*******************************************/
+      QWidget *sbs=new QWidget(this);
+      sbs->setFixedSize(e*1.5,b);
+      QPushButton *seffafSayfaButton=new QPushButton();
+      seffafSayfaButton=butonSlot(seffafSayfaButton,"",":icons/transparanboard.png",QColor(255,0,0,0),e*0.7,b,e*0.7,b);
+      connect(seffafSayfaButton, &QPushButton::clicked, [=]() {
+          emit kalemZeminModeSignal(DiagramItem::DiagramType::TransparanPage);
+           if(oldMode==Scene::DrawPen)penButtonSlot(false);
+      });
+
+      QPushButton *beyazSayfaButton=new QPushButton();
+      beyazSayfaButton=butonSlot(beyazSayfaButton,"",":icons/whiteboard.png",QColor(255,0,0,0),e*0.7,b,e*0.7,b);
+      connect(beyazSayfaButton, &QPushButton::clicked, [=]() {
+          emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
+           if(oldMode==Scene::DrawPen)penButtonSlot(false);
+      });
+
+      QHBoxLayout *linepage = new QHBoxLayout;
+      linepage->addWidget(seffafSayfaButton,Qt::AlignHCenter);
+      linepage->addWidget(beyazSayfaButton,Qt::AlignHCenter);
+
+      linepage->setContentsMargins(0,0, 0,0);
+      linepage->setSpacing(1);
+      sbs->setLayout(linepage);
+      /******************************seffaf beyaz sayfa*******************************************/
+
     auto pdfwidgetlayout = new QGridLayout(pdfWidget);
     pdfWidget->setFixedSize(3*e,b);
     pdfwidgetlayout->setContentsMargins(0, 0, 0, 1);
@@ -469,23 +532,31 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
 
     layout->addWidget(leftrightButton, 0, 5,1,1,Qt::AlignHCenter);
     layout->addWidget(pdfWidget, 0, 6,1,1,Qt::AlignHCenter);
+    layout->addWidget(sbs, 0, 7,1,1,Qt::AlignHCenter);
 
     layout->addWidget(backPageButton, 0, 9,1,1,Qt::AlignHCenter);
     layout->addWidget(addPageButton, 0, 10,1,1,Qt::AlignHCenter);
     layout->addWidget(pageListwg, 0, 11,1,1,Qt::AlignHCenter);
     layout->addWidget(delPageButton, 0, 15,1,1,Qt::AlignHCenter);
     layout->addWidget(nextPageButton, 0, 16,1,1,Qt::AlignHCenter);
+    layout->addWidget(urw, 0, 17,1,1,Qt::AlignHCenter);
 
     QWidget *pdfZoomWidget=new QWidget();
     auto pdfzoomwidgetlayout = new QGridLayout(pdfZoomWidget);
-    pdfZoomWidget->setFixedSize(3*e,b);
+   /* pdfZoomWidget->setObjectName("pdfZoomWidget");
+    pdfZoomWidget->setStyleSheet("QWidget#pdfZoomWidget{"
+                          "border: 0.5px solid rgba(62, 140, 220,100);"
+                          "border-radius: 5px;"
+                          "background-color:rgba(220,220,220,190);"
+                          "}");*/
+    pdfZoomWidget->setFixedSize(2.5*e,b);
     pdfzoomwidgetlayout->setContentsMargins(0, 0, 0, 1);
     pdfzoomwidgetlayout->addWidget(zoomnegatifPageButton, 0, 1,1,1,Qt::AlignHCenter);
     pdfzoomwidgetlayout->addWidget(zoompozitifPageButton, 0, 2,1,1,Qt::AlignHCenter);
     pdfzoomwidgetlayout->addWidget(zoomfitPageButton, 0, 3,1,1,Qt::AlignHCenter);
-    layout->addWidget(pdfZoomWidget, 0, 18,1,1,Qt::AlignHCenter);
+    layout->addWidget(pdfZoomWidget, 0, 20,1,1,Qt::AlignHCenter);
 
-    layout->addWidget(updownButton, 0, 20,1,1,Qt::AlignHCenter);
+    layout->addWidget(updownButton, 0, 25,1,1,Qt::AlignHCenter);
 
        //menu->setFixedSize(QSize(e*20,b));
    // menu->setStyleSheet("QMenu { width: 290 px; height: 180 px; }");
@@ -1005,19 +1076,21 @@ QWidget *toolKalem::toolTopMenu(int _boy)
        connect(sayac, SIGNAL(sayacCloseSignal()),
                this, SLOT(sayacCloseSignalSlot()));
 
-       sayac->move(parentw/2-sayac->width()/2,parenth/2-sayac->height()/2);
-       Qt::WindowFlags flags = 0;
-       flags |= Qt::Window;
+      sayac->move(parentw/2-sayac->width()/2,parenth/2-sayac->height()/2);
+      Qt::WindowFlags flags = 0;
+       /* flags |= Qt::Window;
        flags |= Qt::X11BypassWindowManagerHint;
        flags |= Qt::CustomizeWindowHint;
+
        current_toolTahta_old_flags=current_toolTahta->windowFlags();
        current_toolTahta->setWindowFlags(flags);
-
+*/
+      current_toolTahta->hide();
        flags |= Qt::SplashScreen;
        flags |= Qt::X11BypassWindowManagerHint;
        flags |= Qt::WindowStaysOnTopHint;
        sayac->setWindowFlags(flags);
-
+         emit desktopSignal();
        sayac->show();
        });
 
@@ -1710,7 +1783,6 @@ smartpenButtonSlot(true);
 return menu;
 }
 
-
 QWidget *toolKalem::zeminTopMenu(int _boy)
 {
     int e=(_boy*0.8)/4*5;
@@ -2298,7 +2370,6 @@ QWidget* toolKalem::colorWidget(QString colorType,QString yon,int w,int h,bool c
    //  colorwidget->setStyleSheet("background-color:#ffffff; ");
    return colorwidget;
 }
-
 
 QPushButton *toolKalem::butonSlot(QPushButton *btn, QString text, QString icon, QColor color, int w, int h, int iw, int ih)
 {
