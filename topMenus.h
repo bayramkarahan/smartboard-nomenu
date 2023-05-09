@@ -1204,7 +1204,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     pergel->setFixedSize(e*2, b);
     pergel->setIconSize(QSize(e*2,b));
     pergel->setFlat(true);
-    pergel->setIcon(QIcon(":icons/pergel.png"));
+    pergel->setIcon(QIcon(":icons/pergel.svg"));
     connect(pergel, &QPushButton::clicked, [=]() {
         addObjectScene(":icons/pergel.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Pergel,parentw/10,parenth/5,parentw/2-(parentw/10)/2,parenth/2-(parenth/5)/2,true);
       //if(oldMode==Scene::DrawPen)penButtonSlot(false);

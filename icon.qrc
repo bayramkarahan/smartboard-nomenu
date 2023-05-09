@@ -164,5 +164,6 @@
         <file>icons/transparanboard.svg</file>
         <file>icons/whiteboard.svg</file>
         <file>icons/blackboard.svg</file>
+        <file>icons/pergel.svg</file>
     </qresource>
 </RCC>
