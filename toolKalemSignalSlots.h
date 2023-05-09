@@ -165,12 +165,25 @@ void toolKalem::sayacCloseSignalSlot()
 {
 qDebug()<<"sayac Kapandı..";
 //current_toolTahta->setWindowFlags(current_toolTahta_old_flags);
- //emit penSignal();
+/*
+current_toolTahta->lower();
+current_toolTahta->lower();
+this->raise();
+this->raise();
+*/
+//emit penSignal();
+//current_toolTahta->setEnabled(true);
+//modeKontrolSlot();
+/*
+current_toolTahta->setEnabled(true);
+current_toolKalemMenu->setEnabled(true);
+current_toolPageMenu->setEnabled(true);
+this->setEnabled(true);
+*/
 current_toolTahta->show();
 current_toolKalemMenu->show();
 current_toolPageMenu->show();
-this->raise();
-modeKontrolSlot();
+this->show();
 }
 
 void toolKalem::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
@@ -454,9 +467,9 @@ void toolKalem::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
     modeKontrolSlot();
     current_toolTahta->scene->mySekilType=type;
    if(DiagramItem::DiagramType::Kure==type) current_toolTahta->scene->myImage=QPixmap(":/icons/kure.png");
-    else if(DiagramItem::DiagramType::Silindir==type) current_toolTahta->scene->myImage=QPixmap(":/icons/silindir.png");
-    else if(DiagramItem::DiagramType::Kup==type) current_toolTahta->scene->myImage=QPixmap(":/icons/kup.png");
-    else if(DiagramItem::DiagramType::Pramit==type) current_toolTahta->scene->myImage=QPixmap(":/icons/pramit.png");
+    else if(DiagramItem::DiagramType::Silindir==type) current_toolTahta->scene->myImage=QPixmap(":/icons/silindir.svg");
+    else if(DiagramItem::DiagramType::Kup==type) current_toolTahta->scene->myImage=QPixmap(":/icons/kup.svg");
+    else if(DiagramItem::DiagramType::Pramit==type) current_toolTahta->scene->myImage=QPixmap(":/icons/piramit.svg");
     else if(DiagramItem::DiagramType::Resim==type)
     {
         qDebug()<<"resim";

@@ -51,9 +51,8 @@ void toolKalem::modeKontrolSlot()
     /**************************önemli bir Yer**************************/
     current_toolTahta->raise();
     current_toolPageMenu->raise();
-    raise();
     current_toolKalemMenu->raise();
-
+    raise();
    /* QPixmap pixMap =current_toolTahta->gv->grab(current_toolTahta->gv->sceneRect().toRect());
      QPalette palet;
      //pixMap.save("deneme.png");

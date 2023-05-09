@@ -165,5 +165,10 @@
         <file>icons/whiteboard.svg</file>
         <file>icons/blackboard.svg</file>
         <file>icons/pergel.svg</file>
+        <file>icons/iletki.svg</file>
+        <file>icons/gonye.svg</file>
+        <file>icons/piramit.svg</file>
+        <file>icons/silindir.svg</file>
+        <file>icons/kup.svg</file>
     </qresource>
 </RCC>

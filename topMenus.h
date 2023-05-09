@@ -71,6 +71,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     connect(saveButton, &QPushButton::clicked, [=]() {
     //emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
         saveSayfaButtonClick();
+
        });
 
 
@@ -1082,6 +1083,20 @@ QWidget *toolKalem::toolTopMenu(int _boy)
 
       sayac->move(parentw/2-sayac->width()/2,parenth/2-sayac->height()/2);
       Qt::WindowFlags flags = 0;
+      flags |= Qt::Dialog;
+      flags |= Qt::X11BypassWindowManagerHint;
+      sayac->setWindowFlags(flags);
+      sayac->show();
+      /*current_toolTahta->setEnabled(false);
+      current_toolKalemMenu->setEnabled(false);
+      current_toolPageMenu->setEnabled(false);
+      this->setEnabled(false);*/
+      current_toolTahta->hide();
+      current_toolKalemMenu->hide();
+      current_toolPageMenu->hide();
+      this->hide();
+       //emit desktopSignal();
+      //Qt::WindowFlags flags = 0;
        /* flags |= Qt::Window;
        flags |= Qt::X11BypassWindowManagerHint;
        flags |= Qt::CustomizeWindowHint;
@@ -1089,20 +1104,21 @@ QWidget *toolKalem::toolTopMenu(int _boy)
        current_toolTahta_old_flags=current_toolTahta->windowFlags();
        current_toolTahta->setWindowFlags(flags);
 */
-      current_toolTahta->hide();
-       flags |= Qt::SplashScreen;
+      //current_toolTahta->hide();
+       /*flags |= Qt::SplashScreen;
        flags |= Qt::X11BypassWindowManagerHint;
        flags |= Qt::WindowStaysOnTopHint;
        sayac->setWindowFlags(flags);
          emit desktopSignal();
-       sayac->show();
+       sayac->show();*/
        });
 
     QPushButton *saveButton=new QPushButton();
     saveButton=butonSlot(saveButton,"",":icons/save.svg",QColor(255,0,0,0),e,b,e,b);
     connect(saveButton, &QPushButton::clicked, [=]() {
     //emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
-        saveSayfaButtonClick();
+       saveSayfaButtonClick();
+
        });
 
 
@@ -1212,34 +1228,34 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
       });
 
     QPushButton *cetvel = new QPushButton;
-    cetvel->setIcon(QIcon(":icons/cetvel.png"));
+    cetvel->setIcon(QIcon(":icons/cetvel.svg"));
     cetvel->setFixedSize(e*2, b);
     cetvel->setIconSize(QSize(e*2,b));
     cetvel->setFlat(true);
     connect(cetvel, &QPushButton::clicked, [=]() { 
-        addObjectScene(":icons/cetvel.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Cetvel,parentw/2,parenth/7,parentw/2-(parentw/2)/2,parenth/2-(parenth/7)/2,true);
+        addObjectScene(":icons/cetvel.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Cetvel,parentw/2,parenth/7,parentw/2-(parentw/2)/2,parenth/2-(parenth/7)/2,true);
       //if(oldMode==Scene::DrawPen)penButtonSlot(false);
         handButtonSlot(false);
     });
 
     QPushButton *gonye = new QPushButton;
-    gonye->setIcon(QIcon(":icons/gonye.png"));
+    gonye->setIcon(QIcon(":icons/gonye.svg"));
     gonye->setFixedSize(e*2, b);
     gonye->setIconSize(QSize(e*2,b));
     gonye->setFlat(true);
     connect(gonye, &QPushButton::clicked, [=]() {
-         addObjectScene(":icons/gonye.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Gonye,parentw/4,parenth/3,parentw/2-(parentw/4)/2,parenth/2-(parenth/3)/2,true);
+         addObjectScene(":icons/gonye.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Gonye,parentw/4,parenth/3,parentw/2-(parentw/4)/2,parenth/2-(parenth/3)/2,true);
       //if(oldMode==Scene::DrawPen)penButtonSlot(false);
         handButtonSlot(false);
     });
 
     QPushButton *iletki = new QPushButton;
-    iletki->setIcon(QIcon(":icons/iletki.png"));
+    iletki->setIcon(QIcon(":icons/iletki.svg"));
     iletki->setFixedSize(e*2, b);
     iletki->setIconSize(QSize(e*2,b));
     iletki->setFlat(true);
     connect(iletki, &QPushButton::clicked, [=]() {
-         addObjectScene(":icons/iletki.png",Scene::Mode::SekilMode,DiagramItem::DiagramType::Iletki,parentw/4,parenth/3,parentw/2-(parentw/4)/2,parenth/2-(parenth/3)/2,true);
+         addObjectScene(":icons/iletki.svg",Scene::Mode::SekilMode,DiagramItem::DiagramType::Iletki,parentw/4,parenth/3,parentw/2-(parentw/4)/2,parenth/2-(parenth/3)/2,true);
       //if(oldMode==Scene::DrawPen)penButtonSlot(false);
         handButtonSlot(false);
     });
@@ -1252,13 +1268,13 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     kup->setFixedSize(e*2, b);
     kup->setIconSize(QSize(e*2,b));
     kup->setFlat(true);
-    kup->setIcon(QIcon(":/icons/kup.png"));
+    kup->setIcon(QIcon(":/icons/kup.svg"));
     connect(kup, &QPushButton::clicked, [=]() {
         emit kalemSekilModeSignal(DiagramItem::DiagramType::Kup);
        });
 
     QPushButton *silindir = new QPushButton;
-    silindir->setIcon(QIcon(":icons/silindir.png"));
+    silindir->setIcon(QIcon(":icons/silindir.svg"));
     silindir->setFixedSize(e*2, b);
     silindir->setIconSize(QSize(e*2,b));
     silindir->setFlat(true);
@@ -1267,7 +1283,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
      });
 
     QPushButton *pramit = new QPushButton;
-    pramit->setIcon(QIcon(":icons/pramit.png"));
+    pramit->setIcon(QIcon(":icons/piramit.svg"));
     pramit->setFixedSize(e*2, b);
     pramit->setIconSize(QSize(e*2,b));
     pramit->setFlat(true);
@@ -2433,13 +2449,13 @@ void toolKalem::sekilButtonIconSlot(DiagramItem::DiagramType mySekilType){
         QPixmap pixmap(imageEllipse(ditem->sekilStore(mySekilType,QRectF(QPointF(20,50),QPointF(ken-50,ken-50))),ken,ken));
         sekilButton->setIcon(pixmap);
     }
-    else  if(DiagramItem::DiagramType::Pergel==mySekilType)    {sekilButton->setIcon(QIcon(":icons/pergel.png")); }
-    else  if(DiagramItem::DiagramType::Cetvel==mySekilType)   {sekilButton->setIcon(QIcon(":icons/cetvel.png")); }
-    else  if(DiagramItem::DiagramType::Gonye==mySekilType)    {sekilButton->setIcon(QIcon(":icons/gonye.png")); }
-    else  if(DiagramItem::DiagramType::Iletki==mySekilType)    {sekilButton->setIcon(QIcon(":icons/iletki.png")); }
-    else  if(DiagramItem::DiagramType::Kup==mySekilType)    {sekilButton->setIcon(QIcon(":icons/kup.png")); }
-    else  if(DiagramItem::DiagramType::Silindir==mySekilType)   {sekilButton->setIcon(QIcon(":icons/silindir.png")); }
-    else  if(DiagramItem::DiagramType::Pramit==mySekilType)    {sekilButton->setIcon(QIcon(":icons/pramit.png")); }
+    else  if(DiagramItem::DiagramType::Pergel==mySekilType)    {sekilButton->setIcon(QIcon(":icons/pergel.svg")); }
+    else  if(DiagramItem::DiagramType::Cetvel==mySekilType)   {sekilButton->setIcon(QIcon(":icons/cetvel.svg")); }
+    else  if(DiagramItem::DiagramType::Gonye==mySekilType)    {sekilButton->setIcon(QIcon(":icons/gonye.svg")); }
+    else  if(DiagramItem::DiagramType::Iletki==mySekilType)    {sekilButton->setIcon(QIcon(":icons/iletki.svg")); }
+    else  if(DiagramItem::DiagramType::Kup==mySekilType)    {sekilButton->setIcon(QIcon(":icons/kup.svg")); }
+    else  if(DiagramItem::DiagramType::Silindir==mySekilType)   {sekilButton->setIcon(QIcon(":icons/silindir.svg")); }
+    else  if(DiagramItem::DiagramType::Pramit==mySekilType)    {sekilButton->setIcon(QIcon(":icons/piramit.svg")); }
     else  if(DiagramItem::DiagramType::Kure==mySekilType)    {sekilButton->setIcon(QIcon(":icons/kure.png")); }
     else  if(DiagramItem::DiagramType::NDogru==mySekilType)    {
         sekilButton->setIconSize(QSize(50,50));

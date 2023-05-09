@@ -213,7 +213,8 @@ void toolKalem::sagSolHizala()
     if (!sagSolHizaStatus)
     {
         move(parentw-this->width()-10,parenth/2- this->height()/2);
-        sagSolHizaStatus=true;
+       if(sagSolHizaStatusInit) sagSolHizaStatus=true;
+       sagSolHizaStatusInit=true;
     }else
     {
         move(10,parenth/2- this->height()/2);

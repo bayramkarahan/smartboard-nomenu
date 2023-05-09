@@ -91,6 +91,30 @@ void toolTahta::mouseReleaseEvent(QMouseEvent *event)
 */
 
     if (event->button() == Qt::LeftButton && drawStatus&&penDrawingMain) {
+        if(lastPoint==startPoint)
+         {
+            /// qDebug()<<"bastın çektin";
+           ///  wpoints<<QPoint(wpoints.at(0).x()-1,wpoints.at(0).y()-1);
+          ///   wpoints<<QPoint(wpoints.at(0).x()+1,wpoints.at(0).y()+1);
+             ///drawingMain=true;
+             ///penWriteStatus=true;
+             QPainter painter(&penTuval);
+             QPen pen=QPen( scene->myPenColor, scene->myPenSize, scene->myPenStyle, Qt::RoundCap ,Qt::RoundJoin);
+
+             painter.setPen(QPen(pen));
+             painter.setRenderHint(QPainter::Antialiasing, true);
+            painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+             painter.drawPoint(lastPoint);
+             painter.drawPoint(lastPoint.x()-1,lastPoint.y()-1);
+             painter.drawPoint(lastPoint.x()+1,lastPoint.y()+1);
+             painter.drawPoint(lastPoint.x()-1,lastPoint.y()+1);
+             painter.drawPoint(lastPoint.x()+1,lastPoint.y()-1);
+
+             int rad = (scene->myPenSize / 2) + 2;
+             update(QRect(lastPoint, lastPoint).normalized()
+                    .adjusted(-rad, -rad, +rad, +rad));
+         }
+        //************************************************************************/
         drawStatus=false;
         int myPenSize=4;
         // wpoints<<event->pos();

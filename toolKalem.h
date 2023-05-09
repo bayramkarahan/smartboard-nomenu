@@ -152,6 +152,7 @@ public slots:
 private:
      Qt::WindowFlags current_toolTahta_old_flags;
      bool sagSolHizaStatus;
+     bool sagSolHizaStatusInit;
      int pdfPageList=0;
      int ekliSayfa=1;
      int parentw;

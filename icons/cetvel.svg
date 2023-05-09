@@ -2,25 +2,25 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="751.18109"
    height="92.125984"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    version="1.0"
-   sodipodi:docname="regle.svg"
+   sodipodi:docname="cetvel.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape"
    inkscape:export-filename="/home/pascal/Documents/Programmation/pylote/pylote/images/instruments/regle2.png"
    inkscape:export-xdpi="200"
-   inkscape:export-ydpi="200">
+   inkscape:export-ydpi="200"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4">
     <inkscape:perspective
@@ -71,8 +71,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.5546875"
-     inkscape:cx="269.57608"
-     inkscape:cy="51.616149"
+     inkscape:cx="214.19095"
+     inkscape:cy="52.422111"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      width="800px"
@@ -83,7 +83,10 @@
      inkscape:window-y="0"
      showgrid="false"
      inkscape:window-maximized="0"
-     units="mm" />
+     units="mm"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -92,7 +95,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -102,7 +104,7 @@
      id="layer1"
      transform="translate(0,-7.8740094)">
     <rect
-       style="fill:#ffff00;fill-opacity:0.75886524;stroke:#000000;stroke-width:1.9477849;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       style="fill:#808080;fill-opacity:0.75886524;stroke:#000000;stroke-width:1.9477849;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
        id="rect2864"
        width="746.94788"
        height="88.0522"
@@ -135,7 +137,7 @@
       <text
          x="6"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11211">0</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -147,7 +149,7 @@
       <text
          x="41.433071"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11215">1</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -159,7 +161,7 @@
       <text
          x="76.866142"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11219">2</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -171,7 +173,7 @@
       <text
          x="112.29921"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11223">3</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -183,7 +185,7 @@
       <text
          x="147.73228"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11227">4</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -195,7 +197,7 @@
       <text
          x="183.16536"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11231">5</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -207,7 +209,7 @@
       <text
          x="218.59842"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11235">6</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -219,7 +221,7 @@
       <text
          x="254.03149"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11239">7</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -231,7 +233,7 @@
       <text
          x="289.46457"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11243">8</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -243,7 +245,7 @@
       <text
          x="324.89764"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11247">9</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -255,7 +257,7 @@
       <text
          x="356.33072"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11251">10</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -267,7 +269,7 @@
       <text
          x="391.76379"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11255">11</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -279,7 +281,7 @@
       <text
          x="427.19684"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11259">12</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -291,7 +293,7 @@
       <text
          x="462.62991"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11263">13</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -303,7 +305,7 @@
       <text
          x="498.06299"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11267">14</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -315,7 +317,7 @@
       <text
          x="533.49603"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11271">15</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -327,7 +329,7 @@
       <text
          x="568.92914"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11275">16</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -339,7 +341,7 @@
       <text
          x="604.36218"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11279">17</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -351,7 +353,7 @@
       <text
          x="639.79529"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11283">18</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -363,7 +365,7 @@
       <text
          x="675.22833"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11287">19</text>
       <line
          style="stroke:#000000;stroke-width:1"
@@ -375,7 +377,7 @@
       <text
          x="710.66144"
          y="50"
-         style="font-size:15px;text-align:left;fill:#000000"
+         style="font-size:15px;line-height:0%;text-align:left;fill:#000000"
          id="text11291">20</text>
       <line
          style="stroke:#000000;stroke-width:1"

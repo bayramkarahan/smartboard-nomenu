@@ -104,7 +104,7 @@ toolSayac::toolSayac(int w, int h, QWidget *parent)
             sayac->hide();
     //sure=new QSlider(this);
         sure= new QSlider(Qt::Horizontal,this);
-    sure->setRange(1,60);
+    sure->setRange(1,150);
     sure->setSliderPosition(30);
     sure->setFixedSize(QSize(this->width()*0.7,boy*5));
     sure->move(this->width()/2-sure->width()/2,bar->pos().y()+boy*1.5);
