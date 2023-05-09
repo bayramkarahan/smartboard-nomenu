@@ -165,8 +165,11 @@ void toolKalem::sayacCloseSignalSlot()
 {
 qDebug()<<"sayac Kapandı..";
 //current_toolTahta->setWindowFlags(current_toolTahta_old_flags);
- emit penSignal();
+ //emit penSignal();
 current_toolTahta->show();
+current_toolKalemMenu->show();
+current_toolPageMenu->show();
+this->raise();
 modeKontrolSlot();
 }
 
