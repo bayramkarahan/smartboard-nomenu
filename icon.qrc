@@ -161,5 +161,8 @@
         <file>icons/animasyon.gif</file>
         <file>icons/leftright.svg</file>
         <file>icons/updown.svg</file>
+        <file>icons/transparanboard.svg</file>
+        <file>icons/whiteboard.svg</file>
+        <file>icons/blackboard.svg</file>
     </qresource>
 </RCC>

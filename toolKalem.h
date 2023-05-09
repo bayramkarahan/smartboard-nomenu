@@ -168,11 +168,13 @@ private:
     QPushButton *delPageButton;
     QPushButton *addPageButton;
     QPushButton *nextPageButton;
-    QPushButton *zoomnegatifPageButton;
+    QPushButton *undoPageButton;
+    QPushButton *redoPageButton;
     QPushButton *backPageButton;
     QPushButton *updownButton;
     QPushButton *leftrightButton;
     QPushButton *zoomfitPageButton;
+    QPushButton *zoomnegatifPageButton;
     QPushButton *zoompozitifPageButton;
     protected:
 

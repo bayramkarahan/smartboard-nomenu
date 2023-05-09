@@ -43,6 +43,11 @@ void toolKalem::modeKontrolSlot()
             current_toolTahta->setPalette(palet);
 
         }
+    /********************************undo redo buton işlemleri*********/
+    if(depo::historyBackCount>0&&undoPageButton)undoPageButton->setEnabled(true);
+    if(depo::historyBackCount==0||undoPageButton==nullptr) undoPageButton->setEnabled(false);
+    if(depo::historyNextCount>0&&redoPageButton)  redoPageButton->setEnabled(true);
+    if(depo::historyNextCount==0||redoPageButton==nullptr) redoPageButton->setEnabled(false);
     /**************************önemli bir Yer**************************/
     current_toolTahta->raise();
     current_toolPageMenu->raise();
@@ -285,7 +290,7 @@ urw->setLayout(line00);
 sekilButton = new QToolButton(this);
 DiagramItem *ditem=new DiagramItem();int ken=300;
 QPixmap pixmap(image(ditem->sekilStore(DiagramItem::DiagramType::Cizgi,QRectF(QPointF(20,50),QPointF(ken-70,ken-70))),ken,ken));
-sekilButton=butonToolSlot(sekilButton,"Şekiller",":icons/transparanboard.png",QColor(255,0,0,0),en*1.5,boy);
+sekilButton=butonToolSlot(sekilButton,"Şekiller",":icons/transparanboard.svg",QColor(255,0,0,0),en*1.5,boy);
 sekilButton->setIcon(pixmap);
 //sekilButton->setMenu(sekilMenu());
 //sekilButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -297,7 +302,7 @@ connect(sekilButton, &QToolButton::clicked, [=]() {
    });
 
 zeminButton = new QToolButton(this);
-zeminButton=butonToolSlot(zeminButton,"Arkaplan",":icons/whiteboard.png",QColor(255,0,0,0),en*1.5,boy);
+zeminButton=butonToolSlot(zeminButton,"Arkaplan",":icons/whiteboard.svg",QColor(255,0,0,0),en*1.5,boy);
 //zeminButton->setMenu(zeminMenu());
 //zeminButton->setPopupMode(QToolButton::MenuButtonPopup);
 

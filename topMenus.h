@@ -372,7 +372,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
        });
 
     leftrightButton=new QPushButton();
-    leftrightButton=butonSlot(leftrightButton,"",":icons/leftright.svg",QColor(255,0,0,0),e,b,e,b);
+    leftrightButton=butonSlot(leftrightButton,"",":icons/leftright.svg",QColor(255,0,0,0),e,b,e,b*0.8);
 
     connect(leftrightButton, &QPushButton::clicked, [=]() {
         sagSolHizala();
@@ -431,7 +431,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     });
 
     updownButton=new QPushButton();
-    updownButton=butonSlot(updownButton,"",":icons/updown.svg",QColor(255,0,0,0),e,b,e,b);
+    updownButton=butonSlot(updownButton,"",":icons/updown.svg",QColor(255,0,0,0),e,b,e,b*0.8);
 
     connect(updownButton, &QPushButton::clicked, [=]() {
         current_toolKalemMenu->toolKalemMenuAsagiYukariHizalaStatusSlot();
@@ -468,29 +468,33 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
   /******************************undo redo*******************************************/
     QWidget *urw=new QWidget(this);
     urw->setFixedSize(e*1.4,b);
-    QPushButton *_undoButton=new QPushButton();
-    _undoButton=butonSlot(_undoButton,"",":icons/undo.png",QColor(255,0,0,0),e*0.7,b,e,b);
-    connect(_undoButton, &QPushButton::clicked, [=]() {
+    undoPageButton=new QPushButton();
+    undoPageButton->setEnabled(false);
+    undoPageButton=butonSlot(undoPageButton,"",":icons/undo.png",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    connect(undoPageButton, &QPushButton::clicked, [=]() {
         //emit kalemModeSignal(Scene::Mode::GeriAlMode,DiagramItem::DiagramType::NoType);
         Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
         current_toolTahta->scene->setMode(Scene::Mode::GeriAlMode, DiagramItem::DiagramType::NoType);
         current_toolTahta->scene->sceneMode=tempmode;
-        secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+        //secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+        modeKontrolSlot();
     });
 
-    QPushButton *_redoButton=new QPushButton();
-    _redoButton=butonSlot(_redoButton,"",":icons/redo.png",QColor(255,0,0,0),e*0.7,b,e,b);
-    connect(redoButton, &QPushButton::clicked, [=]() {
+   redoPageButton=new QPushButton();
+    redoPageButton->setEnabled(false);
+    redoPageButton=butonSlot(redoPageButton,"",":icons/redo.png",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    connect(redoPageButton, &QPushButton::clicked, [=]() {
         // emit kalemModeSignal(Scene::Mode::IleriAlMode,DiagramItem::DiagramType::NoType);
          Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
          current_toolTahta->scene->setMode(Scene::Mode::IleriAlMode, DiagramItem::DiagramType::NoType);
          current_toolTahta->scene->sceneMode=tempmode;
-         secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+        // secSayfaButtonClick(current_toolTahta->current_sceneIndex);
+         modeKontrolSlot();
     });
-
+//qDebug()<<"butonlar oluşturuluyor";
     QHBoxLayout *line00 = new QHBoxLayout;
-    line00->addWidget(_undoButton,Qt::AlignHCenter);
-    line00->addWidget(_redoButton,Qt::AlignHCenter);
+    line00->addWidget(undoPageButton,Qt::AlignHCenter);
+    line00->addWidget(redoPageButton,Qt::AlignHCenter);
 
     line00->setContentsMargins(0,0, 0,0);
     line00->setSpacing(1);
@@ -498,16 +502,16 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     /******************************undo redo*******************************************/
     /******************************seffaf beyaz sayfa*******************************************/
       QWidget *sbs=new QWidget(this);
-      sbs->setFixedSize(e*1.5,b);
+      sbs->setFixedSize(e*2,b);
       QPushButton *seffafSayfaButton=new QPushButton();
-      seffafSayfaButton=butonSlot(seffafSayfaButton,"",":icons/transparanboard.png",QColor(255,0,0,0),e*0.7,b,e*0.7,b);
+      seffafSayfaButton=butonSlot(seffafSayfaButton,"",":icons/transparanboard.svg",QColor(255,0,0,0),e*0.7,b,e*0.7,b);
       connect(seffafSayfaButton, &QPushButton::clicked, [=]() {
           emit kalemZeminModeSignal(DiagramItem::DiagramType::TransparanPage);
            if(oldMode==Scene::DrawPen)penButtonSlot(false);
       });
 
       QPushButton *beyazSayfaButton=new QPushButton();
-      beyazSayfaButton=butonSlot(beyazSayfaButton,"",":icons/whiteboard.png",QColor(255,0,0,0),e*0.7,b,e*0.7,b);
+      beyazSayfaButton=butonSlot(beyazSayfaButton,"",":icons/whiteboard.svg",QColor(255,0,0,0),e*0.7,b,e*0.7,b);
       connect(beyazSayfaButton, &QPushButton::clicked, [=]() {
           emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
            if(oldMode==Scene::DrawPen)penButtonSlot(false);
@@ -1724,6 +1728,16 @@ smartpenButtonSlot(true);
   layout->setContentsMargins(5, 2, 5,1);
    // layout->setColumnMinimumWidth(0, 37);
 
+  penColorButton = new QToolButton;
+  penColorButton=butonToolSlot(penColorButton,"",":icons/pencolor.png",QColor(0,0,0,255),en*1.5,boy*0.8);
+  QMenu *penc=colorMenu("penColor","dikey",en,boy,true);
+  penColorButton->setMenu(penc);
+  connect(penColorButton, &QToolButton::clicked, [=]() {
+      /*QMenu *mn= colorMenu("penColor","dikey",en,boy,false);
+   mn->show();mn->hide();
+  mn->exec(mapToGlobal(penColorButton->pos())-QPoint(mn->width(),0));
+  */
+  });
 
     layout->addWidget(kalemSizePopLabel, 0,0,2,1);
  //   layout->addWidget(geriAlButton,1,2,1,1);
@@ -1765,8 +1779,9 @@ smartpenButtonSlot(true);
    // renkloyout->addWidget(cw, 0,0,1,1,Qt::AlignHCenter);
    // QLabel *renk= new QLabel("Kalem Rengi");      renk->setFont(ff);
    // renkloyout->addWidget(renk, 1,0,1,1,Qt::AlignHCenter);
-   // layout->addWidget(cw, 0,5,2,1,Qt::AlignCenter);
+    layout->addWidget(penColorButton, 0,39,2,1,Qt::AlignCenter);
     layout->addWidget(cw, 0,40,2,1,Qt::AlignHCenter);
+
    // layout->addWidget(renk, 1,5,1,1,Qt::AlignHCenter);
 
 
@@ -1904,7 +1919,7 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
 
     /*****************************************************/
     QPushButton *zeminSeffafButton=new QPushButton();
-    zeminSeffafButton=butonSlot(zeminSeffafButton,"",":icons/transparanboard.png",QColor(255,0,0,0),e,b,e,b);
+    zeminSeffafButton=butonSlot(zeminSeffafButton,"",":icons/transparanboard.svg",QColor(255,0,0,0),e,b,e,b);
     zeminSeffafButton->setFlat(true);
     connect(zeminSeffafButton, &QPushButton::clicked, [=]()
     {
@@ -1913,7 +1928,7 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     });
 
     QPushButton *zeminSiyahButton=new QPushButton();
-    zeminSiyahButton=butonSlot(zeminSiyahButton,"",":icons/blackboard.png",QColor(255,0,0,0),e,b,e,b);
+    zeminSiyahButton=butonSlot(zeminSiyahButton,"",":icons/blackboard.svg",QColor(255,0,0,0),e,b,e,b);
     zeminSiyahButton->setFlat(true);
     connect(zeminSiyahButton, &QPushButton::clicked, [=]()
     {
@@ -1921,7 +1936,7 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
           if(oldMode==Scene::DrawPen)penButtonSlot(false);
     });
     QPushButton *zeminBeyazButton=new QPushButton();
-    zeminBeyazButton=butonSlot(zeminBeyazButton,"",":icons/whiteboard.png",QColor(255,0,0,0),e,b,e,b);
+    zeminBeyazButton=butonSlot(zeminBeyazButton,"",":icons/whiteboard.svg",QColor(255,0,0,0),e,b,e,b);
     zeminBeyazButton->setFlat(true);
     connect(zeminBeyazButton, &QPushButton::clicked, [=]()
     {
@@ -1930,8 +1945,6 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     });
     QPushButton *zeminCustomColorButton=new QPushButton();
      zeminCustomColorButton=butonSlot(zeminCustomColorButton,"",":icons/zeminCustomColor.png",QColor(255,0,0,0),e,b,e,b);
-     zeminCustomColorButton->setFlat(true);
-     zeminCustomColorButton=butonSlot(zeminCustomColorButton,"",":icons/zeminrenk.png",QColor(255,0,0,0),e,b,e,b);
      zeminCustomColorButton->setFlat(true);
      QMenu *zcc=colorMenu("zeminColor","dikey",en,boy,true);
       zeminCustomColorButton->setMenu(zcc);
@@ -1943,8 +1956,6 @@ QWidget *toolKalem::zeminTopMenu(int _boy)
     });
     QPushButton *zeminCizgiliSayfaButton = new QPushButton;
     zeminCizgiliSayfaButton->setIcon(QIcon(":icons/icons/cizgilisayfa.png"));
-    zeminCizgiliSayfaButton=butonSlot(zeminCizgiliSayfaButton,"",":icons/cizgilisayfa.png",QColor(255,0,0,0),e,b,e,b);
-    zeminCizgiliSayfaButton->setFlat(true);
     connect(zeminCizgiliSayfaButton, &QPushButton::clicked, [=]()
     {
         emit kalemZeminModeSignal(DiagramItem::DiagramType::CizgiliPage);

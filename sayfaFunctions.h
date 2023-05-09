@@ -126,28 +126,28 @@ void toolKalem::secSayfaButtonClick(int index)
 /********************************************************************/
     if(current_toolTahta->sceneIndex>14)
     {
-        nextPageButton->show();
-        backPageButton->show();
+        nextPageButton->setEnabled(true);
+        backPageButton->setEnabled(true);
     }
     else
     {
-        nextPageButton->hide();
-        backPageButton->hide();
+        nextPageButton->setEnabled(false);
+        backPageButton->setEnabled(false);
     }
     if(current_toolTahta->scene->pdfObjectAdded)
    {
      //  qDebug()<<"sayfa ekle8";
 
-       zoompozitifPageButton->show();
-       zoomnegatifPageButton->show();
-       zoomfitPageButton->show();
+       zoompozitifPageButton->setEnabled(true);
+       zoomnegatifPageButton->setEnabled(true);
+       zoomfitPageButton->setEnabled(true);
 
    }else
    {
 
-        zoompozitifPageButton->hide();
-        zoomnegatifPageButton->hide();
-        zoomfitPageButton->hide();
+        zoompozitifPageButton->setEnabled(false);
+        zoomnegatifPageButton->setEnabled(false);
+        zoomfitPageButton->setEnabled(false);
 
    }
 
@@ -165,6 +165,7 @@ void toolKalem::secSayfaButtonClick(int index)
        delPageButton->setEnabled(false);
 
    }
+
 
 
 }

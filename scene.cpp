@@ -1055,7 +1055,7 @@ void Scene::setMode(Mode mode,DiagramItem::DiagramType sekil){
     }
 
     else if(mode == GeriAlMode){
-     //qDebug()<<"Geri Al";
+     qDebug()<<"Geri Al";
        //  qDebug()<<"Geri Al"<<"historycount"<<Scene::graphicsListHistoryBack.count();
 
          if(!historyBack.isEmpty())
@@ -1097,7 +1097,7 @@ void Scene::setMode(Mode mode,DiagramItem::DiagramType sekil){
 
      }
      else if(mode == IleriAlMode){
-         //qDebug()<<"ileri Al";
+         qDebug()<<"ileri Al";
          if(!historyNext.isEmpty())
          {
              VERectangle * selection = dynamic_cast<VERectangle *>(historyNext.last());
