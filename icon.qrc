@@ -1,174 +1,111 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/zoomselect.png</file>
-        <file>icons/zoompozitif.png</file>
-        <file>icons/zoom-out.svg</file>
-        <file>icons/zoom-original.svg</file>
-        <file>icons/zoomnegatif.png</file>
-        <file>icons/zoom-in.svg</file>
+        <file>icons/hand.svg</file>
+        <file>icons/erase.svg</file>
+        <file>icons/addimage.svg</file>
+        <file>icons/sayac.svg</file>
+        <file>icons/zoompagepozitif.svg</file>
+        <file>icons/zoompagenegatif.svg</file>
+        <file>icons/zoompagefit.svg</file>
         <file>icons/zemintemizle.png</file>
         <file>icons/zeminrenk.png</file>
         <file>icons/zeminCustomColor.png</file>
-        <file>icons/x-office-presentation.svg</file>
-        <file>icons/whiteboard.png</file>
-        <file>icons/view-refresh.svg</file>
-        <file>icons/view-fullscreen.svg</file>
-        <file>icons/undo.png</file>
-        <file>icons/two-pages-with-cover-page.svg</file>
-        <file>icons/two-pages.svg</file>
-        <file>icons/transparanboard.png</file>
-        <file>icons/tab-new.svg</file>
+        <file>icons/whiteboard.svg</file>
+        <file>icons/updown.svg</file>
+        <file>icons/transparanboard.svg</file>
+        <file>icons/tool.svg</file>
+        <file>icons/stopsayac.svg</file>
+        <file>icons/startsayac.svg</file>
+        <file>icons/sosyal.svg</file>
         <file>icons/smartpen.png</file>
+        <file>icons/smartboard.svg</file>
+        <file>icons/silindir.svg</file>
         <file>icons/silindir.png</file>
-        <file>icons/search.png</file>
-        <file>icons/save.png</file>
+        <file>icons/save.svg</file>
         <file>icons/rotate-right.png</file>
         <file>icons/right-to-left.svg</file>
         <file>icons/resimekle.png</file>
-        <file>icons/redo.png</file>
-        <file>icons/qpdfview_win32.rc</file>
-        <file>icons/qpdfview_win32.ico</file>
-        <file>icons/qpdfview_os2.rc</file>
-        <file>icons/qpdfview_os2.ico</file>
         <file>icons/process-stop.svg</file>
-        <file>icons/print.png</file>
+        <file>icons/print.svg</file>
         <file>icons/pramit.png</file>
         <file>icons/pop.png</file>
+        <file>icons/piramit.svg</file>
+        <file>icons/periyodiktable.svg</file>
+        <file>icons/pergel.svg</file>
         <file>icons/pergel.png</file>
         <file>icons/pencolor.png</file>
         <file>icons/pen1.png</file>
+        <file>icons/pen0.svg</file>
+        <file>icons/pen.svg</file>
         <file>icons/pen.png</file>
-        <file>icons/panelsidedown.png</file>
-        <file>icons/panelside.png</file>
+        <file>icons/pdfsave.svg</file>
+        <file>icons/pdfopen.svg</file>
+        <file>icons/pdf.svg</file>
+        <file>icons/patternpen.svg</file>
+        <file>icons/open.svg</file>
+        <file>icons/oksijen.svg</file>
         <file>icons/object-rotate-right.svg</file>
         <file>icons/object-rotate-left.svg</file>
+        <file>icons/numbercoordinate.svg</file>
+        <file>icons/nonumbercoordinate.svg</file>
         <file>icons/noktalikagit.png</file>
         <file>icons/nokta.png</file>
         <file>icons/nnkoordinat.png</file>
         <file>icons/nkoordinat.png</file>
-        <file>icons/nextpage.png</file>
+        <file>icons/nextpage.svg</file>
         <file>icons/ndogru.png</file>
         <file>icons/muziksayfa.png</file>
-        <file>icons/multiple-pages.svg</file>
-        <file>icons/move.png</file>
-        <file>icons/media-seek-forward.svg</file>
-        <file>icons/media-seek-backward.svg</file>
-        <file>icons/mail-attachment.svg</file>
-        <file>icons/logo.png</file>
-        <file>icons/list.png</file>
-        <file>icons/lastpage.png</file>
+        <file>icons/musicikon.png</file>
+        <file>icons/linepage.svg</file>
+        <file>icons/leftright.svg</file>
         <file>icons/kure.png</file>
-        <file>icons/kup.png</file>
+        <file>icons/karepage.svg</file>
         <file>icons/karelisayfa.png</file>
         <file>icons/karelikagit.png</file>
+        <file>icons/k1.png</file>
         <file>icons/jumppage.svg</file>
-        <file>icons/jumppage.png</file>
+        <file>icons/izometripage.svg</file>
+        <file>icons/izometrikpage.svg</file>
         <file>icons/izometrikkagit.png</file>
-        <file>icons/image-missing.svg</file>
-        <file>icons/image-loading.svg</file>
+        <file>icons/info.svg</file>
+        <file>icons/iletki.svg</file>
         <file>icons/iletki.png</file>
         <file>icons/hnkoordinat.png</file>
-        <file>icons/hand.png</file>
+        <file>icons/hidrojen.svg</file>
+        <file>icons/haritaplato.png</file>
+        <file>icons/haritaova.png</file>
+        <file>icons/haritamaden.png</file>
+        <file>icons/haritail.svg</file>
+        <file>icons/haritadilsiz.png</file>
+        <file>icons/haritadag.png</file>
+        <file>icons/haritabosdilsiz.svg</file>
+        <file>icons/haritabolge.svg</file>
+        <file>icons/haritabitkiortusu.png</file>
+        <file>icons/haritaakarsu.png</file>
+        <file>icons/halfnonumbercoordinate.svg</file>
         <file>icons/guzelyazisayfa.png</file>
         <file>icons/gridyatay.png</file>
         <file>icons/gridrenk.png</file>
         <file>icons/griddikey.png</file>
-        <file>icons/go-up.svg</file>
-        <file>icons/go-previous.svg</file>
-        <file>icons/gonye.png</file>
-        <file>icons/go-next.svg</file>
-        <file>icons/go-last.svg</file>
-        <file>icons/go-jump.svg</file>
-        <file>icons/go-first.svg</file>
-        <file>icons/go-down.svg</file>
         <file>icons/fosforlupen.png</file>
-        <file>icons/folder.svg</file>
-        <file>icons/fitwindowsize.png</file>
-        <file>icons/fitwindow1.png</file>
-        <file>icons/fitwindow.png</file>
-        <file>icons/fit-to-page-width.svg</file>
-        <file>icons/fit-to-page-size.svg</file>
-        <file>icons/fitpagesize.png</file>
-        <file>icons/firstpage.png</file>
-        <file>icons/erase.png</file>
-        <file>icons/e-pdf.svg</file>
-        <file>icons/edit-find.svg</file>
+        <file>icons/fen.svg</file>
         <file>icons/edit-copy.svg</file>
-        <file>icons/document-save-as.svg</file>
+        <file>icons/dotpage.svg</file>
         <file>icons/document-save.svg</file>
+        <file>icons/document-save-as.svg</file>
         <file>icons/document-print.svg</file>
         <file>icons/document-open.svg</file>
-        <file>icons/copy.png</file>
-        <file>icons/continuous.svg</file>
-        <file>icons/close.png</file>
-        <file>icons/clear.png</file>
-        <file>icons/cizgilisayfa.png</file>
-        <file>icons/cetvel.svg</file>
-        <file>icons/cetvel.png</file>
-        <file>icons/blackboard.png</file>
-        <file>icons/backpage.png</file>
-        <file>icons/arrow-up-down.png</file>
-        <file>icons/addimage.png</file>
-        <file>icons/addpage.svg</file>
-        <file>icons/delpage.svg</file>
-        <file>icons/nextpage.svg</file>
-        <file>icons/backpage.svg</file>
-        <file>icons/zoompagenegatif.svg</file>
-        <file>icons/zoompagefit.svg</file>
-        <file>icons/zoompagepozitif.svg</file>
-        <file>icons/pen.svg</file>
-        <file>icons/e-tahta.png</file>
-        <file>icons/dotpage.svg</file>
-        <file>icons/linepage.svg</file>
-        <file>icons/karepage.svg</file>
-        <file>icons/izometrikpage.svg</file>
-        <file>icons/halfnonumbercoordinate.svg</file>
-        <file>icons/numbercoordinate.svg</file>
-        <file>icons/nonumbercoordinate.svg</file>
-        <file>icons/pdf.svg</file>
-        <file>icons/pdfopen.svg</file>
-        <file>icons/pdfsave.svg</file>
-        <file>icons/save.svg</file>
-        <file>icons/open.svg</file>
         <file>icons/desktop.svg</file>
-        <file>icons/smartboard.svg</file>
-        <file>icons/k1.png</file>
-        <file>icons/patternpen.svg</file>
-        <file>icons/musicikon.png</file>
-        <file>icons/info.svg</file>
-        <file>icons/tool.svg</file>
-        <file>icons/print.svg</file>
-        <file>icons/close.svg</file>
-        <file>icons/sayac.svg</file>
-        <file>icons/stopsayac.svg</file>
-        <file>icons/startsayac.svg</file>
-        <file>icons/periyodiktable.svg</file>
-        <file>icons/fen.svg</file>
-        <file>icons/hidrojen.svg</file>
-        <file>icons/oksijen.svg</file>
-        <file>icons/azot.svg</file>
-        <file>icons/sosyal.svg</file>
-        <file>icons/haritaakarsu.png</file>
-        <file>icons/haritabitkiortusu.png</file>
-        <file>icons/haritadag.png</file>
-        <file>icons/haritadilsiz.png</file>
-        <file>icons/haritamaden.png</file>
-        <file>icons/haritaova.png</file>
-        <file>icons/haritaplato.png</file>
-        <file>icons/haritabolge.svg</file>
-        <file>icons/haritail.svg</file>
-        <file>icons/haritabosdilsiz.svg</file>
-        <file>icons/animasyon.gif</file>
-        <file>icons/leftright.svg</file>
-        <file>icons/updown.svg</file>
-        <file>icons/transparanboard.svg</file>
-        <file>icons/whiteboard.svg</file>
+        <file>icons/delpage.svg</file>
         <file>icons/blackboard.svg</file>
-        <file>icons/pergel.svg</file>
-        <file>icons/iletki.svg</file>
+        <file>icons/azot.svg</file>
+        <file>icons/addpage.svg</file>
+        <file>icons/copy.svg</file>
+        <file>icons/close.svg</file>
+        <file>icons/clear.svg</file>
+        <file>icons/backpage.svg</file>
+        <file>icons/cetvel.svg</file>
         <file>icons/gonye.svg</file>
-        <file>icons/piramit.svg</file>
-        <file>icons/silindir.svg</file>
         <file>icons/kup.svg</file>
     </qresource>
 </RCC>

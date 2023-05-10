@@ -1441,7 +1441,7 @@ QWidget* toolKalem::sekilTopMenu(int _boy)
     resimEkle->setFixedSize(e*2, b*1.5);
     resimEkle->setIconSize(QSize(e*2,b*1.5));
     resimEkle->setFlat(true);
-    resimEkle->setIcon(QIcon(":icons/addimage.png"));
+    resimEkle->setIcon(QIcon(":icons/addimage.svg"));
     connect(resimEkle, &QPushButton::clicked, [=]() {
         emit kalemSekilModeSignal(DiagramItem::DiagramType::Resim);
     });

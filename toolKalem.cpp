@@ -200,7 +200,7 @@ toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, t
          });
 
 handButton = new QToolButton(this);
-handButton=butonToolSlot(handButton,"",":icons/hand.png",QColor(255,0,0,0),en*1.5,boy);
+handButton=butonToolSlot(handButton,"",":icons/hand.svg",QColor(255,0,0,0),en*1.5,boy);
 handButton->setCheckable(true);
 //handButton->setChecked(true);
 connect(handButton, &QToolButton::clicked, [=]() {
@@ -208,7 +208,7 @@ connect(handButton, &QToolButton::clicked, [=]() {
      });
 
 copyButton = new QToolButton(this);
-copyButton=butonToolSlot(copyButton,"",":icons/copy.png",QColor(255,0,0,0),en*1.5,boy);
+copyButton=butonToolSlot(copyButton,"",":icons/copy.svg",QColor(255,0,0,0),en*1.5,boy);
 copyButton->setCheckable(true);
 connect(copyButton, &QToolButton::clicked, [=]() {
 
@@ -230,17 +230,17 @@ penButtonSlot(true);
 });
 
 eraseButton = new QToolButton(this);
-eraseButton=butonToolSlot(eraseButton,"Silgi",":icons/erase.png",QColor(255,0,0,0),en*1.5,boy);
+eraseButton=butonToolSlot(eraseButton,"Silgi",":icons/erase.svg",QColor(255,0,0,0),en*1.5,boy);
 eraseButton->setCheckable(true);
-eraseButton->setIconSize(QSize(en*0.8,boy*0.8));
+//eraseButton->setIconSize(QSize(en*0.8,boy*0.8));
 connect(eraseButton, &QToolButton::clicked, [=]() {
        eraseButtonSlot();
        //emit kalemModeSignal(Scene::Mode::EraseMode,DiagramItem::DiagramType::NoType);
    });
 
 QToolButton *clearButton = new QToolButton(this);
-clearButton=butonToolSlot(clearButton,"Hepsini Sil",":icons/clear.png",QColor(255,0,0,0),en*1.5,boy);
-clearButton->setIconSize(QSize(en*1,boy*1));
+clearButton=butonToolSlot(clearButton,"Hepsini Sil",":icons/clear.svg",QColor(255,0,0,0),en*1.5,boy);
+clearButton->setIconSize(QSize(en*1.5,boy*1.5));
 connect(clearButton, &QToolButton::clicked, [=]() {
   clearButtonSlot();
 });
