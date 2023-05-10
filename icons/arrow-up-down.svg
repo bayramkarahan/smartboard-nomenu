@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+
+<svg
+   width="256px"
+   height="256px"
+   viewBox="0 0 20 20"
+   version="1.1"
+   fill="#000000"
+   id="svg15"
+   sodipodi:docname="arrow-up-down.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs19" />
+  <sodipodi:namedview
+     id="namedview17"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.921875"
+     inkscape:cx="10.305085"
+     inkscape:cy="128.54237"
+     inkscape:window-width="1366"
+     inkscape:window-height="691"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="SVGRepo_iconCarrier" />
+  <g
+     id="SVGRepo_bgCarrier"
+     stroke-width="0" />
+  <g
+     id="SVGRepo_tracerCarrier"
+     stroke-linecap="round"
+     stroke-linejoin="round" />
+  <g
+     id="SVGRepo_iconCarrier">
+    <title
+       id="title4">arrow_left_up_right_down [#377]</title>
+    <desc
+       id="desc6">Created with Sketch.</desc>
+    <defs
+       id="defs8" />
+    <g
+       id="Page-1"
+       stroke="none"
+       stroke-width="1"
+       fill="none"
+       fill-rule="evenodd"
+       transform="matrix(0.70524208,0.52411876,-0.70856435,0.54375036,10.033222,-0.55157312)">
+      <g
+         id="Dribbble-Light-Preview"
+         transform="translate(-260,-6519)"
+         fill="#000000">
+        <g
+           id="icons"
+           transform="translate(56,160)">
+          <path
+             d="m 224,6372 v 5 c 0,1.105 -0.895,2 -2,2 h -5 c -0.552,0 -1,-0.448 -1,-1 0,-0.552 0.448,-1 1,-1 h 2.379 c 0.445,0 0.668,-0.539 0.353,-0.854 l -3.025,-3.025 -9.853,-9.853 c -0.315,-0.315 -0.854,-0.092 -0.854,0.353 V 6366 c 0,0.552 -0.448,1 -1,1 -0.552,0 -1,-0.448 -1,-1 v -5 c 0,-1.105 0.895,-2 2,-2 h 5 c 0.552,0 1,0.448 1,1 0,0.552 -0.448,1 -1,1 h -2.379 c -0.445,0 -0.668,0.539 -0.353,0.854 7.732,7.732 10.15,10.15 12.878,12.878 0.315,0.315 0.854,0.092 0.854,-0.353 V 6372 c 0,-0.552 0.448,-1 1,-1 0.552,0 1,0.448 1,1"
+             id="arrow_left_up_right_down-[#377]" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -290,13 +290,13 @@ if(DiagramItem::DiagramType::MuzikPage==type){
     DiagramItem *ditem=new DiagramItem();
     QPixmap pim(zeminImage(ditem->sekilStore(DiagramItem::DiagramType::Muzik,QRectF(QPointF(0,0),QPointF(current_toolTahta->width(),current_toolTahta->height()))),current_toolTahta->width(),current_toolTahta->height(),zeminColor,zeminGridColor,2));
     current_toolTahta->scene->myImage=pim;
-/*
+
     VERectangle*  itemToRectDraw = new VERectangle(current_toolTahta->scene);
     itemToRectDraw->sekilTur(DiagramItem::DiagramType::Copy);
     //itemToRectDraw->setPen(QPen(mySekilKalemColor, mySekilPenSize, mySekilPenStyle));
     //itemToRectDraw->setBrush(mySekilZeminColor);
-    QPixmap temp(":icons/musicikon.png");
-    itemToRectDraw->setPos(QPoint(50,this->height()/3*0));
+    QPixmap temp(":icons/musicicon.svg");
+    itemToRectDraw->setPos(QPoint(50,parenth/3*0));
     itemToRectDraw->setImage(temp);
     itemToRectDraw->setRect(0,0,75,250);
     current_toolTahta->scene->addItem(itemToRectDraw);
@@ -308,8 +308,8 @@ if(DiagramItem::DiagramType::MuzikPage==type){
     itemToRectDraw->sekilTur(DiagramItem::DiagramType::Copy);
     //itemToRectDraw->setPen(QPen(mySekilKalemColor, mySekilPenSize, mySekilPenStyle));
     //itemToRectDraw->setBrush(mySekilZeminColor);
-    //QPixmap temp(":icons/musicikon.png");
-    itemToRectDraw->setPos(QPoint(50,this->height()/3*1));
+    //QPixmap temp(":icons/musicikon.svg");
+    itemToRectDraw->setPos(QPoint(50,parenth/3*1));
     itemToRectDraw->setImage(temp);
     itemToRectDraw->setRect(0,0,75,250);
     current_toolTahta->scene->addItem(itemToRectDraw);
@@ -321,14 +321,14 @@ if(DiagramItem::DiagramType::MuzikPage==type){
     itemToRectDraw->sekilTur(DiagramItem::DiagramType::Copy);
    // itemToRectDraw->setPen(QPen(mySekilKalemColor, mySekilPenSize, mySekilPenStyle));
    // itemToRectDraw->setBrush(mySekilZeminColor);
-    //QPixmap temp(":icons/musicikon.png");
-    itemToRectDraw->setPos(QPoint(50,this->height()/3*2));
+    //QPixmap temp(":icons/musicikon.svg");
+    itemToRectDraw->setPos(QPoint(50,parenth/3*2));
     itemToRectDraw->setImage(temp);
     itemToRectDraw->setRect(0,0,75,250);
     current_toolTahta->scene->addItem(itemToRectDraw);
     itemToRectDraw->fareState(false);
     itemToRectDraw = 0;
-*/
+
   }
 if(DiagramItem::DiagramType::GuzelYaziPage==type){
     pagePattern=type;
@@ -466,7 +466,7 @@ void toolKalem::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
     oldType=type;
     modeKontrolSlot();
     current_toolTahta->scene->mySekilType=type;
-   if(DiagramItem::DiagramType::Kure==type) current_toolTahta->scene->myImage=QPixmap(":/icons/kure.png");
+   if(DiagramItem::DiagramType::Kure==type) current_toolTahta->scene->myImage=QPixmap(":/icons/kure.svg");
     else if(DiagramItem::DiagramType::Silindir==type) current_toolTahta->scene->myImage=QPixmap(":/icons/silindir.svg");
     else if(DiagramItem::DiagramType::Kup==type) current_toolTahta->scene->myImage=QPixmap(":/icons/kup.svg");
     else if(DiagramItem::DiagramType::Pramit==type) current_toolTahta->scene->myImage=QPixmap(":/icons/piramit.svg");

@@ -1,7 +1,96 @@
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
-<svg width="256px" height="256px" viewBox="0 0 48 48" data-name="Layer 1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-<g id="SVGRepo_bgCarrier" stroke-width="0"/>
-<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-<g id="SVGRepo_iconCarrier"> <defs> <style>.cls-1{fill:#55aae1;}.cls-2{opacity:0.35;}</style> </defs> <title/> <path class="cls-1" d="M26,39H22a1,1,0,0,1,0-2h4a1,1,0,0,1,0,2Z"/> <path class="cls-1" d="M26,11H22a1,1,0,0,1,0-2h4a1,1,0,0,1,0,2Z"/> <path class="cls-1" d="M38,27a1,1,0,0,1-1-1V22a1,1,0,0,1,2,0v4A1,1,0,0,1,38,27Z"/> <path class="cls-1" d="M10,27a1,1,0,0,1-1-1V22a1,1,0,0,1,2,0v4A1,1,0,0,1,10,27Z"/> <path class="cls-1" d="M38,39H30a1,1,0,1,1,0-2h7V30a1,1,0,0,1,2,0v8A1,1,0,0,1,38,39Z"/> <path class="cls-1" d="M38,18.92a1,1,0,0,1-1-1V11H29.76a1,1,0,0,1,0-2H38a1,1,0,0,1,1,1v7.92A1,1,0,0,1,38,18.92Z"/> <path class="cls-1" d="M10,18.92a1,1,0,0,1-1-1V10a1,1,0,0,1,1-1h8.1a1,1,0,0,1,0,2H11v6.92A1,1,0,0,1,10,18.92Z"/> <path class="cls-1" d="M18.07,39H10a1,1,0,0,1-1-1V30a1,1,0,1,1,2,0v7h7.07a1,1,0,0,1,0,2Z"/> <path class="cls-1" d="M38,44a1,1,0,0,1-1-1V38a1,1,0,0,1,2,0v5A1,1,0,0,1,38,44Z"/> <path class="cls-1" d="M43,39H38a1,1,0,0,1,0-2h5a1,1,0,0,1,0,2Z"/> <g class="cls-2"> <path class="cls-1" d="M35,11.5v22A1.5,1.5,0,0,1,33.5,35h-22A1.5,1.5,0,0,0,10,36.5h0A1.5,1.5,0,0,0,11.5,38h25A1.5,1.5,0,0,0,38,36.5v-25A1.5,1.5,0,0,0,36.5,10h0A1.5,1.5,0,0,0,35,11.5Z"/> </g> </g>
-</svg>
+
+<svg
+   height="256px"
+   width="256px"
+   version="1.1"
+   id="Layer_1"
+   viewBox="0 0 505 505"
+   xml:space="preserve"
+   fill="#000000"
+   sodipodi:docname="copy.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"><defs
+   id="defs9015" /><sodipodi:namedview
+   id="namedview9013"
+   pagecolor="#ffffff"
+   bordercolor="#000000"
+   borderopacity="0.25"
+   inkscape:showpageshadow="2"
+   inkscape:pageopacity="0.0"
+   inkscape:pagecheckerboard="0"
+   inkscape:deskcolor="#d1d1d1"
+   showgrid="false"
+   inkscape:zoom="0.921875"
+   inkscape:cx="-48.271186"
+   inkscape:cy="128.54237"
+   inkscape:window-width="1366"
+   inkscape:window-height="691"
+   inkscape:window-x="0"
+   inkscape:window-y="0"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="SVGRepo_iconCarrier" />
+
+<g
+   id="SVGRepo_bgCarrier"
+   stroke-width="0" />
+
+<g
+   id="SVGRepo_tracerCarrier"
+   stroke-linecap="round"
+   stroke-linejoin="round" />
+
+<g
+   id="SVGRepo_iconCarrier">  <g
+   id="g9003"
+   style="opacity:1;fill:#5599ff"
+   transform="matrix(1.1465416,0,0,1.2428855,-129.37684,-219.12698)"> <polygon
+   style="fill:#5599ff"
+   points="373.9,391.2 357,391.2 357,383.4 366.1,383.4 366.1,374.3 373.9,374.3 "
+   id="polygon8987"
+   transform="matrix(1.8446825,0,0,1.7055722,-315.8268,-276.01986)" /> <path
+   style="fill:#5599ff;stroke-width:1.24736"
+   d="m 333.8,391.2 h -23.2 v -12.13606 h 23.2 z m -46.5,0 h -23.2 v -12.13606 h 23.2 z m -46.4,0 h -23.2 v -12.13606 h 23.2 z m -46.5,0 h -23.2 v -12.13606 h 23.2 z"
+   id="path8989" /> <polygon
+   style="fill:#5599ff"
+   points="131.1,391.2 131.1,374.3 138.9,374.3 138.9,383.4 148,383.4 148,391.2 "
+   id="polygon8991"
+   transform="matrix(1.9214718,0,0,1.8338581,-120.80496,-326.20529)" /> <path
+   style="fill:#5599ff;stroke-width:1.4136"
+   d="M 146.68644,351.1 H 131.1 v -23.2 h 15.58644 z m 0,-46.4 H 131.1 v -23.2 h 15.58644 z m 0,-46.3 H 131.1 v -23.2 h 15.58644 z"
+   id="path8993" /> <polygon
+   style="fill:#5599ff"
+   points="131.1,212.1 131.1,195.1 148,195.1 148,202.9 138.9,202.9 138.9,212.1 "
+   id="polygon8995"
+   transform="matrix(1.9982612,0,0,1.828953,-130.87204,-161.72874)" /> <path
+   style="fill:#5599ff;stroke-width:1.40458"
+   d="M 333.8,210.48811 H 310.6 V 195.1 h 23.2 z m -46.5,0 H 264.1 V 195.1 h 23.2 z m -46.4,0 H 217.7 V 195.1 h 23.2 z m -46.5,0 H 171.2 V 195.1 h 23.2 z"
+   id="path8997" /> <polygon
+   style="fill:#5599ff"
+   points="373.9,212.1 366.1,212.1 366.1,202.9 357,202.9 357,195.1 373.9,195.1 "
+   id="polygon8999"
+   transform="matrix(1.9982612,0,0,1.7014218,-373.24985,-136.8474)" /> <path
+   style="fill:#5599ff;stroke-width:1.52676"
+   d="M 373.9,351.1 H 355.71808 V 327.9 H 373.9 Z m 0,-46.4 H 355.71808 V 281.5 H 373.9 Z m 0,-46.3 H 355.71808 V 235.2 H 373.9 Z"
+   id="path9001" /> </g>    <g
+   id="g9137"
+   transform="matrix(1.1980371,1.3120592,-1.0622855,1.2552256,213.20255,-308.58309)"
+   inkscape:transform-center-x="20.907797"
+   inkscape:transform-center-y="119.78518"><path
+     style="fill:#ac9393"
+     d="m 309.43983,153.73983 c 3.4,6.8 9,11.3 15.4,13.4 l -17.5,13 c -3.8,2.8 -9.1,2 -11.9,-1.8 l -0.9,-1.2 -108.5,80.5 c 9.8,13.1 28.3,15.9 41.5,6.1 l 84.7,-62.9 v 0 c -2.8,-3.8 -2,-9.1 1.8,-11.9 l 33.9,-25.2 c 11.3,-8.4 14.8,-24.4 7,-36.2 -9.4,-14.1 -29.7,-16.1 -41.6,-3 -7,8 -8.6,19.8 -3.9,29.2 z m 36.6,-21.1 c 5.3,7.2 3.8,17.3 -3.3,22.6 -7.2,5.3 -17.3,3.8 -22.6,-3.3 -5.3,-7.2 -3.8,-17.3 3.3,-22.6 7.2,-5.4 17.3,-3.9 22.6,3.3 z"
+     id="path9005" /><path
+     style="fill:#c8b7b7"
+     d="m 311.4,275.3 c 11.9,13 32.3,11 41.6,-3.2 7.5,-11.5 3.9,-28 -7.2,-36.1 l -34.1,-25 c -3.8,-2.8 -4.6,-8.1 -1.8,-11.9 v 0 l -85,-62.4 c -13.2,-9.7 -31.7,-6.8 -41.4,6.4 l 108.9,80 0.9,-1.2 c 2.8,-3.8 8.1,-4.6 11.9,-1.8 l 17.6,12.9 c -6.4,2.1 -12,6.7 -15.3,13.5 -4.8,9.3 -3.2,21 3.9,28.8 z m 10,-4.5 c -7.2,-5.3 -8.7,-15.4 -3.4,-22.6 5.3,-7.2 15.4,-8.7 22.6,-3.5 7.2,5.3 8.7,15.4 3.4,22.6 -5.3,7.2 -15.4,8.7 -22.6,3.5 z"
+     id="path9007" /><circle
+     style="fill:#324a5e"
+     cx="284.39999"
+     cy="199"
+     r="5.4000001"
+     id="circle9009" /></g></g>
+
+</svg>

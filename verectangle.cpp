@@ -352,9 +352,9 @@ void VERectangle::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
     if( (dty < alan && dty > -alan)|| (dty < -alan && dty > alan)) m_cornerFlags |= Bottom;    // Bottom side
     if( (drx < alan && drx > -alan )||(drx < -alan && drx > alan )) m_cornerFlags |= Right;     // Right side
     if( (dlx < alan && dlx > -alan)||  (dlx < -alan && dlx > alan)) m_cornerFlags |= Left;      // Left side
-    QPixmap p(":/icons/arrow-up-down.png");
-    QPixmap px(":/icons/rotate-right.png");
-    QPixmap pd(":/icons/erase.png");
+    QPixmap p(":/icons/arrow-up-down.svg");
+    QPixmap px(":/icons/rotate-right.svg");
+    QPixmap pd(":/icons/erase.svg");
 
     QPixmap pResult;
     QTransform trans = transform();
@@ -365,25 +365,25 @@ void VERectangle::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
         case Top:
         case Bottom:
             pResult = p.transformed(trans);
-            setCursor(pResult.scaled(24,24,Qt::KeepAspectRatio));
+            setCursor(pResult.scaled(48,48,Qt::KeepAspectRatio));
             break;
         case Left:
         case Right:
             trans.rotate(90);
             pResult = p.transformed(trans);
-            setCursor(pResult.scaled(24,24,Qt::KeepAspectRatio));
+            setCursor(pResult.scaled(48,48,Qt::KeepAspectRatio));
             break;
         case TopRight:
 
             trans.rotate(0);
             pResult = p.transformed(trans);
-            setCursor(pResult.scaled(24,24,Qt::KeepAspectRatio));
+            setCursor(pResult.scaled(48,48,Qt::KeepAspectRatio));
             break;
 
         case BottomLeft:
             trans.rotate(45);
             pResult = p.transformed(trans);
-            setCursor(pResult.scaled(24,24,Qt::KeepAspectRatio));
+            setCursor(pResult.scaled(48,48,Qt::KeepAspectRatio));
             break;
         case TopLeft:
 
@@ -391,7 +391,7 @@ void VERectangle::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
 
             trans.rotate(135);
             pResult = p.transformed(trans);
-            setCursor(pResult.scaled(24,24,Qt::KeepAspectRatio));
+            setCursor(pResult.scaled(48,48,Qt::KeepAspectRatio));
             break;
         default:
             setCursor(Qt::ArrowCursor);
@@ -403,7 +403,7 @@ void VERectangle::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
         {
             trans.rotate(135);
             pResult = p.transformed(trans);
-            setCursor(pResult.scaled(24,24,Qt::KeepAspectRatio));
+            setCursor(pResult.scaled(48,48,Qt::KeepAspectRatio));
             break;
 
         }
@@ -424,7 +424,7 @@ void VERectangle::hoverMoveEvent(QGraphicsSceneHoverEvent *event)
         case BottomRight: {
             trans.rotate(135);
             pResult = p.transformed(trans);
-            setCursor(pResult.scaled(24,24,Qt::KeepAspectRatio));
+            setCursor(pResult.scaled(48,48,Qt::KeepAspectRatio));
             break;
         }
         default:
