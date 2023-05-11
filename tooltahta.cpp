@@ -264,13 +264,43 @@ int myPenSize=scene->myPenSize;
         if(!myPixmapForNow.load(":/icons/k1.png")){
             qWarning("Failed to load");
         }
+         QRect rect(0,0,myPenSize/2,myPenSize);
+        QPixmap pix(myPenSize/2,myPenSize);
+        pix.fill(Qt::transparent);
+        QPainter pnt(&pix);
+        pnt.setBrush(QBrush(scene->myPenColor));
+        pnt.setPen(QPen(scene->myPenColor, 0));
+       // pnt.drawPolyline();
 
-        myPixmapForNow= myPixmapForNow.scaled(myPenSize,myPenSize);
+        pnt.drawEllipse(rect);
+
+          pnt.end();
+          QMatrix rm;
+              rm.rotate(45);
+              pix = pix.transformed(rm);
+       /* QTransform trans;// = transform();
+        trans.rotate(35);
+        pix = pix.transformed(trans);
+        */
+
+        /*****************************************/
+      /*  QRectF rectangle(myPolygon[0],myPolygon[1]);
+        QPixmap pixmap(w, h);
+        pixmap.fill(Qt::transparent);
+        QPainter painter(&pixmap);
+        painter.setPen(QPen(Qt::black, 8));
+        painter.drawEllipse(rectangle);
+        /**********************************************/
+         //painter.drawPixmap(endPoint,pix);
+
+     //   myPixmapForNow= myPixmapForNow.scaled(myPenSize,myPenSize);
         while (pos < length) {
             qreal percent = path.percentAtLength(pos);
             ///drawYourPixmapAt(path.pointAtPercent(percent)); // pseudo method, use QPainter and your brush pixmap instead
             //painter.drawPoint(path.pointAtPercent(percent));
-            painter.drawPixmap(path.pointAtPercent(percent),myPixmapForNow);
+            //painter.drawPixmap(path.pointAtPercent(percent),myPixmapForNow);
+            painter.drawPixmap(path.pointAtPercent(percent),pix);
+
             //painter.drawEllipse(path.pointAtPercent(percent),myPenSize,myPenSize);
 
             //  qDebug()<<path.pointAtPercent(percent);
@@ -281,6 +311,7 @@ int myPenSize=scene->myPenSize;
     {
         painter.drawLine(lastPoint, endPoint);
     }
+
     /*******************************************************************************/
     int rad = (myPenSize / 2) + 2;
     update(QRect(lastPoint, endPoint).normalized()
