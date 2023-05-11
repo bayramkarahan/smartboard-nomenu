@@ -164,28 +164,20 @@ void toolKalem::kalemColorSignalSlot(QString colorType, QColor color)
 void toolKalem::sayacCloseSignalSlot()
 {
 qDebug()<<"sayac Kapandı..";
-//current_toolTahta->setWindowFlags(current_toolTahta_old_flags);
-/*
-current_toolTahta->lower();
-current_toolTahta->lower();
-this->raise();
-this->raise();
-*/
-//emit penSignal();
-//current_toolTahta->setEnabled(true);
-//modeKontrolSlot();
-/*
-current_toolTahta->setEnabled(true);
-current_toolKalemMenu->setEnabled(true);
-current_toolPageMenu->setEnabled(true);
-this->setEnabled(true);
-*/
 current_toolTahta->show();
 current_toolKalemMenu->show();
 current_toolPageMenu->show();
 this->show();
 }
 
+void toolKalem::promterCloseSignalSlot()
+{
+qDebug()<<"sayac Kapandı..";
+current_toolTahta->show();
+current_toolKalemMenu->show();
+current_toolPageMenu->show();
+this->show();
+}
 void toolKalem::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
 {
 

@@ -126,6 +126,12 @@ void Scene::mousePressEvent(QGraphicsSceneMouseEvent *event){
          points.clear();
 
          points<<origPoint;
+         startPos=event->scenePos();
+         endPos=startPos;
+         sx=startPos.x();
+         sy=startPos.y();
+         ex=startPos.x();
+         ey=startPos.y();
          break;
      }
      case CopyMode:{sceneModeTrue=CopyModeTrue;
@@ -702,7 +708,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
             if (sonuc=="5"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Besgen);std=true;}
             if (sonuc=="6"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Altigen);std=true;}
             if (sonuc=="7"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Cember);std=true;}
-            if (sonuc=="8"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Sekizgen);std=true;}
+            if (sonuc=="8"){itemToRectDraw->sekilTur(DiagramItem::DiagramType::Cember);std=true;}
             if(std==true)
             {
                 itemToRectDraw->setPen(pen);
@@ -746,6 +752,7 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
     case DrawPenFosforTrue:{
         drawing = false;
         /******************************************************/
+        qDebug()<<"points:"<<points.size();
         QPainterPath path;
         path.moveTo(points.at(0));
         int i=1;
@@ -755,30 +762,31 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
 
               i += 4;
           }
+          // qDebug()<<"path:"<<path.length()<<"-"<<sy<<sx<<ey<<ex<<myPenSize;
          QPen pen(QColor(myPenColor.red(),myPenColor.green(),myPenColor.blue(),myPenAlpha),myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin);
         /// addPath(path,pen);
          //itemToPenDraw->setPen(QPen(QColor(myPenColor.red(),myPenColor.green(),myPenColor.blue(),myPenAlpha),myPenSize, myPenStyle, Qt::RoundCap ,Qt::RoundJoin));
-
          /****************************************************************/
+         while(!graphicsListpoints.isEmpty())
+                {
+                //emit sceneItemRemovedSignal(this,DrawPenFosfor,graphicsListpoints.last(),false);
+                removeItem(graphicsListpoints.last());
+                delete graphicsListpoints.last();
+                graphicsListpoints.removeLast();
 
-          while(!graphicsListpoints.isEmpty())
-          {
-          emit sceneItemRemovedSignal(this,DrawPenFosfor,graphicsListpoints.last(),false);
-          //removeItem(graphicsListpoints.last());
-          delete graphicsListpoints.last();
-          graphicsListpoints.removeLast();
-
-          }update();
-
+                }update();
+        /****************************************************************/
           QPixmap pixmap(qFabs(sx-ex)+myPenSize*2, qFabs(sy-ey)+myPenSize*2);
           pixmap.fill(Qt::transparent);
-          QPainter painter(&pixmap);
-          painter.setRenderHint(QPainter::Antialiasing, true);
-          painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
-          painter.setWindow(QRect(sx-myPenSize, sy-myPenSize,qFabs(sx-ex)+myPenSize*2, qFabs(sy-ey)+myPenSize*2));
-          painter.setPen(pen);
-          painter.strokePath(path,pen);
+          QPainter paint(&pixmap);
+          paint.setRenderHint(QPainter::Antialiasing, true);
+          paint.setRenderHint(QPainter::SmoothPixmapTransform, true);
+          //paint.scale(qFabs(sx-ex)+myPenSize*2, qFabs(sy-ey)+myPenSize*2);
+          paint.setWindow(QRect(sx-myPenSize, sy-myPenSize,qFabs(sx-ex)+myPenSize*2, qFabs(sy-ey)+myPenSize*2));
 
+          paint.setPen(pen);
+          paint.drawPath(path);
+          paint.end();
           if(!itemToRectDraw){
               itemToRectDraw = new VERectangle(this);
               itemToRectDraw->sekilTur(DiagramItem::DiagramType::Resim);
@@ -790,7 +798,8 @@ void Scene::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
           itemToRectDraw->setRect(0,0,qFabs(sx-ex)+2*myPenSize,qFabs(sy-ey)+2*myPenSize);
           itemToRectDraw->fareState(false);
           emit sceneItemAddedSignal(this,itemToRectDraw,true,DrawPenFosfor,itemToRectDraw->sekilTr);
-      itemToRectDraw = 0;
+           /********************************************************************/
+          itemToRectDraw = 0;
         break;}
     case CopyModeTrue:{
 

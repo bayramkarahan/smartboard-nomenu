@@ -82,5 +82,6 @@
         <file>icons/nokta.svg</file>
         <file>icons/pencolor.svg</file>
         <file>icons/musicicon.svg</file>
+        <file>icons/promter.svg</file>
     </qresource>
 </RCC>

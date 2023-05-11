@@ -27,9 +27,11 @@ SOURCES += main.cpp\
     mainwindow.cpp \
     popupmenu.cpp \
     scene.cpp \
+    shiftlabel.cpp \
     toolKalem.cpp \
     toolkalemmenu.cpp \
     toolpagemenu.cpp \
+    toolpromter.cpp \
     toolsayac.cpp \
     tooltahta.cpp \
     verectangle.cpp
@@ -45,12 +47,14 @@ HEADERS  += \
     popupmenu.h \
     sayfaFunctions.h \
     scene.h \
+    shiftlabel.h \
     toolKalem.h \
     toolKalemFunction.h \
     toolKalemSignalSlots.h \
     toolKalemSlots.h \
     toolkalemmenu.h \
     toolpagemenu.h \
+    toolpromter.h \
     toolsayac.h \
     tooltahta.h \
     topMenus.h \

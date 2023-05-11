@@ -69,7 +69,7 @@ void toolKalem::smartpenButtonSlot(bool menushow)
         current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
         current_toolKalemMenu->show();
     }
-     penButton->setIcon(QIcon(":icons/smartpen.png"));
+     penButton->setIcon(QIcon(":icons/smartpen.svg"));
     current_toolTahta->scene->setSekilTanimlamaStatus(true);
     current_toolTahta->scene->mySekilType=DiagramItem::DiagramType::SmartPen;
     current_toolTahta->scene->sceneMode=Scene::Mode::DrawPen;
@@ -87,7 +87,7 @@ void toolKalem::fosforpenButtonSlot(bool menushow)
         current_toolKalemMenu->toolKalemMenuOlustur(penTopMenu(parenth*0.045),parentw*0.9,parenth*0.045,parentw,parenth);
         current_toolKalemMenu->show();
     }
-      penButton->setIcon(QIcon(":icons/fosforlupen.png"));
+      penButton->setIcon(QIcon(":icons/fosforlupen.svg"));
     current_toolTahta->scene->setSekilTanimlamaStatus(false);
     current_toolTahta->scene->setPenAlpha(50);
     current_toolTahta->scene->sceneMode=Scene::Mode::DrawPenFosfor;
@@ -156,7 +156,7 @@ void toolKalem::pdfButtonSlot()
 }
 void toolKalem::toolButtonSlot()
 {
-    current_toolKalemMenu->toolKalemMenuOlustur(toolTopMenu(parenth*0.045),parentw*0.2,parenth*0.045,parentw,parenth);
+    current_toolKalemMenu->toolKalemMenuOlustur(toolTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
     current_toolKalemMenu->show();
 
 }

@@ -7,7 +7,6 @@
 #include<QGraphicsProxyWidget>
 #include<QDial>
 #include<QSizeGrip>
-
 QWidget *toolKalem::cizgiGridBoyutMenu()
 {     int e=(en*0.8)/4*5.5;
       int b=(boy*0.6)/4*5;
@@ -1077,42 +1076,46 @@ QWidget *toolKalem::toolTopMenu(int _boy)
     connect(sayacButton, &QPushButton::clicked, [=]() {
     //emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
 
-       toolSayac *sayac=new toolSayac(parentw*0.90,parenth*0.8);
-       connect(sayac, SIGNAL(sayacCloseSignal()),
-               this, SLOT(sayacCloseSignalSlot()));
+        toolSayac *sayac=new toolSayac(parentw*0.90,parenth*0.8);
+        connect(sayac, SIGNAL(sayacCloseSignal()),
+                this, SLOT(sayacCloseSignalSlot()));
 
-      sayac->move(parentw/2-sayac->width()/2,parenth/2-sayac->height()/2);
-      Qt::WindowFlags flags = 0;
-      flags |= Qt::Dialog;
-      flags |= Qt::X11BypassWindowManagerHint;
-      sayac->setWindowFlags(flags);
-      sayac->show();
-      /*current_toolTahta->setEnabled(false);
-      current_toolKalemMenu->setEnabled(false);
-      current_toolPageMenu->setEnabled(false);
-      this->setEnabled(false);*/
-      current_toolTahta->hide();
-      current_toolKalemMenu->hide();
-      current_toolPageMenu->hide();
-      this->hide();
-       //emit desktopSignal();
-      //Qt::WindowFlags flags = 0;
-       /* flags |= Qt::Window;
-       flags |= Qt::X11BypassWindowManagerHint;
-       flags |= Qt::CustomizeWindowHint;
+        sayac->move(parentw/2-sayac->width()/2,parenth/2-sayac->height()/2);
+        Qt::WindowFlags flags = 0;
+        flags |= Qt::Dialog;
+        flags |= Qt::X11BypassWindowManagerHint;
+        sayac->setWindowFlags(flags);
+        sayac->show();
+        current_toolTahta->hide();
+        current_toolKalemMenu->hide();
+        current_toolPageMenu->hide();
+        this->hide();
 
-       current_toolTahta_old_flags=current_toolTahta->windowFlags();
-       current_toolTahta->setWindowFlags(flags);
-*/
-      //current_toolTahta->hide();
-       /*flags |= Qt::SplashScreen;
-       flags |= Qt::X11BypassWindowManagerHint;
-       flags |= Qt::WindowStaysOnTopHint;
-       sayac->setWindowFlags(flags);
-         emit desktopSignal();
-       sayac->show();*/
        });
 
+    QPushButton *promterButton=new QPushButton();
+    promterButton=butonSlot(promterButton,"",":icons/promter.svg",QColor(255,0,0,0),e,b,e,b);
+    connect(promterButton, &QPushButton::clicked, [=]() {
+    //emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
+
+
+        toolPromter *promter=new toolPromter(parentw*0.90,parenth*0.5);
+        connect(promter, SIGNAL(promterCloseSignal()),
+                this, SLOT(promterCloseSignalSlot()));
+
+        promter->move(parentw/2-promter->width()/2,parenth/2-promter->height()/2);
+        Qt::WindowFlags flags = 0;
+        flags |= Qt::Dialog;
+       // flags |= Qt::X11BypassWindowManagerHint;
+        promter->setWindowFlags(flags);
+        promter->show();
+        current_toolTahta->hide();
+        current_toolKalemMenu->hide();
+        current_toolPageMenu->hide();
+        this->hide();
+
+
+       });
     QPushButton *saveButton=new QPushButton();
     saveButton=butonSlot(saveButton,"",":icons/save.svg",QColor(255,0,0,0),e,b,e,b);
     connect(saveButton, &QPushButton::clicked, [=]() {
@@ -1155,19 +1158,21 @@ QWidget *toolKalem::toolTopMenu(int _boy)
     //layout->setMargin(0);
    // layout->setColumnMinimumWidth(0, 37);
 
-layout->addWidget(sayacButton, 0, 1,1,1,Qt::AlignHCenter);
+layout->addWidget(promterButton, 0, 1,1,1,Qt::AlignHCenter);
+layout->addWidget(sayacButton, 0, 2,1,1,Qt::AlignHCenter);
     layout->addWidget(saveButton, 0, 5,1,1,Qt::AlignHCenter);
     layout->addWidget(printButton, 0, 10,1,1,Qt::AlignHCenter);
     layout->addWidget(infoButton, 0, 15,1,1,Qt::AlignHCenter);
-
+  QLabel *promterLabel=new QLabel("Okuyucu");
     QLabel *sayacLabel=new QLabel("Sınav Sayacı");
     QLabel *kaydetLabel=new QLabel("Ekranı Kaydet");
     QLabel *printLabel=new QLabel("Ekranı Yazdır");
     QLabel *infoLabel=new QLabel("Hakkında");
-
+    promterLabel->setFont(ff);
     kaydetLabel->setFont(ff);printLabel->setFont(ff);
     infoLabel->setFont(ff);sayacLabel->setFont(ff);
-    layout->addWidget(sayacLabel,1,1,1,1,Qt::AlignHCenter);
+     layout->addWidget(promterLabel,1,1,1,1,Qt::AlignHCenter);
+    layout->addWidget(sayacLabel,1,2,1,1,Qt::AlignHCenter);
     layout->addWidget(kaydetLabel,1,5,1,1,Qt::AlignHCenter);
     layout->addWidget(printLabel,1,10,1,1,Qt::AlignHCenter);
     layout->addWidget(infoLabel,1,15,1,1,Qt::AlignHCenter);

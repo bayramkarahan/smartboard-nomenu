@@ -116,7 +116,8 @@ void toolTahta::mouseReleaseEvent(QMouseEvent *event)
          }
         //************************************************************************/
         drawStatus=false;
-        int myPenSize=4;
+        //int myPenSize=4;
+        int myPenSize=scene->myPenSize;
         // wpoints<<event->pos();
         // wpoints.clear();
         msx=(msx>event->pos().x())?event->pos().x():msx;
@@ -270,19 +271,17 @@ int myPenSize=scene->myPenSize;
         QPainter pnt(&pix);
         pnt.setBrush(QBrush(scene->myPenColor));
         pnt.setPen(QPen(scene->myPenColor, 0));
-       // pnt.drawPolyline();
+        // pnt.drawPolyline();
 
         pnt.drawEllipse(rect);
+        pnt.setRenderHint(QPainter::Antialiasing, true);
+        pnt.setRenderHint(QPainter::SmoothPixmapTransform, true);
 
-          pnt.end();
-          QMatrix rm;
-              rm.rotate(45);
-              pix = pix.transformed(rm);
-       /* QTransform trans;// = transform();
-        trans.rotate(35);
-        pix = pix.transformed(trans);
-        */
-
+        pnt.end();
+        QMatrix rm;
+        rm.rotate(145);
+        pix = pix.transformed(rm);
+        ///myPixmapForNow = myPixmapForNow.transformed(rm);
         /*****************************************/
       /*  QRectF rectangle(myPolygon[0],myPolygon[1]);
         QPixmap pixmap(w, h);
@@ -291,15 +290,16 @@ int myPenSize=scene->myPenSize;
         painter.setPen(QPen(Qt::black, 8));
         painter.drawEllipse(rectangle);
         /**********************************************/
-         //painter.drawPixmap(endPoint,pix);
 
-     //   myPixmapForNow= myPixmapForNow.scaled(myPenSize,myPenSize);
-        while (pos < length) {
+
+       /// myPixmapForNow= myPixmapForNow.scaled(myPenSize*1.5,myPenSize);
+       // painter.drawPixmap(endPoint,myPixmapForNow);
+       while (pos < length) {
             qreal percent = path.percentAtLength(pos);
             ///drawYourPixmapAt(path.pointAtPercent(percent)); // pseudo method, use QPainter and your brush pixmap instead
             //painter.drawPoint(path.pointAtPercent(percent));
-            //painter.drawPixmap(path.pointAtPercent(percent),myPixmapForNow);
-            painter.drawPixmap(path.pointAtPercent(percent),pix);
+           ///painter.drawPixmap(path.pointAtPercent(percent),myPixmapForNow);
+             painter.drawPixmap(path.pointAtPercent(percent),pix);
 
             //painter.drawEllipse(path.pointAtPercent(percent),myPenSize,myPenSize);
 

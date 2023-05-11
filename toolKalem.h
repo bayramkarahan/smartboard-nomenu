@@ -21,9 +21,11 @@
 #include<QApplication>
 #include<QScreen>
 #include<toolsayac.h>
+#include<toolpromter.h>
 #include<QSlider>
 #include<toolkalemmenu.h>
 #include<toolpagemenu.h>
+#include<shiftlabel.h>
 class QMouseEvent;
 class toolKalem : public QFrame
 {
@@ -91,6 +93,7 @@ signals:
 
 public slots:
     void sayacCloseSignalSlot();
+    void promterCloseSignalSlot();
     void handButtonSlot(bool menushow);
     void penButtonSlot(bool menushow);
     void smartpenButtonSlot(bool menushow);
