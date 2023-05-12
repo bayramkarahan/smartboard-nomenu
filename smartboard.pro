@@ -21,16 +21,12 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    ExampleDlg.cpp \
-    WidgetMarqueeLabel.cpp \
     depo.cpp \
     dotsignal.cpp \
     gridlines.cpp \
     mainwindow.cpp \
-    mylabel.cpp \
     popupmenu.cpp \
     scene.cpp \
-    shiftlabel.cpp \
     toolKalem.cpp \
     toolkalemmenu.cpp \
     toolpagemenu.cpp \
@@ -40,20 +36,16 @@ SOURCES += main.cpp\
     verectangle.cpp
 
 HEADERS  += \
-    ExampleDlg.h \
-    WidgetMarqueeLabel.h \
     depo.h \
     diagramitem.h \
     dotsignal.h \
     filecrud.h \
     gridlines.h \
     mainwindow.h \
-    mylabel.h \
     popMenus.h \
     popupmenu.h \
     sayfaFunctions.h \
     scene.h \
-    shiftlabel.h \
     toolKalem.h \
     toolKalemFunction.h \
     toolKalemSignalSlots.h \

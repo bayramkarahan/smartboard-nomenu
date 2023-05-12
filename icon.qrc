@@ -84,5 +84,7 @@
         <file>icons/musicicon.svg</file>
         <file>icons/promter.svg</file>
         <file>icons/exit.svg</file>
+        <file>icons/color.svg</file>
+        <file>icons/font.svg</file>
     </qresource>
 </RCC>

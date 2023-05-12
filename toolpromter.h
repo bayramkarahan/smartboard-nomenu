@@ -12,7 +12,9 @@
 #include<QSlider>
 #include<QTextEdit>
 #include<QEventLoop>
-#include<shiftlabel.h>
+#include<QColorDialog>
+#include<QFontDialog>
+
 class toolPromter : public QWidget
 {
     Q_OBJECT
@@ -24,6 +26,10 @@ protected slots:
     void saatslot();
     void setSure(int value);
     void paintEvent(QPaintEvent *pe) override;
+    void on_btnColor_clicked();
+    void on_btnFont_clicked();
+    void on_btnPause_clicked();
+
 protected:
 
 signals:
@@ -40,7 +46,6 @@ private:
     QTimer timer;
  //   QTimer timerText;
     QTextEdit *text;
-
     QString actual_text_;
     int pos_;
      QTimer  *timerText;

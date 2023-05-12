@@ -25,8 +25,7 @@
 #include<QSlider>
 #include<toolkalemmenu.h>
 #include<toolpagemenu.h>
-#include<shiftlabel.h>
-#include<ExampleDlg.h>
+
 class QMouseEvent;
 class toolKalem : public QFrame
 {

@@ -1,6 +1,5 @@
 #include "toolpromter.h"
-#include<WidgetMarqueeLabel.h>
-#include<mylabel.h>
+
 toolPromter::toolPromter(int w, int h, QWidget *parent)
     : QWidget{parent}
 {
@@ -72,7 +71,7 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
     connect(sure,SIGNAL(valueChanged(int)),this,SLOT(setSure(int)));
     sure->setStyleSheet(".QSlider::groove:Horizontal {"
                         "background: rgba(0, 0, 50, 200);"
-                        "width:"+QString::number(en*14)+"px;"
+                        "width:"+QString::number(en*10)+"px;"
                         "height:"+QString::number(boy/2)+"px;"
                         "}"
                         ".QSlider::handle:Horizontal {"
@@ -92,7 +91,7 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
     suresayacLabel->setText("Süre: "+QString::number(suresayac));
     suresayacLabel->show();
     QWidget *butongrub=new QWidget(this);
-    butongrub->setFixedSize(en*4, boy*2.5);
+    butongrub->setFixedSize(en*10, boy*2.5);
     butongrub->move(this->width()/2-butongrub->width()/2,this->height()-butongrub->height()*1);
 
     QPushButton *sayacStartButton= new QPushButton(butongrub);
@@ -101,97 +100,80 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
     sayacStartButton->setIconSize(QSize(en*2,boy*2));
     sayacStartButton->setFlat(true);
     sayacStartButton->setIcon(QIcon(":icons/startsayac.svg"));
-    // sayacStartButton->move(this->width()*0.5,this->height()-sayacStartButton->height()*2);
-    sayacStartButton->move(0,5);
+    sayacStartButton->move(en*4,0);
 
     sayacStartButton->show();
 
     connect(sayacStartButton, &QPushButton::clicked, [=]() {
-        /*saniye=0;
-        saat->start(1000);
-        //delete sure;
-        sure->hide();
-        sayacStartButton->hide();
-
-       // sayacCloseButton->hide();
-
-
-       /* QStringList liste=text->toPlainText().split(" ");
-        qDebug()<<"Kelime Sayısı:"<<liste.length();
-        for(int i=0;i<liste.length();i++)
-        {
-            qDebug()<<i<<":"<<liste[i];
-            timer.start(2000);
-            loop.exec();
-        }*/
-
         sure->hide();
         suresayacLabel->hide();
         text->hide();
         sayacStartButton->hide();
-        //sayacCloseButton->hide();
-
-
         timerText->start(sure->value());
-
     });
 
 
-    QPushButton *sayacCloseButton= new QPushButton(butongrub);
-    sayacCloseButton->hide();
-    sayacCloseButton->setFixedSize(en*2, boy*2);
-    sayacCloseButton->setIconSize(QSize(en*2,boy*2));
-    sayacCloseButton->setFlat(true);
-    sayacCloseButton->setIcon(QIcon(":icons/stopsayac.svg"));
-    sayacCloseButton->move(butongrub->width()-sayacCloseButton->width()-boy/2,5);
-    sayacCloseButton->show();
-    connect(sayacCloseButton, &QPushButton::clicked, [=]() {
-
+    QPushButton *sayacPauseButton= new QPushButton(butongrub);
+    sayacPauseButton->hide();
+    sayacPauseButton->setFixedSize(en*2, boy*2);
+    sayacPauseButton->setIconSize(QSize(en*2,boy*2));
+    sayacPauseButton->setFlat(true);
+    sayacPauseButton->setIcon(QIcon(":icons/stopsayac.svg"));
+    sayacPauseButton->move(en*6,0);
+    sayacPauseButton->show();
+    connect(sayacPauseButton, &QPushButton::clicked, [=]() {
         timerText->stop();
         sure->show();
         suresayacLabel->show();
         text->show();
         sayacStartButton->show();
-        sayacCloseButton->show();
-        ///zeminSeffafButtonClick();///burada zemin beyaz yapılıyor
-        //emit promterCloseSignal();
-        //this->close();
-
     });
 
 
     QPushButton *sayacExitButton= new QPushButton(this);
-    //sayacExitButton->hide();
     sayacExitButton->setFixedSize(en*0.5, boy*1);
     sayacExitButton->setIconSize(QSize(en*1,boy*1));
     sayacExitButton->setFlat(true);
     sayacExitButton->setIcon(QIcon(":icons/exit.svg"));
     sayacExitButton->move(width()-sayacExitButton->width(),0);
-    //sayacExitButton->show();
     connect(sayacExitButton, &QPushButton::clicked, [=]() {
-        /// sayacShow=false;//Sayac Kapatılıyor..
         saat->stop();
         sure->hide();
-
         sayacStartButton->hide();
-        sayacCloseButton->hide();
-        ///zeminSeffafButtonClick();///burada zemin beyaz yapılıyor
         emit promterCloseSignal();
         this->close();
-
     });
 
-    WidgetMarqueeLabel *ml = new WidgetMarqueeLabel(this);
+    QPushButton *fontButton= new QPushButton(butongrub);
+    fontButton->setFixedSize(en*2, boy*2);
+    fontButton->setIconSize(QSize(en*2,boy*2));
+    fontButton->setFlat(true);
+    //fontButton->setText("Font");
+    fontButton->setIcon(QIcon(":icons/font.svg"));
+    fontButton->move(0,0);
+    fontButton->show();
+    connect(fontButton, &QPushButton::clicked, [=]() {
+      on_btnFont_clicked();
+    });
+    QPushButton *colorButton= new QPushButton(butongrub);
+    colorButton->setFixedSize(en*2, boy*2);
+    colorButton->setIconSize(QSize(en*2,boy*2));
+    colorButton->setFlat(true);
+    //colorButton->setText("Color");
+    colorButton->setIcon(QIcon(":icons/color.svg"));
+    colorButton->move(en*2,0);
+    colorButton->show();
+    connect(colorButton, &QPushButton::clicked, [=]() {
+        on_btnColor_clicked();
+    });
+ /*   ml = new WidgetMarqueeLabel(this);
     ml->setFixedSize(width()-en*2,boy);
     ml->setTextFormat(Qt::RichText);
-    //layout()->addWidget(ml);
     ml->setAlignment(Qt::AlignVCenter);
-
     ml->setText(text->toPlainText());
     ml->setFont(QFont("Arial", 20,20));
-   //
     ml->move(10,0);
-   // ml->show();
+    */
 }
 
 void toolPromter::timerTextslot(){
@@ -232,3 +214,37 @@ void toolPromter::paintEvent(QPaintEvent *pe)
   style()->drawPrimitive(QStyle::PE_Widget, &o, &p, this);
 }
 
+
+void toolPromter::on_btnColor_clicked()
+{
+    QColor c = QColorDialog::getColor();
+    QPalette p;
+    p.setBrush(QPalette::WindowText, c);
+    timerTextLabel->setPalette(p);
+}
+
+void toolPromter::on_btnFont_clicked()
+{
+    bool ok;
+    QFont font = QFontDialog::getFont(&ok, timerTextLabel->font(), this);
+    if (ok)
+    {
+        timerTextLabel->setFont(font);
+    }
+}
+void toolPromter::on_btnPause_clicked()
+{
+    /*
+    if(btnPause->text() == QString("Pause"))
+    {
+        currentSpeed = sliderSpeed->value();
+        ml->setSpeed(0);
+        btnPause->setText("Resume");
+    }
+    else
+    {
+        ml->setSpeed(currentSpeed);
+        btnPause->setText("Pause");
+    }
+    */
+}
