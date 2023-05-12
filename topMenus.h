@@ -1109,6 +1109,12 @@ QWidget *toolKalem::toolTopMenu(int _boy)
         //flags |= Qt::X11BypassWindowManagerHint;
         promter->setWindowFlags(flags);
         promter->show();
+        ///  qDebug()<<"acb0";
+        //ExampleDlg dlg(this);
+        //dlg.setFixedSize(200,300);
+       //  qDebug()<<"acb1";
+        //dlg.show();
+       // qDebug()<<"acb2";
         current_toolTahta->hide();
         current_toolKalemMenu->hide();
         current_toolPageMenu->hide();

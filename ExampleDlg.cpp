@@ -1,19 +1,19 @@
 #include "ExampleDlg.h"
 #include <QColorDialog>
 #include <QFontDialog>
-
+#include<QLayout>
 ExampleDlg::ExampleDlg(QWidget *parent)
 {
-	setupUi(this);
+
 	ml = new WidgetMarqueeLabel(this);
 	ml->setTextFormat(Qt::RichText);
-	layout()->addWidget(ml);
+    //layout()->addWidget(ml);
 	ml->setAlignment(Qt::AlignVCenter);
 	
-	ml->setText(lineEdit->text());
+    ml->setText("bu bir deneme");
 	ml->setFont(QFont("Arial", 20,20));
-	sliderSpeed->setRange(1,10);
-	connect(sliderSpeed, SIGNAL(valueChanged(int)), ml, SLOT(setSpeed(int)));
+    //sliderSpeed->setRange(1,10);
+    //connect(sliderSpeed, SIGNAL(valueChanged(int)), ml, SLOT(setSpeed(int)));
 }
 
 ExampleDlg::~ExampleDlg()
@@ -44,7 +44,7 @@ void ExampleDlg::on_btnFont_clicked()
 
 void ExampleDlg::on_btnPause_clicked()
 {
-	if(btnPause->text() == QString("Pause"))
+    /*if(btnPause->text() == QString("Pause"))
 	{
 		currentSpeed = sliderSpeed->value();
 		ml->setSpeed(0);
@@ -54,14 +54,14 @@ void ExampleDlg::on_btnPause_clicked()
 	{
 		ml->setSpeed(currentSpeed);
 		btnPause->setText("Pause");
-	}
+    }*/
 }
 
 void ExampleDlg::on_radioButtonLTR_toggled()
 {
-	if(radioButtonLTR->isChecked())
+    /*if(radioButtonLTR->isChecked())
 		ml->setDirection(WidgetMarqueeLabel::LeftToRight);
 	else
-		ml->setDirection(WidgetMarqueeLabel::RightToLeft);
+        ml->setDirection(WidgetMarqueeLabel::RightToLeft);*/
 }
 

@@ -1,8 +1,12 @@
 #include "toolpromter.h"
-
+#include<WidgetMarqueeLabel.h>
+#include<mylabel.h>
 toolPromter::toolPromter(int w, int h, QWidget *parent)
     : QWidget{parent}
 {
+
+
+
     timer.setSingleShot(true);
     connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
 
@@ -17,6 +21,7 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
     QGridLayout *mainlayout = new QGridLayout(this);
     mainlayout->setAlignment(Qt::AlignCenter);
     mainlayout->setMargin(0);
+    //mainlayout->addWidget(ml);
     setObjectName("promter");
     setStyleSheet("QWidget#promter{"
                   "border: 2px solid rgb(53, 132, 228);"
@@ -28,6 +33,7 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
     int en=w/20;
     int boy=h/20;
     //qDebug()<<en<<boy;
+
     QTimer  *saat = new QTimer(this);
     connect(saat, SIGNAL(timeout()), this, SLOT(saatslot()));
 
@@ -175,7 +181,17 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
 
     });
 
+    WidgetMarqueeLabel *ml = new WidgetMarqueeLabel(this);
+    ml->setFixedSize(width()-en*2,boy);
+    ml->setTextFormat(Qt::RichText);
+    //layout()->addWidget(ml);
+    ml->setAlignment(Qt::AlignVCenter);
 
+    ml->setText(text->toPlainText());
+    ml->setFont(QFont("Arial", 20,20));
+   //
+    ml->move(10,0);
+   // ml->show();
 }
 
 void toolPromter::timerTextslot(){

@@ -2,10 +2,10 @@
 #define _EXMAPLEDLG_H_
 
 #include <QDialog>
-#include "ui_ExampleDlg.h"
+
 #include "WidgetMarqueeLabel.h"
 
-class ExampleDlg : public QDialog, public Ui::ExampleDlg
+class ExampleDlg : public QDialog
 {
 	Q_OBJECT
 	public:
