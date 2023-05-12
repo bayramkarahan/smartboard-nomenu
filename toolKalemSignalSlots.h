@@ -167,7 +167,7 @@ qDebug()<<"sayac Kapandı..";
 current_toolTahta->show();
 current_toolKalemMenu->show();
 current_toolPageMenu->show();
-this->show();
+//this->show();
 }
 
 void toolKalem::promterCloseSignalSlot()
@@ -176,7 +176,7 @@ qDebug()<<"sayac Kapandı..";
 current_toolTahta->show();
 current_toolKalemMenu->show();
 current_toolPageMenu->show();
-this->show();
+//this->show();
 }
 void toolKalem::kalemZeminModeSignalSlot(DiagramItem::DiagramType type)
 {
@@ -187,16 +187,7 @@ qDebug()<<"Zemin Türü Seçiliyor:"<<type;
     current_toolTahta->scene->setSekilPenSize(penSize);
     current_toolTahta->scene->setSekilKalemColor(penColor);
     //current_toolTahta->scene->sceneMode=Scene::Mode::DrawRectangle;
-/*
-if(DiagramItem::DiagramType::NDogru==type){ current_toolTahta->scene->donSlot(type);return;}
-if(DiagramItem::DiagramType::NKoordinat==type){ current_toolTahta->scene->donSlot(type);return;}
-if(DiagramItem::DiagramType::NNKoordinat==type){current_toolTahta->scene->donSlot(type);return;}
-if(DiagramItem::DiagramType::HNKoordinat==type){ current_toolTahta->scene->donSlot(type);return;}
-if(DiagramItem::DiagramType::NoktaliKagit==type) {current_toolTahta->scene->donSlot(type);return;}
-if(DiagramItem::DiagramType::IzometrikKagit==type){ current_toolTahta->scene->donSlot(type);return;}
-if(DiagramItem::DiagramType::KareliKagit==type) {current_toolTahta->scene->donSlot(type);return;}
-if(DiagramItem::DiagramType::CizgiliKagit==type) {current_toolTahta->scene->donSlot(type);return;}
-*/
+
 if(DiagramItem::DiagramType::TransparanPage==type){
       qDebug()<<"seffaf zemin"<<current_toolTahta->scene->sceneMode;
     pagePattern=type;
@@ -398,7 +389,7 @@ if(DiagramItem::DiagramType::CustomImagePage==type)
     flags |= Qt::X11BypassWindowManagerHint;
     flags |= Qt::WindowStaysOnTopHint;
     setWindowFlags(flags);
-    show();
+   // show();
 }
 
 bool pageadd=false;
@@ -528,7 +519,7 @@ void toolKalem::kalemSekilModeSignalSlot(DiagramItem::DiagramType type){
         flags |= Qt::X11BypassWindowManagerHint;
         flags |= Qt::WindowStaysOnTopHint;
         setWindowFlags(flags);
-        show();
+        //show();
       current_toolTahta->scene->mySekilType=type;
     }
     else current_toolTahta->scene->mySekilType=type;

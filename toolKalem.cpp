@@ -189,7 +189,7 @@ toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, t
 
 
 /*******************************************************************/
-
+/*
     desktopButton = new QToolButton(this);
     desktopButton=butonToolSlot(desktopButton,"",":icons/desktop.svg",QColor(255,0,0,0),en*1.5,boy);
     desktopButton->setCheckable(true);
@@ -198,8 +198,8 @@ toolKalem::toolKalem(QString _title, int _en, int _boy, toolTahta *_toolTahta, t
         desktopButtonSlot();
 
          });
-
-handButton = new QToolButton(this);
+*/
+/*handButton = new QToolButton(this);
 handButton=butonToolSlot(handButton,"",":icons/hand.svg",QColor(255,0,0,0),en*1.5,boy);
 handButton->setCheckable(true);
 //handButton->setChecked(true);
@@ -211,19 +211,12 @@ copyButton = new QToolButton(this);
 copyButton=butonToolSlot(copyButton,"",":icons/copy.svg",QColor(255,0,0,0),en*1.5,boy);
 copyButton->setCheckable(true);
 connect(copyButton, &QToolButton::clicked, [=]() {
-
     copyButtonSlot();
-   // current_toolTahta->gv->show();
-   // current_toolTahta->gv->setEnabled(true);
-
-   // emit kalemModeSignal(Scene::Mode::CopyMode,DiagramItem::DiagramType::Copy);
    });
 
 penButton = new QToolButton(this);
 penButton=butonToolSlot(penButton,"Kalem",":icons/pen.svg",QColor(255,0,0,0),en*1.5,boy);
 penButton->setIconSize(QSize(en*0.8,boy*1.3));
-//penButton->setMenu(penMenu());
-//penButton->setPopupMode(QToolButton::MenuButtonPopup);
 penButton->setCheckable(true);
 connect(penButton, &QToolButton::clicked, [=]() {
 penButtonSlot(true);
@@ -235,15 +228,14 @@ eraseButton->setCheckable(true);
 //eraseButton->setIconSize(QSize(en*0.8,boy*0.8));
 connect(eraseButton, &QToolButton::clicked, [=]() {
        eraseButtonSlot();
-       //emit kalemModeSignal(Scene::Mode::EraseMode,DiagramItem::DiagramType::NoType);
-   });
+});
 
 QToolButton *clearButton = new QToolButton(this);
 clearButton=butonToolSlot(clearButton,"Hepsini Sil",":icons/clear.svg",QColor(255,0,0,0),en*1.5,boy);
 clearButton->setIconSize(QSize(en*1.5,boy*1.5));
 connect(clearButton, &QToolButton::clicked, [=]() {
   clearButtonSlot();
-});
+});*/
 /*
 penColorButton = new QToolButton(this);
 penColorButton=butonToolSlot(penColorButton,"",":icons/pencolor.png",QColor(0,0,0,255),en*1.5,boy*0.8);
@@ -286,13 +278,12 @@ line00->setContentsMargins(0,0, 0,0);
 line00->setSpacing(1);
 urw->setLayout(line00);
 */
+    /*
 sekilButton = new QToolButton(this);
 DiagramItem *ditem=new DiagramItem();int ken=300;
 QPixmap pixmap(image(ditem->sekilStore(DiagramItem::DiagramType::Cizgi,QRectF(QPointF(20,50),QPointF(ken-70,ken-70))),ken,ken));
 sekilButton=butonToolSlot(sekilButton,"Şekiller",":icons/transparanboard.svg",QColor(255,0,0,0),en*1.5,boy);
 sekilButton->setIcon(pixmap);
-//sekilButton->setMenu(sekilMenu());
-//sekilButton->setPopupMode(QToolButton::MenuButtonPopup);
 sekilButton->setCheckable(true);
 connect(sekilButton, &QToolButton::clicked, [=]() {
    buttonStateClear(); sekilButton->setChecked(true);
@@ -317,7 +308,7 @@ connect(pdfButton, &QToolButton::clicked, [=]() {
     pdfButtonSlot();
     //emit kalemModeSignal(Scene::Mode::PdfMode,DiagramItem::DiagramType::NoType);
    });
-*/
+*//*
 QToolButton *toolButton = new QToolButton(this);
 toolButton=butonToolSlot(toolButton,"Araç",":icons/tool.svg",QColor(255,0,0,0),en*1.5,boy);
 connect(toolButton, &QToolButton::clicked, [=]() {
@@ -345,20 +336,20 @@ connect(exitButton, &QToolButton::clicked, [=]() {
 //emit kalemModeSignal(Scene::Mode::ExitMode,DiagramItem::DiagramType::NoType);
     exit(0);
    });
-
+*/
 auto layout = new QGridLayout();
 layout->setContentsMargins(2,5, 2,5);
 layout->setSpacing(1);
 
-layout->addWidget(desktopButton, 0, 0,1,2);
-layout->addWidget(handButton, 1, 0,1,2);
-layout->addWidget(copyButton, 2, 0,1,2);
+//layout->addWidget(desktopButton, 0, 0,1,2);
+//layout->addWidget(handButton, 1, 0,1,2);
+//layout->addWidget(copyButton, 2, 0,1,2);
 
-layout->addWidget(penButton, 10, 0,1,2);
+//layout->addWidget(penButton, 10, 0,1,2);
 //layout->addWidget(penPopupButton, 10, 1,1,1);
 
-layout->addWidget(eraseButton, 20, 0,1,2);
-layout->addWidget(clearButton, 30, 0,1,2);
+//layout->addWidget(eraseButton, 20, 0,1,2);
+//layout->addWidget(clearButton, 30, 0,1,2);
 
 /*layout->addWidget(blackButton, 40, 0,1,2);
 layout->addWidget(redButton, 41, 0,1,2);
@@ -369,18 +360,18 @@ layout->addWidget(blueButton, 42, 0,1,2);
 //layout->addWidget(undoButton, 45, 0,1,1);
 //layout->addWidget(redoButton, 45, 1,1,1);
 ///layout->addWidget(urw, 45, 1,1,1);
-layout->addWidget(sekilButton, 50, 0,1,2);
-layout->addWidget(zeminButton, 60, 0,1,2);
+//layout->addWidget(sekilButton, 50, 0,1,2);
+//layout->addWidget(zeminButton, 60, 0,1,2);
 //layout->addWidget(saveButton, 65, 0,1,2);
 
 ///layout->addWidget(pdfButton, 70, 0,1,2);
-
+/*
 layout->addWidget(fenButton, 92, 0,1,2);
 layout->addWidget(sosyalButton, 93, 0,1,2);
 layout->addWidget(toolButton, 94, 0,1,2);
 
 layout->addWidget(exitButton,100, 0,1,2);
-
+*/
 this->setLayout(layout);
 connect(this, SIGNAL(kalemColorSignal(QString,QColor)),
            this, SLOT(kalemColorSignalSlot(QString,QColor)));

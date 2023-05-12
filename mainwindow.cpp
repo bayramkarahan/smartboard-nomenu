@@ -55,21 +55,24 @@ MainWindow::MainWindow(QWidget *parent) :
     /**************************************************************************/
    connect(kw, SIGNAL(desktopSignal()),curent_pageMenu, SLOT(toolPageMenu_DesktopSignalSlot()));
    connect(kw, SIGNAL(penSignal()),curent_pageMenu, SLOT(toolPageMenu_PenSignalSlot()));
-   curent_pageMenu->toolPageMenuOlustur(kw->pageBottomMenu(screenSize.height()*0.045),screenSize.width()*0.9,screenSize.height()*0.045,screenSize.width(),screenSize.height());
+   curent_pageMenu->toolPageMenuOlustur(kw->pageBottomMenu(screenSize.height()*0.045),screenSize.width()*0.99,screenSize.height()*0.045,screenSize.width(),screenSize.height());
    //curent_pageMenu->move(screenSize.width()/2-curent_pageMenu->width()/2,screenSize.height()-curent_pageMenu->height()*2.5);
    curent_pageMenu->show();
 
    /*******************ilk Açılış Hazırlığı****************************/
-   //kw->penToScene();
+   kw->penToScene();
    kw->ekleSayfaButtonClick(-1,false,-1);
+   kw->hide();
+   current_toolKalemMenu->toolKalemMenuAsagiYukariHizalaStatusSlot();
    //kalemModeSignalSlot(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
    //kw->penButtonSlot();
    //kw->desktopButtonSlot();
-   current_toolTahta->raise();
+
+  /* current_toolTahta->raise();
    kw->raise();
    curent_pageMenu->raise();
    current_toolKalemMenu->raise();
-
+*/
 
 }
 

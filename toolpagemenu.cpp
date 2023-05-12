@@ -72,11 +72,11 @@ void toolPageMenu::toolPageMenuOlustur(QWidget *_menu, int w, int h, int parentw
 void toolPageMenu::toolPageMenu_DesktopSignalSlot()
 {
 qDebug()<<"toolPageMenu desktop seç masajı geldi...";
-hide();
+//hide();
 }
 
 void toolPageMenu::toolPageMenu_PenSignalSlot()
 {
 qDebug()<<"toolPageMenu pen seç masajı geldi...";
-show();
+//show();
 }

@@ -74,8 +74,58 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
        });
 
 
+    /*******************************************************************/
+
+    desktopButton = new QPushButton();
+        desktopButton=butonSlot(desktopButton,"",":icons/desktop.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+        desktopButton->setCheckable(true);
+            connect(desktopButton, &QPushButton::clicked, [=]() {
+            desktopButtonSlot();
+
+             });
+
+     handButton = new QPushButton(this);
+    handButton=butonSlot(handButton,"",":icons/hand.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    handButton->setCheckable(true);
+    connect(handButton, &QPushButton::clicked, [=]() {
+        handButtonSlot(true);
+         });
+
+    copyButton = new QPushButton(this);
+    copyButton=butonSlot(copyButton,"",":icons/copy.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    copyButton->setCheckable(true);
+    connect(copyButton, &QPushButton::clicked, [=]() {
+        copyButtonSlot();
+       });
+
+     penButton = new QPushButton(this);
+    penButton=butonSlot(penButton,"",":icons/pen.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    //_penButton->setIconSize(QSize(en*0.8,boy*1.3));
+    penButton->setCheckable(true);
+    connect(penButton, &QPushButton::clicked, [=]() {
+    penButtonSlot(true);
+    });
+
+     eraseButton = new QPushButton(this);
+    eraseButton=butonSlot(eraseButton,"",":icons/erase.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    eraseButton->setCheckable(true);
+    //eraseButton->setIconSize(QSize(en*0.8,boy*0.8));
+    connect(eraseButton, &QPushButton::clicked, [=]() {
+           eraseButtonSlot();
+    });
+
+    QPushButton *clearButton = new QPushButton(this);
+    clearButton=butonSlot(clearButton,"",":icons/clear.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    //_clearButton->setIconSize(QSize(en*1.5,boy*1.5));
+    connect(clearButton, &QPushButton::clicked, [=]() {
+      clearButtonSlot();
+    });
+     QWidget *penWidget=new QWidget();
+
+    /***********************************************************/
+
     QPushButton *printButton = new QPushButton(this);
-    printButton=butonSlot(printButton,"",":icons/print.svg",QColor(255,0,0,0),e*0.7,b,e,b);
+    printButton=butonSlot(printButton,"",":icons/print.svg",QColor(255,0,0,0),e*0.65,b,e,b);
     connect(printButton, &QPushButton::clicked, [=]() {
         //emit kalemModeSignal(Scene::Mode::PrintMode,DiagramItem::DiagramType::NoType);
         //QString fileName = QFileDialog::getSaveFileName(this, "Export PDF",QString(), "*.pdf");
@@ -96,7 +146,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     });
 
     QPushButton *pdfOpenButton=new QPushButton();
-    pdfOpenButton=butonSlot(pdfOpenButton,"",":icons/pdfopen.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    pdfOpenButton=butonSlot(pdfOpenButton,"",":icons/pdfopen.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
     connect(pdfOpenButton, &QPushButton::clicked, [=]() {
         //emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
 
@@ -176,7 +226,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
         flags |= Qt::X11BypassWindowManagerHint;
         flags |= Qt::WindowStaysOnTopHint;
         this->setWindowFlags(flags);
-        show();
+        //show();
 
 
         if(fileSelected==false) return;
@@ -211,7 +261,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     });
 
     QPushButton *pdfSaveButton=new QPushButton();
-    pdfSaveButton=butonSlot(pdfSaveButton,"",":icons/pdfsave.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    pdfSaveButton=butonSlot(pdfSaveButton,"",":icons/pdfsave.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
     connect(pdfSaveButton, &QPushButton::clicked, [=]() {
         //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
         Qt::WindowFlags flags = 0;
@@ -292,7 +342,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     QLabel *pdfsaveLabel=new QLabel("Pdf Kaydet");  pdfsaveLabel->setFont(ff);
     */
     delPageButton=new QPushButton();
-    delPageButton=butonSlot(delPageButton,"",":icons/delpage.svg",QColor(255,0,0,0),e,b,e,b);
+    delPageButton=butonSlot(delPageButton,"",":icons/delpage.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
 
     connect(delPageButton, &QPushButton::clicked, [=]() {
         if (current_toolTahta->sceneIndex>0)
@@ -307,7 +357,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     });
 
     addPageButton=new QPushButton();
-    addPageButton=butonSlot(addPageButton,"",":icons/addpage.svg",QColor(255,0,0,0),e,b,e,b);
+    addPageButton=butonSlot(addPageButton,"",":icons/addpage.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
 
     connect(addPageButton, &QPushButton::clicked, [=]() {
         //current_toolTahta->sceneIndex++;
@@ -318,7 +368,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
       //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
        });
     nextPageButton=new QPushButton();
-    nextPageButton=butonSlot(nextPageButton,"",":icons/nextpage.svg",QColor(255,0,0,0),e,b,e,b);
+    nextPageButton=butonSlot(nextPageButton,"",":icons/nextpage.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
 
     connect(nextPageButton, &QPushButton::clicked, [=]() {
           ileriSayfaButtonClick();
@@ -332,7 +382,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     });
 
    backPageButton=new QPushButton();
-    backPageButton=butonSlot(backPageButton,"",":icons/backpage.svg",QColor(255,0,0,0),e,b,e,b);
+    backPageButton=butonSlot(backPageButton,"",":icons/backpage.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
 
     connect(backPageButton, &QPushButton::clicked, [=]() {
         /*if (current_toolTahta->sceneIndex>0&&current_toolTahta->current_sceneIndex>0)
@@ -346,7 +396,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
        });
 
     zoomnegatifPageButton=new QPushButton();
-    zoomnegatifPageButton=butonSlot(zoomnegatifPageButton,"",":icons/zoompagenegatif.svg",QColor(255,0,0,0),e*0.7,b,e,b);
+    zoomnegatifPageButton=butonSlot(zoomnegatifPageButton,"",":icons/zoompagenegatif.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
 
     connect(zoomnegatifPageButton, &QPushButton::clicked, [=]() {
         zoomnegatifSayfaButtonClick();
@@ -355,7 +405,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
 
 
     zoompozitifPageButton=new QPushButton();
-    zoompozitifPageButton=butonSlot(zoompozitifPageButton,"",":icons/zoompagepozitif.svg",QColor(255,0,0,0),e*0.7,b,e,b);
+    zoompozitifPageButton=butonSlot(zoompozitifPageButton,"",":icons/zoompagepozitif.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
 
     connect(zoompozitifPageButton, &QPushButton::clicked, [=]() {
         zoompozitifSayfaButtonClick();
@@ -364,7 +414,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
 
 
     zoomfitPageButton=new QPushButton();
-    zoomfitPageButton=butonSlot(zoomfitPageButton,"",":icons/zoompagefit.svg",QColor(255,0,0,0),e*0.7,b,e,b);
+    zoomfitPageButton=butonSlot(zoomfitPageButton,"",":icons/zoompagefit.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
 
     connect(zoomfitPageButton, &QPushButton::clicked, [=]() {
         zoomfitSayfaButtonClick();
@@ -372,66 +422,15 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
        });
 
     leftrightButton=new QPushButton();
-    leftrightButton=butonSlot(leftrightButton,"",":icons/leftright.svg",QColor(255,0,0,0),e,b,e,b*0.8);
+    leftrightButton=butonSlot(leftrightButton,"",":icons/leftright.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
 
     connect(leftrightButton, &QPushButton::clicked, [=]() {
         sagSolHizala();
-      //  emit kalemModeSignal(Scene::Mode::ZeminMode,DiagramItem::DiagramType::TransparanPage);
-      /*  QDial *dial = new QDial;// dial object
-           dial->setGeometry(300,300,80,80);// placing on mouse position
-           QSizeGrip * sizeGrip = new QSizeGrip(dial);
 
-           QHBoxLayout *layout = new QHBoxLayout(dial);
-           layout->setContentsMargins(0, 0, 0, 0);
-           layout->addWidget(sizeGrip, 0, Qt::AlignRight | Qt::AlignBottom);
-
-           QGraphicsWidget* parentWidget = new QGraphicsWidget();//make parent of widget
-           parentWidget->setCursor(Qt::SizeAllCursor);
-           parentWidget->setGeometry(300,300,200,200);
-           //parentWidget->setFlags(QGraphicsItem::ItemIsMovable |QGraphicsItem::ItemIsMovable| QGraphicsItem::ItemIsSelectable );
-           current_toolTahta->scene->addItem(parentWidget);
-
-           QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
-           proxy->setWidget(dial);
-           proxy->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable );
-
-           proxy->setParentItem(parentWidget);*/
-      /*  QLabel *gif_anim = new QLabel();
-        QMovie *movie = new QMovie(":icons/animasyon.gif");
-        gif_anim->setMovie(movie);
-        movie->start();
-        QGraphicsProxyWidget *proxy = new QGraphicsProxyWidget();
-            proxy->setWidget(gif_anim);
-            proxy->setFlags(QGraphicsItem::ItemIsMovable | QGraphicsItem::ItemIsSelectable );
-             current_toolTahta->scene->addItem(proxy);
-*/
-
-       /* QGraphicsProxyWidget ideoItem *video_item = new QGraphicsVideoItem();
-        current_toolTahta->scene->addItem(video_item);
-        video_item->setPos(0,0);
-       video_item->setZValue(200);
-        QMediaPlayer *media_player = new QMediaPlayer(current_toolTahta->scene);
-        media_player->setVideoOutput(video_item );
-       // media_player ->setMedia(QUrl(":icons/animasyon.gif"));
-        media_player->setMedia(QUrl::fromLocalFile(QFileInfo("/home/by/animasyon.gif").absoluteFilePath()));
-
-        media_player->;*/
-        /*QLabel* aniLabel = new QLabel();
-                QMovie* aniMovie = new QMovie( ":icons/animasyon.gif", QByteArray(), this );
-                QGraphicsProxyWidget* aniWidget = new QGraphicsProxyWidget();
-                aniLabel->setAttribute( Qt::WA_NoSystemBackground );
-                aniLabel->setMovie( aniMovie );
-                aniWidget->setWidget( aniLabel );
-                current_toolTahta->scene->addItem(aniWidget);
-                aniWidget->setPos( aniLabel->size().width(),
-                                              aniLabel->size().height() );
-                           // aniLabel->show();
-                            aniMovie->start();
-                            */
     });
 
     updownButton=new QPushButton();
-    updownButton=butonSlot(updownButton,"",":icons/updown.svg",QColor(255,0,0,0),e,b,e,b*0.8);
+    updownButton=butonSlot(updownButton,"",":icons/updown.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
 
     connect(updownButton, &QPushButton::clicked, [=]() {
         current_toolKalemMenu->toolKalemMenuAsagiYukariHizalaStatusSlot();
@@ -448,29 +447,25 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
     pageListwg->setStyleSheet("QWidget#pageListwg{"
                           "border: 0.5px solid rgba(62, 140, 220,100);"
                           "border-radius: 5px;"
-                          "background-color:rgba(255,255,255,0);"
+                          "background-color:rgba(255,255,255,200);"
                           "}");
 
     sceneListButtonLayout = new QHBoxLayout(pageListwg);
     sceneListButtonLayout->setContentsMargins(0, 0, 0, 0);
 
     auto layout = new QGridLayout(menu);
-    layout->setContentsMargins(0, 0, 0, 1);
-    //layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setMargin(0);
+
    // layout->setColumnMinimumWidth(0, 37);
     QWidget *pdfWidget=new QWidget();
-   /*pdfWidget->setObjectName("pdfWidget");
-    pdfWidget->setStyleSheet("QWidget#pdfWidget{"
-                          "border: 0.5px solid rgba(62, 140, 220,100);"
-                          "border-radius: 5px;"
-                          "background-color:rgba(220,220,220,190);"
-                          "}");*/
+
   /******************************undo redo*******************************************/
     QWidget *urw=new QWidget(this);
     urw->setFixedSize(e*1.4,b);
     undoPageButton=new QPushButton();
     undoPageButton->setEnabled(false);
-    undoPageButton=butonSlot(undoPageButton,"",":icons/undo.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    undoPageButton=butonSlot(undoPageButton,"",":icons/undo.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
     connect(undoPageButton, &QPushButton::clicked, [=]() {
         //emit kalemModeSignal(Scene::Mode::GeriAlMode,DiagramItem::DiagramType::NoType);
         Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
@@ -482,7 +477,7 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
 
    redoPageButton=new QPushButton();
     redoPageButton->setEnabled(false);
-    redoPageButton=butonSlot(redoPageButton,"",":icons/redo.svg",QColor(255,0,0,0),e*0.7,b,e,b*0.8);
+    redoPageButton=butonSlot(redoPageButton,"",":icons/redo.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
     connect(redoPageButton, &QPushButton::clicked, [=]() {
         // emit kalemModeSignal(Scene::Mode::IleriAlMode,DiagramItem::DiagramType::NoType);
          Scene::Mode tempmode=current_toolTahta->scene->sceneMode;
@@ -504,19 +499,63 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
       QWidget *sbs=new QWidget(this);
       sbs->setFixedSize(e*2,b);
       QPushButton *seffafSayfaButton=new QPushButton();
-      seffafSayfaButton=butonSlot(seffafSayfaButton,"",":icons/transparanboard.svg",QColor(255,0,0,0),e*0.7,b,e*0.7,b);
+      seffafSayfaButton=butonSlot(seffafSayfaButton,"",":icons/transparanboard.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
       connect(seffafSayfaButton, &QPushButton::clicked, [=]() {
           emit kalemZeminModeSignal(DiagramItem::DiagramType::TransparanPage);
            if(oldMode==Scene::DrawPen)penButtonSlot(false);
+           zeminButtonSlot();
       });
 
       QPushButton *beyazSayfaButton=new QPushButton();
-      beyazSayfaButton=butonSlot(beyazSayfaButton,"",":icons/whiteboard.svg",QColor(255,0,0,0),e*0.7,b,e*0.7,b);
+      beyazSayfaButton=butonSlot(beyazSayfaButton,"",":icons/whiteboard.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
       connect(beyazSayfaButton, &QPushButton::clicked, [=]() {
           emit kalemZeminModeSignal(DiagramItem::DiagramType::WhitePage);
            if(oldMode==Scene::DrawPen)penButtonSlot(false);
       });
+/**********************************************************************/
+     sekilButton = new QPushButton(this);
+      DiagramItem *ditem=new DiagramItem();int ken=300;
+      QPixmap pixmap(image(ditem->sekilStore(DiagramItem::DiagramType::Cizgi,QRectF(QPointF(20,50),QPointF(ken-70,ken-70))),ken,ken));
+      sekilButton=butonSlot(sekilButton,"",":icons/transparanboard.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
+      sekilButton->setIcon(pixmap);
+      //sekilButton->setCheckable(true);
+      connect(sekilButton, &QPushButton::clicked, [=]() {
+         buttonStateClear(); sekilButton->setChecked(true);
+         sekilButtonSlot();
+         emit kalemSekilModeSignal(DiagramItem::DiagramType::Cizgi);
+         });
 
+
+
+      QPushButton *_toolButton = new QPushButton(this);
+      _toolButton=butonSlot(_toolButton,"",":icons/tool.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
+      connect(_toolButton, &QPushButton::clicked, [=]() {
+          toolButtonSlot();
+          //emit kalemModeSignal(Scene::Mode::ToolMode,DiagramItem::DiagramType::NoType);
+         });
+
+      QPushButton *_fenButton = new QPushButton(this);
+      _fenButton=butonSlot(_fenButton,"",":icons/fen.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
+      connect(_fenButton, &QPushButton::clicked, [=]() {
+          current_toolKalemMenu->toolKalemMenuOlustur(fenTopMenu(parenth*0.045),parentw*0.3,parenth*0.045,parentw,parenth);
+          current_toolKalemMenu->show();
+         });
+
+      QPushButton *_sosyalButton = new QPushButton(this);
+      _sosyalButton=butonSlot(_sosyalButton,"",":icons/sosyal.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
+      connect(_sosyalButton, &QPushButton::clicked, [=]() {
+          current_toolKalemMenu->toolKalemMenuOlustur(sosyalTopMenu(parenth*0.045),parentw*0.5,parenth*0.045,parentw,parenth);
+          current_toolKalemMenu->show();
+         });
+
+      QPushButton *_exitButton = new QPushButton(this);
+      _exitButton=butonSlot(_exitButton,"",":icons/close.svg",QColor(255,0,0,0),e*0.65,b,e,b*0.8);
+      connect(_exitButton, &QPushButton::clicked, [=]() {
+      //emit kalemModeSignal(Scene::Mode::ExitMode,DiagramItem::DiagramType::NoType);
+          exit(0);
+         });
+
+      /*****************************************************************/
       QHBoxLayout *linepage = new QHBoxLayout;
       linepage->addWidget(seffafSayfaButton,Qt::AlignHCenter);
       linepage->addWidget(beyazSayfaButton,Qt::AlignHCenter);
@@ -527,44 +566,73 @@ QWidget *toolKalem::pageBottomMenu(int _boy)
       /******************************seffaf beyaz sayfa*******************************************/
 
     auto pdfwidgetlayout = new QGridLayout(pdfWidget);
-    pdfWidget->setFixedSize(3*e,b);
+    pdfWidget->setFixedSize(7.5*e,b);
     pdfwidgetlayout->setContentsMargins(0, 0, 0, 1);
+    pdfwidgetlayout->addWidget(_toolButton, 0, 0,1,1,Qt::AlignHCenter);
     pdfwidgetlayout->addWidget(pdfOpenButton, 0, 1,1,1,Qt::AlignHCenter);
     pdfwidgetlayout->addWidget(pdfSaveButton, 0, 2,1,1,Qt::AlignHCenter);
     pdfwidgetlayout->addWidget(saveButton, 0, 3,1,1,Qt::AlignHCenter);
     pdfwidgetlayout->addWidget(printButton, 0, 4,1,1,Qt::AlignHCenter);
+    pdfwidgetlayout->addWidget(zoomnegatifPageButton, 0, 5,1,1,Qt::AlignHCenter);
+    pdfwidgetlayout->addWidget(zoompozitifPageButton, 0, 6,1,1,Qt::AlignHCenter);
+    pdfwidgetlayout->addWidget(zoomfitPageButton, 0, 7,1,1,Qt::AlignHCenter);
+    pdfwidgetlayout->addWidget(updownButton, 0, 8,1,1,Qt::AlignHCenter);
+    pdfwidgetlayout->addWidget(_exitButton, 0, 9,1,1,Qt::AlignHCenter);
 
-    layout->addWidget(leftrightButton, 0, 5,1,1,Qt::AlignHCenter);
-    layout->addWidget(pdfWidget, 0, 6,1,1,Qt::AlignHCenter);
-    layout->addWidget(sbs, 0, 7,1,1,Qt::AlignHCenter);
+    auto penWidgetlayout = new QGridLayout(penWidget);
+    penWidget->setFixedSize(27*e,b);
+    penWidgetlayout->setContentsMargins(0, 0, 0, 1);
+    penWidgetlayout->addWidget(leftrightButton, 0, 0,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(desktopButton, 0, 1,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(handButton, 0, 2,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(copyButton, 0, 3,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(penButton, 0, 4,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(eraseButton, 0, 5,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(clearButton, 0, 6,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(sbs, 0, 7,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(sekilButton, 0, 8,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(_fenButton, 0, 9,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(_sosyalButton, 0, 10,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(backPageButton, 0, 11,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(addPageButton, 0, 12,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(pageListwg, 0, 13,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(delPageButton, 0, 15,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(nextPageButton, 0, 16,1,1,Qt::AlignCenter);
+    penWidgetlayout->addWidget(urw, 0, 17,1,1,Qt::AlignCenter);
 
-    layout->addWidget(backPageButton, 0, 9,1,1,Qt::AlignHCenter);
+
+   // layout->addWidget(leftrightButton, 0, 0,1,1,Qt::AlignHCenter);
+    layout->addWidget(penWidget, 0, 5,1,1,Qt::AlignHCenter);
+
+   // layout->addWidget(pdfWidget, 0, 6,1,1,Qt::AlignHCenter);
+    //layout->addWidget(sbs, 0, 7,1,1,Qt::AlignHCenter);
+
+  /*  layout->addWidget(backPageButton, 0, 9,1,1,Qt::AlignHCenter);
     layout->addWidget(addPageButton, 0, 10,1,1,Qt::AlignHCenter);
     layout->addWidget(pageListwg, 0, 11,1,1,Qt::AlignHCenter);
     layout->addWidget(delPageButton, 0, 15,1,1,Qt::AlignHCenter);
     layout->addWidget(nextPageButton, 0, 16,1,1,Qt::AlignHCenter);
     layout->addWidget(urw, 0, 17,1,1,Qt::AlignHCenter);
+    */
 
-    QWidget *pdfZoomWidget=new QWidget();
+  /*  QWidget *pdfZoomWidget=new QWidget();
     auto pdfzoomwidgetlayout = new QGridLayout(pdfZoomWidget);
-   /* pdfZoomWidget->setObjectName("pdfZoomWidget");
-    pdfZoomWidget->setStyleSheet("QWidget#pdfZoomWidget{"
-                          "border: 0.5px solid rgba(62, 140, 220,100);"
-                          "border-radius: 5px;"
-                          "background-color:rgba(220,220,220,190);"
-                          "}");*/
-    pdfZoomWidget->setFixedSize(2.5*e,b);
+    pdfZoomWidget->setFixedSize(5*e,b);
     pdfzoomwidgetlayout->setContentsMargins(0, 0, 0, 1);
-    pdfzoomwidgetlayout->addWidget(zoomnegatifPageButton, 0, 1,1,1,Qt::AlignHCenter);
-    pdfzoomwidgetlayout->addWidget(zoompozitifPageButton, 0, 2,1,1,Qt::AlignHCenter);
-    pdfzoomwidgetlayout->addWidget(zoomfitPageButton, 0, 3,1,1,Qt::AlignHCenter);
-    layout->addWidget(pdfZoomWidget, 0, 20,1,1,Qt::AlignHCenter);
+    */
+   // pdfzoomwidgetlayout->addWidget(pdfWidget, 0, 0,1,1,Qt::AlignHCenter);
+   // pdfzoomwidgetlayout->addWidget(zoomnegatifPageButton, 0, 1,1,1,Qt::AlignHCenter);
+   // pdfzoomwidgetlayout->addWidget(zoompozitifPageButton, 0, 2,1,1,Qt::AlignHCenter);
+  //  pdfzoomwidgetlayout->addWidget(zoomfitPageButton, 0, 3,1,1,Qt::AlignHCenter);
+   // layout->addWidget(pdfZoomWidget, 0, 20,1,1,Qt::AlignHCenter);
+    layout->addWidget(pdfWidget, 0, 20,1,1,Qt::AlignHCenter);
 
-    layout->addWidget(updownButton, 0, 25,1,1,Qt::AlignHCenter);
-
+   /* layout->addWidget(updownButton, 0, 25,1,1,Qt::AlignHCenter);
+    layout->addWidget(_exitButton, 0, 26,1,1,Qt::AlignHCenter);
+*/
        //menu->setFixedSize(QSize(e*20,b));
    // menu->setStyleSheet("QMenu { width: 290 px; height: 180 px; }");
-
+menu->setLayout(layout);
    return menu;
 }
 

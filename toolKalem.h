@@ -59,12 +59,12 @@ public:
     DiagramItem::DiagramType pagePattern=DiagramItem::DiagramType::TransparanPage;
     QToolButton *penColorButton;
     QPixmap zeminImage(const QPolygonF &myPolygon, int w, int h, QColor zemincolor, QColor cizgicolor, int pensize) const;
-    QToolButton *handButton;
-    QToolButton *desktopButton;
-    QToolButton *copyButton;
-    QToolButton *penButton;
-    QToolButton *eraseButton;
-    QToolButton *sekilButton;
+    QPushButton *handButton;
+    QPushButton *desktopButton;
+    QPushButton *copyButton;
+    QPushButton *penButton;
+    QPushButton *eraseButton;
+    QPushButton *sekilButton;
     QToolButton *zeminButton;
     QToolButton *undoButton;
     QToolButton *redoButton;
