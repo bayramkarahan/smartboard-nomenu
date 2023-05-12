@@ -51,7 +51,7 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
     text->setText(" Bir millet irfan ordusuna sahip olmadıkça, muharebe meydanlarında ne kadar parlak zaferler elde ederse etsin, o zaferlerin kalıcı sonuçlar vermesi ancak irfan ordusuna bağlıdır. -Mustafa Kemal Atatürk ");
     text->setFixedSize(this->width()-20, boy*5);
     text->move(10,h-text->height()*2.5);
-    text->show();
+   // text->show();
     pos_=0;
     QString pad(50, ' ');
     actual_text_ = pad+text->toPlainText() ;
@@ -120,8 +120,8 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
         }*/
 
         sure->hide();
-suresayacLabel->hide();
-text->hide();
+        suresayacLabel->hide();
+        text->hide();
         sayacStartButton->hide();
         //sayacCloseButton->hide();
 
@@ -196,23 +196,7 @@ void toolPromter::saatslot(){
      int second=saniye%60;
      int sr=suresayac*60;
 
-   /* sayac->setText(QString::number(sure->value()-1-minute)+":"+QString::number(60-second));
 
-//if(minute>(sr*0.3))
-//sayac->setStyleSheet("QLabel{size:170px;}");
-QFont f( "Arial", 120, QFont::Bold);
-sayac->setFont(f);
-sayac->setAlignment(Qt::AlignCenter);
-
-sayac->setStyleSheet("QLabel{color: rgb(0, 255, 0);}");
-if(saniye>sr*0.33)sayac->setStyleSheet("QLabel{color: rgb(255, 255, 0);}");
-if(saniye>0.66*sr)sayac->setStyleSheet("QLabel{color: rgb(255, 0, 0);}");
-if(saniye>sr){
-    sayac->setText("-00-");
-    sayac->setStyleSheet("QLabel{color: rgb(0, 0, 0);}");
-}
-
-*/
 
 }
 
@@ -220,8 +204,8 @@ void toolPromter::setSure(int value)
 {
     suresayac=value;
     suresayacLabel->setText("Süre: "+QString::number(suresayac));
-    timerText->stop();
-    timerText->start(sure->value());
+    //timerText->stop();
+    //timerText->start(sure->value());
 }
 
 void toolPromter::paintEvent(QPaintEvent *pe)

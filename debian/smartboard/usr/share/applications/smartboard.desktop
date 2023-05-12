@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Name=smartboard Application
+Name[tr]=smartboard Uygulaması
+Type=Application
+Comment=Simple Qt based smartboard Application
+Comment[tr]=Basit Qt tabanlı smartboard Uygulaması
+Terminal=false
+Exec=/usr/bin/smartboard
+Icon=/usr/share/smartboard/smartboard.svg
+Categories=Qt;Utility;
+Keywords=zil;smartboard;e-tahta;pen,board,tahta;
+GenericName=smartboard
+Name[tr_TR]=smartboard

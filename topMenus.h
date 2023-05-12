@@ -1105,8 +1105,8 @@ QWidget *toolKalem::toolTopMenu(int _boy)
 
         promter->move(parentw/2-promter->width()/2,parenth/2-promter->height()/2);
         Qt::WindowFlags flags = 0;
-        flags |= Qt::Dialog;
-        flags |= Qt::X11BypassWindowManagerHint;
+        flags |= Qt::FramelessWindowHint;
+        //flags |= Qt::X11BypassWindowManagerHint;
         promter->setWindowFlags(flags);
         promter->show();
         current_toolTahta->hide();

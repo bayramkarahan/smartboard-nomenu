@@ -33,7 +33,7 @@ private:
     QLabel *suresayacLabel;
     int suresayac=180;
     QProgressBar *bar;
-    QLabel  *sayac;
+   // QLabel  *sayac;
      QLabel  *timerTextLabel;
     qint64 saniye;
     QEventLoop loop;
