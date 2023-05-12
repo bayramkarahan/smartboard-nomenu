@@ -36,7 +36,7 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
 
     timerTextLabel=new QLabel(this);
     timerTextLabel->setFixedSize(w-20, boy*5);
-    timerTextLabel->move(10,boy*1);
+    timerTextLabel->move(10,boy*1.5);
     QFont f( "Arial", 90, QFont::Normal);
     timerTextLabel->setFont(f);
     timerTextLabel->setObjectName("timertext");
@@ -119,6 +119,12 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
             loop.exec();
         }*/
 
+        sure->hide();
+suresayacLabel->hide();
+text->hide();
+        sayacStartButton->hide();
+        //sayacCloseButton->hide();
+
 
         timerText->start(sure->value());
 
@@ -134,6 +140,29 @@ toolPromter::toolPromter(int w, int h, QWidget *parent)
     sayacCloseButton->move(butongrub->width()-sayacCloseButton->width()-boy/2,5);
     sayacCloseButton->show();
     connect(sayacCloseButton, &QPushButton::clicked, [=]() {
+
+        timerText->stop();
+        sure->show();
+        suresayacLabel->show();
+        text->show();
+        sayacStartButton->show();
+        sayacCloseButton->show();
+        ///zeminSeffafButtonClick();///burada zemin beyaz yapılıyor
+        //emit promterCloseSignal();
+        //this->close();
+
+    });
+
+
+    QPushButton *sayacExitButton= new QPushButton(this);
+    //sayacExitButton->hide();
+    sayacExitButton->setFixedSize(en*0.5, boy*1);
+    sayacExitButton->setIconSize(QSize(en*1,boy*1));
+    sayacExitButton->setFlat(true);
+    sayacExitButton->setIcon(QIcon(":icons/exit.svg"));
+    sayacExitButton->move(width()-sayacExitButton->width(),0);
+    //sayacExitButton->show();
+    connect(sayacExitButton, &QPushButton::clicked, [=]() {
         /// sayacShow=false;//Sayac Kapatılıyor..
         saat->stop();
         sure->hide();
