@@ -31,7 +31,7 @@ signals:
 
 private:
     QLabel *suresayacLabel;
-    int suresayac=200;
+    int suresayac=180;
     QProgressBar *bar;
     QLabel  *sayac;
      QLabel  *timerTextLabel;
@@ -43,6 +43,7 @@ private:
 
     QString actual_text_;
     int pos_;
+     QTimer  *timerText;
 };
 
 
